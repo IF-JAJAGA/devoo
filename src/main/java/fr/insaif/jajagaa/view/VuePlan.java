@@ -1,16 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.insaif.jajagaa.view;
 
 import java.util.List;
 
 /**
- *
+ * La classe représente la Vue du plan et est composée de tous les tronçons, les noeuds et les tournées du modèle.
  * @author alicia
  */
-public class VuePlan extends javax.swing.JPanel {
+public class VuePlan extends javax.swing.JPanel implements VueElement {
 
     private List<VueNoeud> noeuds;
     private List<VueTroncon> troncons;
@@ -18,10 +14,12 @@ public class VuePlan extends javax.swing.JPanel {
     
     
     /**
-     * Creates new form VuePlan
+     * Constructeur de la classe VuePlan
      */
-    public VuePlan() {
-        initComponents();
+    public VuePlan(List<VueNoeud> desNoeuds, List<VueTroncon> desTroncons, List<VueTournee> desTournees) {
+        noeuds = desNoeuds;
+        troncons = desTroncons;
+        tournees = desTournees;
     }
 
     /**

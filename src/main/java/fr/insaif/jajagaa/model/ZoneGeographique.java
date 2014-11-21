@@ -1,7 +1,9 @@
 package fr.insaif.jajagaa.model;
 
+import java.util.List;
+
 /**
- * Zone regroupant un certain nombre de points de livraison.
+ * Zone regroupant un certain nombre de points de livraison, de noeuds et de tronçons reliants ces noeuds.
  * @author gustavemonod
  */
 public class ZoneGeographique {
@@ -14,7 +16,10 @@ public class ZoneGeographique {
      * Entrepôt de la zone
      */
     protected Noeud entrepot;
-
+    /**
+     * Liste des noeuds qui composent la zone géographique.
+     */
+    protected List<Noeud> noeuds;
     /**
      * Constructeur de la zone géographique à partir de l'entrepôt
      */

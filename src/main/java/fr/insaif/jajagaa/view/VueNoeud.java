@@ -1,24 +1,45 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.insaif.jajagaa.view;
 
-/**
- *
- * @author alicia
- */
-public class VueNoeud extends javax.swing.JPanel {
+import fr.insaif.jajagaa.model.Noeud;
 
-    int vueX;
-    int vueY;
-    String couleur;
-        
+/**
+ * Classe Vue qui correspond à un noeud dans le modèle.
+ * Cette vue possède plus d'attributs si le noeud est un point de livraison. 
+ * @author alicia
+*/
+public class VueNoeud extends javax.swing.JPanel implements VueElement {
+    
+    /**
+     * Référence vers le noeud correspondant dans le package Modele
+     */
+    private Noeud noeudModele;
+    /**
+     * Coordonnée X du noeud dans la vue.
+     */
+    private int vueX;
+    /**
+     * Coordonnée Y du noeud dans la vue.
+     */
+    private int vueY;
+    /**
+     * Ce booléen est vrai si le noeud est un point de livraison.
+     */
+    private boolean estPointDeLivraison;
+    /**
+     * Couleur du noeud si c'est un point de livraison. 
+     */
+    private String couleur;
+    private static int conv;
+    
+    //TODO : enum si le noeud est un point de livraison
+    
     /**
      * Creates new form VueNoeud
      */
-    public VueNoeud() {
-        initComponents();
+    public VueNoeud(Noeud unNoeud) {
+        noeudModele = unNoeud;
+        vueX = unNoeud.getX()*conv;
+        vueY = unNoeud.getY()*conv;
     }
 
     /**

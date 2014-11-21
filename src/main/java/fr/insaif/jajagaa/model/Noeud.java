@@ -14,8 +14,11 @@ public class Noeud {
 
     /**
      * L'adresse à laquelle se trouve le noeud
+     * Correspond à l'id dans le document XML.
      */
-    protected String adresse;
+    private String adresse;
+    private int x;
+    private int y;
 
     /**
      * Constructeur du noeud à partir de l'adresse
@@ -38,5 +41,21 @@ public class Noeud {
      */
     public void setAdresse(String adresse) {
         this.adresse = adresse;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }
