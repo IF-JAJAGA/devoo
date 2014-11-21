@@ -20,12 +20,12 @@ import java.util.List;
  */
 public class Parseur {
     public static List<Livraison> lireLivraison(InputStream inputStream) {
-        List<Livraison> livraisonList = new ArrayList<Livraison>();
+        List<Livraison> livraisonList = new ArrayList<>();
         SAXBuilder builder = new SAXBuilder();
         try {
-            Document document = (Document) builder.build(inputStream);
+            Document document = builder.build(inputStream);
             Element journee = document.getRootElement();
-            Noeud entrepot = new Noeud(0, 0, 0); // TODO Trouver quel noeud à comme id "adresse"
+            int entrepotIndice = Integer.parseInt(journee.getChild("Entrepot").getAttributeValue("adresse"));
 
             @SuppressWarnings("unchecked")
             List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");
