@@ -8,4 +8,6 @@ package fr.insaif.jajagaa.model;
 public class Troncon {
     protected Noeud origine;
     protected Noeud destination;
+    protected float longueur;
+    protected float vitesse;
 }
