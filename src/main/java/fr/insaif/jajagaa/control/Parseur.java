@@ -25,7 +25,7 @@ public class Parseur {
         try {
             Document document = (Document) builder.build(inputStream);
             Element journee = document.getRootElement();
-            Noeud entrepot = new Noeud(journee.getChild("Entrepot").getAttributeValue("adresse"));
+            Noeud entrepot = new Noeud(0, 0, 0); // TODO Trouver quel noeud à comme id "adresse"
 
             @SuppressWarnings("unchecked")
             List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");

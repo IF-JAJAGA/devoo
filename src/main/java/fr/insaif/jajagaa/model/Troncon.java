@@ -6,56 +6,115 @@ package fr.insaif.jajagaa.model;
  * @author gustavemonod
  */
 public class Troncon {
-    
+
     /**
-     * Noeud d'origine du tronçon.
+     * Noeud origine de ce Troncon
      */
     protected Noeud origine;
+
     /**
-     * Noeud de destination du tronçon.
+     * Noeud destination de ce Troncon
      */
     protected Noeud destination;
+
     /**
-     * Vitesse à laquelle on peut se déplacer sur le tronçon.
+     * Distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     */
+    protected float longueurMetre;
+
+    /**
+     * Vitesse de parcours du Troncon (exprimée en ???)
      */
     protected float vitesse;
-    /**
-     * Longueur du tronçon.
-     */
-    protected float longueur;
 
-    
-    //GETTERS AND SETTERS  /define which we keep (see useful)
+    /**
+     * Construction d'un Troncon à partir de ces informations de base
+     * @param origine Noeud origine de ce Troncon
+     * @param destination Noeud destination de ce Troncon
+     * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
+     */
+    public Troncon(Noeud origine, Noeud destination, float longueurMetre, float vitesse) {
+        this.origine = origine;
+        this.destination = destination;
+        this.longueurMetre = longueurMetre;
+        this.vitesse = vitesse;
+    }
+
+    /**
+     * Coût d'un Troncon, calculé avec Math.round(vitesse * longueurMetre)
+     * @return Coût d'un Troncon, calculé avec Math.round(vitesse * longueurMetre)
+     */
+    public int getCost() {
+        return Math.round(this.getVitesse() * this.getLongueurMetre());
+    }
+
+    /**
+     * Noeud origine de ce Troncon
+     * @return Noeud origine de ce Troncon
+     */
     public Noeud getOrigine() {
         return origine;
     }
 
+
+    /**
+     * Modifie le noeud origine de ce Troncon
+     * @param origine Noeud origine de ce Troncon
+     */
     public void setOrigine(Noeud origine) {
         this.origine = origine;
     }
 
+
+    /**
+     * Noeud destination de ce Troncon
+     * @return Noeud destination de ce Troncon
+     */
     public Noeud getDestination() {
         return destination;
     }
 
+
+    /**
+     * Modifie le noeud destination de ce Troncon
+     * @param destination Noeud destination de ce Troncon
+     */
     public void setDestination(Noeud destination) {
         this.destination = destination;
     }
 
+
+    /**
+     * Distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     * @return Distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     */
+    public float getLongueurMetre() {
+        return longueurMetre;
+    }
+
+    /**
+     * Modifie la distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     */
+    public void setLongueurMetre(float longueurMetre) {
+        assert longueurMetre > 0;
+        this.longueurMetre = longueurMetre;
+    }
+
+    /**
+     * Vitesse de parcours du Troncon (exprimée en ???)
+     * @return Vitesse de parcours du Troncon (exprimée en ???)
+     */
     public float getVitesse() {
         return vitesse;
     }
 
+    /**
+     * Modifie la vitesse de parcours du Troncon (exprimée en ???)
+     * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
+     */
     public void setVitesse(float vitesse) {
         this.vitesse = vitesse;
     }
-
-    public float getLongueur() {
-        return longueur;
-    }
-
-    public void setLongueur(float longueur) {
-        this.longueur = longueur;
-    }
-    
 }

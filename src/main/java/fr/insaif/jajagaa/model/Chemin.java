@@ -1,20 +1,15 @@
 package fr.insaif.jajagaa.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Chemin orienté le plus court entre deux points de livraison. 
- * Ces deux points de livraisons sont l'origine du premier tronçon et la destination du dernier tronçon.
- * @author alicia
+ * Ensemble ordonné de tronçons joignant deux points de livraison, ou un point de livraison et un entrepôt
+ * @author gustavemonod
  */
 public class Chemin {
     /**
-     * Liste ordonnée de tronçons composants le chemin.
+     * Liste des troncons à emprunter (dans l'ordre) pour aller de l'origine du premier à la destination du dernier
      */
-    protected List<Troncon> troncons;
-    
-    void calculerPlusCourtChemin(){
-        //TODO : algo ? Ou choco
-    }
-    
+    protected List<Troncon> troncons = new ArrayList<Troncon>();
 }
