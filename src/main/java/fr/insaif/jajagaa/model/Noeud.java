@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,43 +19,46 @@ public class Noeud {
      */
     protected List<Troncon> sortants;
 
-/* TODO Définir comment ces attributs doivent être mis en place
-    protected Collection<Livraison> livraisons;
-    protected int x;
-    protected int y;
-*/
+    /**
+     * Abscisse du noeud (exprimée en mètre)
+     */
+    protected int xMetre;
 
     /**
-     * L'adresse à laquelle se trouve le noeud
+     * Ordonnée du noeud (exprimée en mètre)
      */
-    protected String adresse;
+    protected int yMetre;
+
+    /**
+     * Identifiant du noeud
+     */
+    protected int id;
 
     /**
      * Constructeur du noeud à partir de l'adresse
-     * @param adresse Adresse à laquelle se trouve le noeud
+     * @param id Identifiant du noeud
+     * @param xMetre Abscisse du noeud (exprimée en mètre)
+     * @param yMetre Ordonnée du noeud (exprimée en mètre)
      */
-    public Noeud(String adresse) {
-        this.setAdresse(adresse);
+    public Noeud(int id, int xMetre, int yMetre) {
+        this.id = id;
+        this.setXMetre(xMetre);
+        this.setYMetre(yMetre);
+        this.sortants = new ArrayList<Troncon>();
+        this.entrants = new ArrayList<Troncon>();
     }
 
     /**
-     * L'adresse à laquelle se trouve le noeud
-     * @return L'adresse à laquelle se trouve le noeud
+     * Identifiant du noeud
+     * @return Identifiant du noeud
      */
-    public String getAdresse() {
-        return adresse;
-    }
-
-    /**
-     * Modifie l'adresse à laquelle se trouve le noeud
-     * @param adresse La nouvelle adresse à laquelle se trouve le noeud
-     */
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public int getId() {
+        return this.id;
     }
 
     /**
      * Liste des troncons qui ont ce noeud comme destination
+     * @return Liste des troncons qui ont ce noeud comme destination
      */
     public List<Troncon> getEntrants() {
         return entrants;
@@ -82,5 +86,59 @@ public class Noeud {
      */
     public void setSortants(List<Troncon> sortants) {
         this.sortants = sortants;
+    }
+
+    /**
+     * Abscisse du noeud (exprimée en mètre)
+     * @return Abscisse du noeud (exprimée en mètre)
+     */
+    public int getXMetre() {
+        return xMetre;
+    }
+
+    /**
+     * Modifie l'abscisse du noeud (exprimée en mètre)
+     * @param xMetre Abscisse du noeud (exprimée en mètre)
+     */
+    public void setXMetre(int xMetre) {
+        this.xMetre = xMetre;
+    }
+
+    /**
+     * Ordonnée du noeud (exprimée en mètre)
+     * @return Ordonnée du noeud (exprimée en mètre)
+     */
+    public int getYMetre() {
+        return yMetre;
+    }
+
+    /**
+     * Modifie l'ordonnée du noeud (exprimée en mètre)
+     * @param yMetre Ordonnée du noeud (exprimée en mètre)
+     */
+    public void setYMetre(int yMetre) {
+        this.yMetre = yMetre;
+    }
+
+    /**
+     * Ajoute un Troncon sortant avec la destination en paramètre
+     * @param destination Noeud destination du Troncon à rajouter
+     * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
+     */
+    public void addSortant(Noeud destination, float longueurMetre, float vitesse) {
+        assert !this.equals(destination);
+        this.sortants.add(new Troncon(this, destination, longueurMetre, vitesse));
+    }
+
+    /**
+     * Ajoute un Troncon entrant avec l'origine en paramètre
+     * @param origine Noeud origine du Troncon à rajouter
+     * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
+     */
+    public void addEntrant(Noeud origine, float longueurMetre, float vitesse) {
+        assert !this.equals(origine);
+        this.entrants.add(new Troncon(origine, this, longueurMetre, vitesse));
     }
 }
