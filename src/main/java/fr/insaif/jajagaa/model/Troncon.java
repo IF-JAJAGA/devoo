@@ -1,4 +1,4 @@
-package model;
+package fr.insaif.jajagaa.model;
 
 /**
  * Arc du graphe représentant une route, une rue ou un chemin reliant deux points de la carte,

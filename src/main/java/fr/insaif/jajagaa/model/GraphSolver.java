@@ -1,4 +1,4 @@
-package model;
+package fr.insaif.jajagaa.model;
 
 /**
  * Classe permettant de trouver la meilleure Tournée

@@ -1,4 +1,4 @@
-package model;
+package fr.insaif.jajagaa.view;
 
 import org.junit.After;
 import org.junit.Before;
@@ -7,10 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test de {@link model.ZoneGeographique}.
+ * Test de {@link fr.insaif.jajagaa.view.Window}
  * @author gustavemonod
  */
-public class ZoneGeographiqueTest {
+public class WindowTest {
     @Before
     public void setUp() throws Exception {
 

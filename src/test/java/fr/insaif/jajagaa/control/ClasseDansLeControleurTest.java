@@ -1,4 +1,4 @@
-package view;
+package fr.insaif.jajagaa.control;
 
 import org.junit.After;
 import org.junit.Before;
@@ -7,10 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test de {@link view.Window}
+ * Test de {@link fr.insaif.jajagaa.control.ClasseDansLeControleur}
  * @author gustavemonod
  */
-public class WindowTest {
+public class ClasseDansLeControleurTest {
     @Before
     public void setUp() throws Exception {
 

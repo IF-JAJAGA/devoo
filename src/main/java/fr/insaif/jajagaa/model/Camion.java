@@ -1,4 +1,4 @@
-package model;
+package fr.insaif.jajagaa.model;
 
 /**
  * Véhicule affecté à une tournée. N'importe quel livreur peut conduire n'importe quel camion.

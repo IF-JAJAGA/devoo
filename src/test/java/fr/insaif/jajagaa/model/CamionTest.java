@@ -1,4 +1,4 @@
-package control;
+package fr.insaif.jajagaa.model;
 
 import org.junit.After;
 import org.junit.Before;
@@ -7,10 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test de {@link control.ClasseDansLeControleur}
+ * Test de {@link fr.insaif.jajagaa.model.Camion}
  * @author gustavemonod
  */
-public class ClasseDansLeControleurTest {
+public class CamionTest {
     @Before
     public void setUp() throws Exception {
 

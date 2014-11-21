@@ -1,4 +1,4 @@
-package model;
+package fr.insaif.jajagaa.model;
 
 /**
  * Itinéraire d'un livreur dans une seule zone géographique, partant du dépôt et revenant au dépôt,
