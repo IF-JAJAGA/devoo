@@ -47,10 +47,10 @@ public class Parseur {
             System.err.println("Impossible d'accéder au fichier correctement");
             System.exit(501);
         } catch (JDOMException jdomex) {
-            System.err.println("Ficher XML mal formé");
+            System.err.println("Ficher XML mal formé: mauvaise syntaxe XML");
             System.exit(502);
         } catch (NullPointerException nullptrex) {
-            System.err.println("Ficher XML mal formé");
+            System.err.println("Ficher XML mal formé: element ou attribut manquant");
             System.exit(502);
         }
 
