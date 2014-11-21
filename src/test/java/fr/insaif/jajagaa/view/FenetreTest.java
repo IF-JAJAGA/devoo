@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test de {@link fr.insaif.jajagaa.view.Window}
+ * Test de {@link fr.insaif.jajagaa.view.Fenetre}
  * @author gustavemonod
  */
 public class FenetreTest {

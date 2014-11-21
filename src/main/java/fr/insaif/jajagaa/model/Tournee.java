@@ -8,8 +8,10 @@ import java.util.List;
  * @author gustavemonod
  */
 public class Tournee {
+    // TODO encapsulation
     protected ZoneGeographique zone;
     protected Camion camion;
     protected List<PlageHoraire> horaires;
     protected List<Chemin> chemins;
+    public List<Livraison> livraisons;
 }
