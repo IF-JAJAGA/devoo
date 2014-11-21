@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
  * Test de {@link fr.insaif.jajagaa.view.Window}
  * @author gustavemonod
  */
-public class WindowTest {
+public class FenetreTest {
     @Before
     public void setUp() throws Exception {
 
