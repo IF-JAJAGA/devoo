@@ -26,6 +26,9 @@ public class Parseur {
             Document document = (Document) builder.build(inputStream);
             Element journee = document.getRootElement();
             Noeud entrepot = new Noeud(0, 0, 0); // TODO Trouver quel noeud à comme id "adresse"
+	    //Pourquoi ne pas simplement enregistrer l'info de l'adresse de l'entrepot sous forme d'un attribut (int) de zoneGeographique ? 
+	    //Puis se servir de cette info plus tard ?
+	    //int entrepot = journee.getChild("Entrepot").getAttributeValue("adresse");
 
             @SuppressWarnings("unchecked")
             List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");
