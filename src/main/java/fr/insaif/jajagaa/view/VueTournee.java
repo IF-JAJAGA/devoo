@@ -4,11 +4,15 @@
  */
 package fr.insaif.jajagaa.view;
 
+import java.awt.Point;
+
+import javax.swing.JPanel;
+
 /**
  *
  * @author alicia
  */
-public class VueTournee extends javax.swing.JPanel {
+public class VueTournee extends JPanel implements VueElement{
 
     /**
      * Creates new form VueTournee
@@ -16,6 +20,11 @@ public class VueTournee extends javax.swing.JPanel {
     public VueTournee() {
         initComponents();
     }
+    
+    public boolean clicSurMoi(Point p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.

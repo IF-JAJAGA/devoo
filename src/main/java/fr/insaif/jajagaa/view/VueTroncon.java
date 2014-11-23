@@ -4,11 +4,15 @@
  */
 package fr.insaif.jajagaa.view;
 
+import java.awt.Point;
+
+import javax.swing.JPanel;
+
 /**
  *
  * @author alicia
  */
-public class VueTroncon extends javax.swing.JPanel {
+public class VueTroncon extends JPanel implements VueElement{
 
     /**
      * Creates new form VueTroncon
@@ -16,6 +20,11 @@ public class VueTroncon extends javax.swing.JPanel {
     public VueTroncon() {
         initComponents();
     }
+    
+    public boolean clicSurMoi(Point p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.

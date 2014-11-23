@@ -4,12 +4,13 @@
  */
 package fr.insaif.jajagaa.view;
 
+import java.awt.Point;
+
 /**
  *
  * @author alicia
  */
 public interface VueElement {
-    
-    //TODO : méthodes partagées avec les autres éléments Vues
+	public boolean clicSurMoi(Point p);
     
 }

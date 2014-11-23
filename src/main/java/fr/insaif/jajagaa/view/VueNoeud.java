@@ -4,22 +4,79 @@
  */
 package fr.insaif.jajagaa.view;
 
+import java.awt.Color;
+import java.awt.Point;
+
+import javax.swing.JPanel;
+
+import fr.insaif.jajagaa.model.Noeud;
+
 /**
  *
  * @author alicia
  */
-public class VueNoeud extends javax.swing.JPanel {
-
+public class VueNoeud extends JPanel implements VueElement{
+	public static final int RAYON = 20;	//Pour l'instant
+	
     int vueX;
-    int vueY;
-    String couleur;
+    int vueY;   
+    Noeud noeud;
+    Color couleur;
         
     /**
      * Creates new form VueNoeud
      */
-    public VueNoeud() {
+    public VueNoeud(Noeud noeud, Color couleur) {
+    	this.noeud = noeud;
+    	this.couleur = couleur;
         initComponents();
     }
+    
+    
+    public Noeud getNoeud() {
+		return noeud;
+	}
+
+
+	public int getVueX() {
+		return vueX;
+	}
+
+
+	public void setVueX(int vueX) {
+		this.vueX = vueX;
+	}
+
+
+	public int getVueY() {
+		return vueY;
+	}
+
+
+	public void setVueY(int vueY) {
+		this.vueY = vueY;
+	}
+
+
+	public Color getCouleur() {
+		return couleur;
+	}
+
+
+	public void setCouleur(Color couleur) {
+		this.couleur = couleur;
+	}
+
+
+	public boolean clicSurMoi(Point p) {
+		//On calcule la distance de p au centre du noeud et on compare au rayon.
+		int d = (int) Math.sqrt(
+							Math.pow(Math.abs(p.x - (vueX+RAYON/2)),2) +
+							Math.pow(Math.abs(p.y - (vueY+RAYON/2)),2)
+							);
+		System.out.println(p.x + " ; " + (vueX+RAYON/2) + " ; " + p.y + " ; " + (vueY+RAYON/2));
+		return d<RAYON;
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.

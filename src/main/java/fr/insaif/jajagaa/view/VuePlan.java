@@ -4,25 +4,69 @@
  */
 package fr.insaif.jajagaa.view;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.util.List;
+import java.util.Vector;
+
+import javax.swing.JPanel;
+
+import fr.insaif.jajagaa.model.Noeud;
 
 /**
  *
  * @author alicia
  */
-public class VuePlan extends javax.swing.JPanel {
+public class VuePlan extends JPanel{
+	private static VuePlan vuePlan;
+	/*
+	 * Il n'y a qu'un seul plan, donc cette classe ne doit être instanciée qu"une seule fois.
+	 */
+	public static VuePlan getInstance(){
+		if(vuePlan==null) vuePlan = new VuePlan();
+		return vuePlan;
+	}
+	
+    private Vector<VueNoeud> noeuds = new Vector<VueNoeud>();
+    private Vector<VueTroncon> troncons = new Vector<VueTroncon>();
+    private Vector<VueTournee> tournees =  new Vector<VueTournee>();
+    
+    //Valeurs en mètres avant que le chargement soit implémenté.
+    private final int XVille = 1000;
+    private final int YVille = 700;
+    
+    
+    public void quiEstClique(Point locationOnScreen) {
+    	for(VueNoeud vN : noeuds){
+    		if(vN.clicSurMoi(locationOnScreen)){
+    			System.out.println("Noeud " + vN.getNoeud().getId() + " : touché coulé !");
+    			return;
+    		}
+    		else {
+    			System.out.println("Noeud " + vN.getNoeud().getId() + " : raté !");
+    		}
+    	}
+		
+	}
 
-    private List<VueNoeud> noeuds;
-    private List<VueTroncon> troncons;
-    private List<VueTournee> tournees;
-    
-    
-    /**
-     * Creates new form VuePlan
-     */
-    public VuePlan() {
-        initComponents();
-    }
+	@Override
+	public void paintComponent(Graphics g) {
+		/* methode appelee a chaque fois que le dessin doit etre redessine
+		 * C'est ici que l'on peint tous les composants
+		 */
+		super.paintComponent(g);
+		for(VueNoeud vN : noeuds){
+			//Règle de trois pour afficher les points.
+			vN.setVueX(this.getX() + vN.getNoeud().getXMetre()*this.getWidth() / XVille);
+			vN.setVueY(this.getY() + vN.getNoeud().getYMetre()*this.getHeight() / YVille);
+			
+			g.setColor(vN.getCouleur());
+			g.fillOval(vN.getVueX(), vN.getVueY(), VueNoeud.RAYON, VueNoeud.RAYON);
+		}
+		System.out.println("paintComponent : " + this.getHeight() + " : " + this.getWidth());
+
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,6 +75,18 @@ public class VuePlan extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    
+    /**
+     * Creates new form VuePlan
+     */
+    private VuePlan() {
+		setBackground(Color.GRAY);
+        //initComponents();
+    	
+    	//Pour l'instant ici
+    	noeuds.add(new VueNoeud(new Noeud(0, 200, 200), Color.BLUE));
+    }
+    
     private void initComponents() {
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
