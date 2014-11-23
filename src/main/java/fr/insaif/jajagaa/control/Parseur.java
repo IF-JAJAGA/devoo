@@ -56,4 +56,46 @@ public class Parseur {
 
         return livraisonList;
     }
+	
+    public static List<Noeud> lirePlan(InputStream inputStream) {
+        List<Noeud> plan = new ArrayList<Noeud>();
+        SAXBuilder builder = new SAXBuilder();
+        try {
+            Document document = (Document) builder.build(inputStream);
+            Element reseau = document.getRootElement();
+
+            @SuppressWarnings("unchecked")
+            List<Element> noeuds = reseau.getChildren("Noeud");
+	    //Création des noeuds contenus dans le fichier XML
+	    //Et ajout de ceux-ci dans la liste plan
+            for (Element noeudXml : noeuds) {
+                Noeud noeud = new Noeud(noeudXml.getAttributeValue("id"),
+                        noeudXml.getAttributeValue("x"),
+			noeudXml.getAttributeValue("y"));
+
+                @SuppressWarnings("unchecked")
+		plan.add(noeud);
+            }
+		
+	    //Ajout des tronçons sortants de chaque noeud
+	    for (Element noeudXml : noeuds) {
+		list Element troncons = noeudXml.getChildren("LeTronconSortant");
+		for (Element tronconXml : troncons) {
+			plan.get(noeudXml.getAttributeValue("id")).addSortant(plan.get(tronconXml.getAttributeValue("idNoeudDestination")),tronconXml.getAttributeValue("longueur"),tronconXml.getAttributeValue("vitesse")); 
+		}
+	    }	
+
+        } catch (IOException io) {
+            System.err.println("Impossible d'accéder au fichier correctement");
+            System.exit(501);
+        } catch (JDOMException jdomex) {
+            System.err.println("Ficher XML mal formé: mauvaise syntaxe XML");
+            System.exit(502);
+        } catch (NullPointerException nullptrex) {
+            System.err.println("Ficher XML mal formé: element ou attribut manquant");
+            System.exit(502);
+        }
+
+        return plan;
+    }
 }
