@@ -14,7 +14,7 @@ public class Livraison {
      * Identifiant de la livraison
      */
     protected String id;
-
+ 
     /**
      * Plage horaire pendant laquelle devrait se dérouler la livraison
      */

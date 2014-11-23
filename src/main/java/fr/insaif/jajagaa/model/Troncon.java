@@ -1,11 +1,12 @@
 package fr.insaif.jajagaa.model;
 
 /**
- * Arc du graphe représentant une route, une rue ou un chemin reliant deux points de la carte,
+ * Arc orienté du graphe représentant une route, une rue ou un chemin reliant deux points de la carte,
  * qui peuvent être un point de livraison.
  * @author gustavemonod
  */
 public class Troncon {
+
     /**
      * Noeud origine de ce Troncon
      */
@@ -56,6 +57,7 @@ public class Troncon {
         return origine;
     }
 
+
     /**
      * Modifie le noeud origine de ce Troncon
      * @param origine Noeud origine de ce Troncon
@@ -63,6 +65,7 @@ public class Troncon {
     public void setOrigine(Noeud origine) {
         this.origine = origine;
     }
+
 
     /**
      * Noeud destination de ce Troncon
@@ -72,6 +75,7 @@ public class Troncon {
         return destination;
     }
 
+
     /**
      * Modifie le noeud destination de ce Troncon
      * @param destination Noeud destination de ce Troncon
@@ -79,6 +83,7 @@ public class Troncon {
     public void setDestination(Noeud destination) {
         this.destination = destination;
     }
+
 
     /**
      * Distance séparant le noeud origine de celui destination (exprimée en mètre?)

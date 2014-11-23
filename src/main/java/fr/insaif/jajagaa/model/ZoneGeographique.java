@@ -1,24 +1,23 @@
 package fr.insaif.jajagaa.model;
 
-import fr.insaif.jajagaa.model.tsp.Graph;
 
+import fr.insaif.jajagaa.model.tsp.Graph;
 import java.util.List;
 
 /**
- * Zone regroupant un certain nombre de points de livraison.
+ * Zone regroupant un certain nombre de points de livraison, de noeuds et de tronçons reliants ces noeuds.
  * @author gustavemonod
  */
 public class ZoneGeographique implements Graph {
-    /**
-     * Liste des noeuds qui forme une zone géographique (carte)
-     */
-    protected List<Noeud> noeuds;
 
     /**
      * Noeud de la liste qui est l'entrepôt
      */
     protected Noeud entrepot;
-
+    /**
+     * Liste des noeuds qui composent la zone géographique.
+     */
+    protected List<Noeud> noeuds;
     /**
      * Coût max des arcs
      */
@@ -42,7 +41,6 @@ public class ZoneGeographique implements Graph {
      * Coût max des arcs
      * @return Coût max des arcs
      */
-    @Override
     public int getMaxArcCost() {
         return this.maxArcCost;
     }
@@ -51,7 +49,6 @@ public class ZoneGeographique implements Graph {
      * Coût min des arcs
      * @return Coût min des arcs
      */
-    @Override
     public int getMinArcCost() {
         return this.minArcCost;
     }
@@ -60,12 +57,10 @@ public class ZoneGeographique implements Graph {
      * Nombre de sommets du graphe
      * @return Nombre de sommets du graphe
      */
-    @Override
     public int getNbVertices() {
         return this.getNoeuds().size();
     }
 
-    @Override
     public int[][] getCost() {
         final int PAS_DE_TRONCON = this.getMaxArcCost() + 1;
         int size = this.getNbVertices();
@@ -92,7 +87,6 @@ public class ZoneGeographique implements Graph {
      * @return Tableau des ID des noeuds reliés avec un Troncon sortant
      * @throws ArrayIndexOutOfBoundsException
      */
-    @Override
     public int[] getSucc(int i) throws ArrayIndexOutOfBoundsException {
         List<Troncon> sortants = this.getNoeuds().get(i).getSortants();
         int size = sortants.size();
@@ -103,7 +97,6 @@ public class ZoneGeographique implements Graph {
         return succ;
     }
 
-    @Override
     public int getNbSucc(int i) throws ArrayIndexOutOfBoundsException {
         return this.noeuds.get(i).getSortants().size();
     }
