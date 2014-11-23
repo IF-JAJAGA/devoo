@@ -1,24 +1,23 @@
 package fr.insaif.jajagaa.model;
 
-import fr.insaif.jajagaa.model.tsp.Graph;
 
+import fr.insaif.jajagaa.model.tsp.Graph;
 import java.util.List;
 
 /**
- * Zone regroupant un certain nombre de points de livraison.
+ * Zone regroupant un certain nombre de points de livraison, de noeuds et de tronçons reliants ces noeuds.
  * @author gustavemonod
  */
 public class ZoneGeographique implements Graph {
-    /**
-     * Liste des noeuds qui forme une zone géographique (carte)
-     */
-    protected List<Noeud> noeuds;
 
     /**
      * Noeud de la liste qui est l'entrepôt
      */
     protected Noeud entrepot;
-
+    /**
+     * Liste des noeuds qui composent la zone géographique.
+     */
+    protected List<Noeud> noeuds;
     /**
      * Coût max des arcs
      */

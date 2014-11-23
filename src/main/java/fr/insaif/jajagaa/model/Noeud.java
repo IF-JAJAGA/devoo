@@ -20,6 +20,7 @@ public class Noeud {
     protected List<Troncon> sortants;
 
     /**
+
      * Abscisse du noeud (exprimée en mètre)
      */
     protected int xMetre;
@@ -140,5 +141,21 @@ public class Noeud {
     public void addEntrant(Noeud origine, float longueurMetre, float vitesse) {
         assert !this.equals(origine);
         this.entrants.add(new Troncon(origine, this, longueurMetre, vitesse));
+    }
+
+    public int getX() {
+        return xMetre;
+    }
+
+    public void setX(int x) {
+        this.xMetre = x;
+    }
+
+    public int getY() {
+        return yMetre;
+    }
+
+    public void setY(int y) {
+        this.yMetre = y;
     }
 }

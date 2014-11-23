@@ -1,24 +1,35 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.insaif.jajagaa.view;
+
 
 import java.awt.Point;
 
 import javax.swing.JPanel;
 
+import fr.insaif.jajagaa.model.Tournee;
+
 /**
- *
+ * Classe qui implémente la vue d'une tournée, elle même constituée de plusieurs chemins.
  * @author alicia
  */
 public class VueTournee extends JPanel implements VueElement{
 
     /**
-     * Creates new form VueTournee
+     * Tournée du modèle que VueTournee implémente.
      */
-    public VueTournee() {
-        initComponents();
+    private Tournee tourneeModel;
+    /**
+     * Couleur avec laquelle sera colorée la tournée sur la carte.
+     */
+    private String couleur;
+    
+    /**
+     * Constructeur de la classe tournée
+     * @param uneTournee
+     * @param uneCouleur 
+     */
+    public VueTournee(Tournee uneTournee, String uneCouleur) {
+        tourneeModel = uneTournee;
+        couleur = uneCouleur;
     }
     
     public boolean clicSurMoi(Point p) {

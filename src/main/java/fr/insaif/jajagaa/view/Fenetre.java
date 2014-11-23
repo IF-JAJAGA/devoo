@@ -7,11 +7,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 
 /**
- * Example class of what could be in the {@link fr.insaif.jajagaa.view} package
+ * Classe qui fait l'interface avec le controleur et qui implémente tous les écouteurs.
+ * @author alicia
  */
 public class Fenetre {
 	private JFrame fenetre;
-	private VuePlan vuePlan = VuePlan.getInstance();
+	private VuePlan vuePlan = new VuePlan();
 
 	
     public Fenetre(){

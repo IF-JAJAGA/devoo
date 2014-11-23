@@ -1,24 +1,59 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.insaif.jajagaa.view;
 
 import java.awt.Point;
 
 import javax.swing.JPanel;
 
+import fr.insaif.jajagaa.model.Troncon;
+
+
 /**
- *
+ * Classe qui implémente la vue d'un tronçon.
  * @author alicia
  */
 public class VueTroncon extends JPanel implements VueElement{
 
     /**
-     * Creates new form VueTroncon
+     * Troncon à partir duquel la VueTroncon est implémentée.
      */
-    public VueTroncon() {
-        initComponents();
+    private Troncon tronconModel;
+    /**
+     * Coordonnée X du noeud d'origine du tronçon.
+     */
+    private int origViewX;
+    /**
+     * Coordonnée Y du noeud d'origine du tronçon.
+     */
+    private int origViewY;
+    /**
+     * Coordonnée X du noeud de destination du tronçon.
+     */
+    private int destViewX;
+    /**
+     * Coordonnée Y du noeud de destination du tronçon.
+     */
+    private int destViewY;
+    /**
+     * Coefficient de conversion entre les coordonnées du modèle et la vue. 
+     */
+    private int conv;
+    /**
+     * Vitesse à laquelle on peut rouler sur le tronconModel.
+     */
+    private float vitesse;
+    
+    
+    /**
+     * Constructeur de la classe VueTroncon.
+     * @param unTroncon 
+     */
+    public VueTroncon(Troncon unTroncon) {
+        tronconModel = unTroncon;
+        origViewX = unTroncon.getOrigine().getX()*conv;
+        origViewY = unTroncon.getOrigine().getY()*conv;
+        destViewX = unTroncon.getDestination().getX()*conv;
+        destViewY = unTroncon.getDestination().getY()*conv;
+        vitesse = unTroncon.getVitesse();
     }
     
     public boolean clicSurMoi(Point p) {
