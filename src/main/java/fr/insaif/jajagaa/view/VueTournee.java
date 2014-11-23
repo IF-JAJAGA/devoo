@@ -16,11 +16,11 @@ public class VueTournee extends JPanel implements VueElement{
     /**
      * Tournée du modèle que VueTournee implémente.
      */
-    private Tournee tourneeModel;
+    protected Tournee tourneeModel;
     /**
      * Couleur avec laquelle sera colorée la tournée sur la carte.
      */
-    private String couleur;
+    protected String couleur;
     
     /**
      * Constructeur de la classe tournée

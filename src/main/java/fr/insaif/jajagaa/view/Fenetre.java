@@ -13,10 +13,10 @@ import javax.swing.SpringLayout;
  * @author alicia
  */
 public class Fenetre {
-	private JFrame fenetre;
-	private VuePlan vuePlan = new VuePlan();
+	protected JFrame fenetre;
+	protected VuePlan vuePlan = new VuePlan();
 	
-	private SpringLayout layout = new SpringLayout();
+	protected SpringLayout layout = new SpringLayout();
 
 	
     public Fenetre(){
