@@ -32,7 +32,7 @@ public class VueTournee extends JPanel implements VueElement{
         couleur = uneCouleur;
     }
     
-    public boolean clicSurMoi(Point p) {
+    public boolean changementSelection(Point p) {
 		// TODO Auto-generated method stub
 		return false;
 	}

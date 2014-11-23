@@ -3,6 +3,8 @@ package fr.insaif.jajagaa.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 
@@ -23,19 +25,6 @@ public class VuePlan extends JPanel{
     private final int XVille = 1000;
     private final int YVille = 700;
     
-    
-    public void quiEstClique(Point locationOnScreen) {
-    	for(VueNoeud vN : noeuds){
-    		if(vN.clicSurMoi(locationOnScreen)){
-    			System.out.println("Noeud " + vN.getNoeudModele().getId() + " : touché coulé !");
-    			return;
-    		}
-    		else {
-    			System.out.println("Noeud " + vN.getNoeudModele().getId() + " : raté !");
-    		}
-    	}
-	}
-
 	@Override
 	public void paintComponent(Graphics g) {
 		/* methode appelee a chaque fois que le dessin doit etre redessine
@@ -48,9 +37,8 @@ public class VuePlan extends JPanel{
 			vN.setVueY(this.getY() + vN.getNoeudModele().getYMetre()*this.getHeight() / YVille);
 			
 			g.setColor(vN.getCouleur());
-			g.fillOval(vN.getVueX(), vN.getVueY(), VueNoeud.RAYON, VueNoeud.RAYON);
+			g.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
 		}
-		System.out.println("paintComponent : " + this.getHeight() + " : " + this.getWidth());
 
 	}
 //    /**
@@ -79,6 +67,16 @@ public class VuePlan extends JPanel{
     	
     	//Pour l'instant ici
     	noeuds.add(new VueNoeud(new Noeud(0, 200, 200), Color.BLUE));
+    	noeuds.add(new VueNoeud(new Noeud(1, 0, 0), Color.GREEN));
+    	
+    	this.addMouseListener(new MouseAdapter() {
+    		@Override
+    		public void mouseClicked(MouseEvent e) {
+    			super.mouseClicked(e);
+    			quelquUnEstClique(e.getPoint());
+    		}
+		});
+    	this.paint(getGraphics());
     }
     
     private void initComponents() {
@@ -96,4 +94,12 @@ public class VuePlan extends JPanel{
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    
+    private void quelquUnEstClique(Point locationOnPanel) {
+    	boolean rePaint = false;
+    	for(VueNoeud vN : noeuds){
+    		if(vN.changementSelection(locationOnPanel)) 	rePaint = true;
+    	}
+    	if(rePaint)		repaint();
+	}
 }

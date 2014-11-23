@@ -1,7 +1,9 @@
 package fr.insaif.jajagaa.view;
 
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Point;
+import java.io.ObjectInputStream.GetField;
 
 import javax.swing.JPanel;
 
@@ -13,7 +15,9 @@ import fr.insaif.jajagaa.model.Noeud;
  * @author alicia
  */
 public class VueNoeud extends JPanel implements VueElement {
-	public static final int RAYON = 20;		//Pour l'instant
+	public static final int DIAMETRE = 20;		//Pour l'instant
+    private static int conv;
+
     
     /**
      * Référence vers le noeud correspondant dans le package Modele
@@ -35,7 +39,11 @@ public class VueNoeud extends JPanel implements VueElement {
      * Couleur du noeud si c'est un point de livraison. 
      */
     private Color couleur;
-    private static int conv;
+    /**
+     * Booléen si le noeud est sélectionné par un clic de souris ou pas.
+     * Permet de définir la couleur dans l'affichage.
+     */
+    private boolean estSelectionne;
     
     //TODO : enum si le noeud est un point de livraison
     
@@ -77,6 +85,9 @@ public class VueNoeud extends JPanel implements VueElement {
 
 
 	public Color getCouleur() {
+		if(estSelectionne){
+			return Color.RED;
+		}
 		return couleur;
 	}
 
@@ -85,15 +96,22 @@ public class VueNoeud extends JPanel implements VueElement {
 		this.couleur = couleur;
 	}
 
-
-	public boolean clicSurMoi(Point p) {
+	public boolean changementSelection(Point p) {
 		//On calcule la distance de p au centre du noeud et on compare au rayon.
 		int d = (int) Math.sqrt(
-							Math.pow(Math.abs(p.x - (vueX+RAYON/2)),2) +
-							Math.pow(Math.abs(p.y - (vueY+RAYON/2)),2)
+							Math.pow(Math.abs(p.x - (vueX)),2) +
+							Math.pow(Math.abs(p.y - (vueY)),2)
 							);
-		System.out.println(p.x + " ; " + (vueX+RAYON/2) + " ; " + p.y + " ; " + (vueY+RAYON/2));
-		return d<RAYON;
+		
+		if(d<DIAMETRE/2){
+			//L'élément est sélectionné.
+			if(estSelectionne)	return false;
+			return estSelectionne = true;
+		}
+		//L'élément n'est pas sélectionné
+		if(!estSelectionne)		return false;
+		estSelectionne = false;
+		return true;
 	}
 
     /**

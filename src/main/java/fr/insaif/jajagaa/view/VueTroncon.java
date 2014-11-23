@@ -56,7 +56,7 @@ public class VueTroncon extends JPanel implements VueElement{
         vitesse = unTroncon.getVitesse();
     }
     
-    public boolean clicSurMoi(Point p) {
+    public boolean changementSelection(Point p) {
 		// TODO Auto-generated method stub
 		return false;
 	}

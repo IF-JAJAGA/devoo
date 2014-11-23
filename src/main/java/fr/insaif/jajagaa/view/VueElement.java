@@ -11,6 +11,10 @@ import java.awt.Point;
  * @author alicia
  */
 public interface VueElement {
-	public boolean clicSurMoi(Point p);
+	/*
+	 * Calcule si l'élément est sélectionné par le clic au point p.
+	 * @return : vrai si il y a un changement de sélection.
+	 */
+	public boolean changementSelection(Point p);
     
 }
