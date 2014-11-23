@@ -8,14 +8,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SpringLayout;
 
 /**
  * Classe qui fait l'interface avec le controleur et qui implémente tous les écouteurs.
  * @author alicia
  */
 public class Fenetre {
-	private JFrame fenetre;
-	private VuePlan vuePlan = new VuePlan();
+	protected JFrame fenetre;
+	protected VuePlan vuePlan = new VuePlan();
+	
+	protected SpringLayout layout = new SpringLayout();
 	private JPanel listeNoeuds = new JPanel();
 	
 	private JSplitPane split;

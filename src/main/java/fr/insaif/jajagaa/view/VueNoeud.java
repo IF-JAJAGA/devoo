@@ -6,6 +6,8 @@ import java.awt.Point;
 import javax.swing.JPanel;
 
 import fr.insaif.jajagaa.model.Noeud;
+import java.awt.Graphics;
+import java.util.Date;
 
 /**
  * Classe Vue qui correspond à un noeud dans le modèle.
@@ -13,41 +15,50 @@ import fr.insaif.jajagaa.model.Noeud;
  * @author alicia
  */
 public class VueNoeud extends JPanel implements VueElement {
-	public static final int DIAMETRE = 20;		//Pour l'instant
-    private static int conv;
 
-    
+    public static final int DIAMETRE = 20;		//Pour l'instant
+        
+    protected static int conv;
     /**
      * Référence vers le noeud correspondant dans le package Modele
      */
-    private Noeud noeudModele;
+    protected Noeud noeudModele;
     /**
      * Coordonnée X du noeud dans la vue.
      */
-    private int vueX;
+    protected int vueX;
     /**
      * Coordonnée Y du noeud dans la vue.
      */
-    private int vueY;
-    /**
-     * Ce booléen est vrai si le noeud est un point de livraison.
-     */
-    private boolean estPointDeLivraison;
+    protected int vueY;
     /**
      * Couleur du noeud si c'est un point de livraison. 
      */
-    private Color couleur;
+    protected Color couleur;
     /**
      * Booléen si le noeud est sélectionné par un clic de souris ou pas.
      * Permet de définir la couleur dans l'affichage.
      */
-    private boolean estSelectionne;
+    protected boolean estSelectionne;
     
     //TODO : enum si le noeud est un point de livraison
+    /**
+     * Ce booléen est vrai si le noeud est un point de livraison.
+     */
+    protected boolean estPointDeLivraison;
+    
+    /**
+     * Si le noeud est un point de livraison alors cette Date est réglée à
+     * l'heure d'arrivée prévue du camion.
+     */
+    protected Date heureLivraison;
+    
     
     /**
      * Creates new form VueNoeud
      */
+    
+    //TODO : différencier la création d'un noeud et d'un point de livraison).
     public VueNoeud(Noeud unNoeud, Color couleur) {
     	this.couleur = couleur;
         noeudModele = unNoeud;
@@ -55,63 +66,64 @@ public class VueNoeud extends JPanel implements VueElement {
         vueY = unNoeud.getY()*conv;
     }
 
+    
+    
+    
+    //GETTERS AND SETTERS ------------------------------------
+    
+    public Noeud getNoeudModele() {
+            return noeudModele;
+    }
 
-	public Noeud getNoeudModele() {
-		return noeudModele;
-	}
+    public int getVueX() {
+            return vueX;
+    }
+    
+    public void setVueX(int vueX) {
+            this.vueX = vueX;
+    }
 
+    public int getVueY() {
+            return vueY;
+    }
 
+    public void setVueY(int vueY) {
+            this.vueY = vueY;
+    }
+    
+    public Color getCouleur() {
+            if(estSelectionne){
+                    return Color.RED;
+            }
+            return couleur;
+    }
 
-	public int getVueX() {
-		return vueX;
-	}
+    public void setCouleur(Color couleur) {
+            this.couleur = couleur;
+    }
+    
+    public boolean changementSelection(Point p) {
+            //On calcule la distance de p au centre du noeud et on compare au rayon.
+            int d = (int) Math.sqrt(
+                Math.pow(Math.abs(p.x - (vueX)),2) +
+                Math.pow(Math.abs(p.y - (vueY)),2)
+            );
 
-
-	public void setVueX(int vueX) {
-		this.vueX = vueX;
-	}
-
-
-	public int getVueY() {
-		return vueY;
-	}
-
-
-	public void setVueY(int vueY) {
-		this.vueY = vueY;
-	}
-
-
-	public Color getCouleur() {
-		if(estSelectionne){
-			return Color.RED;
-		}
-		return couleur;
-	}
-
-
-	public void setCouleur(Color couleur) {
-		this.couleur = couleur;
-	}
-
-	public boolean changementSelection(Point p) {
-		//On calcule la distance de p au centre du noeud et on compare au rayon.
-		int d = (int) Math.sqrt(
-							Math.pow(Math.abs(p.x - (vueX)),2) +
-							Math.pow(Math.abs(p.y - (vueY)),2)
-							);
-		
-		if(d<DIAMETRE/2){
-			//L'élément est sélectionné.
-			if(estSelectionne)	return false;
-			return estSelectionne = true;
-		}
-		//L'élément n'est pas sélectionné
-		if(!estSelectionne)		return false;
-		estSelectionne = false;
-		return true;
-	}
-
+            if(d<DIAMETRE/2){
+                //L'élément est sélectionné.
+                if(estSelectionne){	
+                    return false;
+                }
+                return estSelectionne = true;
+            }
+            //L'élément n'est pas sélectionné
+            if(!estSelectionne){
+                return false;
+            }
+            estSelectionne = false;
+            return true;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
