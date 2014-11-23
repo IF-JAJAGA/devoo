@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -17,6 +16,8 @@ import fr.insaif.jajagaa.model.Noeud;
  * @author alicia
  */
 public class VuePlan extends JPanel{
+	private static int border = VueNoeud.DIAMETRE;
+	
     private Vector<VueNoeud> noeuds = new Vector<VueNoeud>();
     private Vector<VueTroncon> troncons = new Vector<VueTroncon>();
     private Vector<VueTournee> tournees =  new Vector<VueTournee>();
@@ -33,14 +34,15 @@ public class VuePlan extends JPanel{
 		super.paintComponent(g);
 		for(VueNoeud vN : noeuds){
 			//Règle de trois pour afficher les points.
-			vN.setVueX(this.getX() + vN.getNoeudModele().getXMetre()*this.getWidth() / XVille);
-			vN.setVueY(this.getY() + vN.getNoeudModele().getYMetre()*this.getHeight() / YVille);
+			vN.setVueX(border + this.getX() + vN.getNoeudModele().getXMetre()*(this.getWidth() - 2*border) / XVille);
+			vN.setVueY(border + this.getY() + vN.getNoeudModele().getYMetre()*(this.getHeight() - 2*border) / YVille);
 			
 			g.setColor(vN.getCouleur());
 			g.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
 		}
 
 	}
+//		TODO
 //    /**
 //     * Constructeur de la classe VuePlan
 //     */
@@ -63,11 +65,16 @@ public class VuePlan extends JPanel{
      */
     public VuePlan() {
 		setBackground(Color.GRAY);
-        //initComponents();
+        initComponents();
     	
     	//Pour l'instant ici
     	noeuds.add(new VueNoeud(new Noeud(0, 200, 200), Color.BLUE));
     	noeuds.add(new VueNoeud(new Noeud(1, 0, 0), Color.GREEN));
+    	noeuds.add(new VueNoeud(new Noeud(2, 1000, 700), Color.ORANGE));
+    	noeuds.add(new VueNoeud(new Noeud(3, 1000, 0), Color.YELLOW));
+    	noeuds.add(new VueNoeud(new Noeud(4, 0, 700), Color.BLACK));
+
+
     	
     	this.addMouseListener(new MouseAdapter() {
     		@Override

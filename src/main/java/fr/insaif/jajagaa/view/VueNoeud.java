@@ -1,9 +1,7 @@
 package fr.insaif.jajagaa.view;
 
 import java.awt.Color;
-import java.awt.Frame;
 import java.awt.Point;
-import java.io.ObjectInputStream.GetField;
 
 import javax.swing.JPanel;
 
