@@ -31,7 +31,7 @@ public class ZoneGeographiqueTest {
     }
 
     private void makeZone() {
-        this.noeuds = new ArrayList<>();
+        this.noeuds = new ArrayList<Noeud>();
 
         // Exemple de noeuds (et d'entrepôt)
         noeuds.add(new Noeud(0, 541, 12));
@@ -54,7 +54,7 @@ public class ZoneGeographiqueTest {
     public void setUp() throws Exception{
         this.makeZone();
 
-        List<Troncon> troncons = new ArrayList<>();
+        List<Troncon> troncons = new ArrayList<Troncon>();
         troncons.add(noeuds.get(0).getSortants().get(0));
         troncons.add(noeuds.get(0).getSortants().get(1));
         troncons.add(noeuds.get(1).getSortants().get(0));

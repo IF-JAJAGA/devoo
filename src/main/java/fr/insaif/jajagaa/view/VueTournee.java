@@ -1,11 +1,17 @@
 package fr.insaif.jajagaa.view;
 
 
+import fr.insaif.jajagaa.model.Chemin;
 import java.awt.Point;
 
 import javax.swing.JPanel;
 
 import fr.insaif.jajagaa.model.Tournee;
+import fr.insaif.jajagaa.model.Troncon;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Classe qui implémente la vue d'une tournée, elle même constituée de plusieurs chemins.
@@ -20,15 +26,29 @@ public class VueTournee extends JPanel implements VueElement{
     /**
      * Couleur avec laquelle sera colorée la tournée sur la carte.
      */
-    protected String couleur;
+    protected Color couleur;
+    
+    /** 
+     * Liste des tronçons qui composent la tournée 
+     */
+    protected List<VueTroncon> vTroncons = new ArrayList <VueTroncon> ();
     
     /**
      * Constructeur de la classe tournée
      * @param uneTournee
      * @param uneCouleur 
      */
-    public VueTournee(Tournee uneTournee, String uneCouleur) {
+    public VueTournee(Tournee uneTournee, Color uneCouleur) {
         tourneeModel = uneTournee;
+        Iterator<Chemin> itCh = uneTournee.getChemins().iterator();
+        while(itCh.hasNext()) {
+            Chemin ch = itCh.next();
+            Iterator<Troncon> itTo = ch.getTroncons().iterator();
+            while(itTo.hasNext()) {
+                Troncon tr = itTo.next();
+                vTroncons.add(new VueTroncon(tr));
+            }
+        }
         couleur = uneCouleur;
     }
     
@@ -37,6 +57,11 @@ public class VueTournee extends JPanel implements VueElement{
 		return false;
 	}
 
+    @Override 
+    public String toString(){
+        return "Tournée : "+ tourneeModel.toString() + "; Couleur : "+ couleur.toString() ;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

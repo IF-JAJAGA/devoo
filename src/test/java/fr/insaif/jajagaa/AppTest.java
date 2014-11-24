@@ -18,7 +18,7 @@ public class AppTest {
     @Test
     public void testSolve() {
         ZoneGeographique zone = ZoneGeographiqueTest.exampleZone();
-        List<Livraison> livraisons = new ArrayList<>();
+        List<Livraison> livraisons = new ArrayList<Livraison>();
 
     }
 }

@@ -22,7 +22,7 @@ public class TSPTest {
 
     @Before
     public void setUp() throws Exception{
-        List<Noeud> noeuds = new ArrayList<>();
+        List<Noeud> noeuds = new ArrayList<Noeud>();
 
         // Exemple de noeuds (et d'entrepôt)
         noeuds.add(new Noeud(0, 541, 12));

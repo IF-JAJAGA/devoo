@@ -1,6 +1,7 @@
 package fr.insaif.jajagaa.model;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class Tournee {
      * Le dernier chemin doit arriver à l'entrepôt.
      * La fin d'un chemin doit être le début du chemin de l'autre.
      */
-    protected List<Chemin> chemins;
+    protected List<Chemin> chemins = new ArrayList <Chemin>();
 
     public List<Livraison> livraisons;
 
@@ -40,6 +41,10 @@ public class Tournee {
     
     public List<Chemin> getChemins() {
         return chemins;
+    }
+
+    public void addChemin(Chemin chemin) {
+        chemins.add(chemin);
     }
 
     public void setChemins(List<Chemin> chemins) {
