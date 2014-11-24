@@ -34,5 +34,13 @@ public class Tournee {
      */
     protected Date jour;
 
+    public List<Chemin> getChemins() {
+        return chemins;
+    }
+
+    public void setChemins(List<Chemin> chemins) {
+        this.chemins = chemins;
+    }
+
 
 }

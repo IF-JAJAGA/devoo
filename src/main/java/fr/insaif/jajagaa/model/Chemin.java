@@ -12,4 +12,14 @@ public class Chemin {
      * Liste des troncons à emprunter (dans l'ordre) pour aller de l'origine du premier à la destination du dernier
      */
     protected List<Troncon> troncons = new ArrayList<Troncon>();
+
+    public List<Troncon> getTroncons() {
+        return troncons;
+    }
+
+    public void setTroncons(List<Troncon> troncons) {
+        this.troncons = troncons;
+    }
+    
+    
 }
