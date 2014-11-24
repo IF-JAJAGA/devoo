@@ -20,6 +20,4 @@ public class Chemin {
     public void setTroncons(List<Troncon> troncons) {
         this.troncons = troncons;
     }
-    
-    
 }

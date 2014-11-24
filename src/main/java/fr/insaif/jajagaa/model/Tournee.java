@@ -13,6 +13,7 @@ public class Tournee {
     /**
      * Zone Géographique (unique) dans laquelle se déroule la tournée. 
      */
+
     protected ZoneGeographique zone;
     /**
      * Camion qui doit exécuter la tournée et à contacter en temps réel.
@@ -29,11 +30,14 @@ public class Tournee {
      * La fin d'un chemin doit être le début du chemin de l'autre.
      */
     protected List<Chemin> chemins;
+
+    public List<Livraison> livraisons;
+
     /**
      * Jour au cours duquel se déroule la tournée (non pas l'heure, seulement la date). 
      */
     protected Date jour;
-
+    
     public List<Chemin> getChemins() {
         return chemins;
     }
@@ -41,6 +45,4 @@ public class Tournee {
     public void setChemins(List<Chemin> chemins) {
         this.chemins = chemins;
     }
-
-
 }

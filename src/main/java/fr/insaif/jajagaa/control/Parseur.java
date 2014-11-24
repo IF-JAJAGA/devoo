@@ -19,16 +19,18 @@ import java.util.List;
  * @author gustavemonod
  */
 public class Parseur {
+    /**
+     * Lit toutes les livraisons contenues dans un fichier de demande de livraisons et en renvoie une liste
+     * @param inputStream Flux à partir duquel lire les données XML
+     * @return Liste des livraisons à effectuer
+     */
     public static List<Livraison> lireLivraison(InputStream inputStream) {
-        List<Livraison> livraisonList = new ArrayList<Livraison>();
+        List<Livraison> livraisonList = new ArrayList<>();
         SAXBuilder builder = new SAXBuilder();
         try {
-            Document document = (Document) builder.build(inputStream);
+            Document document = builder.build(inputStream);
             Element journee = document.getRootElement();
-            Noeud entrepot = new Noeud(0, 0, 0); // TODO Trouver quel noeud à comme id "adresse"
-	    //Pourquoi ne pas simplement enregistrer l'info de l'adresse de l'entrepot sous forme d'un attribut (int) de zoneGeographique ? 
-	    //Puis se servir de cette info plus tard ?
-	    //int entrepot = journee.getChild("Entrepot").getAttributeValue("adresse");
+            int entrepotIndice = Integer.parseInt(journee.getChild("Entrepot").getAttributeValue("adresse"));
 
             @SuppressWarnings("unchecked")
             List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");
@@ -59,7 +61,13 @@ public class Parseur {
 
         return livraisonList;
     }
-	
+
+    // TODO tester cette methode dans {@link fr.insaif.jajagaa.control.ParseurTest}
+    /**
+     * TODO
+     * @param inputStream TODO
+     * @return TODO
+     */
     public static List<Noeud> lirePlan(InputStream inputStream) {
         List<Noeud> plan = new ArrayList<Noeud>();
         SAXBuilder builder = new SAXBuilder();
@@ -69,24 +77,28 @@ public class Parseur {
 
             @SuppressWarnings("unchecked")
             List<Element> noeuds = reseau.getChildren("Noeud");
-	    //Création des noeuds contenus dans le fichier XML
-	    //Et ajout de ceux-ci dans la liste plan
-            for (Element noeudXml : noeuds) {
-                Noeud noeud = new Noeud(noeudXml.getAttributeValue("id"),
-                        noeudXml.getAttributeValue("x"),
-			noeudXml.getAttributeValue("y"));
+            //Création des noeuds contenus dans le fichier XML
+            //Et ajout de ceux-ci dans la liste plan
+                for (Element noeudXml : noeuds) {
+                    Noeud noeud = new Noeud(Integer.parseInt(noeudXml.getAttributeValue("id")),
+                            Integer.parseInt(noeudXml.getAttributeValue("x")),
+                            Integer.parseInt(noeudXml.getAttributeValue("y")));
 
+                    plan.add(noeud);
+                }
+
+            //Ajout des tronçons sortants de chaque noeud
+            for (Element noeudXml : noeuds) {
                 @SuppressWarnings("unchecked")
-		plan.add(noeud);
+                List<Element> troncons = noeudXml.getChildren("LeTronconSortant");
+                for (Element tronconXml : troncons) {
+                    int id = Integer.parseInt(noeudXml.getAttributeValue("id"));
+                    int idNoeudDestination = Integer.parseInt(tronconXml.getAttributeValue("idNoeudDestination"));
+                    float longeur = Float.parseFloat(tronconXml.getAttributeValue("longueur"));
+                    float vitesse = Float.parseFloat(tronconXml.getAttributeValue("vitesse"));
+                    plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse);
+                }
             }
-		
-	    //Ajout des tronçons sortants de chaque noeud
-	    for (Element noeudXml : noeuds) {
-		list Element troncons = noeudXml.getChildren("LeTronconSortant");
-		for (Element tronconXml : troncons) {
-			plan.get(noeudXml.getAttributeValue("id")).addSortant(plan.get(tronconXml.getAttributeValue("idNoeudDestination")),tronconXml.getAttributeValue("longueur"),tronconXml.getAttributeValue("vitesse")); 
-		}
-	    }	
 
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");
