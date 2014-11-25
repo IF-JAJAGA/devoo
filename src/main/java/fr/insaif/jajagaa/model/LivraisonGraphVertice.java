@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class LivraisonGraphVertice {
     
+    protected boolean estEntrepot = false;
+    
     protected Noeud noeud;
     
     protected List<Chemin> entrants;
@@ -22,4 +24,22 @@ public class LivraisonGraphVertice {
     public LivraisonGraphVertice(Noeud noeud) {
         this.noeud = noeud;
     }
+    
+    public LivraisonGraphVertice(Noeud noeud, boolean estEntrepot) {
+        this.noeud = noeud;
+        this.estEntrepot = estEntrepot;
+    }
+    
+    public int getId() {
+        return this.noeud.getId();
+    }
+
+    public List<Chemin> getEntrants() {
+        return entrants;
+    }
+
+    public List<Chemin> getSortants() {
+        return sortants;
+    }
+    
 }

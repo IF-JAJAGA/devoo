@@ -28,13 +28,15 @@ public class LivraisonGraph implements Graph {
      * Liste des plus courts chemins
      */
     protected List<Chemin> chemins;
+    
+    protected List<LivraisonGraphVertice> noeuds;
 
     public LivraisonGraph(List<Chemin> chemins) {
         this.chemins = chemins;
     }
 
-    public List<Chemin> getChemins() {
-        return chemins;
+    public List<LivraisonGraphVertice> getNoeuds() {
+        return this.noeuds;
     }
 
     public void setChemins(List<Chemin> chemins) {
@@ -47,9 +49,9 @@ public class LivraisonGraph implements Graph {
      * Met à jour les champs calculés
      */
     public void update() {
-        for (Noeud noeud : this.getNoeuds()) {
-            for (Troncon troncon : noeud.getSortants()) {
-                int cost = troncon.getCost();
+        for (LivraisonGraphVertice noeud : this.getNoeuds()) {
+            for (Chemin chemin : noeud.getSortants()) {
+                int cost = chemin.getCost();
                 this.maxArcCost = cost > this.maxArcCost ? cost : this.maxArcCost;
                 this.minArcCost = cost < this.minArcCost ? cost : this.minArcCost;
             }
@@ -87,7 +89,7 @@ public class LivraisonGraph implements Graph {
         for (int i = 0; i < size; ++i) {
             int successors[] = this.getSucc(i);
             int k = 0;
-            Noeud noeud = this.getNoeuds().get(i);
+            LivraisonGraphVertice noeud = this.getNoeuds().get(i);
             for (int j = 0; j < size; ++j) {
                 if (k < successors.length && j == successors[k]) {
                     costs[i][j] = noeud.getSortants().get(k).getCost();
@@ -107,7 +109,7 @@ public class LivraisonGraph implements Graph {
      * @throws ArrayIndexOutOfBoundsException
      */
     public int[] getSucc(int i) throws ArrayIndexOutOfBoundsException {
-        List<Troncon> sortants = this.getNoeuds().get(i).getSortants();
+        List<Chemin> sortants = this.getNoeuds().get(i).getSortants();
         int size = sortants.size();
         int succ[] = new int[size];
         for (int k = 0; k < size; ++k) {

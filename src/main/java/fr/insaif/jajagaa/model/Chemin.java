@@ -13,9 +13,9 @@ public class Chemin {
      */
     protected List<Troncon> troncons = new ArrayList<Troncon>();
     
-    protected LivraisonGraphVertice depart;
+    protected LivraisonGraphVertice origine;
     
-    protected LivraisonGraphVertice arrivee;
+    protected LivraisonGraphVertice destination;
 
     public Chemin(List<Troncon> troncons) {
         this.troncons = troncons;
@@ -29,8 +29,16 @@ public class Chemin {
      * Renvoie le nœud dont part ce chemin (origine du premier troncon)
      * @return Le nœud dont part ce chemin (origine du premier troncon)
      */
-    public Noeud getOrigine() {
-        return this.getTroncons().get(0).getOrigine();
+    public LivraisonGraphVertice getOrigine() {
+        return this.origine;
+    }
+    
+    /**
+     * Renvoie le nœud où arrive ce chemin (destination du dernier troncon)
+     * @return Le nœud où arrive ce chemin (destination du dernier troncon)
+     */
+    public LivraisonGraphVertice getDestination() {
+        return this.destination;
     }
 
     public List<Troncon> getTroncons() {
