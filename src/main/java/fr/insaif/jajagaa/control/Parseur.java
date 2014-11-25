@@ -79,13 +79,13 @@ public class Parseur {
             List<Element> noeuds = reseau.getChildren("Noeud");
             //Création des noeuds contenus dans le fichier XML
             //Et ajout de ceux-ci dans la liste plan
-                for (Element noeudXml : noeuds) {
-                    Noeud noeud = new Noeud(Integer.parseInt(noeudXml.getAttributeValue("id")),
-                            Integer.parseInt(noeudXml.getAttributeValue("x")),
-                            Integer.parseInt(noeudXml.getAttributeValue("y")));
+            for (Element noeudXml : noeuds) {
+                Noeud noeud = new Noeud(Integer.parseInt(noeudXml.getAttributeValue("id")),
+                        Integer.parseInt(noeudXml.getAttributeValue("x")),
+                        Integer.parseInt(noeudXml.getAttributeValue("y")));
 
-                    plan.add(noeud);
-                }
+                plan.add(noeud);
+            }
 
             //Ajout des tronçons sortants de chaque noeud
             for (Element noeudXml : noeuds) {

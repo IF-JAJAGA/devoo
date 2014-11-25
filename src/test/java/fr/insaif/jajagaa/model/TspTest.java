@@ -1,7 +1,9 @@
-package fr.insaif.jajagaa.model.tsp;
+package fr.insaif.jajagaa.model;
 
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.ZoneGeographique;
+import fr.insaif.jajagaa.model.tsp.SolutionState;
+import fr.insaif.jajagaa.model.tsp.TSP;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +18,7 @@ import static org.junit.Assert.fail;
  * Classe testant {@link fr.insaif.jajagaa.model.tsp.TSP#solve(int, int)} avec une ZoneGeographique
  * @author gustavemonod
  */
-public class TSPTest {
+public class TspTest {
     private ZoneGeographique zone;
     public static final int MAX_SEC = 200;
 
