@@ -31,7 +31,7 @@ public class Livraison {
     protected PlageHoraire horaireDeroulement;
     
     /**
-     * Heure exacte de la livraison (établie une fois la tournée calculée)
+     * Heure exacte (prévue) de la livraison (établie une fois la tournée calculée)
      */
     protected Date heureLivraison;
 
