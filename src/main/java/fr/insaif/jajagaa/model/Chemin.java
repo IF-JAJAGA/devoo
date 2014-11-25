@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Chemin {
     /**
-     * Liste des troncons à emprunter (dans l'ordre) pour aller de l'origine du premier à la destination du dernier
+     * Liste des vueTroncons à emprunter (dans l'ordre) pour aller de l'origine du premier à la destination du dernier
      */
     protected List<Troncon> troncons = new ArrayList<Troncon>();
 
@@ -20,6 +20,14 @@ public class Chemin {
 
     public void addTroncon(Troncon unTroncon){
         troncons.add(unTroncon);
+    }
+
+    /**
+     * Renvoie le nœud dont part ce chemin (origine du premier troncon)
+     * @return Le nœud dont part ce chemin (origine du premier troncon)
+     */
+    public Noeud getOrigine() {
+        return this.getTroncons().get(0).getOrigine();
     }
 
     public List<Troncon> getTroncons() {

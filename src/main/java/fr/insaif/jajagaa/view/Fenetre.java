@@ -30,7 +30,7 @@ public class Fenetre {
     	
     	fenetre.getContentPane().add(vuePlan);
     	
-    	listeNoeuds.add(new JLabel("Liste des noeuds ici"));
+    	listeNoeuds.add(new JLabel("Liste des vueNoeuds ici"));
     	
     	split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, vuePlan, listeNoeuds);
          

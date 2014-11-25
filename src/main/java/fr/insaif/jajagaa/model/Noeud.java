@@ -10,12 +10,12 @@ import java.util.List;
  */
 public class Noeud {
     /**
-     * Liste des troncons qui ont ce noeud comme destination
+     * Liste des vueTroncons qui ont ce noeud comme destination
      */
     protected List<Troncon> entrants;
 
     /**
-     * Liste des troncons qui ont ce noeud comme origine
+     * Liste des vueTroncons qui ont ce noeud comme origine
      */
     protected List<Troncon> sortants;
 
@@ -58,32 +58,32 @@ public class Noeud {
     }
 
     /**
-     * Liste des troncons qui ont ce noeud comme destination
-     * @return Liste des troncons qui ont ce noeud comme destination
+     * Liste des vueTroncons qui ont ce noeud comme destination
+     * @return Liste des vueTroncons qui ont ce noeud comme destination
      */
     public List<Troncon> getEntrants() {
         return entrants;
     }
 
     /**
-     * Modifie la liste des troncons qui ont ce noeud comme destination
-     * @param entrants Liste des troncons qui ont ce noeud comme origine
+     * Modifie la liste des vueTroncons qui ont ce noeud comme destination
+     * @param entrants Liste des vueTroncons qui ont ce noeud comme origine
      */
     public void setEntrants(List<Troncon> entrants) {
         this.entrants = entrants;
     }
 
     /**
-     * Liste des troncons qui ont ce noeud comme origine
-     * @return liste des troncons qui ont ce noeud comme origine
+     * Liste des vueTroncons qui ont ce noeud comme origine
+     * @return liste des vueTroncons qui ont ce noeud comme origine
      */
     public List<Troncon> getSortants() {
         return sortants;
     }
 
     /**
-     * Modifie la liste des troncons qui ont ce noeud comme origine
-     * @param sortants Liste des troncons qui ont ce noeud comme origine
+     * Modifie la liste des vueTroncons qui ont ce noeud comme origine
+     * @param sortants Liste des vueTroncons qui ont ce noeud comme origine
      */
     public void setSortants(List<Troncon> sortants) {
         this.sortants = sortants;

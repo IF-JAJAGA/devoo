@@ -26,7 +26,7 @@ public class TspTest {
     public void setUp() throws Exception{
         List<Noeud> noeuds = new ArrayList<Noeud>();
 
-        // Exemple de noeuds (et d'entrepôt)
+        // Exemple de vueNoeuds (et d'entrepôt)
         noeuds.add(new Noeud(0, 541, 12));
         noeuds.add(new Noeud(1, 321, 11));
         Noeud entrepot = new Noeud(2, 42, 144);
