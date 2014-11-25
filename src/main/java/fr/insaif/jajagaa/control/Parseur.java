@@ -25,7 +25,7 @@ public class Parseur {
      * @return Liste des livraisons à effectuer
      */
     public static List<Livraison> lireLivraison(InputStream inputStream) {
-        List<Livraison> livraisonList = new ArrayList<>();
+        List<Livraison> livraisonList = new ArrayList<Livraison>();
         SAXBuilder builder = new SAXBuilder();
         try {
             Document document = builder.build(inputStream);

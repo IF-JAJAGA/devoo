@@ -16,8 +16,8 @@ import java.util.Date;
  */
 public class VueNoeud extends JPanel implements VueElement {
 
-    public static final int DIAMETRE = 20;		//Pour l'instant
-        
+    public static final int DIAMETRE = 15;		//Pour l'instant
+    public static final int DIAMETRE_LIVRAISON = 20;    
     protected static int conv;
     /**
      * Référence vers le noeud correspondant dans le package Modele
@@ -45,7 +45,7 @@ public class VueNoeud extends JPanel implements VueElement {
     /**
      * Ce booléen est vrai si le noeud est un point de livraison.
      */
-    protected boolean estPointDeLivraison;
+    protected boolean estPointDeLivraison = false;
     
     /**
      * Si le noeud est un point de livraison alors cette Date est réglée à
@@ -101,6 +101,15 @@ public class VueNoeud extends JPanel implements VueElement {
     public void setCouleur(Color couleur) {
             this.couleur = couleur;
     }
+
+    public boolean isEstPointDeLivraison() {
+        return estPointDeLivraison;
+    }
+
+    public void setEstPointDeLivraison(boolean estPointDeLivraison) {
+        this.estPointDeLivraison = estPointDeLivraison;
+    }
+    
     
     public boolean changementSelection(Point p) {
             //On calcule la distance de p au centre du noeud et on compare au rayon.
@@ -108,20 +117,21 @@ public class VueNoeud extends JPanel implements VueElement {
                 Math.pow(Math.abs(p.x - (vueX)),2) +
                 Math.pow(Math.abs(p.y - (vueY)),2)
             );
-
+            System.out.println("Inside VN" + estSelectionne);
             if(d<DIAMETRE/2){
-                //L'élément est sélectionné.
-                if(estSelectionne){	
+                //On a cliqué sur le noeud.
+                estSelectionne = ! (estSelectionne);
+                return true;
+            }
+            //On a cliqué en dehors du noeud.
+            else {
+                if(!estSelectionne){
                     return false;
                 }
-                return estSelectionne = true;
+                estSelectionne = false;
+                return true;
+                
             }
-            //L'élément n'est pas sélectionné
-            if(!estSelectionne){
-                return false;
-            }
-            estSelectionne = false;
-            return true;
     }
     
     /**

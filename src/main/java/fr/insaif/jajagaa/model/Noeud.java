@@ -45,8 +45,8 @@ public class Noeud {
         this.id = id;
         this.setXMetre(xMetre);
         this.setYMetre(yMetre);
-        this.sortants = new ArrayList<>();
-        this.entrants = new ArrayList<>();
+        this.sortants = new ArrayList<Troncon>();
+        this.entrants = new ArrayList<Troncon>();
     }
 
     /**

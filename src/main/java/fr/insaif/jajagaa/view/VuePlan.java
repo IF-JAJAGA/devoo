@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.view;
 
+import fr.insaif.jajagaa.model.Chemin;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -10,38 +11,103 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.Tournee;
+import fr.insaif.jajagaa.model.Troncon;
+import java.awt.BasicStroke;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * La classe représente la Vue du plan et est composée de tous les tronçons, les noeuds et les tournées du modèle.
  * @author alicia
  */
 public class VuePlan extends JPanel{
-	private static int border = VueNoeud.DIAMETRE;
+    protected static int border = VueNoeud.DIAMETRE;
 	
-    private Vector<VueNoeud> noeuds = new Vector<VueNoeud>();
-    private Vector<VueTroncon> troncons = new Vector<VueTroncon>();
-    private Vector<VueTournee> tournees =  new Vector<VueTournee>();
+    protected Vector<VueNoeud> noeuds = new Vector<VueNoeud>();
+    protected Vector<VueTroncon> troncons = new Vector<VueTroncon>();
+    protected Vector<VueTournee> tournees =  new Vector<VueTournee>();
     
     //Valeurs en mètres avant que le chargement soit implémenté.
-    private final int XVille = 1000;
-    private final int YVille = 700;
+    protected final int XVille = 1000;
+    protected final int YVille = 700;
     
 	@Override
-	public void paintComponent(Graphics g) {
-		/* methode appelee a chaque fois que le dessin doit etre redessine
-		 * C'est ici que l'on peint tous les composants
-		 */
-		super.paintComponent(g);
-		for(VueNoeud vN : noeuds){
-			//Règle de trois pour afficher les points.
-			vN.setVueX(border + this.getX() + vN.getNoeudModele().getXMetre()*(this.getWidth() - 2*border) / XVille);
-			vN.setVueY(border + this.getY() + vN.getNoeudModele().getYMetre()*(this.getHeight() - 2*border) / YVille);
-			
-			g.setColor(vN.getCouleur());
-			g.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
-		}
+    public void paintComponent(Graphics g) {
+        /* methode appelee a chaque fois que le dessin doit etre redessine
+         * C'est ici que l'on peint tous les composants
+         */
+        super.paintComponent(g);
+        
+        Iterator<VueTroncon> itTroncon = troncons.iterator();
+        Iterator<VueTournee> itTournee = tournees.iterator();
+        Iterator<VueNoeud> itNoeud = noeuds.iterator();
+        
+        //On utilise un type différent pour avoir plus de possibilités et l'accès à de nouvelles méthodes
+        //Les méthodes qu'on utilisait avec g continuent à fonctionner.
+        Graphics2D g2 = (Graphics2D) g;
+        
+        // Dessin des tronçons
+        while(itTroncon.hasNext()){
+            VueTroncon vTr = itTroncon.next();                    
+            //Règle de trois pour afficher les points.
+            vTr.setOrigViewX(border + this.getX() + vTr.getTronconModel().getOrigine().getXMetre()*(this.getWidth() - 2*border) / XVille);
+            vTr.setOrigViewY(border + this.getY() + vTr.getTronconModel().getOrigine().getYMetre()*(this.getHeight() -2*border) / YVille);
+            vTr.setDestViewX(border + this.getX() + vTr.getTronconModel().getDestination().getXMetre()*(this.getWidth() - 2*border) / XVille);
+            vTr.setDestViewY(border + this.getY() + vTr.getTronconModel().getDestination().getYMetre()*(this.getHeight() -2*border) / YVille);
 
-	}
+            //g2.setColor(vTr.getCouleur());
+            g2.setStroke(new BasicStroke(3));
+            g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
+        }
+        // Dessin des noeuds
+        while(itNoeud.hasNext()){
+                VueNoeud vN = itNoeud.next();
+                //Règle de trois pour afficher les points.
+                vN.setVueX(border + this.getX() + vN.getNoeudModele().getXMetre()*(this.getWidth() - 2*border) / XVille);
+                vN.setVueY(border + this.getY() + vN.getNoeudModele().getYMetre()*(this.getHeight() - 2*border) / YVille);
+
+                g2.setColor(vN.getCouleur());
+                if (!vN.estPointDeLivraison)
+                {
+                    System.out.println("Here");
+                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
+                }
+                else {
+                    System.out.println("There");
+                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE_LIVRAISON/2, vN.getVueY()-VueNoeud.DIAMETRE_LIVRAISON/2, VueNoeud.DIAMETRE_LIVRAISON, VueNoeud.DIAMETRE_LIVRAISON);
+                }
+        }
+        
+       
+        while(itTournee.hasNext()){
+            VueTournee vTo = itTournee.next();
+            
+            System.out.println((vTo.couleur).toString());
+            System.out.println(vTo);
+            
+            Iterator itTr = vTo.vTroncons.iterator();
+            while(itTr.hasNext()){
+                
+                VueTroncon vTr = (VueTroncon) itTr.next();
+
+                    //Règle de trois pour afficher les points.
+                    vTr.setOrigViewX(border + this.getX() + vTr.getTronconModel().getOrigine().getXMetre()*(this.getWidth() - 2*border) / XVille);
+                    vTr.setOrigViewY(border + this.getY() + vTr.getTronconModel().getOrigine().getYMetre()*(this.getHeight() -2*border) / YVille);
+                    vTr.setDestViewX(border + this.getX() + vTr.getTronconModel().getDestination().getXMetre()*(this.getWidth() - 2*border) / XVille);
+                    vTr.setDestViewY(border + this.getY() + vTr.getTronconModel().getDestination().getYMetre()*(this.getHeight() -2*border) / YVille);
+
+                    //g2.setColor(vTr.getCouleur());
+                    g2.setStroke(new BasicStroke(5));
+                    g2.setColor(Color.BLUE);
+                    g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
+            }
+        }
+        
+
+    }
 //		TODO
 //    /**
 //     * Constructeur de la classe VuePlan
@@ -68,11 +134,35 @@ public class VuePlan extends JPanel{
         initComponents();
     	
     	//Pour l'instant ici
-    	noeuds.add(new VueNoeud(new Noeud(0, 200, 200), Color.BLUE));
+        VueNoeud vn1 = new VueNoeud(new Noeud(0, 200, 200), Color.BLUE);
+        vn1.setEstPointDeLivraison(true);
+    	noeuds.add(vn1);
     	noeuds.add(new VueNoeud(new Noeud(1, 0, 0), Color.GREEN));
     	noeuds.add(new VueNoeud(new Noeud(2, 1000, 700), Color.ORANGE));
     	noeuds.add(new VueNoeud(new Noeud(3, 1000, 0), Color.YELLOW));
     	noeuds.add(new VueNoeud(new Noeud(4, 0, 700), Color.BLACK));
+        Troncon t1 = new Troncon(new Noeud(0,200,200), new Noeud(2,1000,700), 400,4);
+        troncons.add(new VueTroncon(t1));
+        Troncon t2 = new Troncon(new Noeud(1,0,0), new Noeud(4,0,700), 400,4);
+        troncons.add(new VueTroncon(t2));
+        Troncon t3 = new Troncon(new Noeud(0,200,200), new Noeud(3,1000,0), 400,4);
+        troncons.add(new VueTroncon(t3));
+        Troncon t4 = new Troncon(new Noeud(4,0,700), new Noeud(2,1000,700), 400,4);
+        troncons.add(new VueTroncon(t4));
+        Troncon t5 = new Troncon(new Noeud(1,0,0), new Noeud(3,1000,0), 400,4);
+        troncons.add(new VueTroncon(t5));
+        Troncon t6 = new Troncon(new Noeud(2,1000,700), new Noeud(3,1000,0), 400,4);
+        troncons.add(new VueTroncon(t6));
+        
+        List <Troncon> tronconsTournee = new ArrayList<Troncon>();
+        tronconsTournee.add(t1);
+        tronconsTournee.add(t6);
+        Chemin chemin = new Chemin(tronconsTournee);
+        Tournee tourneeModele = new Tournee();
+        tourneeModele.addChemin(chemin);
+        VueTournee vT = new VueTournee(tourneeModele, Color.BLUE);
+        tournees.add(vT);
+
 
 
     	
@@ -104,9 +194,15 @@ public class VuePlan extends JPanel{
     
     private void quelquUnEstClique(Point locationOnPanel) {
     	boolean rePaint = false;
-    	for(VueNoeud vN : noeuds){
-    		if(vN.changementSelection(locationOnPanel)) 	rePaint = true;
-    	}
-    	if(rePaint)		repaint();
+        Iterator<VueNoeud> itVN = noeuds.iterator();
+    	while(itVN.hasNext()){
+            VueNoeud vN = itVN.next();
+            if(vN.changementSelection(locationOnPanel)) { 	
+                rePaint = true;
+            }
+        }
+    	if(rePaint){
+            repaint();
+        }
 	}
 }
