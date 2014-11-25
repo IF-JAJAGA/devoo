@@ -13,13 +13,12 @@ public class Chemin {
      */
     protected List<Troncon> troncons = new ArrayList<Troncon>();
 
-    public Chemin(List<Troncon> desTroncons)
-    {
-        troncons = desTroncons;
+    public Chemin(List<Troncon> troncons) {
+        this.troncons = troncons;
     }
 
     public void addTroncon(Troncon unTroncon){
-        troncons.add(unTroncon);
+        this.troncons.add(unTroncon);
     }
 
     /**

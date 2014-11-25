@@ -69,7 +69,7 @@ public class Parseur {
      * @param inputStream TODO
      * @return TODO
      */
-    public static List<Noeud> lirePlan(InputStream inputStream) {
+    public static ZoneGeographique lirePlan(InputStream inputStream) {
         List<Noeud> plan = new ArrayList<Noeud>();
         SAXBuilder builder = new SAXBuilder();
         try {
@@ -112,6 +112,7 @@ public class Parseur {
             System.exit(502);
         }
 
-        return plan;
+//        return plan;
+        return null; // TODO
     }
 }

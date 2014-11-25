@@ -24,11 +24,6 @@ public class Livraison {
      * Formatter/parser de dates
      */
     protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:m:s");
-
-    /**
-     * Plage horaire pendant laquelle devrait se dérouler la livraison
-     */
-    protected PlageHoraire horaireDeroulement;
     
     /**
      * Heure exacte (prévue) de la livraison (établie une fois la tournée calculée)
@@ -37,28 +32,11 @@ public class Livraison {
 
     /**
      * Constructeur à partir de l'identifiant et de la plage horaire de déroulement souhaitée
-     * @param horaireDeroulement Plage horaire pendant laquelle devrait se dérouler la livraison
      */
-    public Livraison(Noeud pointLivraison, PlageHoraire horaireDeroulement) {
+    public Livraison(Noeud pointLivraison) {
         this.setPointLivraison(pointLivraison);
-        this.setHoraireDeroulement(horaireDeroulement);
     }
 
-    /**
-     * @return Plage horaire pendant laquelle devrait se dérouler la livraison
-     */
-    public PlageHoraire getHoraireDeroulement() {
-        return horaireDeroulement;
-    }
-
-    /**
-     * Modifie la plage horaire pendant laquelle devrait se dérouler la livraison
-     * @param horaireDeroulement Nouvelle plage horaire pendant laquelle devrait se dérouler la livraison
-     */
-    public void setHoraireDeroulement(PlageHoraire horaireDeroulement) {
-        this.horaireDeroulement = horaireDeroulement;
-    }
-    
     /**
      * @return Heure exacte de la livraison
      */
