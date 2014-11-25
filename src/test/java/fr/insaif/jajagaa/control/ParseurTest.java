@@ -30,7 +30,7 @@ public class ParseurTest {
             assertEquals(simpleDateFormat.parse("8:0:0"), livraisons.get(0).getHoraireDeroulement().getHeureDebut());
             assertEquals(simpleDateFormat.parse("12:0:0"), livraisons.get(0).getHoraireDeroulement().getHeureFin());
             for (int i = 1; i <= NB_LIVRAISON_1; ++i) {
-                assertEquals(""+i, livraisons.get(i - 1).getId());
+                assertEquals(i, livraisons.get(i - 1).getId());
             }
         } finally {
             if (inputStream != null) {

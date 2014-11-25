@@ -1,10 +1,9 @@
 package fr.insaif.jajagaa.model;
 
-
 import java.util.List;
 
 /**
- * Zone regroupant un certain nombre de points de livraison, de noeuds et de tronçons reliants ces noeuds.
+ * Zone regroupant un certain nombre de points de livraison, de vueNoeuds et de tronçons reliants ces vueNoeuds.
  * @author gustavemonod
  */
 public class ZoneGeographique {
@@ -13,18 +12,29 @@ public class ZoneGeographique {
      * Noeud de la liste qui est l'entrepôt
      */
     protected Noeud entrepot;
+
     /**
-     * Liste des noeuds qui composent la zone géographique.
+     * Liste des vueNoeuds qui composent la zone géographique.
      */
     protected List<Noeud> noeuds;
 
     /**
-     * Constructeur de la zone géographique à partir de la liste des noeuds (non vide)
-     * @param noeuds La liste des noeuds qui sont dans la zone (contenant l'entrepôt, en première place par défaut)
+     * Constructeur de la zone géographique à partir de la liste des vueNoeuds (non vide)
+     * @param noeuds La liste des vueNoeuds qui sont dans la zone (contenant l'entrepôt, en première place par défaut)
      */
     public ZoneGeographique(List<Noeud> noeuds) {
         this.setNoeuds(noeuds);
         this.setEntrepot(0);
+    }
+
+    /**
+     * Renvoie le nœud d'id donné en paramètre
+     * @param id L'id du nœud à renvoyer
+     * @return Le nœud d'id donné en paramètre
+     */
+    public Noeud getNoeudId(int id) {
+        assert this.noeuds.get(id).getId() == id;
+        return this.noeuds.get(id);
     }
 
     /**
@@ -45,7 +55,7 @@ public class ZoneGeographique {
 
     /**
      * Modifie l'entrepôt de la zone
-     * @param entrepot Le nouvel entrepôt de la zone (qui doit déjà être présent dans la liste des noeuds)
+     * @param entrepot Le nouvel entrepôt de la zone (qui doit déjà être présent dans la liste des vueNoeuds)
      */
     public void setEntrepot(Noeud entrepot) {
         assert this.getNoeuds().contains(entrepot);
@@ -53,16 +63,16 @@ public class ZoneGeographique {
     }
 
     /**
-     * Liste des noeuds qui forme une zone géographique (carte)
-     * @return Liste des noeuds qui forme une zone géographique (carte)
+     * Liste des vueNoeuds qui forme une zone géographique (carte)
+     * @return Liste des vueNoeuds qui forme une zone géographique (carte)
      */
     public List<Noeud> getNoeuds() {
         return noeuds;
     }
 
     /**
-     * Modifie la liste des noeuds qui forme une zone géographique (carte)
-     * @param noeuds Liste des noeuds (non vide) qui forme une zone géographique (carte)
+     * Modifie la liste des vueNoeuds qui forme une zone géographique (carte)
+     * @param noeuds Liste des vueNoeuds (non vide) qui forme une zone géographique (carte)
      */
     public void setNoeuds(List<Noeud> noeuds) {
         assert !noeuds.isEmpty();

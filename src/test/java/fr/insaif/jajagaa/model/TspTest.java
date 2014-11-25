@@ -1,7 +1,9 @@
-package fr.insaif.jajagaa.model.tsp;
+package fr.insaif.jajagaa.model;
 
 import fr.insaif.jajagaa.model.LivraisonGraph;
 import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.tsp.SolutionState;
+import fr.insaif.jajagaa.model.tsp.TSP;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +25,7 @@ public class TSPTest {
     public void setUp() throws Exception{
         List<Noeud> noeuds = new ArrayList<Noeud>();
 
-        // Exemple de noeuds (et d'entrepôt)
+        // Exemple de vueNoeuds (et d'entrepôt)
         noeuds.add(new Noeud(0, 541, 12));
         noeuds.add(new Noeud(1, 321, 11));
         Noeud entrepot = new Noeud(2, 42, 144);

@@ -2,6 +2,7 @@ package fr.insaif.jajagaa.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -12,93 +13,71 @@ import java.util.Date;
 public class Livraison {
 /* TODO Définir comment ces attributs doivent être mis en place
     protected String raisonRetard;
-    protected Noeud pointLivraison;
 */
+
+    /**
+     * Nœud auquel il faut livrer la livraison
+     */
+    protected Noeud pointLivraison;
+
 	/**
      * Formatter/parser de dates
      */
     protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:m:s");
     
     /**
-     * Identifiant de la livraison
-     */
-    protected String id;
- 
-    /**
-     * Plage horaire pendant laquelle devrait se dérouler la livraison
-     */
-    protected PlageHoraire horaireDeroulement;
-    
-    /**
-     * 
+     * Heure exacte (prévue) de la livraison (établie une fois la tournée calculée)
      */
     protected Date heureLivraison;
-    
+
     /**
      * Constructeur à partir de l'identifiant et de la plage horaire de déroulement souhaitée
-     * @param id Identifiant de la livraison
-     * @param horaireDeroulement Plage horaire pendant laquelle devrait se dérouler la livraison
      */
-    public Livraison(String id, PlageHoraire horaireDeroulement) {
-        this.setId(id);
-        this.setHoraireDeroulement(horaireDeroulement);
+    public Livraison(Noeud pointLivraison) {
+        this.setPointLivraison(pointLivraison);
     }
 
     /**
-     * @return Identifiant de la livraison
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Modifie l'identifiant de la livraison
-     * @param id Le nouvel identifiant de la livraison
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * @return Plage horaire pendant laquelle devrait se dérouler la livraison
-     */
-    public PlageHoraire getHoraireDeroulement() {
-        return horaireDeroulement;
-    }
-
-    /**
-     * Modifie la plage horaire pendant laquelle devrait se dérouler la livraison
-     * @param horaireDeroulement Nouvelle plage horaire pendant laquelle devrait se dérouler la livraison
-     */
-    public void setHoraireDeroulement(PlageHoraire horaireDeroulement) {
-        this.horaireDeroulement = horaireDeroulement;
-    }
-    
-    /**
-     * @return Heure de fin de la livraison
+     * @return Heure exacte de la livraison
      */
     public Date getHeureLivraison() {
         return heureLivraison;
     }
 
     /**
-     * Modifie l'heure de fin de la livraison
-     * @param heureFin La nouvelle heure de fin
+     * Modifie l'heure exacte de la livraison
+     * @param heureLivraison La nouvelle heure de fin
      */
     public void setHeureLivraison(Date heureLivraison) {
         this.heureLivraison = heureLivraison;
     }
 
     /**
-     * Modifie l'heure de fin de la livraison
-     * @param heureFin La nouvelle heure de fin sous forme de chaîne
+     * Modifie l'heure exacte de la livraison
+     * @param heureLivraison La nouvelle heure exacte sous forme de chaîne
      */
-    public void setHeureLivraison(String heureLivraison) {
+    public void setHeureLivraison(String heureLivraison) throws ParseException {
         try {
             this.heureLivraison = this.simpleDateFormat.parse(heureLivraison);
         } catch (ParseException e) {
             System.err.println("Impossible de parser la date: pas de modification");
+            throw e;
         }
     }
-    
+
+    /**
+     * Nœud auquel il faut livrer la livraison
+     * @return Nœud auquel il faut livrer la livraison
+     */
+    public Noeud getPointLivraison() {
+        return pointLivraison;
+    }
+
+    /**
+     * Modifie le nœud auquel il faut livrer la livraison
+     * @param pointLivraison Nœud auquel il faut livrer la livraison
+     */
+    public void setPointLivraison(Noeud pointLivraison) {
+        this.pointLivraison = pointLivraison;
+    }
 }

@@ -2,7 +2,6 @@ package fr.insaif.jajagaa.model;
 
 import fr.insaif.jajagaa.control.Parseur;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.FileInputStream;
@@ -15,10 +14,10 @@ public class TourneeTest {
     protected Tournee tournee;
     protected ZoneGeographique zone;
 
-    @BeforeClass
+    @Before
     public void setUp() throws Exception {
         this.tournee = new Tournee();
-        tournee.livraisons = Parseur.lireLivraison(new FileInputStream("./src/test/resources/livraison10x10-1.xml"));
+        //tournee.livraisons = Parseur.lireLivraison(new FileInputStream("./src/test/resources/livraison10x10-1.xml"));
         tournee.zone = ZoneGeographiqueTest.exampleZone();
     }
 

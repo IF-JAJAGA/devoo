@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Heure précise à laquelle est annoncée l'arrivée du livreur au client et est prévue la livraison.
@@ -25,6 +26,8 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
      * Heure de fin de la livraison
      */
     protected Date heureFin;
+
+    protected List<Livraison> livraisons;
 
     /**
      * Construit une plage horaire avec un début et une fin

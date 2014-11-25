@@ -1,23 +1,21 @@
 package fr.insaif.jajagaa.view;
 
-import java.awt.Color;
-import java.awt.Point;
-
-import javax.swing.JPanel;
-
 import fr.insaif.jajagaa.model.Noeud;
-import java.awt.Graphics;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.Date;
 
 /**
  * Classe Vue qui correspond à un noeud dans le modèle.
- * Cette vue possède plus d'attributs si le noeud est un point de livraison. 
+ * Cette vue possède plus d'attributs si le noeud est un point de livraison.
+ *
  * @author alicia
  */
 public class VueNoeud extends JPanel implements VueElement {
 
-    public static final int DIAMETRE = 15;		//Pour l'instant
-    public static final int DIAMETRE_LIVRAISON = 20;    
+    public static final int DIAMETRE = 15;        //Pour l'instant
+    public static final int DIAMETRE_LIVRAISON = 20;
     protected static int conv;
     /**
      * Référence vers le noeud correspondant dans le package Modele
@@ -32,7 +30,7 @@ public class VueNoeud extends JPanel implements VueElement {
      */
     protected int vueY;
     /**
-     * Couleur du noeud si c'est un point de livraison. 
+     * Couleur du noeud si c'est un point de livraison.
      */
     protected Color couleur;
     /**
@@ -40,66 +38,64 @@ public class VueNoeud extends JPanel implements VueElement {
      * Permet de définir la couleur dans l'affichage.
      */
     protected boolean estSelectionne;
-    
+
     //TODO : enum si le noeud est un point de livraison
     /**
      * Ce booléen est vrai si le noeud est un point de livraison.
      */
     protected boolean estPointDeLivraison = false;
-    
+
     /**
      * Si le noeud est un point de livraison alors cette Date est réglée à
      * l'heure d'arrivée prévue du camion.
      */
     protected Date heureLivraison;
-    
-    
+
+
     /**
      * Creates new form VueNoeud
      */
-    
+
     //TODO : différencier la création d'un noeud et d'un point de livraison).
     public VueNoeud(Noeud unNoeud, Color couleur) {
-    	this.couleur = couleur;
+        this.couleur = couleur;
         noeudModele = unNoeud;
-        vueX = unNoeud.getX()*conv;
-        vueY = unNoeud.getY()*conv;
+        vueX = unNoeud.getX() * conv;
+        vueY = unNoeud.getY() * conv;
     }
 
-    
-    
-    
+
     //GETTERS AND SETTERS ------------------------------------
-    
+
     public Noeud getNoeudModele() {
-            return noeudModele;
+        return noeudModele;
     }
 
     public int getVueX() {
-            return vueX;
+        return vueX;
     }
-    
+
     public void setVueX(int vueX) {
-            this.vueX = vueX;
+        this.vueX = vueX;
     }
 
     public int getVueY() {
-            return vueY;
+        return vueY;
     }
 
     public void setVueY(int vueY) {
-            this.vueY = vueY;
+        this.vueY = vueY;
     }
-    
+
     public Color getCouleur() {
-            if(estSelectionne){
-                    return Color.RED;
-            }
-            return couleur;
+        if (estSelectionne) {
+            return Color.RED;
+        }
+        return couleur;
     }
 
     public void setCouleur(Color couleur) {
-            this.couleur = couleur;
+        this.couleur = couleur;
     }
 
     public boolean isEstPointDeLivraison() {
@@ -109,31 +105,31 @@ public class VueNoeud extends JPanel implements VueElement {
     public void setEstPointDeLivraison(boolean estPointDeLivraison) {
         this.estPointDeLivraison = estPointDeLivraison;
     }
-    
-    
+
+
     public boolean changementSelection(Point p) {
-            //On calcule la distance de p au centre du noeud et on compare au rayon.
-            int d = (int) Math.sqrt(
-                Math.pow(Math.abs(p.x - (vueX)),2) +
-                Math.pow(Math.abs(p.y - (vueY)),2)
-            );
-            System.out.println("Inside VN" + estSelectionne);
-            if(d<DIAMETRE/2){
-                //On a cliqué sur le noeud.
-                estSelectionne = ! (estSelectionne);
-                return true;
+        //On calcule la distance de p au centre du noeud et on compare au rayon.
+        int d = (int) Math.sqrt(
+                Math.pow(Math.abs(p.x - (vueX)), 2) +
+                        Math.pow(Math.abs(p.y - (vueY)), 2)
+        );
+        System.out.println("Inside VN" + estSelectionne);
+        if (d < DIAMETRE / 2) {
+            //On a cliqué sur le noeud.
+            estSelectionne = !(estSelectionne);
+            return true;
+        }
+        //On a cliqué en dehors du noeud.
+        else {
+            if (!estSelectionne) {
+                return false;
             }
-            //On a cliqué en dehors du noeud.
-            else {
-                if(!estSelectionne){
-                    return false;
-                }
-                estSelectionne = false;
-                return true;
-                
-            }
+            estSelectionne = false;
+            return true;
+
+        }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -146,14 +142,18 @@ public class VueNoeud extends JPanel implements VueElement {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    public Noeud getNoeudClique(Point position) {
+        return null;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

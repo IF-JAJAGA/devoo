@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test de {@link fr.insaif.jajagaa.control.ClasseDansLeControleur}
+ * Test de {@link Controleur}
  * @author gustavemonod
  */
 public class ClasseDansLeControleurTest {
