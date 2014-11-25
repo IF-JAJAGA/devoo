@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.view;
 
+import fr.insaif.jajagaa.control.Controleur;
 import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -17,7 +18,8 @@ import javax.swing.SpringLayout;
 public class Fenetre {
 	protected JFrame fenetre;
 	protected VuePlan vuePlan = new VuePlan();
-	
+	protected Controleur controleur;
+        
 	protected SpringLayout layout = new SpringLayout();
 	private JPanel listeNoeuds = new JPanel();
 	
