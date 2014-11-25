@@ -2,6 +2,7 @@ package fr.insaif.jajagaa.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Date;
  * Est contenue dans une seule plage horaire.
  * @author gustavemonod
  */
-public class PlageHoraire {
+public class PlageHoraire implements Comparable<PlageHoraire> {
     /**
      * Formatter/parser de dates
      */
@@ -96,6 +97,18 @@ public class PlageHoraire {
             this.heureFin = this.simpleDateFormat.parse(heureFin);
         } catch (ParseException e) {
             System.err.println("Impossible de parser la date: pas de modification");
+        }
+    }
+
+    public int compareTo(PlageHoraire t) {
+        if(this.heureFin.before(t.getHeureDebut()) || this.heureFin.equals(t.getHeureDebut())) {
+            return -1;
+        }
+        else if(this.heureDebut.after(t.getHeureFin()) || this.heureDebut.equals(t.getHeureFin())) {
+            return 1;
+        }
+        else {
+            return 0;
         }
     }
 }
