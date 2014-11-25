@@ -30,7 +30,7 @@ public class Livraison {
     protected PlageHoraire horaireDeroulement;
     
     /**
-     * 
+     * Heure prévu de livraison.
      */
     protected Date heureLivraison;
     
