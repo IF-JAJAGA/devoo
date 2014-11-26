@@ -12,7 +12,9 @@ import org.jdom.input.SAXBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Classe qui s'occupe de parser les fichiers XML de livraisons et de plan.
@@ -20,33 +22,37 @@ import java.util.List;
  * @author gustavemonod
  */
 public class Parseur {
-    /**
+    /** TODO tester (test actuel incomplet/vieux)
      * Lit toutes les livraisons contenues dans un fichier de demande de livraisons et en renvoie une liste
      * @param inputStream Flux à partir duquel lire les données XML
-     * @return Liste des livraisons à effectuer
+     * @return Liste des plages horaires contenant chacune leur livraisons à effectuer
      */
-    public static List<Livraison> lireLivraison(InputStream inputStream, ZoneGeographique zone) {
-        List<Livraison> livraisonList = new ArrayList<Livraison>();
+    public static List<PlageHoraire> lireLivraison(InputStream inputStream, ZoneGeographique zone) {
         SAXBuilder builder = new SAXBuilder();
+        List<PlageHoraire> plages = null;
         try {
             Document document = builder.build(inputStream);
             Element journee = document.getRootElement();
-            int entrepotIndice = Integer.parseInt(journee.getChild("Entrepot").getAttributeValue("adresse"));
 
+            // L'identifiant de l'entrepôt permet de savoir quel nœud est l'entrepôt
+            zone.setEntrepot(Integer.parseInt(journee.getChild("Entrepot").getAttributeValue("adresse")));
+
+            // Liste des plages représentées dans le document XML
             @SuppressWarnings("unchecked")
-            List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");
-            for (Element plage : plages) {
-                PlageHoraire plageHoraire = new PlageHoraire(plage.getAttributeValue("heureDebut"),
-                        plage.getAttributeValue("heureFin"));
+            List<Element> plagesXml = journee.getChild("PlagesHoraires").getChildren("Plage");
+            plages = new Vector<PlageHoraire>();
+            for (Element plageXml : plagesXml) {
+                PlageHoraire plageCourante = new PlageHoraire(plageXml.getAttributeValue("heureDebut"),
+                        plageXml.getAttributeValue("heureFin"));
+                plages.add(plageCourante);
 
                 @SuppressWarnings("unchecked")
-                List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
-                for (Element livraison : livraisons) {
-                    int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
-                    /* TODO Prendre en compte les informations sur le client et l'adresse de la livraison
-                    String idClient = livraison.getAttributeValue("client");
-                    */
-//                    livraisonList.add(new Livraison(zone.getNoeudId(idNoeud), plageHoraire));
+                List<Element> livraisonsXml = plageXml.getChild("Livraisons").getChildren("Livraison");
+                for (Element livraisonXml : livraisonsXml) {
+                    int idNoeud = Integer.parseInt(livraisonXml.getAttributeValue("adresse"));
+
+                    // TODO À quoi sert l'information sur le client?
+                    plageCourante.getLivraisons().add(new Livraison(zone.getNoeudId(idNoeud)));
                 }
             }
         } catch (IOException io) {
@@ -60,7 +66,7 @@ public class Parseur {
             System.exit(502);
         }
 
-        return livraisonList;
+        return plages;
     }
 
     // TODO tester cette methode dans {@link fr.insaif.jajagaa.control.ParseurTest}

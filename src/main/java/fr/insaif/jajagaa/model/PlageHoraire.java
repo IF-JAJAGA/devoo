@@ -3,6 +3,7 @@ package fr.insaif.jajagaa.model;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,6 +27,9 @@ public class PlageHoraire {
      */
     protected Date heureFin;
 
+    /**
+     * TODO
+     */
     protected List<Livraison> livraisons;
 
     /**
@@ -36,6 +40,7 @@ public class PlageHoraire {
     public PlageHoraire(Date heureDebut, Date heureFin) {
         this.setHeureDebut(heureDebut);
         this.setHeureFin(heureFin);
+        this.livraisons = new LinkedList<Livraison>();
     }
 
     /**
@@ -53,6 +58,14 @@ public class PlageHoraire {
      */
     public Date getHeureDebut() {
         return heureDebut;
+    }
+
+    /**
+     * TODO
+     * @return
+     */
+    public List<Livraison> getLivraisons() {
+        return this.livraisons;
     }
 
     /**
