@@ -48,13 +48,20 @@ public class VueNoeudTest {
     // public void hello() {}
     @Test
     public void testClicSurCentreNoeud(){
-        assertTrue( vN1.getNoeudClique(new Point(vN1.getVueX(),vN1.getVueY())) == vN1);
+        assertTrue( vN1.getNoeudClique(new Point(vN1.getVueX(),vN1.getVueY())));
     }
     
     @Test
     public void testClicSurExtremiteNoeud(){
         int diagonale = (int) (rayon/sqrt(2));
         Point p = new Point(vN1.getVueX()+diagonale, vN1.getVueY()+diagonale);
-        assertEquals(vN1,vN1.getNoeudClique(p));
+        assertTrue(vN1.getNoeudClique(p));
+    }
+    
+    @Test
+    public void testClicHorsNeud(){
+        assertFalse(vN1.getNoeudClique(new Point(vN1.getVueX()+rayon,vN1.getVueY())));
+        assertFalse(vN1.getNoeudClique(new Point(vN1.getVueX(),vN1.getVueY()+rayon)));
+
     }
 }

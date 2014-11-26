@@ -31,8 +31,8 @@ public class VuePlan extends JPanel{
     protected List<VueTroncon> vueTroncons = new Vector<VueTroncon>();
     protected VueTournee vueTournee;
     
-    private VueNoeud noeudSelectionne = null;
-    
+    private VueNoeud noeudEnSelection = null;
+        
     //Valeurs en mètres avant que le chargement soit implémenté.
     protected final int XVille = 1000;
     protected final int YVille = 700;
@@ -65,8 +65,6 @@ public class VuePlan extends JPanel{
             g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
         }
 
-        System.out.println((getVueTournee().couleur).toString());
-        System.out.println(getVueTournee());
 
         Iterator itTr = getVueTournee().vTroncons.iterator();
         while (itTr.hasNext()) {
@@ -92,14 +90,12 @@ public class VuePlan extends JPanel{
                 vN.setVueY(border + this.getY() + vN.getNoeudModele().getYMetre()*(this.getHeight() - 2*border) / YVille);
 
                 g2.setColor(vN.getCouleur());
-                if (!vN.estPointDeLivraison)
+                if (vN.getPointDeLivraison()==VueNoeud.Etat.LIVRAISON)
                 {
-                    System.out.println("Here");
-                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
+                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE_LIVRAISON/2, vN.getVueY()-VueNoeud.DIAMETRE_LIVRAISON/2, VueNoeud.DIAMETRE_LIVRAISON, VueNoeud.DIAMETRE_LIVRAISON);
                 }
                 else {
-                    System.out.println("There");
-                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE_LIVRAISON/2, vN.getVueY()-VueNoeud.DIAMETRE_LIVRAISON/2, VueNoeud.DIAMETRE_LIVRAISON, VueNoeud.DIAMETRE_LIVRAISON);
+                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
                 }
         }
     }
@@ -129,7 +125,7 @@ public class VuePlan extends JPanel{
     	
     	//Pour l'instant ici
         VueNoeud vn1 = new VueNoeud(new Noeud(0, 200, 200), Color.BLUE);
-        vn1.setEstPointDeLivraison(true);
+        vn1.setEstPointDeLivraison(VueNoeud.Etat.LIVRAISON);
     	vueNoeuds.add(vn1);
     	vueNoeuds.add(new VueNoeud(new Noeud(1, 0, 0), Color.GREEN));
     	vueNoeuds.add(new VueNoeud(new Noeud(2, 1000, 700), Color.ORANGE));
@@ -158,15 +154,15 @@ public class VuePlan extends JPanel{
         //getVueTournee().add(vT);
 
 
-
     	
     	this.addMouseListener(new MouseAdapter() {
     		@Override
     		public void mouseClicked(MouseEvent e) {
     			super.mouseClicked(e);
-    			quelquUnEstClique(e.getPoint());
+    			noeudEstClique(e.getPoint());
+                        repaint();
     		}
-		});
+	});
     	this.paint(getGraphics());
     }
      
@@ -190,22 +186,18 @@ public class VuePlan extends JPanel{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     
-    private void quelquUnEstClique(Point locationOnPanel) {
+    private VueNoeud noeudEstClique(Point locationOnPanel) {
     	boolean rePaint = false;
         Iterator<VueNoeud> itVN = vueNoeuds.iterator();
-        VueNoeud ancienSelectionne = noeudSelectionne;
     	while(itVN.hasNext()){
             VueNoeud vN = itVN.next();
-            noeudSelectionne = vN.getNoeudClique(locationOnPanel);
-            if(ancienSelectionne == noeudSelectionne) { 	
-                rePaint = true;
-                break;
-            }
+            if(vN.getNoeudClique(locationOnPanel))    return vN;
         }
-    	if(rePaint){
-            repaint();
-        }
-	}
+        
+        //TODO : Envoi au contrôleur pour demander activer le bouton "ajouter un noeud"
+    	
+        return null;
+    }
 
     public VueTournee getVueTournee() {
         return vueTournee;

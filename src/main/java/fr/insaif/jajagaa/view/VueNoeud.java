@@ -16,6 +16,13 @@ public class VueNoeud {
     public static final int DIAMETRE = 15;        //Pour l'instant
     public static final int DIAMETRE_LIVRAISON = 20;
     protected static int conv;
+    
+    protected enum Etat{
+        RIEN,
+        LIVRAISON,
+        RETARD
+    }
+    
     /**
      * Référence vers le noeud correspondant dans le package Modele
      */
@@ -42,7 +49,7 @@ public class VueNoeud {
     /**
      * Ce booléen est vrai si le noeud est un point de livraison.
      */
-    protected boolean estPointDeLivraison = false;
+    protected Etat estPointDeLivraison = Etat.RIEN;
 
     /**
      * Si le noeud est un point de livraison alors cette Date est réglée à
@@ -99,16 +106,16 @@ public class VueNoeud {
         this.couleur = couleur;
     }
 
-    public boolean isEstPointDeLivraison() {
+    public Etat getPointDeLivraison() {
         return estPointDeLivraison;
     }
 
-    public void setEstPointDeLivraison(boolean estPointDeLivraison) {
+    public void setEstPointDeLivraison(Etat estPointDeLivraison) {
         this.estPointDeLivraison = estPointDeLivraison;
     }
 
 
-    public VueNoeud getNoeudClique(Point p) {
+    public boolean getNoeudClique(Point p) {
         //On calcule la distance de p au centre du noeud et on compare au rayon.
         int d = (int) Math.sqrt(
                 Math.pow(Math.abs(p.x - (vueX)), 2) +
@@ -116,12 +123,12 @@ public class VueNoeud {
         );
         if (d < DIAMETRE / 2) {
             if(!estSelectionne) estSelectionne = true;
-            return this;
+            return true;
         }
         //On a cliqué en dehors du noeud.
         else {
             if(estSelectionne)  estSelectionne = false;
-            return null;
+            return false;
         }
     }
 }
