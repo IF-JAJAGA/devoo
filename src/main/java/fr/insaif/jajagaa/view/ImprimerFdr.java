@@ -37,8 +37,8 @@ public class ImprimerFdr {
 	
     public void ecrireFichierTri(String ecriture[], String id){
         String NomFichier = "./feuilleDeRoute_"+id;
-        try(PrintWriter out  = new PrintWriter(new BufferedWriter(new FileWriter(NomFichier)))){
-          
+        try{
+          PrintWriter out  = new PrintWriter(new BufferedWriter(new FileWriter(NomFichier)));
           for (int i = 0; i < ecriture.length; i++) {
             out.println(ecriture);
           }
