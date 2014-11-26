@@ -17,7 +17,7 @@ public class App {
         FileInputStream inputStream = null;
         try {
             inputStream = new FileInputStream("./src/test/resources/livraison10x10-1.xml");
-            Parseur.lireLivraison(inputStream);
+//            Parseur.lireLivraison(inputStream, ZoneGeographiqueTest.exampleZone());
         } finally {
             if (inputStream != null) {
                 inputStream.close();

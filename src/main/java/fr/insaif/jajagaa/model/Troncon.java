@@ -42,11 +42,11 @@ public class Troncon {
     }
 
     /**
-     * Coût d'un Troncon, calculé avec Math.round(vitesse * longueurMetre)
-     * @return Coût d'un Troncon, calculé avec Math.round(vitesse * longueurMetre)
+     * Coût d'un Troncon, calculé avec Math.round(longueurMetre / vitesse)
+     * @return Coût d'un Troncon, calculé avec Math.round(longueurMetre / vitesse)
      */
     public int getCost() {
-        return Math.round(this.getVitesse() * this.getLongueurMetre());
+        return Math.round(this.getLongueurMetre() / this.getVitesse());
     }
 
     /**

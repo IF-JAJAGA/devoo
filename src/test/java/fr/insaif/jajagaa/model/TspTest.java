@@ -1,7 +1,5 @@
 package fr.insaif.jajagaa.model;
 
-import fr.insaif.jajagaa.model.Noeud;
-import fr.insaif.jajagaa.model.ZoneGeographique;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
 import fr.insaif.jajagaa.model.tsp.TSP;
 import org.junit.Before;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
@@ -47,7 +44,6 @@ public class TspTest {
     public void testSolve() throws Exception {
         int nbVertices = this.zone.getNbVertices();
         int maxCost = this.zone.getMaxArcCost();
-        int totalCost = 0;
 
         TSP tsp = new TSP(this.zone);
         tsp.solve(MAX_SEC * 1000, nbVertices * maxCost + 1);

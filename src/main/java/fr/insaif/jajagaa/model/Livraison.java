@@ -24,7 +24,7 @@ public class Livraison {
      * Formatter/parser de dates
      */
     protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:m:s");
-    
+
     /**
      * Heure exacte (prévue) de la livraison (établie une fois la tournée calculée)
      */

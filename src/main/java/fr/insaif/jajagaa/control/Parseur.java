@@ -46,7 +46,7 @@ public class Parseur {
                     /* TODO Prendre en compte les informations sur le client et l'adresse de la livraison
                     String idClient = livraison.getAttributeValue("client");
                     */
-                    livraisonList.add(new Livraison(zone.getNoeudId(idNoeud), plageHoraire));
+//                    livraisonList.add(new Livraison(zone.getNoeudId(idNoeud), plageHoraire));
                 }
             }
         } catch (IOException io) {
