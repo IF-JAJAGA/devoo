@@ -92,4 +92,11 @@ public class Livraison {
     public void setPointLivraison(Noeud pointLivraison) {
         this.pointLivraison = pointLivraison;
     }
+    
+    /**
+     * Calcule l'heure de départ pour la livraison.
+     */
+    public Date getHeureFin(){
+    	return new Date(this.heureLivraison.getTime() + 10*60000);
+    }
 }
