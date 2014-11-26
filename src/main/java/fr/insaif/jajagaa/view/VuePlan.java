@@ -31,6 +31,8 @@ public class VuePlan extends JPanel{
     protected List<VueTroncon> vueTroncons = new Vector<VueTroncon>();
     protected VueTournee vueTournee;
     
+    private VueNoeud noeudSelectionne = null;
+    
     //Valeurs en mètres avant que le chargement soit implémenté.
     protected final int XVille = 1000;
     protected final int YVille = 700;
@@ -62,24 +64,6 @@ public class VuePlan extends JPanel{
             g2.setStroke(new BasicStroke(3));
             g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
         }
-        // Dessin des vueNoeuds
-        while(itNoeud.hasNext()){
-                VueNoeud vN = itNoeud.next();
-                //Règle de trois pour afficher les points.
-                vN.setVueX(border + this.getX() + vN.getNoeudModele().getXMetre()*(this.getWidth() - 2*border) / XVille);
-                vN.setVueY(border + this.getY() + vN.getNoeudModele().getYMetre()*(this.getHeight() - 2*border) / YVille);
-
-                g2.setColor(vN.getCouleur());
-                if (!vN.estPointDeLivraison)
-                {
-                    System.out.println("Here");
-                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
-                }
-                else {
-                    System.out.println("There");
-                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE_LIVRAISON/2, vN.getVueY()-VueNoeud.DIAMETRE_LIVRAISON/2, VueNoeud.DIAMETRE_LIVRAISON, VueNoeud.DIAMETRE_LIVRAISON);
-                }
-        }
 
         System.out.println((getVueTournee().couleur).toString());
         System.out.println(getVueTournee());
@@ -98,6 +82,25 @@ public class VuePlan extends JPanel{
                 g2.setStroke(new BasicStroke(5));
                 g2.setColor(Color.BLUE);
                 g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
+        }
+        
+        
+        while(itNoeud.hasNext()){
+                VueNoeud vN = itNoeud.next();
+                //Règle de trois pour afficher les points.
+                vN.setVueX(border + this.getX() + vN.getNoeudModele().getXMetre()*(this.getWidth() - 2*border) / XVille);
+                vN.setVueY(border + this.getY() + vN.getNoeudModele().getYMetre()*(this.getHeight() - 2*border) / YVille);
+
+                g2.setColor(vN.getCouleur());
+                if (!vN.estPointDeLivraison)
+                {
+                    System.out.println("Here");
+                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
+                }
+                else {
+                    System.out.println("There");
+                    g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE_LIVRAISON/2, vN.getVueY()-VueNoeud.DIAMETRE_LIVRAISON/2, VueNoeud.DIAMETRE_LIVRAISON, VueNoeud.DIAMETRE_LIVRAISON);
+                }
         }
     }
 //		TODO
@@ -132,17 +135,17 @@ public class VuePlan extends JPanel{
     	vueNoeuds.add(new VueNoeud(new Noeud(2, 1000, 700), Color.ORANGE));
     	vueNoeuds.add(new VueNoeud(new Noeud(3, 1000, 0), Color.YELLOW));
     	vueNoeuds.add(new VueNoeud(new Noeud(4, 0, 700), Color.BLACK));
-        Troncon t1 = new Troncon(new Noeud(0,200,200), new Noeud(2,1000,700), 400,4);
+        Troncon t1 = new Troncon(new Noeud(0,200,200), new Noeud(2,1000,700), 400,4,"rue1");
         vueTroncons.add(new VueTroncon(t1));
-        Troncon t2 = new Troncon(new Noeud(1,0,0), new Noeud(4,0,700), 400,4);
+        Troncon t2 = new Troncon(new Noeud(1,0,0), new Noeud(4,0,700), 400,4,"rue2");
         vueTroncons.add(new VueTroncon(t2));
-        Troncon t3 = new Troncon(new Noeud(0,200,200), new Noeud(3,1000,0), 400,4);
+        Troncon t3 = new Troncon(new Noeud(0,200,200), new Noeud(3,1000,0), 400,4,"rue3");
         vueTroncons.add(new VueTroncon(t3));
-        Troncon t4 = new Troncon(new Noeud(4,0,700), new Noeud(2,1000,700), 400,4);
+        Troncon t4 = new Troncon(new Noeud(4,0,700), new Noeud(2,1000,700), 400,4,"rue4");
         vueTroncons.add(new VueTroncon(t4));
-        Troncon t5 = new Troncon(new Noeud(1,0,0), new Noeud(3,1000,0), 400,4);
+        Troncon t5 = new Troncon(new Noeud(1,0,0), new Noeud(3,1000,0), 400,4,"rue5");
         vueTroncons.add(new VueTroncon(t5));
-        Troncon t6 = new Troncon(new Noeud(2,1000,700), new Noeud(3,1000,0), 400,4);
+        Troncon t6 = new Troncon(new Noeud(2,1000,700), new Noeud(3,1000,0), 400,4,"rue6");
         vueTroncons.add(new VueTroncon(t6));
         
         List <Troncon> tronconsTournee = new ArrayList<Troncon>();
@@ -151,8 +154,8 @@ public class VuePlan extends JPanel{
         Chemin chemin = new Chemin(tronconsTournee);
         Tournee tourneeModele = new Tournee();
         tourneeModele.addChemin(chemin);
-        VueTournee vT = new VueTournee(tourneeModele, Color.BLUE);
-        getVueTournee().add(vT);
+        vueTournee = new VueTournee(tourneeModele, Color.BLUE);
+        //getVueTournee().add(vT);
 
 
 
@@ -183,17 +186,20 @@ public class VuePlan extends JPanel{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-    }// </editor-fold>                        
+    }                    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     
     private void quelquUnEstClique(Point locationOnPanel) {
     	boolean rePaint = false;
         Iterator<VueNoeud> itVN = vueNoeuds.iterator();
+        VueNoeud ancienSelectionne = noeudSelectionne;
     	while(itVN.hasNext()){
             VueNoeud vN = itVN.next();
-            if(vN.changementSelection(locationOnPanel)) { 	
+            noeudSelectionne = vN.getNoeudClique(locationOnPanel);
+            if(ancienSelectionne == noeudSelectionne) { 	
                 rePaint = true;
+                break;
             }
         }
     	if(rePaint){

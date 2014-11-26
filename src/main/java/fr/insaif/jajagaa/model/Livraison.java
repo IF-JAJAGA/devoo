@@ -94,7 +94,7 @@ public class Livraison {
     }
     
     /**
-     * Calcule l'heure de départ pour la livraison.
+     * Calcule l'heure de dÃ©part pour la livraison.
      */
     public Date getHeureFin(){
     	return new Date(this.heureLivraison.getTime() + 10*60000);
