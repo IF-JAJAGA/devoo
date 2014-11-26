@@ -9,19 +9,21 @@ import fr.insaif.jajagaa.model.Tournee;
 
 /**
  * AIDE________________________
- * la liste des livraisons qui appartiennent a cette tournée, l’heure de départ 
- * et d’arrivée pour chaque livraison, itinéraire entre chaque livraison et les 
- * informations sur la personne à livrer
+ * la liste des livraisons qui appartiennent a cette tournï¿½e, lï¿½heure de dï¿½part 
+ * et dï¿½arrivï¿½e pour chaque livraison, itinï¿½raire entre chaque livraison et les 
+ * informations sur la personne ï¿½ livrer
  *
  */
 public class ImprimerFdr {
 
 	public boolean faireImpresion(Tournee tournee){
+            /*
 		List<Livraison> livraisons = Tournee.
 		for(Livraison liv : livraisons) {
 			Date heuDeb = liv.getHeureLivraison();
 			Date heuFin = liv.getFinLivraison();
 		}
+             */
 		return false;
 	}
 }

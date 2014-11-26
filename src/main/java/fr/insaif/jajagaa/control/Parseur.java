@@ -38,16 +38,21 @@ public class Parseur {
             for (Element plage : plages) {
                 PlageHoraire plageHoraire = new PlageHoraire(plage.getAttributeValue("heureDebut"),
                         plage.getAttributeValue("heureFin"));
+                List<Livraison> listLivraisonPlage = new ArrayList<Livraison>();
 
                 @SuppressWarnings("unchecked")
                 List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
                 for (Element livraison : livraisons) {
                     int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
-                    /* TODO Prendre en compte les informations sur le client et l'adresse de la livraison
-                    String idClient = livraison.getAttributeValue("client");
-                    */
-                    livraisonList.add(new Livraison(zone.getNoeudId(idNoeud), plageHoraire));
+                    int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
+                    int idClient = Integer.parseInt(livraison.getAttributeValue("client"));
+                    
+                    Livraison nouvelleLiv = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient);
+                    
+                    listLivraisonPlage.add(nouvelleLiv);
+                    livraisonList.add(nouvelleLiv);
                 }
+                plageHoraire.setLivraisons(listLivraisonPlage);
             }
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");

@@ -102,6 +102,10 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
             System.err.println("Impossible de parser la date: pas de modification");
         }
     }
+    
+    public void setLivraisons (List<Livraison> listLiv) {
+        this.livraisons = listLiv;
+    }
 
     public int compareTo(PlageHoraire t) {
         if(this.heureFin.before(t.getHeureDebut()) || this.heureFin.equals(t.getHeureDebut())) {
