@@ -102,7 +102,8 @@ public class Parseur {
                     int idNoeudDestination = Integer.parseInt(tronconXml.getAttributeValue("idNoeudDestination"));
                     float longeur = Float.parseFloat(tronconXml.getAttributeValue("longueur"));
                     float vitesse = Float.parseFloat(tronconXml.getAttributeValue("vitesse"));
-                    plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse);
+                    String rue = tronconXml.getAttributeValue("nomRue");
+                    plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse, rue);
                 }
             }
 
