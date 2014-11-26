@@ -16,6 +16,9 @@ public class Chemin {
     protected LivraisonGraphVertice origine;
     
     protected LivraisonGraphVertice destination;
+    
+    //C'est la livraison destination
+    protected Livraison livraison;
 
     public Chemin(List<Troncon> troncons) {
         this.troncons = troncons;
@@ -47,6 +50,14 @@ public class Chemin {
 
     public void setTroncons(List<Troncon> troncons) {
         this.troncons = troncons;
+    }
+    
+    public Livraison getLivraison() {
+        return livraison;
+    }
+
+    public void setLivraison(Livraison livraison) {
+        this.livraison = livraison;
     }
     
     /**
