@@ -3,6 +3,7 @@ package fr.insaif.jajagaa.control;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.PlageHoraire;
+import fr.insaif.jajagaa.model.ZoneGeographique;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -24,7 +25,7 @@ public class Parseur {
      * @param inputStream Flux à partir duquel lire les données XML
      * @return Liste des livraisons à effectuer
      */
-    public static List<Livraison> lireLivraison(InputStream inputStream) {
+    public static List<Livraison> lireLivraison(InputStream inputStream, ZoneGeographique zone) {
         List<Livraison> livraisonList = new ArrayList<Livraison>();
         SAXBuilder builder = new SAXBuilder();
         try {
@@ -41,11 +42,11 @@ public class Parseur {
                 @SuppressWarnings("unchecked")
                 List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
                 for (Element livraison : livraisons) {
+                    int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
                     /* TODO Prendre en compte les informations sur le client et l'adresse de la livraison
                     String idClient = livraison.getAttributeValue("client");
-                    String adresse = livraison.getAttributeValue("adresse");
                     */
-                    livraisonList.add(new Livraison(livraison.getAttributeValue("id"), plageHoraire));
+                    livraisonList.add(new Livraison(zone.getNoeudId(idNoeud), plageHoraire));
                 }
             }
         } catch (IOException io) {
@@ -68,7 +69,7 @@ public class Parseur {
      * @param inputStream TODO
      * @return TODO
      */
-    public static List<Noeud> lirePlan(InputStream inputStream) {
+    public static ZoneGeographique lirePlan(InputStream inputStream) {
         List<Noeud> plan = new ArrayList<Noeud>();
         SAXBuilder builder = new SAXBuilder();
         try {
@@ -77,7 +78,7 @@ public class Parseur {
 
             @SuppressWarnings("unchecked")
             List<Element> noeuds = reseau.getChildren("Noeud");
-            //Création des noeuds contenus dans le fichier XML
+            //Création des vueNoeuds contenus dans le fichier XML
             //Et ajout de ceux-ci dans la liste plan
             for (Element noeudXml : noeuds) {
                 Noeud noeud = new Noeud(Integer.parseInt(noeudXml.getAttributeValue("id")),
@@ -111,6 +112,7 @@ public class Parseur {
             System.exit(502);
         }
 
-        return plan;
+//        return plan;
+        return null; // TODO
     }
 }
