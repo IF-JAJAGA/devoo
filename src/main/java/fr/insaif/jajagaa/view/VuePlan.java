@@ -26,8 +26,6 @@ import java.util.List;
  */
 public class VuePlan extends JPanel{
     protected static int border = VueNoeud.DIAMETRE;
-
-    protected Controleur controleur;
     
     protected List<VueNoeud> vueNoeuds = new Vector<VueNoeud>();
     protected List<VueTroncon> vueTroncons = new Vector<VueTroncon>();

@@ -21,19 +21,11 @@ public class Fenetre extends JFrame {
             if(fenetre==null)   fenetre=new Fenetre();
             return fenetre;
         }
-<<<<<<< HEAD
 	
         private final VuePlan vuePlan;
 	private final ConteneurDroite conteneurDroite;
 	private final JSplitPane split;
-=======
-	protected VuePlan vuePlan;
         
-	private ConteneurDroite conteneurDroite;
-        private Controleur controleur;
-
-	private JSplitPane split;
->>>>>>> ad8c2d489798df4967984df1572a925eaeebf95a
 	
     private Fenetre(){
     	setVisible(true);
