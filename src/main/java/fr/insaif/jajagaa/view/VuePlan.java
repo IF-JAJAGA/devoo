@@ -26,7 +26,9 @@ import java.util.List;
  */
 public class VuePlan extends JPanel{
     protected static int border = VueNoeud.DIAMETRE;
-	
+
+    protected Controleur controleur;
+    
     protected List<VueNoeud> vueNoeuds = new Vector<VueNoeud>();
     protected List<VueTroncon> vueTroncons = new Vector<VueTroncon>();
     protected VueTournee vueTournee;
@@ -185,7 +187,7 @@ public class VuePlan extends JPanel{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-    }                    
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     

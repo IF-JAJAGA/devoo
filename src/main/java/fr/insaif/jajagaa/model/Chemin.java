@@ -71,4 +71,8 @@ public class Chemin {
         }
         return cost;                 
     }
+    
+    public void recalculerHeuresLivraison(){
+        
+    }
 }

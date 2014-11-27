@@ -6,12 +6,10 @@ package fr.insaif.jajagaa;
  * and open the template in the editor.
  */
 
-import fr.insaif.jajagaa.control.ClasseDansLeControleurTest;
 import fr.insaif.jajagaa.model.PlageHoraireTest;
 import fr.insaif.jajagaa.model.TSPTest;
 import fr.insaif.jajagaa.model.TourneeTest;
 import fr.insaif.jajagaa.model.ZoneGeographiqueTest;
-import fr.insaif.jajagaa.view.FenetreTest;
 import fr.insaif.jajagaa.view.VueNoeudTest;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,9 +24,9 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({   AppTest.class,
-                        ClasseDansLeControleurTest.class, //ParseurTest.class,  //TODO : Parseur
+                        //ParseurTest.class,  //TODO : Parseur
                         PlageHoraireTest.class, TSPTest.class, TourneeTest.class, ZoneGeographiqueTest.class,
-                        FenetreTest.class,VueNoeudTest.class})
+                        VueNoeudTest.class})
 public class AllTests {
 
     @BeforeClass

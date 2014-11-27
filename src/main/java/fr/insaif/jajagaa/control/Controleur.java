@@ -1,6 +1,8 @@
 package fr.insaif.jajagaa.control;
 
-import fr.insaif.jajagaa.model.Livraison;
+import fr.insaif.jajagaa.model.PlageHoraire;
+import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
 import java.io.FileInputStream;
@@ -14,6 +16,7 @@ import java.util.List;
 public class Controleur {
     private static Controleur controleur;
     public static Controleur getInstance(){
+        //TODO : mieu 
         if(controleur==null)    controleur = new Controleur();
         return controleur;
     }
@@ -24,23 +27,39 @@ public class Controleur {
         CHARGER_TOURNEE,
         AJOUTER_LIVRAISON
     }
-    
+
     protected Parseur parseur;
     
     public void creerTournee(String fichierPlan, String fichierLivraison) throws FileNotFoundException {
         ZoneGeographique zone = Parseur.lirePlan(new FileInputStream(fichierPlan));
-        List<Livraison> livraisons = Parseur.lireLivraison(new FileInputStream(fichierLivraison), zone);
+        List<PlageHoraire> livraisons = Parseur.lireLivraison(new FileInputStream(fichierLivraison), zone);
     }
     
     public void Controle(ACTION action, Object ...obj){
-        switch(action){
+        switch(action) {
             case CHARGER_PLAN :
-                return;
+                break;
             case CHARGER_TOURNEE :
-                return;
+                break;
             case AJOUTER_LIVRAISON :
                 System.out.println("[Dans le controleur]    Ajout d'une livraison");
-                return;
+                break;
         }
     }
+    
+    /**
+     * Méthode qui permet d'ajouter un point dans une tournee, juste après un autre point (spécifié)
+     * @param tourneeModel tournee que l'on veut modifier
+     * @param noeudMilieu noeud que l'on veut ajouter à la tournee
+     * @param noeudAvant noeud après lequel on veut ajouter noeudMilieu
+     * @return la tournee une fois qu'elle a été modifiée
+     */
+      public Tournee ajouterPointLivraison (Tournee tourneeModel,Noeud noeudMilieu, Noeud noeudAvant) {
+        return null;
+    }
+    
+      public List<Noeud> LirePlan(String fichierPlan){
+          return null;
+      }
+    
 }

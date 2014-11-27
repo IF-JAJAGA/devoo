@@ -2,12 +2,12 @@ package fr.insaif.jajagaa.view;
 
 import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
+
 import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
@@ -15,16 +15,25 @@ import javax.swing.JSplitPane;
  * Classe qui fait l'interface avec le controleur et qui implémente tous les écouteurs.
  * @author alicia
  */
-public class Fenetre extends JFrame{
+public class Fenetre extends JFrame {
         private static Fenetre fenetre = null;
         public static Fenetre getInstance(){
             if(fenetre==null)   fenetre=new Fenetre();
             return fenetre;
         }
+<<<<<<< HEAD
 	
         private final VuePlan vuePlan;
 	private final ConteneurDroite conteneurDroite;
 	private final JSplitPane split;
+=======
+	protected VuePlan vuePlan;
+        
+	private ConteneurDroite conteneurDroite;
+        private Controleur controleur;
+
+	private JSplitPane split;
+>>>>>>> ad8c2d489798df4967984df1572a925eaeebf95a
 	
     private Fenetre(){
     	setVisible(true);

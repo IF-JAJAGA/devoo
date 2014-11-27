@@ -14,7 +14,7 @@ public class ZoneGeographique {
     protected Noeud entrepot;
 
     /**
-     * Liste des vueNoeuds qui composent la zone géographique.
+     * Liste des noeuds qui composent la zone géographique.
      */
     protected List<Noeud> noeuds;
 

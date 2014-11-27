@@ -1,7 +1,6 @@
 package fr.insaif.jajagaa.model;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -41,19 +40,19 @@ public class ZoneGeographiqueTest {
         noeuds.add(new Noeud(3, 42, 145));
 
         // Exemple de tronçons
-        //TODO
-        /*
-        noeuds.get(0).addSortant(noeuds.get(1), 349f, 3.32f);
-        noeuds.get(0).addSortant(noeuds.get(3), 123.5f, 4.43f); // min
-        noeuds.get(1).addSortant(noeuds.get(2), 312.4f, 6.831f); // max
-        noeuds.get(2).addSortant(noeuds.get(3), 323.5f, 3.43f);
-        noeuds.get(3).addSortant(noeuds.get(0), 432.4f, 1.43f);*/
+        //TODO mettre le bon nom de rue
+        noeuds.get(0).addSortant(noeuds.get(1), 349f, 3.32f, "TODO");
+        noeuds.get(0).addSortant(noeuds.get(3), 123.5f, 4.43f, "TODO"); // min
+        noeuds.get(1).addSortant(noeuds.get(2), 312.4f, 6.831f, "TODO");
+        noeuds.get(2).addSortant(noeuds.get(3), 323.5f, 3.43f, "TODO");
+        noeuds.get(3).addSortant(noeuds.get(0), 432.4f, 1.43f, "TODO"); // max
+        noeuds.get(3).addSortant(noeuds.get(0), 432.4f, 1.43f, "TODO");
 
         this.zone = new ZoneGeographique(noeuds);
     }
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         this.makeZone();
 
         List<Troncon> troncons = new ArrayList<Troncon>();
@@ -64,8 +63,8 @@ public class ZoneGeographiqueTest {
         troncons.add(noeuds.get(3).getSortants().get(0));
 
         // Min et max attendus
-        this.min = troncons.get(1).getCost();
-        this.max = troncons.get(2).getCost();
+        this.min = Math.round(troncons.get(1).getCost());
+        this.max = Math.round(troncons.get(4).getCost());
 
         // Successeurs attendus
         this.successeurs = new int[4][];
@@ -75,13 +74,22 @@ public class ZoneGeographiqueTest {
         this.successeurs[3] = new int[] {0};
 
         // Matrice des coûts attendue
-        int pasTroncon = this.max + 1;
+        int PAS_TRONCON = this.max + 1;
         this.costs = new int[][]{
-                {pasTroncon, troncons.get(0).getCost(), pasTroncon,                troncons.get(1).getCost()},
-                {pasTroncon,                pasTroncon, troncons.get(2).getCost(), pasTroncon},
-                {pasTroncon,                pasTroncon, pasTroncon,                troncons.get(3).getCost()},
-                {troncons.get(4).getCost(), pasTroncon, pasTroncon,                pasTroncon}
+                {PAS_TRONCON, troncons.get(0).getCostInt(), PAS_TRONCON,                  troncons.get(1).getCostInt()},
+                {PAS_TRONCON,                  PAS_TRONCON, troncons.get(2).getCostInt(), PAS_TRONCON},
+                {PAS_TRONCON,                  PAS_TRONCON, PAS_TRONCON,                  troncons.get(3).getCostInt()},
+                {troncons.get(4).getCostInt(), PAS_TRONCON, PAS_TRONCON,                  PAS_TRONCON}
         };
+    }
+
+    @Test
+    public void testCourtChemin() {
+        Chemin c = Dijkstra.plusCourtChemin(this.zone, this.noeuds.get(0), this.noeuds.get(2));
+        List<Troncon> troncons = c.getTroncons();
+        assertEquals(2, troncons.size());
+        assertEquals(this.noeuds.get(0).getSortants().get(0), troncons.get(0));
+        assertEquals(this.noeuds.get(1).getSortants().get(0), troncons.get(1));
     }
 
     @Test
