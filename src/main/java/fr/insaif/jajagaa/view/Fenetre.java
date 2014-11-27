@@ -75,7 +75,7 @@ public class Fenetre extends JFrame {
     /**
      * Appelée par un listener sur bouton
      */
-    private void ChoisirZoneGéographique(){
+    private void ChoisirZoneGeographique(){
         //TODO : appel de JFileChooser
     }
     
