@@ -29,7 +29,7 @@ public class Parseur {
      */
     public static List<PlageHoraire> lireLivraison(InputStream inputStream, ZoneGeographique zone) {
         SAXBuilder builder = new SAXBuilder();
-        List<PlageHoraire> plages = null;
+        List<PlageHoraire> listLivraisonPlage = null;
         try {
             Document document = builder.build(inputStream);
             Element journee = document.getRootElement();
@@ -39,21 +39,43 @@ public class Parseur {
 
             // Liste des plages représentées dans le document XML
             @SuppressWarnings("unchecked")
+<<<<<<< HEAD
             List<Element> plagesXml = journee.getChild("PlagesHoraires").getChildren("Plage");
-            plages = new Vector<PlageHoraire>();
+            listLivraisonPlage = new ArrayList<PlageHoraire>();
             for (Element plageXml : plagesXml) {
                 PlageHoraire plageCourante = new PlageHoraire(plageXml.getAttributeValue("heureDebut"),
                         plageXml.getAttributeValue("heureFin"));
-                plages.add(plageCourante);
+                listLivraisonPlage.add(plageCourante);
 
                 @SuppressWarnings("unchecked")
                 List<Element> livraisonsXml = plageXml.getChild("Livraisons").getChildren("Livraison");
                 for (Element livraisonXml : livraisonsXml) {
                     int idNoeud = Integer.parseInt(livraisonXml.getAttributeValue("adresse"));
+                    int idLiv = Integer.parseInt(livraisonXml.getAttributeValue("id"));
+                    int idClient = Integer.parseInt(livraisonXml.getAttributeValue("client"));
 
-                    // TODO À quoi sert l'information sur le client?
-                    plageCourante.getLivraisons().add(new Livraison(zone.getNoeudId(idNoeud)));
+                    plageCourante.getLivraisons().add(new Livraison(zone.getNoeudId(idNoeud), idLiv, idClient));
+=======
+            List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");
+            for (Element plage : plages) {
+                PlageHoraire plageHoraire = new PlageHoraire(plage.getAttributeValue("heureDebut"),
+                        plage.getAttributeValue("heureFin"));
+                List<Livraison> listLivraisonPlage = new ArrayList<Livraison>();
+
+                @SuppressWarnings("unchecked")
+                List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
+                for (Element livraison : livraisons) {
+                    int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
+                    int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
+                    int idClient = Integer.parseInt(livraison.getAttributeValue("client"));
+                    
+                    Livraison nouvelleLiv = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient);
+                    
+                    listLivraisonPlage.add(nouvelleLiv);
+//                    livraisonList.add(nouvelleLiv);
+>>>>>>> 20fec5bd88e8b712e17b6d96d9419098bc276eda
                 }
+                plageHoraire.setLivraisons(listLivraisonPlage);
             }
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");
@@ -66,7 +88,7 @@ public class Parseur {
             System.exit(502);
         }
 
-        return plages;
+        return listLivraisonPlage;
     }
 
     // TODO tester cette methode dans {@link fr.insaif.jajagaa.control.ParseurTest}
@@ -103,7 +125,8 @@ public class Parseur {
                     int idNoeudDestination = Integer.parseInt(tronconXml.getAttributeValue("idNoeudDestination"));
                     float longeur = Float.parseFloat(tronconXml.getAttributeValue("longueur"));
                     float vitesse = Float.parseFloat(tronconXml.getAttributeValue("vitesse"));
-                    plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse);
+                    String rue = tronconXml.getAttributeValue("nomRue");
+                    plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse, rue);
                 }
             }
 

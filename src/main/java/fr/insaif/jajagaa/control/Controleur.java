@@ -12,6 +12,9 @@ import java.util.List;
  * @author gustavemonod
  */
 public class Controleur {
+    
+    protected Parseur parseur;
+    
     public void creerTournee(String fichierPlan, String fichierLivraison) throws FileNotFoundException {
         ZoneGeographique zone = Parseur.lirePlan(new FileInputStream(fichierPlan));
         List<Livraison> livraisons = Parseur.lireLivraison(new FileInputStream(fichierLivraison), zone);

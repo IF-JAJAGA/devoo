@@ -20,7 +20,7 @@ public class Livraison {
      */
     protected Noeud pointLivraison;
 
-	/**
+    /**
      * Formatter/parser de dates
      */
     protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:m:s");
@@ -29,12 +29,24 @@ public class Livraison {
      * Heure exacte (prévue) de la livraison (établie une fois la tournée calculée)
      */
     protected Date heureLivraison;
+    
+    /**
+     * Client à qui on doit faire la livraison
+     */
+    protected int idClient;
+    
+    /**
+     * Id de la livraison
+     */
+    protected int idLivraison;
 
     /**
-     * Constructeur à partir de l'identifiant et de la plage horaire de déroulement souhaitée
+     * Constructeur d'une livraison à partir du noeud qui la concerne
      */
-    public Livraison(Noeud pointLivraison) {
+    public Livraison(Noeud pointLivraison, int idLiv, int idClientLiv) {
         this.setPointLivraison(pointLivraison);
+        this.idLivraison = idLiv;
+        this.idClient = idClientLiv;
     }
 
     /**
@@ -79,5 +91,12 @@ public class Livraison {
      */
     public void setPointLivraison(Noeud pointLivraison) {
         this.pointLivraison = pointLivraison;
+    }
+    
+    /**
+     * Calcule l'heure de d�part pour la livraison.
+     */
+    public Date getHeureFin(){
+    	return new Date(this.heureLivraison.getTime() + 10*60000);
     }
 }

@@ -26,7 +26,11 @@ public class Troncon {
      * Vitesse de parcours du Troncon (exprimée en ???)
      */
     protected float vitesse;
-
+    
+    /**
+     * Nom de la rue concernée par le Troncon
+     */
+    protected String nomRue;
     /**
      * Construction d'un Troncon à partir de ces informations de base
      * @param origine Noeud origine de ce Troncon
@@ -34,11 +38,12 @@ public class Troncon {
      * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
      * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
      */
-    public Troncon(Noeud origine, Noeud destination, float longueurMetre, float vitesse) {
+    public Troncon(Noeud origine, Noeud destination, float longueurMetre, float vitesse, String rue) {
         this.origine = origine;
         this.destination = destination;
         this.longueurMetre = longueurMetre;
         this.vitesse = vitesse;
+        this.nomRue = rue;
     }
 
     /**
@@ -116,5 +121,9 @@ public class Troncon {
      */
     public void setVitesse(float vitesse) {
         this.vitesse = vitesse;
+    }
+    
+    public void setNomRue(String nom) {
+        this.nomRue = nom;
     }
 }

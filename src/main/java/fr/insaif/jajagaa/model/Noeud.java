@@ -127,9 +127,9 @@ public class Noeud {
      * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
      * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
      */
-    public void addSortant(Noeud destination, float longueurMetre, float vitesse) {
+    public void addSortant(Noeud destination, float longueurMetre, float vitesse, String rue) {
         assert !this.equals(destination);
-        this.sortants.add(new Troncon(this, destination, longueurMetre, vitesse));
+        this.sortants.add(new Troncon(this, destination, longueurMetre, vitesse,rue));
     }
 
     /**
@@ -138,9 +138,9 @@ public class Noeud {
      * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
      * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
      */
-    public void addEntrant(Noeud origine, float longueurMetre, float vitesse) {
+    public void addEntrant(Noeud origine, float longueurMetre, float vitesse, String rue) {
         assert !this.equals(origine);
-        this.entrants.add(new Troncon(origine, this, longueurMetre, vitesse));
+        this.entrants.add(new Troncon(origine, this, longueurMetre, vitesse, rue));
     }
 
     public int getX() {
