@@ -1,6 +1,8 @@
 package fr.insaif.jajagaa.control;
 
 import fr.insaif.jajagaa.model.PlageHoraire;
+import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
 import java.io.FileInputStream;
@@ -14,6 +16,7 @@ import java.util.List;
 public class Controleur {
     private static Controleur controleur;
     public static Controleur getInstance(){
+        //TODO : mieu 
         if(controleur==null)    controleur = new Controleur();
         return controleur;
     }
@@ -43,4 +46,20 @@ public class Controleur {
                 break;
         }
     }
+    
+    /**
+     * Méthode qui permet d'ajouter un point dans une tournee, juste après un autre point (spécifié)
+     * @param tourneeModel tournee que l'on veut modifier
+     * @param noeudMilieu noeud que l'on veut ajouter à la tournee
+     * @param noeudAvant noeud après lequel on veut ajouter noeudMilieu
+     * @return la tournee une fois qu'elle a été modifiée
+     */
+      public Tournee ajouterPointLivraison (Tournee tourneeModel,Noeud noeudMilieu, Noeud noeudAvant) {
+        return null;
+    }
+    
+      public List<Noeud> LirePlan(String fichierPlan){
+          return null;
+      }
+    
 }
