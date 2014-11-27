@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.model;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,7 +68,17 @@ public class Tournee {
         this.chemins = chemins;
     }
 
-    public Chemin plusCourtChemin(Noeud depart, Noeud arrivee) {
+    public Chemin calculerPlusCourtChemin(Noeud depart, Noeud arrivee) {
         return null;
+    }
+    
+    /**
+     * TODO diagram : pourquoi pas appelée par le contrôleur ? (Jérôme)
+     * @param pointMilieu
+     * @param pointAvant
+     * @return 
+     */
+    public boolean ajouterPointDeLivraison(Point pointMilieu, Point pointAvant){
+        return true;
     }
 }

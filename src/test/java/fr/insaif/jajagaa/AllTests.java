@@ -7,7 +7,6 @@ package fr.insaif.jajagaa;
  */
 
 import fr.insaif.jajagaa.control.ClasseDansLeControleurTest;
-import fr.insaif.jajagaa.control.ParseurTest;
 import fr.insaif.jajagaa.model.PlageHoraireTest;
 import fr.insaif.jajagaa.model.TSPTest;
 import fr.insaif.jajagaa.model.TourneeTest;
@@ -22,7 +21,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- *
+ * Cette classe permet uniquement de lancer les tests dont les noms sont renseignés dans la liste @Suite.SuiteClasses
  * @author jeje
  */
 @RunWith(Suite.class)

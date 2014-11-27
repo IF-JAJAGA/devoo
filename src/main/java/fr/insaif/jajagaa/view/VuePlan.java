@@ -186,6 +186,11 @@ public class VuePlan extends JPanel{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     
+    /**
+     * 
+     * @param locationOnPanel point cliqué sur le panel
+     * @return le noeud qui a été cliqué, null si le noeud n'est pas cliqué.
+     */
     private VueNoeud noeudEstClique(Point locationOnPanel) {
     	boolean rePaint = false;
         Iterator<VueNoeud> itVN = vueNoeuds.iterator();

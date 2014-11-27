@@ -5,7 +5,6 @@ import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.Troncon;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;

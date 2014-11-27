@@ -5,8 +5,10 @@ import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
 import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 /**
@@ -20,9 +22,9 @@ public class Fenetre extends JFrame{
             return fenetre;
         }
 	protected VuePlan vuePlan;
-	protected Controleur controleur;
         
 	private ConteneurDroite conteneurDroite;
+        private Controleur controleur;
 	
 	private JSplitPane split;
 	
@@ -38,21 +40,50 @@ public class Fenetre extends JFrame{
         split.setDividerLocation(getWidth()-200);
          
         getContentPane().add(split);
+        
+        addListeners();
 
+        pack();
+    }
+    
+    private void addListeners(){
         addComponentListener(new ComponentListener() {
 
-                    public void componentShown(ComponentEvent arg0) {}
+                public void componentShown(ComponentEvent arg0) {}
 
-                    public void componentResized(ComponentEvent arg0) {
-                            //Maj de l'endroit de la séparation
-                        split.setDividerLocation(getWidth()-200);
-                    }
+                public void componentResized(ComponentEvent arg0) {
+                        //Maj de l'endroit de la séparation
+                    split.setDividerLocation(getWidth()-200);
+                }
 
-                    public void componentMoved(ComponentEvent arg0) {}
+                public void componentMoved(ComponentEvent arg0) {}
 
-                    public void componentHidden(ComponentEvent arg0) {}
-            });
-        pack();
+                public void componentHidden(ComponentEvent arg0) {}
+        });
+        
+        conteneurDroite.getBtnAddNoeud().addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                Controleur.getInstance().Controle(Controleur.ACTION.AJOUTER_LIVRAISON, (Object) null);
+            }
+
+        });
+    }
+    
+    
+    /**
+     * Appelée par un listener sur bouton
+     */
+    private void ChoisirZoneGéographique(){
+        //TODO : appel de JFileChooser
+    }
+    
+    /**
+     * Appelée par un listener sur bouton
+     */
+    private void ChoisirTournee(){
+        //TODO : appel de JFileChooser
     }
     
     

@@ -8,13 +8,12 @@ package fr.insaif.jajagaa.view.panelDroite;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
 
 /**
- *
+ * Contient les éléments à droite du plan.
  * @author jeje
  */
 public class ConteneurDroite extends JPanel{
@@ -23,6 +22,11 @@ public class ConteneurDroite extends JPanel{
     private JButton btnAddNoeud;
     
     private SpringLayout layout;
+
+    public JButton getBtnAddNoeud() {
+        return btnAddNoeud;
+    }
+    
 
     public ConteneurDroite() {
         initComponents();
@@ -36,7 +40,6 @@ public class ConteneurDroite extends JPanel{
         listeNoeuds = new ListNoeuds();
 
         btnAddNoeud = new JButton("Ajouter un noeud");
-        btnAddNoeud.setEnabled(false);
     }
     
     private void placeComponents(){
@@ -63,6 +66,7 @@ public class ConteneurDroite extends JPanel{
     }
     
     private void addListeners(){
-        
     }
+    
+    
 }

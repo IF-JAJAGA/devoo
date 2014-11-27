@@ -115,6 +115,11 @@ public class VueNoeud {
     }
 
 
+    /**
+     * 
+     * @param p  point cliqué par rapport aux origines du plan, en haut à gauche
+     * @return  true si le clic est situé dans le noeud.
+     */
     public boolean getNoeudClique(Point p) {
         //On calcule la distance de p au centre du noeud et on compare au rayon.
         int d = (int) Math.sqrt(
