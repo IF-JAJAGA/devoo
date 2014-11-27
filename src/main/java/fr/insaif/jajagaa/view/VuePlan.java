@@ -31,11 +31,14 @@ public class VuePlan extends JPanel{
     protected List<VueTroncon> vueTroncons = new Vector<VueTroncon>();
     protected VueTournee vueTournee;
     
-    private VueNoeud noeudEnSelection = null;
-        
     //Valeurs en mètres avant que le chargement soit implémenté.
     protected final int XVille = 1000;
     protected final int YVille = 700;
+
+    public List<VueNoeud> getVueNoeuds() {
+        return vueNoeuds;
+    }
+    
     
 	@Override
     public void paintComponent(Graphics g) {
@@ -189,19 +192,20 @@ public class VuePlan extends JPanel{
     /**
      * 
      * @param locationOnPanel point cliqué sur le panel
-     * @return le noeud qui a été cliqué, null si le noeud n'est pas cliqué.
+     * @return le noeud qui a été cliqué, null aucun noeud n'est cliqué.
      */
     private VueNoeud noeudEstClique(Point locationOnPanel) {
     	boolean rePaint = false;
         Iterator<VueNoeud> itVN = vueNoeuds.iterator();
+        VueNoeud noeudSelectionne = null;
     	while(itVN.hasNext()){
             VueNoeud vN = itVN.next();
-            if(vN.getNoeudClique(locationOnPanel))    return vN;
+            if(vN.getNoeudClique(locationOnPanel))    noeudSelectionne = vN;
         }
         
         //TODO : Envoi au contrôleur pour demander activer le bouton "ajouter un noeud"
     	
-        return null;
+        return noeudSelectionne;
     }
 
     public VueTournee getVueTournee() {
