@@ -2,7 +2,6 @@ package fr.insaif.jajagaa.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -94,7 +93,7 @@ public class Livraison {
     }
     
     /**
-     * Calcule l'heure de départ pour la livraison.
+     * Calcule l'heure de dÃ©part pour la livraison.
      */
     public Date getHeureFin(){
     	return new Date(this.heureLivraison.getTime() + 10*60000);

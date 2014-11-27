@@ -17,15 +17,10 @@ public class App {
         Thread.sleep(6000);
         FileInputStream zoneInputStream = null,livInputStream = null;
         try {
-<<<<<<< HEAD
-            inputStream = new FileInputStream("./src/test/resources/livraison10x10-1.xml");
-//            Parseur.lireLivraison(inputStream, ZoneGeographiqueTest.exampleZone());
-=======
             zoneInputStream = new FileInputStream("./src/test/resources/plan10x10.xml");
         	livInputStream = new FileInputStream("./src/test/resources/livraison10x10-1.xml");
         	ZoneGeographique zoneGeo = Parseur.lirePlan(zoneInputStream);
             Parseur.lireLivraison(livInputStream,zoneGeo);
->>>>>>> 20fec5bd88e8b712e17b6d96d9419098bc276eda
         } finally {
             if (livInputStream != null) {
                 livInputStream.close();

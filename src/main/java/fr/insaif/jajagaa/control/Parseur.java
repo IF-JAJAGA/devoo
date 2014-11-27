@@ -39,43 +39,24 @@ public class Parseur {
 
             // Liste des plages représentées dans le document XML
             @SuppressWarnings("unchecked")
-<<<<<<< HEAD
-            List<Element> plagesXml = journee.getChild("PlagesHoraires").getChildren("Plage");
-            listLivraisonPlage = new ArrayList<PlageHoraire>();
-            for (Element plageXml : plagesXml) {
-                PlageHoraire plageCourante = new PlageHoraire(plageXml.getAttributeValue("heureDebut"),
-                        plageXml.getAttributeValue("heureFin"));
-                listLivraisonPlage.add(plageCourante);
-
-                @SuppressWarnings("unchecked")
-                List<Element> livraisonsXml = plageXml.getChild("Livraisons").getChildren("Livraison");
-                for (Element livraisonXml : livraisonsXml) {
-                    int idNoeud = Integer.parseInt(livraisonXml.getAttributeValue("adresse"));
-                    int idLiv = Integer.parseInt(livraisonXml.getAttributeValue("id"));
-                    int idClient = Integer.parseInt(livraisonXml.getAttributeValue("client"));
-
-                    plageCourante.getLivraisons().add(new Livraison(zone.getNoeudId(idNoeud), idLiv, idClient));
-=======
             List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");
+            listLivraisonPlage = new ArrayList<PlageHoraire>();
             for (Element plage : plages) {
                 PlageHoraire plageHoraire = new PlageHoraire(plage.getAttributeValue("heureDebut"),
                         plage.getAttributeValue("heureFin"));
-                List<Livraison> listLivraisonPlage = new ArrayList<Livraison>();
 
                 @SuppressWarnings("unchecked")
                 List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
+                List<Livraison> listLivraison = new ArrayList<Livraison>();
                 for (Element livraison : livraisons) {
                     int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
                     int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
                     int idClient = Integer.parseInt(livraison.getAttributeValue("client"));
-                    
-                    Livraison nouvelleLiv = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient);
-                    
-                    listLivraisonPlage.add(nouvelleLiv);
-//                    livraisonList.add(nouvelleLiv);
->>>>>>> 20fec5bd88e8b712e17b6d96d9419098bc276eda
+
+                    listLivraison.add(new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient));
                 }
-                plageHoraire.setLivraisons(listLivraisonPlage);
+                plageHoraire.setLivraisons(listLivraison);
+                listLivraisonPlage.add(plageHoraire);
             }
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");

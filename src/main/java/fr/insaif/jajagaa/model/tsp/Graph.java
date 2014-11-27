@@ -43,5 +43,4 @@ public interface Graph {
      */
     public abstract int getNbSucc(int i)
             throws ArrayIndexOutOfBoundsException;
-
 }

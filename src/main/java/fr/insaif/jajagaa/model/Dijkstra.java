@@ -20,7 +20,7 @@ public class Dijkstra {
         final Map<Noeud, Float> distances = new HashMap<Noeud, Float>();
 
         for (Noeud noeud : zone.getNoeuds()) {
-            distances.put(noeud, zone.getMaxArcCost() + 1f);
+            distances.put(noeud, getMaxArcCost(zone) + 1f);
         }
         distances.put(depart, 0f);
 
@@ -67,5 +67,16 @@ public class Dijkstra {
             int[] next = tsp.getNext();
             System.out.println(Arrays.toString(next));
         }
+    }
+
+    private static float getMaxArcCost(ZoneGeographique zone) {
+        float maxArcCost = 0;
+        for (Noeud noeud : zone.getNoeuds()) {
+            for (Troncon troncon: noeud.getSortants()) {
+                float cost = troncon.getCost();
+                maxArcCost = cost > maxArcCost ? cost : maxArcCost;
+            }
+        }
+        return maxArcCost;
     }
 }

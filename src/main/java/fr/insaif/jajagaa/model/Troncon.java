@@ -31,6 +31,7 @@ public class Troncon {
      * Nom de la rue concernée par le Troncon
      */
     protected String nomRue;
+
     /**
      * Construction d'un Troncon à partir de ces informations de base
      * @param origine Noeud origine de ce Troncon
@@ -47,11 +48,19 @@ public class Troncon {
     }
 
     /**
-     * Coût d'un Troncon, calculé avec Math.round(longueurMetre / vitesse)
-     * @return Coût d'un Troncon, calculé avec Math.round(longueurMetre / vitesse)
+     * Coût d'un Troncon, calculé avec longueurMetre / vitesse
+     * @return Coût d'un Troncon, calculé avec longueurMetre / vitesse
      */
-    public int getCost() {
-        return Math.round(this.getLongueurMetre() / this.getVitesse());
+    public float getCost() {
+        return this.getLongueurMetre() / this.getVitesse();
+    }
+
+    /**
+     * Coût arrondi d'un Troncon Math.round(this.getCost())
+     * @return Coût arrondi d'un Troncon Math.round(this.getCost())
+     */
+    public int getCostInt() {
+        return Math.round(this.getCost());
     }
 
     /**
