@@ -73,12 +73,11 @@ public class Tournee {
     }
     
     /**
-     * TODO diagram : pourquoi pas appelée par le contrôleur ? (Jérôme)
-     * @param pointMilieu
-     * @param pointAvant
-     * @return 
+     * @param pointMilieu point à ajouter à la tournée
+     * @param pointAvant point après lequel on doit ajouter pointMilieu
+     * @return la tournée une fois qu'elle a été modifiée.
      */
-    public boolean ajouterPointDeLivraison(Point pointMilieu, Point pointAvant){
-        return true;
+    public Tournee ajouterPointDeLivraison(Point pointMilieu, Point pointAvant){
+        return this;
     }
 }
