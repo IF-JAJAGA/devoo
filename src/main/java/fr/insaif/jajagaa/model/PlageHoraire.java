@@ -103,9 +103,23 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
         }
     }
     
+    /**
+     * mutateur de PlageHoraire pour muter une liste de livraisons
+     * @param listLiv 
+     */
     public void setLivraisons (List<Livraison> listLiv) {
         this.livraisons = listLiv;
     }
+    
+    /**
+     * Accesseur de la liste de livraisons de la PlageHoraire
+     * @return List<Livraison> 
+     */
+    public List<Livraison> getLivraisons() {
+        return livraisons;
+    }
+    
+    
 
     public int compareTo(PlageHoraire t) {
         if(this.heureFin.before(t.getHeureDebut()) || this.heureFin.equals(t.getHeureDebut())) {

@@ -23,10 +23,11 @@ public class Parseur {
     /**
      * Lit toutes les livraisons contenues dans un fichier de demande de livraisons et en renvoie une liste
      * @param inputStream Flux à partir duquel lire les données XML
+     * @param zone ZoneGeographique la liste des noeuds dans laquelle les livraisons sont contenues
      * @return Liste des livraisons à effectuer
      */
-    public static List<Livraison> lireLivraison(InputStream inputStream, ZoneGeographique zone) {
-        List<Livraison> livraisonList = new ArrayList<Livraison>();
+    public static List<PlageHoraire> lireLivraison(InputStream inputStream, ZoneGeographique zone) {
+        List<PlageHoraire> plageList = new ArrayList<PlageHoraire>();
         SAXBuilder builder = new SAXBuilder();
         try {
             Document document = builder.build(inputStream);
@@ -38,7 +39,7 @@ public class Parseur {
             for (Element plage : plages) {
                 PlageHoraire plageHoraire = new PlageHoraire(plage.getAttributeValue("heureDebut"),
                         plage.getAttributeValue("heureFin"));
-                List<Livraison> listLivraisonPlage = new ArrayList<Livraison>();
+                List<Livraison> livraisonList = new ArrayList<Livraison>();
 
                 @SuppressWarnings("unchecked")
                 List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
@@ -49,10 +50,10 @@ public class Parseur {
                     
                     Livraison nouvelleLiv = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient);
                     
-                    listLivraisonPlage.add(nouvelleLiv);
                     livraisonList.add(nouvelleLiv);
                 }
-                plageHoraire.setLivraisons(listLivraisonPlage);
+                plageHoraire.setLivraisons(livraisonList);
+                plageList.add(plageHoraire);
             }
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");
@@ -65,7 +66,7 @@ public class Parseur {
             System.exit(502);
         }
 
-        return livraisonList;
+        return plageList;
     }
 
     // TODO tester cette methode dans {@link fr.insaif.jajagaa.control.ParseurTest}
