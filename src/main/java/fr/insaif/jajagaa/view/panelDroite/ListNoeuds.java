@@ -6,9 +6,9 @@
 
 package fr.insaif.jajagaa.view.panelDroite;
 
-import fr.insaif.jajagaa.view.VueNoeud;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -17,8 +17,10 @@ import javax.swing.JList;
 public class ListNoeuds extends JList {
     private DefaultListModel dlm = new DefaultListModel();
 
-    public ListNoeuds(VueNoeud ...n) {
+    public ListNoeuds() {
         setModel(dlm);
+        dlm.addElement("Noeud 1");
+        dlm.addElement("Noeud 2");
     }
 
     

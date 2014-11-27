@@ -6,9 +6,11 @@
 
 package fr.insaif.jajagaa.view.panelDroite;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
 
 
 /**
@@ -16,16 +18,51 @@ import javax.swing.JPanel;
  * @author jeje
  */
 public class ConteneurDroite extends JPanel{
-    private ListNoeuds listeNoeuds = null;
+    private JLabel titre;
+    private ListNoeuds listeNoeuds;
+    private JButton btnAddNoeud;
+    
+    private SpringLayout layout;
 
     public ConteneurDroite() {
-        super();
-        add(new JLabel("Liste des vueNoeuds ici"));
+        initComponents();
+        placeComponents();
+        addListeners();
+    }
+    
+    private void initComponents(){
+        titre = new JLabel("Liste des vueNoeuds ici");
         
+        listeNoeuds = new ListNoeuds();
+
+        btnAddNoeud = new JButton("Ajouter un noeud");
+        btnAddNoeud.setEnabled(false);
+    }
+    
+    private void placeComponents(){
+        layout = new SpringLayout();
+        setLayout(layout);
         
-        listeNoeuds = new ListNoeuds(null);
+        add(titre);
         add(listeNoeuds);
+        add(btnAddNoeud);
+        
+        final int espace = 5;
+        layout.putConstraint(SpringLayout.NORTH, titre, espace, SpringLayout.NORTH, this);
+        layout.putConstraint(SpringLayout.WEST, titre, espace, SpringLayout.WEST, this);
+        
+        layout.putConstraint(SpringLayout.NORTH, listeNoeuds, espace, SpringLayout.SOUTH, titre);
+        layout.putConstraint(SpringLayout.WEST, listeNoeuds, 0, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.EAST, listeNoeuds, 0, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.SOUTH, listeNoeuds, -espace, SpringLayout.NORTH, btnAddNoeud);
+        
+        layout.putConstraint(SpringLayout.SOUTH, btnAddNoeud, -espace, SpringLayout.SOUTH, this);
+        layout.putConstraint(SpringLayout.WEST, btnAddNoeud, 0, SpringLayout.WEST, titre);
+
 
     }
     
+    private void addListeners(){
+        
+    }
 }
