@@ -23,10 +23,13 @@ public class ParseurTest {
     @Test
     public void testLireLivraison() throws Exception {
         FileInputStream inputStream = null;
+        FileInputStream inputStreamPlan = null;
         ZoneGeographique zone = null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:m:s");
         try {
             inputStream = new FileInputStream("./src/test/resources/livraison10x10-1.xml");
+            inputStreamPlan = new FileInputStream("./src/test/resources/plan10x10.xml");
+            zone = Parseur.lirePlan(inputStreamPlan);
             List<Livraison> livraisons = Parseur.lireLivraison(inputStream,zone);
             assertEquals(NB_LIVRAISON_1, livraisons.size());
             assertEquals(simpleDateFormat.parse("8:0:0"), livraisons.get(0).getHeureLivraison());
@@ -37,6 +40,9 @@ public class ParseurTest {
         } finally {
             if (inputStream != null) {
                 inputStream.close();
+            }
+            if (inputStreamPlan != null) {
+                inputStreamPlan.close();
             }
         }
     }
