@@ -59,7 +59,7 @@ public class Fenetre extends JFrame {
         
     private Fenetre(){
     	setVisible(true);
-    	setSize(new Dimension(600,400));
+    	setSize(new Dimension(1366,768));
         setTitle("OnlyLyon Livreur");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vuePlan = new VuePlan();
@@ -100,8 +100,6 @@ public class Fenetre extends JFrame {
         
         this.setJMenuBar(barreMenu);
         addListeners();
-
-        pack();
     }
     
     private void addListeners(){
@@ -111,7 +109,7 @@ public class Fenetre extends JFrame {
 
                 public void componentResized(ComponentEvent arg0) {
                         //Maj de l'endroit de la séparation
-                    //split.setDividerLocation(getWidth()-200);
+                    split.setDividerLocation(getWidth()-200);
                 }
 
                 public void componentMoved(ComponentEvent arg0) {}

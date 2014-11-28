@@ -69,21 +69,21 @@ public class VuePlan extends JPanel{
         }
 
 
-        Iterator itTr = getVueTournee().vTroncons.iterator();
-        while (itTr.hasNext()) {
-            VueTroncon vTr = (VueTroncon) itTr.next();
-
-                //Règle de trois pour afficher les points.
-                vTr.setOrigViewX(border + this.getX() + vTr.getTronconModel().getOrigine().getXMetre()*(this.getWidth() - 2*border) / XVille);
-                vTr.setOrigViewY(border + this.getY() + vTr.getTronconModel().getOrigine().getYMetre()*(this.getHeight() -2*border) / YVille);
-                vTr.setDestViewX(border + this.getX() + vTr.getTronconModel().getDestination().getXMetre()*(this.getWidth() - 2*border) / XVille);
-                vTr.setDestViewY(border + this.getY() + vTr.getTronconModel().getDestination().getYMetre()*(this.getHeight() -2*border) / YVille);
-
-                //g2.setColor(vTr.getCouleur());
-                g2.setStroke(new BasicStroke(5));
-                g2.setColor(Color.BLUE);
-                g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
-        }
+//        Iterator itTr = getVueTournee().vTroncons.iterator();
+//        while (itTr.hasNext()) {
+//            VueTroncon vTr = (VueTroncon) itTr.next();
+//
+//                //Règle de trois pour afficher les points.
+//                vTr.setOrigViewX(border + this.getX() + vTr.getTronconModel().getOrigine().getXMetre()*(this.getWidth() - 2*border) / XVille);
+//                vTr.setOrigViewY(border + this.getY() + vTr.getTronconModel().getOrigine().getYMetre()*(this.getHeight() -2*border) / YVille);
+//                vTr.setDestViewX(border + this.getX() + vTr.getTronconModel().getDestination().getXMetre()*(this.getWidth() - 2*border) / XVille);
+//                vTr.setDestViewY(border + this.getY() + vTr.getTronconModel().getDestination().getYMetre()*(this.getHeight() -2*border) / YVille);
+//
+//                //g2.setColor(vTr.getCouleur());
+//                g2.setStroke(new BasicStroke(5));
+//                g2.setColor(Color.BLUE);
+//                g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
+//        }
         
         
         while(itNoeud.hasNext()){
