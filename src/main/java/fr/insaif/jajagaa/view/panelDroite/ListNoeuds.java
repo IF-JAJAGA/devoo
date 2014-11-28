@@ -58,12 +58,8 @@ class ListNoeudsRenderer extends JLabel implements ListCellRenderer{
             VueNoeud vN = (VueNoeud)e;
             setText("Noeud " + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY());
             if (isSelected) {
-                vN.setEstSelectionne(true);
                 setBackground(Color.CYAN);
             } else {
-                if(vN.isEstSelectionne()){
-                    vN.setEstSelectionne(false);
-                }
                 setBackground(Color.WHITE);
             }
         }

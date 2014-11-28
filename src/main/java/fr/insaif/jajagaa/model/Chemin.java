@@ -20,7 +20,9 @@ public class Chemin {
     //C'est la livraison destination
     protected Livraison livraison;
 
-    public Chemin(List<Troncon> troncons) {
+    public Chemin(List<Troncon> troncons, LivraisonGraphVertex origine, LivraisonGraphVertex destination) {
+        this.origine = origine;
+        this.destination = destination;
         this.troncons = troncons;
     }
 

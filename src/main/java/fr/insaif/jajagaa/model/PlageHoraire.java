@@ -61,13 +61,6 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
         return heureDebut;
     }
 
-    /**
-     * TODO
-     * @return
-     */
-    public List<Livraison> getLivraisons() {
-        return this.livraisons;
-    }
 
     /**
      * Modifie l'heure de début de la livraison
@@ -128,7 +121,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
      * Accesseur de la liste de livraisons de la PlageHoraire
      * @return List<Livraison> 
      */
-    public List<Livraison> getListLivraisons() {
+    public List<Livraison> getLivraisons() {
         return livraisons;
     }
     
