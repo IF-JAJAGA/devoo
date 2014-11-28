@@ -10,6 +10,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * Classe qui fait l'interface avec le controleur et qui implémente tous les écouteurs.
@@ -68,6 +70,16 @@ public class Fenetre extends JFrame {
                 Controleur.getInstance().Controle(Controleur.ACTION.AJOUTER_LIVRAISON, (Object) null);
             }
 
+        });
+        
+        conteneurDroite.getListeNoeuds().addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if(!lse.getValueIsAdjusting()){
+                    vuePlan.repaint();
+                }
+            }
         });
     }
     

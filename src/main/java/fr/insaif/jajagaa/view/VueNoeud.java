@@ -114,6 +114,14 @@ public class VueNoeud {
         this.estPointDeLivraison = estPointDeLivraison;
     }
 
+    public boolean isEstSelectionne() {
+        return estSelectionne;
+    }
+
+    public void setEstSelectionne(boolean estSelectionne) {
+        this.estSelectionne = estSelectionne;
+    }
+
 
     /**
      * 
