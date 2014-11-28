@@ -16,6 +16,7 @@ import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.ZoneGeographique;
+import javax.sound.midi.SysexMessage;
 
 /**
  * Classe qui s'occupe de parser les fichiers XML de livraisons et de plan.
@@ -115,7 +116,6 @@ public class Parseur {
                     float vitesse = Float.parseFloat((tronconXml.getAttributeValue("vitesse")).replace(",", "."));
                     String rue = tronconXml.getAttributeValue("nomRue");
                     plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse, rue);
-                    //TODO Gérer exceptions
                 }
             }
 
@@ -128,7 +128,9 @@ public class Parseur {
         } catch (NullPointerException nullptrex) {
             System.err.println("Ficher XML mal formé: element ou attribut manquant");
             System.exit(502);
-        } 
+        } catch (IndexOutOfBoundsException ioobe) {
+            System.err.println("Fichier XML erroné: valeurs de certains attributs inexistants");
+        }
         return (new ZoneGeographique(plan));
     }
 }
