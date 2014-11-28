@@ -21,30 +21,26 @@ public class Controleur {
         return controleur;
     }
     
-    
-    public enum ACTION{
-        CHARGER_PLAN,
-        CHARGER_TOURNEE,
-        AJOUTER_LIVRAISON
+    protected ZoneGeographique zone;
+    protected List<PlageHoraire> plagesHoraire;
+
+    public ZoneGeographique getZone() {
+        return zone;
     }
 
-    protected Parseur parseur;
-    
-    public void creerTournee(String fichierPlan, String fichierLivraison) throws FileNotFoundException {
-        ZoneGeographique zone = Parseur.lirePlan(new FileInputStream(fichierPlan));
-        List<PlageHoraire> livraisons = Parseur.lireLivraison(new FileInputStream(fichierLivraison), zone);
+    public List<PlageHoraire> getPlagesHoraire() {
+        return plagesHoraire;
     }
     
-    public void Controle(ACTION action, Object ...obj){
-        switch(action) {
-            case CHARGER_PLAN :
-                break;
-            case CHARGER_TOURNEE :
-                break;
-            case AJOUTER_LIVRAISON :
-                System.out.println("[Dans le controleur]    Ajout d'une livraison");
-                break;
-        }
+    
+    public ZoneGeographique lirePlan(String fichierPlan) throws FileNotFoundException {
+        this.zone = Parseur.lirePlan(new FileInputStream(fichierPlan));
+        return this.zone;
+    }
+    
+    public List<PlageHoraire> lireLivraisons(String fichierLivraison, ZoneGeographique zone) throws FileNotFoundException {
+        this.plagesHoraire = Parseur.lireLivraison(new FileInputStream(fichierLivraison), zone);
+        return this.plagesHoraire;
     }
     
     /**
@@ -57,9 +53,4 @@ public class Controleur {
       public Tournee ajouterPointLivraison (Tournee tourneeModel,Noeud noeudMilieu, Noeud noeudAvant) {
         return null;
     }
-    
-      public List<Noeud> LirePlan(String fichierPlan){
-          return null;
-      }
-    
 }

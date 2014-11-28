@@ -29,13 +29,13 @@ public class LivraisonGraph implements Graph {
      */
     protected List<Chemin> chemins;
     
-    protected List<LivraisonGraphVertice> noeuds;
+    protected List<LivraisonGraphVertex> noeuds;
 
     public LivraisonGraph(List<Chemin> chemins) {
         this.chemins = chemins;
     }
 
-    public List<LivraisonGraphVertice> getNoeuds() {
+    public List<LivraisonGraphVertex> getNoeuds() {
         return this.noeuds;
     }
 
@@ -49,7 +49,7 @@ public class LivraisonGraph implements Graph {
      * Met à jour les champs calculés
      */
     public void update() {
-        for (LivraisonGraphVertice noeud : this.getNoeuds()) {
+        for (LivraisonGraphVertex noeud : this.getNoeuds()) {
             for (Chemin chemin : noeud.getSortants()) {
                 int cost = chemin.getCost();
                 this.maxArcCost = cost > this.maxArcCost ? cost : this.maxArcCost;
@@ -89,7 +89,7 @@ public class LivraisonGraph implements Graph {
         for (int i = 0; i < size; ++i) {
             int successors[] = this.getSucc(i);
             int k = 0;
-            LivraisonGraphVertice noeud = this.getNoeuds().get(i);
+            LivraisonGraphVertex noeud = this.getNoeuds().get(i);
             for (int j = 0; j < size; ++j) {
                 if (k < successors.length && j == successors[k]) {
                     costs[i][j] = noeud.getSortants().get(k).getCost();
