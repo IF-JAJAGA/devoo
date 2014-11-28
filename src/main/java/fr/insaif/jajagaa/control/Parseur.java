@@ -1,20 +1,21 @@
 package fr.insaif.jajagaa.control;
 
-import fr.insaif.jajagaa.model.Livraison;
-import fr.insaif.jajagaa.model.Noeud;
-import fr.insaif.jajagaa.model.PlageHoraire;
-import fr.insaif.jajagaa.model.ZoneGeographique;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Vector;
+import fr.insaif.jajagaa.model.Livraison;
+import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.PlageHoraire;
+import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
  * Classe qui s'occupe de parser les fichiers XML de livraisons et de plan.
@@ -22,7 +23,8 @@ import java.util.Vector;
  * @author gustavemonod
  */
 public class Parseur {
-    /** TODO tester (test actuel incomplet/vieux)
+	
+	/** TODO tester (test actuel incomplet/vieux)
      * Lit toutes les livraisons contenues dans un fichier de demande de livraisons et en renvoie une liste
      * @param inputStream Flux à partir duquel lire les données XML
      * @param zone ZoneGeographique la liste des noeuds dans laquelle les livraisons sont contenues
@@ -109,10 +111,11 @@ public class Parseur {
                 for (Element tronconXml : troncons) {
                     int id = Integer.parseInt(noeudXml.getAttributeValue("id"));
                     int idNoeudDestination = Integer.parseInt(tronconXml.getAttributeValue("idNoeudDestination"));
-                    float longeur = Float.parseFloat(tronconXml.getAttributeValue("longueur"));
-                    float vitesse = Float.parseFloat(tronconXml.getAttributeValue("vitesse"));
+                    float longeur = Float.parseFloat((tronconXml.getAttributeValue("longueur")).replace(",", "."));
+                    float vitesse = Float.parseFloat((tronconXml.getAttributeValue("vitesse")).replace(",", "."));
                     String rue = tronconXml.getAttributeValue("nomRue");
                     plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse, rue);
+                    //TODO Gérer exceptions
                 }
             }
 
@@ -125,8 +128,7 @@ public class Parseur {
         } catch (NullPointerException nullptrex) {
             System.err.println("Ficher XML mal formé: element ou attribut manquant");
             System.exit(502);
-        }
-
+        } 
         return (new ZoneGeographique(plan));
     }
 }
