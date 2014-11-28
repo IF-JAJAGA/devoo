@@ -8,14 +8,14 @@ package fr.insaif.jajagaa.model;
 public class Troncon {
 
     /**
-     * Noeud origine de ce Troncon
+     * id du noeud origine de ce Troncon
      */
-    protected Noeud origine;
+    protected int idOrigine;
 
     /**
-     * Noeud destination de ce Troncon
+     * id du noeud destination de ce Troncon
      */
-    protected Noeud destination;
+    protected int idDestination;
 
     /**
      * Distance séparant le noeud origine de celui destination (exprimée en mètre?)
@@ -39,9 +39,9 @@ public class Troncon {
      * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
      * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
      */
-    public Troncon(Noeud origine, Noeud destination, float longueurMetre, float vitesse, String rue) {
-        this.origine = origine;
-        this.destination = destination;
+    public Troncon(int idOrigine, int idDestination, float longueurMetre, float vitesse, String rue) {
+        this.idOrigine = idOrigine;
+        this.idDestination = idDestination;
         this.longueurMetre = longueurMetre;
         this.vitesse = vitesse;
         this.nomRue = rue;
@@ -67,8 +67,8 @@ public class Troncon {
      * Noeud origine de ce Troncon
      * @return Noeud origine de ce Troncon
      */
-    public Noeud getOrigine() {
-        return origine;
+    public int getIdOrigine() {
+        return idOrigine;
     }
 
 
@@ -76,8 +76,8 @@ public class Troncon {
      * Modifie le noeud origine de ce Troncon
      * @param origine Noeud origine de ce Troncon
      */
-    public void setOrigine(Noeud origine) {
-        this.origine = origine;
+    public void setIdOrigine(int idOrigine) {
+        this.idOrigine = idOrigine;
     }
 
 
@@ -85,8 +85,8 @@ public class Troncon {
      * Noeud destination de ce Troncon
      * @return Noeud destination de ce Troncon
      */
-    public Noeud getDestination() {
-        return destination;
+    public int getIdDestination() {
+        return idDestination;
     }
 
 
@@ -94,8 +94,8 @@ public class Troncon {
      * Modifie le noeud destination de ce Troncon
      * @param destination Noeud destination de ce Troncon
      */
-    public void setDestination(Noeud destination) {
-        this.destination = destination;
+    public void setIdDestination(int idDestination) {
+        this.idDestination = idDestination;
     }
 
 

@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.model;
 
+import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.model.tsp.Graph;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
 import fr.insaif.jajagaa.model.tsp.TSP;
@@ -19,9 +20,12 @@ public class Dijkstra {
     public static Chemin plusCourtChemin(ZoneGeographique zone, LivraisonGraphVertex depart, LivraisonGraphVertex arrivee) {
         final Map<Noeud, Float> distances = new HashMap<Noeud, Float>();
         float maxArcCost = getMaxArcCost(zone);
+
+        ZoneGeographique zg = Controleur.getInstance().getZone();
+
         Noeud arriveeNoeud = arrivee.getNoeud();
         Noeud departNoeud = depart.getNoeud();
-
+        
         for (Noeud noeud : zone.getNoeuds()) {
             distances.put(noeud, maxArcCost + 1f);
         }
@@ -41,12 +45,12 @@ public class Dijkstra {
                 List<Troncon> troncons = new LinkedList<Troncon>();
                 while (noeud != departNoeud) {
                     troncons.add(0, chemin.get(noeud));
-                    noeud = chemin.get(noeud).getOrigine();
+                    noeud = zg.getNoeudId(chemin.get(noeud).getIdOrigine());
                 }
                 return new Chemin(troncons, depart, arrivee);
             }
             for (Troncon t : noeud.getSortants()) {
-                Noeud n = t.getDestination();
+                Noeud n = zg.getNoeudId(t.getIdDestination());
                 if (!chemin.containsKey(n)) {
                     q.add(n);
                     chemin.put(n, t);

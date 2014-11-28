@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.view;
 
+import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.model.Chemin;
 import fr.insaif.jajagaa.model.Livraison;
 import java.awt.Color;
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.Troncon;
+import fr.insaif.jajagaa.model.ZoneGeographique;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -49,6 +51,8 @@ public class VuePlan extends JPanel{
         
         Iterator<VueTroncon> itTroncon = vueTroncons.iterator();
         Iterator<VueNoeud> itNoeud = vueNoeuds.iterator();
+        
+        ZoneGeographique zg = Controleur.getInstance().getZone();
 
         //On utilise un type différent pour avoir plus de possibilités et l'accès à de nouvelles méthodes
         //Les méthodes qu'on utilisait avec g continuent à fonctionner.
@@ -58,10 +62,10 @@ public class VuePlan extends JPanel{
         while(itTroncon.hasNext()){
             VueTroncon vTr = itTroncon.next();                    
             //Règle de trois pour afficher les points.
-            vTr.setOrigViewX(border + this.getX() + vTr.getTronconModel().getOrigine().getXMetre()*(this.getWidth() - 2*border) / XVille);
-            vTr.setOrigViewY(border + this.getY() + vTr.getTronconModel().getOrigine().getYMetre()*(this.getHeight() -2*border) / YVille);
-            vTr.setDestViewX(border + this.getX() + vTr.getTronconModel().getDestination().getXMetre()*(this.getWidth() - 2*border) / XVille);
-            vTr.setDestViewY(border + this.getY() + vTr.getTronconModel().getDestination().getYMetre()*(this.getHeight() -2*border) / YVille);
+            vTr.setOrigViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+            vTr.setOrigViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
+            vTr.setDestViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+            vTr.setDestViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
 
             //g2.setColor(vTr.getCouleur());
             g2.setStroke(new BasicStroke(3));
@@ -74,10 +78,10 @@ public class VuePlan extends JPanel{
             VueTroncon vTr = (VueTroncon) itTr.next();
 
                 //Règle de trois pour afficher les points.
-                vTr.setOrigViewX(border + this.getX() + vTr.getTronconModel().getOrigine().getXMetre()*(this.getWidth() - 2*border) / XVille);
-                vTr.setOrigViewY(border + this.getY() + vTr.getTronconModel().getOrigine().getYMetre()*(this.getHeight() -2*border) / YVille);
-                vTr.setDestViewX(border + this.getX() + vTr.getTronconModel().getDestination().getXMetre()*(this.getWidth() - 2*border) / XVille);
-                vTr.setDestViewY(border + this.getY() + vTr.getTronconModel().getDestination().getYMetre()*(this.getHeight() -2*border) / YVille);
+                vTr.setOrigViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+                vTr.setOrigViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
+                vTr.setDestViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+                vTr.setDestViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
 
                 //g2.setColor(vTr.getCouleur());
                 g2.setStroke(new BasicStroke(5));
@@ -134,17 +138,23 @@ public class VuePlan extends JPanel{
     	vueNoeuds.add(new VueNoeud(new Noeud(2, 1000, 700), Color.ORANGE));
     	vueNoeuds.add(new VueNoeud(new Noeud(3, 1000, 0), Color.YELLOW));
     	vueNoeuds.add(new VueNoeud(new Noeud(4, 0, 700), Color.BLACK));
-        Troncon t1 = new Troncon(new Noeud(0,200,200), new Noeud(2,1000,700), 400,4,"rue1");
+        //Troncon t1 = new Troncon(new Noeud(0,200,200), new Noeud(2,1000,700), 400,4,"rue1");
+        Troncon t1 = new Troncon(0, 2, 400,4,"rue1");
         vueTroncons.add(new VueTroncon(t1));
-        Troncon t2 = new Troncon(new Noeud(1,0,0), new Noeud(4,0,700), 400,4,"rue2");
+        //Troncon t2 = new Troncon(new Noeud(1,0,0), new Noeud(4,0,700), 400,4,"rue2");
+        Troncon t2 = new Troncon(1, 4, 400,4,"rue2");
         vueTroncons.add(new VueTroncon(t2));
-        Troncon t3 = new Troncon(new Noeud(0,200,200), new Noeud(3,1000,0), 400,4,"rue3");
+        //Troncon t3 = new Troncon(new Noeud(0,200,200), new Noeud(3,1000,0), 400,4,"rue3");
+        Troncon t3 = new Troncon(0, 3, 400,4,"rue3");
         vueTroncons.add(new VueTroncon(t3));
-        Troncon t4 = new Troncon(new Noeud(4,0,700), new Noeud(2,1000,700), 400,4,"rue4");
+        //Troncon t4 = new Troncon(new Noeud(4,0,700), new Noeud(2,1000,700), 400,4,"rue4");
+        Troncon t4 = new Troncon(4, 2, 400,4,"rue4");
         vueTroncons.add(new VueTroncon(t4));
-        Troncon t5 = new Troncon(new Noeud(1,0,0), new Noeud(3,1000,0), 400,4,"rue5");
+        //Troncon t5 = new Troncon(new Noeud(1,0,0), new Noeud(3,1000,0), 400,4,"rue5");
+        Troncon t5 = new Troncon(1, 3, 400,4,"rue5");
         vueTroncons.add(new VueTroncon(t5));
-        Troncon t6 = new Troncon(new Noeud(2,1000,700), new Noeud(3,1000,0), 400,4,"rue6");
+        //Troncon t6 = new Troncon(new Noeud(2,1000,700), new Noeud(3,1000,0), 400,4,"rue6");
+        Troncon t6 = new Troncon(2, 3, 400,4,"rue6");
         vueTroncons.add(new VueTroncon(t6));
         
         List <Troncon> tronconsTournee = new ArrayList<Troncon>();
