@@ -25,11 +25,13 @@ public class Parseur {
     /** TODO tester (test actuel incomplet/vieux)
      * Lit toutes les livraisons contenues dans un fichier de demande de livraisons et en renvoie une liste
      * @param inputStream Flux à partir duquel lire les données XML
+     * @param zone ZoneGeographique la liste des noeuds dans laquelle les livraisons sont contenues
      * @return Liste des plages horaires contenant chacune leur livraisons à effectuer
+
      */
     public static List<PlageHoraire> lireLivraison(InputStream inputStream, ZoneGeographique zone) {
+        List<PlageHoraire> plageList = new ArrayList<PlageHoraire>();
         SAXBuilder builder = new SAXBuilder();
-        List<PlageHoraire> listLivraisonPlage = null;
         try {
             Document document = builder.build(inputStream);
             Element journee = document.getRootElement();
@@ -40,10 +42,10 @@ public class Parseur {
             // Liste des plages représentées dans le document XML
             @SuppressWarnings("unchecked")
             List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");
-            listLivraisonPlage = new ArrayList<PlageHoraire>();
             for (Element plage : plages) {
                 PlageHoraire plageHoraire = new PlageHoraire(plage.getAttributeValue("heureDebut"),
                         plage.getAttributeValue("heureFin"));
+                List<Livraison> livraisonList = new ArrayList<Livraison>();
 
                 @SuppressWarnings("unchecked")
                 List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
@@ -52,11 +54,13 @@ public class Parseur {
                     int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
                     int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
                     int idClient = Integer.parseInt(livraison.getAttributeValue("client"));
-
-                    listLivraison.add(new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient));
+                    
+                    Livraison l = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient);
+                    livraisonList.add(l);
+                    zone.modifierNoeudEnLivraison(idNoeud, l);
                 }
-                plageHoraire.setLivraisons(listLivraison);
-                listLivraisonPlage.add(plageHoraire);
+                plageHoraire.setLivraisons(livraisonList);
+                plageList.add(plageHoraire);
             }
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");
@@ -69,7 +73,7 @@ public class Parseur {
             System.exit(502);
         }
 
-        return listLivraisonPlage;
+        return plageList;
     }
 
     // TODO tester cette methode dans {@link fr.insaif.jajagaa.control.ParseurTest}
@@ -122,7 +126,6 @@ public class Parseur {
             System.exit(502);
         }
 
-//        return plan;
-        return null; // TODO
+        return (new ZoneGeographique(plan));
     }
 }

@@ -10,7 +10,7 @@ import java.util.Date;
  * Une livraison a un intervalle horaire précis, et peut être prévue sans retard, en retard ou faite
  * @author gustavemonod
  */
-public class Livraison {
+public class Livraison extends Noeud {
 /* TODO Définir comment ces attributs doivent être mis en place
     protected String raisonRetard;
 */
@@ -48,8 +48,8 @@ public class Livraison {
     /**
      * Constructeur d'une livraison à partir du noeud qui la concerne
      */
-    public Livraison(Noeud pointLivraison, int idLiv, int idClientLiv) {
-        this.setPointLivraison(pointLivraison);
+    public Livraison(Noeud n, int idLiv, int idClientLiv) {
+        super(n.id, n.xMetre, n.yMetre);
         this.idLivraison = idLiv;
         this.idClient = idClientLiv;
         // Date de livraison par défaut: heure de création
@@ -89,22 +89,6 @@ public class Livraison {
      */
     public void decalerHeureLivraison() {
         this.heureLivraison.add(Calendar.MINUTE, TPS_LIVRAISON_MIN);
-    }
-
-    /**
-     * Nœud auquel il faut livrer la livraison
-     * @return Nœud auquel il faut livrer la livraison
-     */
-    public Noeud getPointLivraison() {
-        return pointLivraison;
-    }
-
-    /**
-     * Modifie le nœud auquel il faut livrer la livraison
-     * @param pointLivraison Nœud auquel il faut livrer la livraison
-     */
-    public void setPointLivraison(Noeud pointLivraison) {
-        this.pointLivraison = pointLivraison;
     }
     
     /**
