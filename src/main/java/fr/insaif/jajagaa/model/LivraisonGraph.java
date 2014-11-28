@@ -56,9 +56,8 @@ public class LivraisonGraph implements Graph {
     public void update() {
         Set<LivraisonGraphVertex> tree = new HashSet<LivraisonGraphVertex>();
         for(Chemin chemin : chemins) {
-            LivraisonGraphVertex origine = chemin.getOrigine();
-            origine.getSortants().add(chemin);
-            tree.add(origine);
+            tree.add(chemin.getOrigine());
+            tree.add(chemin.getDestination());
         }
         this.noeuds = new ArrayList<LivraisonGraphVertex>(tree);
 

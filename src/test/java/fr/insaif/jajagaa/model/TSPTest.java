@@ -19,7 +19,7 @@ import static org.junit.Assert.fail;
  */
 public class TSPTest {
     private LivraisonGraph graph;
-    public static final int MAX_SEC = 200;
+    public static final int MAX_SEC = 2;
 
     @Before
     public void setUp() throws Exception{
@@ -59,6 +59,7 @@ public class TSPTest {
         noeuds.get(8).addSortant(noeuds.get(7), 320.3f, 4.7f, "v0");
         noeuds.get(8).addSortant(noeuds.get(9), 652.6f, 4.5f, "v0");
         noeuds.get(9).addSortant(noeuds.get(8), 652.6f, 4.6f, "v0");
+        noeuds.get(9).addSortant(noeuds.get(0), 652.6f, 4.6f, "v0");
         noeuds.get(10).addSortant(noeuds.get(0), 729f, 4.5f, "h0");
 
         ZoneGeographique zone = new ZoneGeographique(noeuds);
