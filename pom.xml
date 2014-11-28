@@ -87,7 +87,7 @@
                 <version>2.3.2</version>
                 <configuration>
                     <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
+                    <target>${jdk.version}</target>   
                 </configuration>
             </plugin>
         </plugins>

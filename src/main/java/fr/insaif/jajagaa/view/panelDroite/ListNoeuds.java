@@ -9,15 +9,11 @@ package fr.insaif.jajagaa.view.panelDroite;
 import fr.insaif.jajagaa.view.VueNoeud;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.plaf.basic.BasicListUI;
 
 /**
  *
@@ -31,6 +27,16 @@ public class ListNoeuds extends JList {
         setCellRenderer(new ListNoeudsRenderer());
         setSelectionBackground(Color.RED);
     }
+    
+    public void SelectionnerNoeud(VueNoeud vNASelectionner){
+        System.out.println("isSelectionEmpty() : " + isSelectionEmpty());
+        if(vNASelectionner==null){
+            clearSelection();
+        }
+        else {
+            setSelectedValue(vNASelectionner, true);
+        }
+    }
 
     /**
      * Met à jour la liste selon l'état des éléments dans le plan
@@ -41,16 +47,13 @@ public class ListNoeuds extends JList {
     }
 
     private void addElements(List<VueNoeud> vueNoeuds) {
-        dlm.addElement("8h");
         for(VueNoeud vN : vueNoeuds){
             dlm.addElement(vN);
         }
-        dlm.addElement("9h");
     }
 }
 
 class ListNoeudsRenderer extends JLabel implements ListCellRenderer{
-    
 
     @Override
     public Component getListCellRendererComponent(JList jlist, Object e, int index, boolean isSelected, boolean cellHasFocus) {
@@ -73,5 +76,4 @@ class ListNoeudsRenderer extends JLabel implements ListCellRenderer{
         setOpaque(true);
         return this;
     }
-    
 }

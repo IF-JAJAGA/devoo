@@ -7,6 +7,7 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,17 +24,10 @@ public class Controleur {
         return controleur;
     }
     
-    /**
-     * Énumération des différents types d'actions possibles. 
-     */
-    public enum ACTION{
-        CHARGER_PLAN,
-        CHARGER_TOURNEE,
-        AJOUTER_LIVRAISON
-        
-    };
     protected ZoneGeographique zone;
     protected List<PlageHoraire> plagesHoraire;
+    
+    protected List<Command> commands = new ArrayList<Command>();
 
     public ZoneGeographique getZone() {
         return zone;
@@ -66,5 +60,13 @@ public class Controleur {
      */
       public Tournee ajouterPointLivraison (Tournee tourneeModel,Noeud noeudMilieu, Noeud noeudAvant) {
         return null;
+    }
+      
+    public void undo(){
+        //TODO
+    }
+    
+    public void redo(){
+        //TODO
     }
 }
