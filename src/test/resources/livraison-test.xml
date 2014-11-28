@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <JourneeType>
-    <Entrepot adresse="4"/>
+    <Entrepot adresse="40"/>
     <PlagesHoraires>
         <Plage heureDebut="8:0:0" heureFin="12:0:0">
             <Livraisons>

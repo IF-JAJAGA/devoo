@@ -1,6 +1,5 @@
 package fr.insaif.jajagaa.model;
 
-import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.model.tsp.Graph;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
 import fr.insaif.jajagaa.model.tsp.TSP;
@@ -21,8 +20,6 @@ public class Dijkstra {
         final Map<Noeud, Float> distances = new HashMap<Noeud, Float>();
         float maxArcCost = getMaxArcCost(zone);
 
-        ZoneGeographique zg = Controleur.getInstance().getZone();
-
         Noeud arriveeNoeud = arrivee.getNoeud();
         Noeud departNoeud = depart.getNoeud();
         
@@ -31,7 +28,7 @@ public class Dijkstra {
         }
         distances.put(departNoeud, 0f);
 
-        Map<Noeud, Troncon> chemin = new HashMap<Noeud, Troncon>();
+        Map<Noeud, Troncon> cheminMap = new HashMap<Noeud, Troncon>();
         Queue<Noeud> q = new PriorityQueue<Noeud>(11, new Comparator<Noeud>() {
             public int compare(Noeud n1, Noeud n2) {
                 return -distances.get(n1).compareTo(distances.get(n2));
@@ -41,19 +38,22 @@ public class Dijkstra {
         q.add(departNoeud);
         while (!q.isEmpty()) {
             Noeud noeud = q.remove();
-            if (departNoeud == arriveeNoeud) {
+            if (noeud == arriveeNoeud) {
                 List<Troncon> troncons = new LinkedList<Troncon>();
                 while (noeud != departNoeud) {
-                    troncons.add(0, chemin.get(noeud));
-                    noeud = zg.getNoeudId(chemin.get(noeud).getIdOrigine());
+                    troncons.add(0, cheminMap.get(noeud));
+                    noeud = zone.getNoeudId(cheminMap.get(noeud).getIdOrigine());
                 }
-                return new Chemin(troncons, depart, arrivee);
+                Chemin chemin = new Chemin(troncons, depart, arrivee);
+                depart.getSortants().add(chemin);
+                arrivee.getEntrants().add(chemin);
+                return chemin;
             }
             for (Troncon t : noeud.getSortants()) {
-                Noeud n = zg.getNoeudId(t.getIdDestination());
-                if (!chemin.containsKey(n)) {
+                Noeud n = zone.getNoeudId(t.getIdDestination());
+                if (!cheminMap.containsKey(n)) {
                     q.add(n);
-                    chemin.put(n, t);
+                    cheminMap.put(n, t);
                     distances.put(n, t.getCost() + distances.get(noeud));
                 }
             }

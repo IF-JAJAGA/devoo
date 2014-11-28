@@ -85,7 +85,7 @@ public class Tournee {
 
         // Chemins les plus courts de tous les nœuds de la dernière plage horaire vers l'entrepôt
         for (Livraison livraison: this.plagesHoraire.get(this.plagesHoraire.size() - 1).getLivraisons()) {
-            Chemin plusCourt = Dijkstra.plusCourtChemin(this.zone, entrepot, new LivraisonGraphVertex(livraison));
+            Chemin plusCourt = Dijkstra.plusCourtChemin(this.zone, new LivraisonGraphVertex(livraison), entrepot);
             if (plusCourt != null) {
                 cheminsPossibles.add(plusCourt);
             }

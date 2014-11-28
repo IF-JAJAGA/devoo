@@ -6,10 +6,8 @@
 package fr.insaif.jajagaa.model;
 
 import fr.insaif.jajagaa.model.tsp.Graph;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+
+import java.util.*;
 
 /**
  *
@@ -35,13 +33,7 @@ public class LivraisonGraph implements Graph {
     protected List<LivraisonGraphVertex> noeuds;
 
     public LivraisonGraph(List<Chemin> chemins) {
-        this.chemins = chemins;
-        Set<LivraisonGraphVertex> tree = new TreeSet<LivraisonGraphVertex>();
-        for(Chemin chemin : chemins) {
-            tree.add(chemin.getOrigine());
-            tree.add(chemin.getDestination());
-        }
-        this.noeuds = new ArrayList<LivraisonGraphVertex>(tree);
+        this.setChemins(chemins);
     }
 
     protected List<LivraisonGraphVertex> getNoeuds() {
@@ -62,6 +54,14 @@ public class LivraisonGraph implements Graph {
      * Met à jour les champs calculés
      */
     public void update() {
+        Set<LivraisonGraphVertex> tree = new HashSet<LivraisonGraphVertex>();
+        for(Chemin chemin : chemins) {
+            LivraisonGraphVertex origine = chemin.getOrigine();
+            origine.getSortants().add(chemin);
+            tree.add(origine);
+        }
+        this.noeuds = new ArrayList<LivraisonGraphVertex>(tree);
+
         for (LivraisonGraphVertex noeud : this.getNoeuds()) {
             for (Chemin chemin : noeud.getSortants()) {
                 int cost = chemin.getCost();
