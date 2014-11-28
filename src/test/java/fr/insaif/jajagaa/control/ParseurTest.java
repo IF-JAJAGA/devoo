@@ -1,6 +1,6 @@
 package fr.insaif.jajagaa.control;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
 import java.util.List;
@@ -9,12 +9,10 @@ import org.junit.Test;
 
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.PlageHoraire;
-import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
  * Test de {@link fr.insaif.jajagaa.control.Parseur}
- * @author gustavemonod
  */
 public class ParseurTest {
     /**
@@ -24,6 +22,7 @@ public class ParseurTest {
 	private static final int NB_LIVRAISON_1 = 8;
 	//TODO Test plan10x10, Test plan20x20, Test xml mal formé, Test xml n'existe pas
 	//XML mar formé: manque d'attributs, Noeuds pas fermés
+	//DONE???
     
 	@Test
 	public void testLirePlansCorrects(){
@@ -98,5 +97,74 @@ public class ParseurTest {
 			
 		}
 	}
-
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void testErreurXMLMalForme(){
+		try {
+			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E1.xml");
+			//TODO Exception
+			inputPlan.close();
+		} catch (Exception e) {
+			//Exception ici?
+		}
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void testErreurAttributInvalide(){
+		try {
+			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E2.xml");
+			//TODO Exception
+			inputPlan.close();
+		} catch (Exception e) {
+			//Exception ici?
+		}
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void testErreurManqueAttribut(){
+		try {
+			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E3.xml");
+			//TODO Exception
+			inputPlan.close();
+		} catch (Exception e) {
+			//Exception ici?
+		}
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void testErreurAttributVide(){
+		try {
+			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E4.xml");
+			//TODO Exception
+			inputPlan.close();
+		} catch (Exception e) {
+			//Exception ici?
+		}
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void testErreurXMLNonExistant(){
+		try {
+			FileInputStream inputPlan = new FileInputStream("./src/test/resources/nexistepas.xml");
+			//TODO Exception
+			inputPlan.close();
+		} catch (Exception e) {
+			//Exception ici?
+		}
+	}
 }
