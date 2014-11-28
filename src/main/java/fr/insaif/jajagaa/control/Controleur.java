@@ -17,10 +17,21 @@ public class Controleur {
     private static Controleur controleur;
     public static Controleur getInstance(){
         //TODO : mieu 
-        if(controleur==null)    controleur = new Controleur();
+        if(controleur==null){  
+            controleur = new Controleur();
+        }
         return controleur;
     }
     
+    /**
+     * Énumération des différents types d'actions possibles. 
+     */
+    public enum ACTION{
+        CHARGER_PLAN,
+        CHARGER_TOURNEE,
+        AJOUTER_LIVRAISON
+        
+    };
     protected ZoneGeographique zone;
     protected List<PlageHoraire> plagesHoraire;
 
@@ -32,7 +43,10 @@ public class Controleur {
         return plagesHoraire;
     }
     
-    
+    public void creerTournee(FileInputStream fichierPlan, FileInputStream fichierLivraison) throws FileNotFoundException {
+        ZoneGeographique zone = Parseur.lirePlan(fichierPlan);
+        List<PlageHoraire> livraisons = Parseur.lireLivraison(fichierLivraison, zone);
+    }
     public ZoneGeographique lirePlan(String fichierPlan) throws FileNotFoundException {
         this.zone = Parseur.lirePlan(new FileInputStream(fichierPlan));
         return this.zone;

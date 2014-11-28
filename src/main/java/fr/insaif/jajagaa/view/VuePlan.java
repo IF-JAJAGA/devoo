@@ -201,7 +201,7 @@ public class VuePlan extends JPanel{
     	while(itVN.hasNext()){
             VueNoeud vN = itVN.next();
             if(vN.getNoeudClique(locationOnPanel)){
-                return noeudSelectionne;
+               return noeudSelectionne;
             }
         }
         
