@@ -1,14 +1,14 @@
 package fr.insaif.jajagaa.model;
 
+import fr.insaif.jajagaa.model.tsp.SolutionState;
+import fr.insaif.jajagaa.model.tsp.TSP;
+
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Itinéraire d'un livreur dans une seule zone géographique, partant du dépôt et revenant au dépôt,
- * elle est représentée par une liste ordonnée de chemins
+ * elle est représentée par une liste ordonnée de cheminsResultats
  *
  * @author gustavemonod
  */
@@ -24,17 +24,21 @@ public class Tournee {
     protected List<PlageHoraire> plagesHoraire;
 
     /**
-     * Liste ordonnée des chemins parcourus au cours de la tournée.
+     * Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      * Le premier chemin doit partir de l'entrepôt de la zone géographique.
      * Le dernier chemin doit arriver à l'entrepôt.
      * La fin d'un chemin doit être le début du chemin de l'autre.
      */
-    protected List<Chemin> chemins = new ArrayList<Chemin>();
+    protected List<Chemin> cheminsResultats = new LinkedList<Chemin>();
 
     /**
      * Liste des livraisons à effectuer (non triées, voir {@link fr.insaif.jajagaa.model.Tournee} pour la liste triée)
      */
     protected List<PlageHoraire> plages;
+
+    protected TSP tsp;
+
+    protected LivraisonGraph graph;
 
     /**
      * Jour au cours duquel se déroule la tournée (non pas l'heure, seulement la date).
@@ -42,30 +46,91 @@ public class Tournee {
     protected Date jour;
 
     /**
-     * Liste ordonnée des chemins parcourus au cours de la tournée.
-     *
-     * @return Liste ordonnée des chemins parcourus au cours de la tournée.
+     * Création d'une tournée à partir d'une zone et d'une demande de livraisons (List<PlageHoraire>)
      */
-    public List<Chemin> getChemins() {
-        return chemins;
+    public Tournee(ZoneGeographique zone) {
+        this.zone = zone;
+    }
+
+    public void setPlagesHoraire(List<PlageHoraire> plagesHoraire) {
+        this.plagesHoraire = plagesHoraire;
+        this.graph = new LivraisonGraph(this.getCheminsPossibles());
+        this.tsp = new TSP(graph);
+    }
+
+    protected List<Chemin> getCheminsPossibles() {
+        List<Chemin> cheminsPossibles = new ArrayList<Chemin>();
+        LivraisonGraphVertex entrepot = new LivraisonGraphVertex(this.zone.getEntrepot(), true);
+
+        // Chemins les plus courts de l'entrepôt vers tous les nœuds de la première plage horaire
+        for (Livraison livraison: this.plagesHoraire.get(0).getLivraisons()) {
+            Chemin plusCourt = Dijkstra.plusCourtChemin(this.zone, entrepot, new LivraisonGraphVertex(livraison));
+            if (plusCourt != null) {
+                cheminsPossibles.add(plusCourt);
+            }
+        }
+
+        // Tous les chemins possibles de tous les nœuds de la plage horaire n vers la plage horaire n + 1
+        int taille = this.plagesHoraire.size();
+        for (int i = 1; i < taille; ++i) {
+            for (Livraison depart: this.plagesHoraire.get(i - 1).getLivraisons()) {
+                for (Livraison arrivee: this.plagesHoraire.get(i).getLivraisons()) {
+                    Chemin plusCourt = Dijkstra.plusCourtChemin(this.zone, new LivraisonGraphVertex(depart), new LivraisonGraphVertex(arrivee));
+                    if (plusCourt != null) {
+                        cheminsPossibles.add(plusCourt);
+                    }
+                }
+            }
+        }
+
+        // Chemins les plus courts de tous les nœuds de la dernière plage horaire vers l'entrepôt
+        for (Livraison livraison: this.plagesHoraire.get(this.plagesHoraire.size() - 1).getLivraisons()) {
+            Chemin plusCourt = Dijkstra.plusCourtChemin(this.zone, entrepot, new LivraisonGraphVertex(livraison));
+            if (plusCourt != null) {
+                cheminsPossibles.add(plusCourt);
+            }
+        }
+
+        return cheminsPossibles;
+    }
+
+    public SolutionState solve(int TIME_LIMIT_MS) {
+        return this.tsp.solve(TIME_LIMIT_MS, this.graph.getNbVertices() * this.graph.getNoeuds().size());
+    }
+
+    public SolutionState getSolutionState() {
+        return this.tsp.getSolutionState();
+    }
+
+    public LivraisonGraph getGraph() {
+        return this.graph;
     }
 
     /**
-     * Ajoute un chemin à la liste ordonnée des chemins parcourus au cours de la tournée.
+     * Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
+     *
+     * @return Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
+     */
+    public List<Chemin> getCheminsResultats() {
+        return cheminsResultats;
+    }
+
+    /**
+     * Ajoute un chemin à la liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      *
      * @param chemin Chemin à ajouter
      */
-    public void addChemin(Chemin chemin) {
-        this.chemins.add(chemin);
+    public void addCheminResultat(Chemin chemin) {
+        this.cheminsResultats.add(chemin);
     }
 
     /**
-     * Modifie la liste ordonnée des chemins parcourus au cours de la tournée.
+     * Modifie la liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      *
-     * @param chemins Liste ordonnée des chemins parcourus au cours de la tournée.
+     * @param cheminsResultats Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      */
-    public void setChemins(List<Chemin> chemins) {
-        this.chemins = chemins;
+    public void setCheminsResultats(List<Chemin> cheminsResultats) {
+        this.cheminsResultats = cheminsResultats;
     }
 
     public Chemin calculerPlusCourtChemin(Noeud depart, Noeud arrivee) {

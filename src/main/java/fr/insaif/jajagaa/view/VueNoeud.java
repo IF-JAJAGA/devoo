@@ -134,14 +134,6 @@ public class VueNoeud {
                 Math.pow(Math.abs(p.x - (vueX)), 2) +
                         Math.pow(Math.abs(p.y - (vueY)), 2)
         );
-        if (d < DIAMETRE / 2) {
-            if(!estSelectionne) estSelectionne = true;
-            return true;
-        }
-        //On a cliqué en dehors du noeud.
-        else {
-            if(estSelectionne)  estSelectionne = false;
-            return false;
-        }
+        return d < DIAMETRE / 2;
     }
 }

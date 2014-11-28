@@ -2,6 +2,7 @@ package fr.insaif.jajagaa.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -15,6 +16,16 @@ public class Livraison extends Noeud {
 */
 
     /**
+     * Temps pris pour faire une livraison
+     */
+    public static final int TPS_LIVRAISON_MIN = 10;
+
+    /**
+     * Nœud auquel il faut livrer la livraison
+     */
+    protected Noeud pointLivraison;
+
+    /**
      * Formatter/parser de dates
      */
     protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:m:s");
@@ -22,7 +33,7 @@ public class Livraison extends Noeud {
     /**
      * Heure exacte (prévue) de la livraison (établie une fois la tournée calculée)
      */
-    protected Date heureLivraison;
+    protected Calendar heureLivraison;
     
     /**
      * Client à qui on doit faire la livraison
@@ -41,13 +52,15 @@ public class Livraison extends Noeud {
         super(n.id, n.xMetre, n.yMetre);
         this.idLivraison = idLiv;
         this.idClient = idClientLiv;
+        // Date de livraison par défaut: heure de création
+        this.heureLivraison = Calendar.getInstance();
     }
 
     /**
      * @return Heure exacte de la livraison
      */
     public Date getHeureLivraison() {
-        return heureLivraison;
+        return this.heureLivraison.getTime();
     }
 
     /**
@@ -55,7 +68,7 @@ public class Livraison extends Noeud {
      * @param heureLivraison La nouvelle heure de fin
      */
     public void setHeureLivraison(Date heureLivraison) {
-        this.heureLivraison = heureLivraison;
+        this.heureLivraison.setTime(heureLivraison);
     }
 
     /**
@@ -64,17 +77,26 @@ public class Livraison extends Noeud {
      */
     public void setHeureLivraison(String heureLivraison) throws ParseException {
         try {
-            this.heureLivraison = this.simpleDateFormat.parse(heureLivraison);
+            this.heureLivraison.setTime(this.simpleDateFormat.parse(heureLivraison));
         } catch (ParseException e) {
             System.err.println("Impossible de parser la date: pas de modification");
             throw e;
         }
+    }
+
+    /**
+     * Décale la livraison d'un cran dans le planning (avance l'heure de livraison de TPS_LIVRAISON_MIN minutes)
+     */
+    public void decalerHeureLivraison() {
+        this.heureLivraison.add(Calendar.MINUTE, TPS_LIVRAISON_MIN);
     }
     
     /**
      * Calcule l'heure de départ pour la livraison.
      */
     public Date getHeureFin(){
-    	return new Date(this.heureLivraison.getTime() + 10*60000);
+        Calendar heureFin = ((Calendar) this.heureLivraison.clone());
+        heureFin.add(Calendar.MINUTE, TPS_LIVRAISON_MIN);
+    	return heureFin.getTime();
     }
 }
