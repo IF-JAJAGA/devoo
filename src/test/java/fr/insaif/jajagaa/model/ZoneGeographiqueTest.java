@@ -40,13 +40,11 @@ public class ZoneGeographiqueTest {
         noeuds.add(new Noeud(3, 42, 145));
 
         // Exemple de tronçons
-        //TODO mettre le bon nom de rue
-        noeuds.get(0).addSortant(noeuds.get(1), 349f, 3.32f, "TODO");
-        noeuds.get(0).addSortant(noeuds.get(3), 123.5f, 4.43f, "TODO"); // min
-        noeuds.get(1).addSortant(noeuds.get(2), 312.4f, 6.831f, "TODO");
-        noeuds.get(2).addSortant(noeuds.get(3), 323.5f, 3.43f, "TODO");
-        noeuds.get(3).addSortant(noeuds.get(0), 432.4f, 1.43f, "TODO"); // max
-        noeuds.get(3).addSortant(noeuds.get(0), 432.4f, 1.43f, "TODO");
+        noeuds.get(0).addSortant(noeuds.get(1), 349f, 3.32f, "a");
+        noeuds.get(0).addSortant(noeuds.get(3), 123.5f, 4.43f, "b"); // min
+        noeuds.get(1).addSortant(noeuds.get(2), 312.4f, 6.831f, "c"); // max
+        noeuds.get(2).addSortant(noeuds.get(3), 323.5f, 3.43f, "d");
+        noeuds.get(3).addSortant(noeuds.get(0), 432.4f, 1.43f, "e");
 
         this.zone = new ZoneGeographique(noeuds);
     }
