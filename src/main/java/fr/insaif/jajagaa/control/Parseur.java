@@ -118,7 +118,6 @@ public class Parseur {
                     plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse, rue);
                 }
             }
-
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");
             System.exit(501);
@@ -130,6 +129,7 @@ public class Parseur {
             System.exit(502);
         } catch (IndexOutOfBoundsException ioobe) {
             System.err.println("Fichier XML erroné: valeurs de certains attributs inexistants");
+            System.exit(503);
         }
         return (new ZoneGeographique(plan));
     }
