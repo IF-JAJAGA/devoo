@@ -57,7 +57,9 @@ public class Parseur {
                     int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
                     int idClient = Integer.parseInt(livraison.getAttributeValue("client"));
                     
-                    livraisonList.add(new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient));
+                    Livraison l = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient);
+                    livraisonList.add(l);
+                    zone.modifierNoeudEnLivraison(idNoeud, l);
                 }
                 plageHoraire.setLivraisons(livraisonList);
                 plageList.add(plageHoraire);
@@ -94,11 +96,12 @@ public class Parseur {
             //Création des vueNoeuds contenus dans le fichier XML
             //Et ajout de ceux-ci dans la liste plan
             for (Element noeudXml : noeuds) {
-                Noeud noeud = new Noeud(Integer.parseInt(noeudXml.getAttributeValue("id")),
+                int noeudId = Integer.parseInt(noeudXml.getAttributeValue("id"));
+                Noeud noeud = new Noeud(noeudId,
                         Integer.parseInt(noeudXml.getAttributeValue("x")),
                         Integer.parseInt(noeudXml.getAttributeValue("y")));
 
-                plan.add(noeud);
+                plan.add(noeudId, noeud);
             }
 
             //Ajout des tronçons sortants de chaque noeud

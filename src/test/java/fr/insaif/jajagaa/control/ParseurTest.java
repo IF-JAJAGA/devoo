@@ -30,17 +30,17 @@ public class ParseurTest {
             inputStream = new FileInputStream("./src/test/resources/livraison10x10-1.xml");
             inputStreamPlan = new FileInputStream("./src/test/resources/plan10x10.xml");
             zone = Parseur.lirePlan(inputStreamPlan);
-            List<Noeud> listNoeuds = zone.getNoeuds();
-//            List<PlageHoraire> plages = Parseur.lireLivraison(inputStream,zone);
-//            for (PlageHoraire plage : plages) {
-//                List<Livraison> livraisons = plage.getLivraisons();
-//                assertEquals(NB_LIVRAISON_1, livraisons.size());
-//                assertEquals(simpleDateFormat.parse("8:0:0"), livraisons.get(0).getHeureLivraison());
-//                assertEquals(simpleDateFormat.parse("12:0:0"), livraisons.get(0).getHeureLivraison());
-//                for (int i = 1; i <= NB_LIVRAISON_1; ++i) {
-//                    assertEquals(i, livraisons.get(i - 1).getPointLivraison().getId());
-//                }
-//            }
+
+            List<PlageHoraire> plages = Parseur.lireLivraison(inputStream,zone);
+            for (PlageHoraire plage : plages) {
+                List<Livraison> livraisons = plage.getLivraisons();
+                assertEquals(NB_LIVRAISON_1, livraisons.size());
+                assertEquals(simpleDateFormat.parse("8:0:0"), livraisons.get(0).getHeureLivraison());
+                //assertEquals(simpleDateFormat.parse("12:0:0"), livraisons.get(0).getHeureLivraison());
+                for (int i = 1; i <= NB_LIVRAISON_1; ++i) {
+                    //assertEquals(i, livraisons.get(i - 1).getPointLivraison().getId());
+                }
+            }
             
         } finally {
             if (inputStream != null) {
@@ -50,6 +50,5 @@ public class ParseurTest {
                 inputStreamPlan.close();
             }
         }
-       
     }
 }
