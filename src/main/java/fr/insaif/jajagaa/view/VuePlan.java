@@ -200,7 +200,9 @@ public class VuePlan extends JPanel{
         VueNoeud noeudSelectionne = null;
     	while(itVN.hasNext()){
             VueNoeud vN = itVN.next();
-            if(vN.getNoeudClique(locationOnPanel))    noeudSelectionne = vN;
+            if(vN.getNoeudClique(locationOnPanel)){
+                noeudSelectionne = vN;
+            }
         }
         
         //TODO : Envoi au contrôleur pour demander activer le bouton "ajouter un noeud"
