@@ -123,7 +123,7 @@ public class VuePlan extends JPanel{
      * Creates new form VuePlan
      */
     public VuePlan() {
-		setBackground(Color.GRAY);
+        setBackground(Color.GRAY);
         initComponents();
     	
     	//Pour l'instant ici
@@ -150,21 +150,21 @@ public class VuePlan extends JPanel{
         List <Troncon> tronconsTournee = new ArrayList<Troncon>();
         tronconsTournee.add(t1);
         tronconsTournee.add(t6);
-        Chemin chemin = new Chemin(tronconsTournee);
-        Tournee tourneeModele = new Tournee();
-        tourneeModele.addChemin(chemin);
-        vueTournee = new VueTournee(tourneeModele, Color.BLUE);
+//        Chemin chemin = new Chemin(tronconsTournee);
+//        Tournee tourneeModele = new Tournee();
+//        tourneeModele.addCheminResultat(chemin);
+//        vueTournee = new VueTournee(tourneeModele, Color.BLUE);
         //getVueTournee().add(vT);
 
 
     	
     	this.addMouseListener(new MouseAdapter() {
-    		@Override
-    		public void mouseClicked(MouseEvent e) {
-    			super.mouseClicked(e);
-    			noeudEstClique(e.getPoint());
-                        repaint();
-    		}
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                changerSelection(noeudEstClique(e.getPoint()));
+                repaint();
+            }
 	});
     	this.paint(getGraphics());
     }
@@ -201,13 +201,21 @@ public class VuePlan extends JPanel{
     	while(itVN.hasNext()){
             VueNoeud vN = itVN.next();
             if(vN.getNoeudClique(locationOnPanel)){
-                noeudSelectionne = vN;
+               return noeudSelectionne;
             }
         }
         
         //TODO : Envoi au contrôleur pour demander activer le bouton "ajouter un noeud"
     	
-        return noeudSelectionne;
+        return null;
+    }
+    /**
+     * Change les flags des VueNoeud de la Vue pour que la sélection se mette à jour.
+     * Appelée à la fois par 
+     * @param vueNoeud 
+     */
+    private void changerSelection(VueNoeud vueNoeud){
+        Iterator<VueNoeud> itVN = vueNoeuds.iterator();
     }
 
     public VueTournee getVueTournee() {

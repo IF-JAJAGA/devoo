@@ -21,7 +21,7 @@ import fr.insaif.jajagaa.model.Tournee;
 public class ImprimerFdr {
 
 	public boolean faireImpresion(Tournee tournee){
-		List<Chemin> chemins = tournee.getChemins();
+		List<Chemin> chemins = tournee.getCheminsResultats();
 		Livraison liv = null;
 		for(Chemin chem : chemins) {
 			liv = chem.getLivraison();

@@ -1,20 +1,22 @@
 package fr.insaif.jajagaa.control;
 
-import fr.insaif.jajagaa.model.Livraison;
-import fr.insaif.jajagaa.model.Noeud;
-import fr.insaif.jajagaa.model.PlageHoraire;
-import fr.insaif.jajagaa.model.ZoneGeographique;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Vector;
+import fr.insaif.jajagaa.model.Livraison;
+import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.PlageHoraire;
+import fr.insaif.jajagaa.model.ZoneGeographique;
+import javax.sound.midi.SysexMessage;
 
 /**
  * Classe qui s'occupe de parser les fichiers XML de livraisons et de plan.
@@ -22,14 +24,17 @@ import java.util.Vector;
  * @author gustavemonod
  */
 public class Parseur {
-    /** TODO tester (test actuel incomplet/vieux)
+	
+	/** TODO tester (test actuel incomplet/vieux)
      * Lit toutes les livraisons contenues dans un fichier de demande de livraisons et en renvoie une liste
      * @param inputStream Flux à partir duquel lire les données XML
+     * @param zone ZoneGeographique la liste des noeuds dans laquelle les livraisons sont contenues
      * @return Liste des plages horaires contenant chacune leur livraisons à effectuer
+
      */
     public static List<PlageHoraire> lireLivraison(InputStream inputStream, ZoneGeographique zone) {
+        List<PlageHoraire> plageList = new ArrayList<PlageHoraire>();
         SAXBuilder builder = new SAXBuilder();
-        List<PlageHoraire> listLivraisonPlage = null;
         try {
             Document document = builder.build(inputStream);
             Element journee = document.getRootElement();
@@ -40,10 +45,10 @@ public class Parseur {
             // Liste des plages représentées dans le document XML
             @SuppressWarnings("unchecked")
             List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");
-            listLivraisonPlage = new ArrayList<PlageHoraire>();
             for (Element plage : plages) {
                 PlageHoraire plageHoraire = new PlageHoraire(plage.getAttributeValue("heureDebut"),
                         plage.getAttributeValue("heureFin"));
+                List<Livraison> livraisonList = new ArrayList<Livraison>();
 
                 @SuppressWarnings("unchecked")
                 List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
@@ -52,11 +57,13 @@ public class Parseur {
                     int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
                     int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
                     int idClient = Integer.parseInt(livraison.getAttributeValue("client"));
-
-                    listLivraison.add(new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient));
+                    
+                    Livraison l = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient);
+                    livraisonList.add(l);
+                    zone.modifierNoeudEnLivraison(idNoeud, l);
                 }
-                plageHoraire.setLivraisons(listLivraison);
-                listLivraisonPlage.add(plageHoraire);
+                plageHoraire.setLivraisons(livraisonList);
+                plageList.add(plageHoraire);
             }
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");
@@ -69,7 +76,7 @@ public class Parseur {
             System.exit(502);
         }
 
-        return listLivraisonPlage;
+        return plageList;
     }
 
     // TODO tester cette methode dans {@link fr.insaif.jajagaa.control.ParseurTest}
@@ -90,11 +97,12 @@ public class Parseur {
             //Création des vueNoeuds contenus dans le fichier XML
             //Et ajout de ceux-ci dans la liste plan
             for (Element noeudXml : noeuds) {
-                Noeud noeud = new Noeud(Integer.parseInt(noeudXml.getAttributeValue("id")),
+                int noeudId = Integer.parseInt(noeudXml.getAttributeValue("id"));
+                Noeud noeud = new Noeud(noeudId,
                         Integer.parseInt(noeudXml.getAttributeValue("x")),
                         Integer.parseInt(noeudXml.getAttributeValue("y")));
 
-                plan.add(noeud);
+                plan.add(noeudId, noeud);
             }
 
             //Ajout des tronçons sortants de chaque noeud
@@ -104,8 +112,8 @@ public class Parseur {
                 for (Element tronconXml : troncons) {
                     int id = Integer.parseInt(noeudXml.getAttributeValue("id"));
                     int idNoeudDestination = Integer.parseInt(tronconXml.getAttributeValue("idNoeudDestination"));
-                    float longeur = Float.parseFloat(tronconXml.getAttributeValue("longueur"));
-                    float vitesse = Float.parseFloat(tronconXml.getAttributeValue("vitesse"));
+                    float longeur = Float.parseFloat((tronconXml.getAttributeValue("longueur")).replace(",", "."));
+                    float vitesse = Float.parseFloat((tronconXml.getAttributeValue("vitesse")).replace(",", "."));
                     String rue = tronconXml.getAttributeValue("nomRue");
                     plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse, rue);
                 }
@@ -120,9 +128,9 @@ public class Parseur {
         } catch (NullPointerException nullptrex) {
             System.err.println("Ficher XML mal formé: element ou attribut manquant");
             System.exit(502);
+        } catch (IndexOutOfBoundsException ioobe) {
+            System.err.println("Fichier XML erroné: valeurs de certains attributs inexistants");
         }
-
-//        return plan;
-        return null; // TODO
+        return (new ZoneGeographique(plan));
     }
 }

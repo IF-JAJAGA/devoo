@@ -32,6 +32,11 @@ public class ConteneurDroite extends JPanel{
     public JButton getBtnAddNoeud() {
         return btnAddNoeud;
     }
+
+    public ListNoeuds getListeNoeuds() {
+        return listeNoeuds;
+    }
+
     
 
     public ConteneurDroite() {

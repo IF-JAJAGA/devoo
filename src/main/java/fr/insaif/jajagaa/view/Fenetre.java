@@ -23,6 +23,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.KeyStroke;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * Classe qui fait l'interface avec le controleur et qui implémente tous les écouteurs.
@@ -50,10 +52,16 @@ public class Fenetre extends JFrame {
         
         //On crée un nouveau sélecteur de fichier
         final JFileChooser fc = new JFileChooser();
-	
+        
+        private VueNoeud vNAAjouter;
+        private VueNoeud vNAvant;
+        
+        
     private Fenetre(){
     	setVisible(true);
     	setSize(new Dimension(600,400));
+        setTitle("OnlyLyon Livreur");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vuePlan = new VuePlan();
     	getContentPane().add(vuePlan);
     	
@@ -115,11 +123,12 @@ public class Fenetre extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                Controleur.getInstance().Controle(Controleur.ACTION.AJOUTER_LIVRAISON, (Object) null);
+                //TODO
+                Controleur.getInstance().ajouterPointLivraison(null, null, null);
             }
 
         });
-        
+      
         
         importPlan.addActionListener(new ActionListener(){
             @Override
@@ -153,10 +162,21 @@ public class Fenetre extends JFrame {
                 else{
                     System.out.println("Opération annulée, pour le plan.");
                 }
+            }
+            
+        });
                 
+        conteneurDroite.getListeNoeuds().addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if(!lse.getValueIsAdjusting()){
+                    VueNoeud vNListe = (VueNoeud) conteneurDroite.getListeNoeuds().getModel().getElementAt(conteneurDroite.getListeNoeuds().getSelectedIndex());
+                    vuePlan.repaint();
+                }
             }
         });
-    }
+     }
     
     
     /**

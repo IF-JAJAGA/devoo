@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author aurelien
  */
-public class LivraisonGraphVertice {
+public class LivraisonGraphVertex {
     
     protected boolean estEntrepot = false;
     
@@ -21,17 +21,17 @@ public class LivraisonGraphVertice {
     
     protected List<Chemin> sortants;
 
-    public LivraisonGraphVertice(Noeud noeud) {
+    public LivraisonGraphVertex(Noeud noeud) {
         this.noeud = noeud;
     }
     
-    public LivraisonGraphVertice(Noeud noeud, boolean estEntrepot) {
+    public LivraisonGraphVertex(Noeud noeud, boolean estEntrepot) {
         this.noeud = noeud;
         this.estEntrepot = estEntrepot;
     }
     
     public int getId() {
-        return this.noeud.getId();
+        return this.getNoeud().getId();
     }
 
     public List<Chemin> getEntrants() {
@@ -41,5 +41,8 @@ public class LivraisonGraphVertice {
     public List<Chemin> getSortants() {
         return sortants;
     }
-    
+
+    public Noeud getNoeud() {
+        return noeud;
+    }
 }

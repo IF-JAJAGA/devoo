@@ -9,11 +9,15 @@ package fr.insaif.jajagaa.view.panelDroite;
 import fr.insaif.jajagaa.view.VueNoeud;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicListUI;
 
 /**
  *
@@ -25,6 +29,7 @@ public class ListNoeuds extends JList {
     public ListNoeuds() {
         setModel(dlm);
         setCellRenderer(new ListNoeudsRenderer());
+        setSelectionBackground(Color.RED);
     }
 
     /**
@@ -45,20 +50,27 @@ public class ListNoeuds extends JList {
 }
 
 class ListNoeudsRenderer extends JLabel implements ListCellRenderer{
+    
 
     @Override
     public Component getListCellRendererComponent(JList jlist, Object e, int index, boolean isSelected, boolean cellHasFocus) {
-        if(e instanceof VueNoeud)
-            setText("VueNoeud");
-        else if(e instanceof String)
+        if(e instanceof VueNoeud){
+            VueNoeud vN = (VueNoeud)e;
+            setText("Noeud " + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY());
+            if (isSelected) {
+                setBackground(Color.CYAN);
+            } else {
+                setBackground(Color.WHITE);
+            }
+        }
+        else if(e instanceof String){
             setText((String)e);
-        else
-            setText("merde");
+        }
+        else{
+            setText("Type non trouvé");
+        }
         
-        setBackground(Color.RED);
-//        setBackground(isSelected ? Color.BLUE : Color.WHITE);
-        setForeground(Color.BLACK);
-        
+        setOpaque(true);
         return this;
     }
     

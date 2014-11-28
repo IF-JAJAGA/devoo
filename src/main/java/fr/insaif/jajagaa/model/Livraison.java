@@ -2,6 +2,7 @@ package fr.insaif.jajagaa.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -9,10 +10,15 @@ import java.util.Date;
  * Une livraison a un intervalle horaire précis, et peut être prévue sans retard, en retard ou faite
  * @author gustavemonod
  */
-public class Livraison {
+public class Livraison extends Noeud {
 /* TODO Définir comment ces attributs doivent être mis en place
     protected String raisonRetard;
 */
+
+    /**
+     * Temps pris pour faire une livraison
+     */
+    public static final int TPS_LIVRAISON_MIN = 10;
 
     /**
      * Nœud auquel il faut livrer la livraison
@@ -27,7 +33,7 @@ public class Livraison {
     /**
      * Heure exacte (prévue) de la livraison (établie une fois la tournée calculée)
      */
-    protected Date heureLivraison;
+    protected Calendar heureLivraison;
     
     /**
      * Client à qui on doit faire la livraison
@@ -42,17 +48,19 @@ public class Livraison {
     /**
      * Constructeur d'une livraison à partir du noeud qui la concerne
      */
-    public Livraison(Noeud pointLivraison, int idLiv, int idClientLiv) {
-        this.setPointLivraison(pointLivraison);
+    public Livraison(Noeud n, int idLiv, int idClientLiv) {
+        super(n.id, n.xMetre, n.yMetre);
         this.idLivraison = idLiv;
         this.idClient = idClientLiv;
+        // Date de livraison par défaut: heure de création
+        this.heureLivraison = Calendar.getInstance();
     }
 
     /**
      * @return Heure exacte de la livraison
      */
     public Date getHeureLivraison() {
-        return heureLivraison;
+        return this.heureLivraison.getTime();
     }
 
     /**
@@ -60,7 +68,7 @@ public class Livraison {
      * @param heureLivraison La nouvelle heure de fin
      */
     public void setHeureLivraison(Date heureLivraison) {
-        this.heureLivraison = heureLivraison;
+        this.heureLivraison.setTime(heureLivraison);
     }
 
     /**
@@ -69,7 +77,7 @@ public class Livraison {
      */
     public void setHeureLivraison(String heureLivraison) throws ParseException {
         try {
-            this.heureLivraison = this.simpleDateFormat.parse(heureLivraison);
+            this.heureLivraison.setTime(this.simpleDateFormat.parse(heureLivraison));
         } catch (ParseException e) {
             System.err.println("Impossible de parser la date: pas de modification");
             throw e;
@@ -77,25 +85,18 @@ public class Livraison {
     }
 
     /**
-     * Nœud auquel il faut livrer la livraison
-     * @return Nœud auquel il faut livrer la livraison
+     * Décale la livraison d'un cran dans le planning (avance l'heure de livraison de TPS_LIVRAISON_MIN minutes)
      */
-    public Noeud getPointLivraison() {
-        return pointLivraison;
-    }
-
-    /**
-     * Modifie le nœud auquel il faut livrer la livraison
-     * @param pointLivraison Nœud auquel il faut livrer la livraison
-     */
-    public void setPointLivraison(Noeud pointLivraison) {
-        this.pointLivraison = pointLivraison;
+    public void decalerHeureLivraison() {
+        this.heureLivraison.add(Calendar.MINUTE, TPS_LIVRAISON_MIN);
     }
     
     /**
      * Calcule l'heure de départ pour la livraison.
      */
     public Date getHeureFin(){
-    	return new Date(this.heureLivraison.getTime() + 10*60000);
+        Calendar heureFin = ((Calendar) this.heureLivraison.clone());
+        heureFin.add(Calendar.MINUTE, TPS_LIVRAISON_MIN);
+    	return heureFin.getTime();
     }
 }
