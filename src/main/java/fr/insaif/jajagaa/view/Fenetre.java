@@ -34,6 +34,7 @@ public class Fenetre extends JFrame {
     private Fenetre(){
     	setVisible(true);
     	setSize(new Dimension(600,400));
+        setTitle("OnlyLyon Livreur");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vuePlan = new VuePlan();
     	getContentPane().add(vuePlan);
@@ -81,6 +82,7 @@ public class Fenetre extends JFrame {
             @Override
             public void valueChanged(ListSelectionEvent lse) {
                 if(!lse.getValueIsAdjusting()){
+                    VueNoeud vNListe = (VueNoeud) conteneurDroite.getListeNoeuds().getModel().getElementAt(conteneurDroite.getListeNoeuds().getSelectedIndex());
                     vuePlan.repaint();
                 }
             }

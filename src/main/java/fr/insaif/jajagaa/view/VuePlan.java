@@ -162,7 +162,7 @@ public class VuePlan extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                noeudEstClique(e.getPoint());
+                changerSelection(noeudEstClique(e.getPoint()));
                 repaint();
             }
 	});
@@ -200,12 +200,22 @@ public class VuePlan extends JPanel{
         VueNoeud noeudSelectionne = null;
     	while(itVN.hasNext()){
             VueNoeud vN = itVN.next();
-            if(vN.getNoeudClique(locationOnPanel))    noeudSelectionne = vN;
+            if(vN.getNoeudClique(locationOnPanel)){
+                return noeudSelectionne;
+            }
         }
         
         //TODO : Envoi au contrôleur pour demander activer le bouton "ajouter un noeud"
     	
-        return noeudSelectionne;
+        return null;
+    }
+    /**
+     * Change les flags des VueNoeud de la Vue pour que la sélection se mette à jour.
+     * Appelée à la fois par 
+     * @param vueNoeud 
+     */
+    private void changerSelection(VueNoeud vueNoeud){
+        Iterator<VueNoeud> itVN = vueNoeuds.iterator();
     }
 
     public VueTournee getVueTournee() {
