@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Classe qui implémente la vue d'une tournée, elle même constituée de plusieurs chemins.
+ * Classe qui implémente la vue d'une tournée, elle même constituée de plusieurs cheminsResultats.
  *
  * @author alicia
  */
@@ -39,7 +39,7 @@ public class VueTournee {
      */
     public VueTournee(Tournee uneTournee, Color uneCouleur) {
         setTourneeModel(uneTournee);
-        Iterator<Chemin> itCh = uneTournee.getChemins().iterator();
+        Iterator<Chemin> itCh = uneTournee.getCheminsResultats().iterator();
         while (itCh.hasNext()) {
             Chemin ch = itCh.next();
             Iterator<Troncon> itTo = ch.getTroncons().iterator();

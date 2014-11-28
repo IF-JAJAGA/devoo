@@ -1,0 +1,17 @@
+
+noeuds.get(2).addSortant(noeuds.get(1), 627.500000f, 4.600000f, "v0");
+noeuds.get(2).addSortant(noeuds.get(3), 581.700000f, 4.100000f, "v0");
+noeuds.get(3).addSortant(noeuds.get(2), 581.700000f, 4.000000f, "v0");
+noeuds.get(3).addSortant(noeuds.get(4), 334.000000f, 4.500000f, "v0");
+noeuds.get(4).addSortant(noeuds.get(3), 334.000000f, 4.200000f, "v0");
+noeuds.get(4).addSortant(noeuds.get(5), 426.700000f, 4.100000f, "v0");
+noeuds.get(5).addSortant(noeuds.get(4), 426.700000f, 4.100000f, "v0");
+noeuds.get(5).addSortant(noeuds.get(6), 640.700000f, 4.000000f, "v0");
+noeuds.get(6).addSortant(noeuds.get(5), 640.700000f, 4.700000f, "v0");
+noeuds.get(6).addSortant(noeuds.get(7), 838.200000f, 4.200000f, "v0");
+noeuds.get(7).addSortant(noeuds.get(6), 838.200000f, 4.300000f, "v0");
+noeuds.get(7).addSortant(noeuds.get(8), 320.300000f, 4.100000f, "v0");
+noeuds.get(8).addSortant(noeuds.get(7), 320.300000f, 4.700000f, "v0");
+noeuds.get(8).addSortant(noeuds.get(9), 652.600000f, 4.500000f, "v0");
+noeuds.get(9).addSortant(noeuds.get(8), 652.600000f, 4.600000f, "v0");
+noeuds.get(10).addSortant(noeuds.get(0), 729.000000f, 4.500000f, "h0");

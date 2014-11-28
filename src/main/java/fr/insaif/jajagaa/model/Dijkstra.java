@@ -16,14 +16,16 @@ public class Dijkstra {
      */
     public static int MAX_SEC = 200;
 
-    public static Chemin plusCourtChemin(ZoneGeographique zone, Noeud depart, Noeud arrivee) {
+    public static Chemin plusCourtChemin(ZoneGeographique zone, LivraisonGraphVertex depart, LivraisonGraphVertex arrivee) {
         final Map<Noeud, Float> distances = new HashMap<Noeud, Float>();
         float maxArcCost = getMaxArcCost(zone);
+        Noeud arriveeNoeud = arrivee.getNoeud();
+        Noeud departNoeud = depart.getNoeud();
 
         for (Noeud noeud : zone.getNoeuds()) {
             distances.put(noeud, maxArcCost + 1f);
         }
-        distances.put(depart, 0f);
+        distances.put(departNoeud, 0f);
 
         Map<Noeud, Troncon> chemin = new HashMap<Noeud, Troncon>();
         Queue<Noeud> q = new PriorityQueue<Noeud>(11, new Comparator<Noeud>() {
@@ -32,16 +34,16 @@ public class Dijkstra {
             }
         });
 
-        q.add(depart);
+        q.add(departNoeud);
         while (!q.isEmpty()) {
             Noeud noeud = q.remove();
-            if (noeud == arrivee) {
+            if (departNoeud == arriveeNoeud) {
                 List<Troncon> troncons = new LinkedList<Troncon>();
-                while (noeud != depart) {
+                while (noeud != departNoeud) {
                     troncons.add(0, chemin.get(noeud));
                     noeud = chemin.get(noeud).getOrigine();
                 }
-                return new Chemin(troncons);
+                return new Chemin(troncons, depart, arrivee);
             }
             for (Troncon t : noeud.getSortants()) {
                 Noeud n = t.getDestination();

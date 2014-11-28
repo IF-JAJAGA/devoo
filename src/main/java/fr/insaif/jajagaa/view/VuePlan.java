@@ -150,10 +150,10 @@ public class VuePlan extends JPanel{
         List <Troncon> tronconsTournee = new ArrayList<Troncon>();
         tronconsTournee.add(t1);
         tronconsTournee.add(t6);
-        Chemin chemin = new Chemin(tronconsTournee);
-        Tournee tourneeModele = new Tournee();
-        tourneeModele.addChemin(chemin);
-        vueTournee = new VueTournee(tourneeModele, Color.BLUE);
+//        Chemin chemin = new Chemin(tronconsTournee);
+//        Tournee tourneeModele = new Tournee();
+//        tourneeModele.addCheminResultat(chemin);
+//        vueTournee = new VueTournee(tourneeModele, Color.BLUE);
         //getVueTournee().add(vT);
 
 

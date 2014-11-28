@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class LivraisonGraph implements Graph {
 
-     /**
+    /**
      * Coût max des arcs
      */
     protected int maxArcCost = 0;
@@ -25,7 +25,7 @@ public class LivraisonGraph implements Graph {
     protected int minArcCost = Integer.MAX_VALUE;
     
     /**
-     * Liste des plus courts chemins
+     * Liste des plus courts cheminsResultats
      */
     protected List<Chemin> chemins;
     

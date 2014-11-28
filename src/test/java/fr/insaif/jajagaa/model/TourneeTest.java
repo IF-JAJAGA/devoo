@@ -16,7 +16,7 @@ public class TourneeTest {
 
     @Before
     public void setUp() throws Exception {
-        this.tournee = new Tournee();
+//        this.tournee = new Tournee();
         //tournee.livraisons = Parseur.lireLivraison(new FileInputStream("./src/test/resources/livraison10x10-1.xml"));
         tournee.zone = ZoneGeographiqueTest.exampleZone();
     }
