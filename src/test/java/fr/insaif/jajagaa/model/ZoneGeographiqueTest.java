@@ -83,7 +83,7 @@ public class ZoneGeographiqueTest {
 
     @Test
     public void testCourtChemin() {
-        Chemin c = Dijkstra.plusCourtChemin(this.zone, this.noeuds.get(0), this.noeuds.get(2));
+        Chemin c = Dijkstra.plusCourtChemin(this.zone, new LivraisonGraphVertex(this.noeuds.get(0)), new LivraisonGraphVertex(this.noeuds.get(2)));
         List<Troncon> troncons = c.getTroncons();
         assertEquals(2, troncons.size());
         assertEquals(this.noeuds.get(0).getSortants().get(0), troncons.get(0));

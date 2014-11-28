@@ -31,7 +31,7 @@ public class LivraisonGraphVertex {
     }
     
     public int getId() {
-        return this.noeud.getId();
+        return this.getNoeud().getId();
     }
 
     public List<Chemin> getEntrants() {
@@ -41,5 +41,8 @@ public class LivraisonGraphVertex {
     public List<Chemin> getSortants() {
         return sortants;
     }
-    
+
+    public Noeud getNoeud() {
+        return noeud;
+    }
 }
