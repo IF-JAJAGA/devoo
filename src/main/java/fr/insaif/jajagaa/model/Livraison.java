@@ -37,8 +37,8 @@ public class Livraison extends Noeud {
     /**
      * Constructeur d'une livraison à partir du noeud qui la concerne
      */
-    public Livraison(int id, int xMetre, int yMetre, int idLiv, int idClientLiv) {
-        super(id, xMetre, yMetre);
+    public Livraison(Noeud n, int idLiv, int idClientLiv) {
+        super(n.id, n.xMetre, n.yMetre);
         this.idLivraison = idLiv;
         this.idClient = idClientLiv;
     }

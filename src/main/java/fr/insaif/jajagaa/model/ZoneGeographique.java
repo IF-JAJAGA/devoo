@@ -78,4 +78,14 @@ public class ZoneGeographique {
         assert !noeuds.isEmpty();
         this.noeuds = noeuds;
     }
+    
+    /**
+     * Supprime le Noeud qui possède l'id idNoeud et ajoute la livraison l à la place.
+     * La livraison à ajouter et le Noeud à supprimer doivent avoir le même id de Noeud.
+     * @param idNoeud
+     * @param l 
+     */
+    public void modifierNoeudEnLivraison(int idNoeud, Livraison l){
+        
+    }
 }
