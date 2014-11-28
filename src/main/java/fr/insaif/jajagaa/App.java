@@ -23,7 +23,7 @@ public class App {
         	for(Noeud no : zoneGeo.getNoeuds()) {
         		List<Troncon> lt = no.getSortants();
         		for(Troncon tronco : lt) {
-        			System.out.println(tronco.getOrigine().getId()+": "+tronco.getLongueurMetre()+"m.   "+tronco.getVitesse()+"m/s");
+        			System.out.println(tronco.getIdOrigine()+": "+tronco.getLongueurMetre()+"m.   "+tronco.getVitesse()+"m/s");
         		}
         		
         	}

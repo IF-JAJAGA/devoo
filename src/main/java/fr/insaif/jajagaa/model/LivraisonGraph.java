@@ -6,7 +6,10 @@
 package fr.insaif.jajagaa.model;
 
 import fr.insaif.jajagaa.model.tsp.Graph;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
@@ -33,6 +36,12 @@ public class LivraisonGraph implements Graph {
 
     public LivraisonGraph(List<Chemin> chemins) {
         this.chemins = chemins;
+        Set<LivraisonGraphVertex> tree = new TreeSet<LivraisonGraphVertex>();
+        for(Chemin chemin : chemins) {
+            tree.add(chemin.getOrigine());
+            tree.add(chemin.getDestination());
+        }
+        this.noeuds = new ArrayList<LivraisonGraphVertex>(tree);
     }
 
     public List<LivraisonGraphVertex> getNoeuds() {
