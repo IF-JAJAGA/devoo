@@ -123,7 +123,7 @@ public class VuePlan extends JPanel{
      * Creates new form VuePlan
      */
     public VuePlan() {
-		setBackground(Color.GRAY);
+        setBackground(Color.GRAY);
         initComponents();
     	
     	//Pour l'instant ici
@@ -159,12 +159,12 @@ public class VuePlan extends JPanel{
 
     	
     	this.addMouseListener(new MouseAdapter() {
-    		@Override
-    		public void mouseClicked(MouseEvent e) {
-    			super.mouseClicked(e);
-    			noeudEstClique(e.getPoint());
-                        repaint();
-    		}
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                noeudEstClique(e.getPoint());
+                repaint();
+            }
 	});
     	this.paint(getGraphics());
     }
