@@ -44,8 +44,12 @@ public class LivraisonGraph implements Graph {
         this.noeuds = new ArrayList<LivraisonGraphVertex>(tree);
     }
 
-    public List<LivraisonGraphVertex> getNoeuds() {
+    protected List<LivraisonGraphVertex> getNoeuds() {
         return this.noeuds;
+    }
+    
+    public LivraisonGraphVertex getVertex(int index) {
+        return this.noeuds.get(index);
     }
 
     public void setChemins(List<Chemin> chemins) {

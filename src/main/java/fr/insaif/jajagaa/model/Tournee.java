@@ -95,7 +95,13 @@ public class Tournee {
     }
 
     public SolutionState solve(int TIME_LIMIT_MS) {
-        return this.tsp.solve(TIME_LIMIT_MS, this.graph.getNbVertices() * this.graph.getNoeuds().size());
+        SolutionState state = this.tsp.solve(TIME_LIMIT_MS, this.graph.getNbVertices() * this.graph.getNoeuds().size());
+        if(state == SolutionState.OPTIMAL_SOLUTION_FOUND || state == SolutionState.SOLUTION_FOUND) {
+            int[] next = this.tsp.getNext();
+            // TODO : récupération des LivraisonGraphVertex dans l'ordre
+            // TODO : reconstitution de la liste des chemins
+        }
+        return state;
     }
 
     public SolutionState getSolutionState() {
