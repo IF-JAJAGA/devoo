@@ -6,6 +6,8 @@
 
 package fr.insaif.jajagaa.view.panelDroite;
 
+import fr.insaif.jajagaa.view.VueNoeud;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,6 +24,10 @@ public class ConteneurDroite extends JPanel{
     private JButton btnAddNoeud;
     
     private SpringLayout layout;
+    
+    public void majListe(List<VueNoeud> vueNoeuds) {
+        listeNoeuds.maj(vueNoeuds);
+    }
 
     public JButton getBtnAddNoeud() {
         return btnAddNoeud;
@@ -67,6 +73,4 @@ public class ConteneurDroite extends JPanel{
     
     private void addListeners(){
     }
-    
-    
 }
