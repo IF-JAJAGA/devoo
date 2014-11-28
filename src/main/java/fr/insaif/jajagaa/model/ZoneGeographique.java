@@ -86,6 +86,7 @@ public class ZoneGeographique {
      * @param l 
      */
     public void modifierNoeudEnLivraison(int idNoeud, Livraison l){
-        
+        this.noeuds.remove(idNoeud);
+        this.noeuds.add(l.id, l);
     }
 }
