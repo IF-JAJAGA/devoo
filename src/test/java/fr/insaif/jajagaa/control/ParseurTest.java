@@ -61,10 +61,14 @@ public class ParseurTest {
 	public void testLireLivraisonsCorrectes(){
 		testLireLivraisonCorrecte("./src/test/resources/livraison10x10-1.xml",
 				"./src/test/resources/plan10x10.xml",8);
-//		testLireLivraisonCorrecte("./src/test/resources/livraison10x10-2.xml","./src/test/resources/plan10x10.xml",);
-//		testLireLivraisonCorrecte("./src/test/resources/livraison10x10-3.xml","./src/test/resources/plan10x10.xml",);
-//		testLireLivraisonCorrecte("./src/test/resources/livraison20x20-1.xml","./src/test/resources/plan20x20.xml",);
-//		testLireLivraisonCorrecte("./src/test/resources/livraison20x20-2.xml","./src/test/resources/plan20x20.xml",);
+		testLireLivraisonCorrecte("./src/test/resources/livraison10x10-2.xml",
+				"./src/test/resources/plan10x10.xml",8);
+		testLireLivraisonCorrecte("./src/test/resources/livraison10x10-3.xml",
+				"./src/test/resources/plan10x10.xml",8);
+		testLireLivraisonCorrecte("./src/test/resources/livraison20x20-1.xml",
+				"./src/test/resources/plan20x20.xml",12);
+		testLireLivraisonCorrecte("./src/test/resources/livraison20x20-2.xml",
+				"./src/test/resources/plan20x20.xml",12);
 	}
 	
 	/**
@@ -80,9 +84,13 @@ public class ParseurTest {
 			inputLivraison = new FileInputStream(pathLiv);
 			zoneGeo = Parseur.lirePlan(inputPlan);
 			listPlages = Parseur.lireLivraison(inputLivraison, zoneGeo);
+			
+			int cont = 0;
 			for (PlageHoraire plage : listPlages) {
-				plage.getLivraisons();
+				cont += plage.getLivraisons().size();
 			}
+			
+			assertEquals(nombre, cont);
 			
 			inputPlan.close();
 			inputLivraison.close();
