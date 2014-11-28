@@ -62,6 +62,5 @@ public class VueNoeudTest {
     public void testClicHorsNeud(){
         assertFalse(vN1.getNoeudClique(new Point(vN1.getVueX()+rayon,vN1.getVueY())));
         assertFalse(vN1.getNoeudClique(new Point(vN1.getVueX(),vN1.getVueY()+rayon)));
-
     }
 }
