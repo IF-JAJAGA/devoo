@@ -67,7 +67,7 @@ public class Fenetre extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                Controleur.getInstance().Controle(Controleur.ACTION.AJOUTER_LIVRAISON, (Object) null);
+                //Controleur.getInstance().Controle(Controleur.ACTION.AJOUTER_LIVRAISON, (Object) null);
             }
 
         });
