@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
@@ -21,29 +22,33 @@ public class ParseurTest {
      */
 	
 	private static final int NB_LIVRAISON_1 = 8;
-	private static final int NB_NOEUDS_10x10 = 100;
 	//TODO Test plan10x10, Test plan20x20, Test xml mal formé, Test xml n'existe pas
 	//XML mar formé: manque d'attributs, Noeuds pas fermés
     
 	@Test
+	public void testLirePlansCorrects(){
+		testLirePlanCorrect("./src/test/resources/plan10x10.xml",100,2,3,2);
+		testLirePlanCorrect("./src/test/resources/plan20x20.xml",400,2,3,1);
+	}
+	
 	/**
 	 * 
 	 */
-	public void testLirePlan() {
+	public void testLirePlanCorrect(String path, int nombre, int i1, int i2, int i3) {
 		FileInputStream inputPlan = null;
 		ZoneGeographique zoneGeo = null;
 		List<Noeud> listNoeuds = null;
 		try {
-			inputPlan = new FileInputStream("./src/test/resources/plan10x10.xml");
+			inputPlan = new FileInputStream(path);
 			zoneGeo = Parseur.lirePlan(inputPlan);
 			listNoeuds = zoneGeo.getNoeuds();
-			assertEquals(NB_NOEUDS_10x10,listNoeuds.size());
+			assertEquals(nombre,listNoeuds.size());
 			
-			Noeud n1 = listNoeuds.get(0), n2 = listNoeuds.get(50), 
-					n3 = listNoeuds.get(100);
-			assertEquals(2,n1.getSortants().size());
-			assertEquals(3,n2.getSortants().size());
-			assertEquals(20, n3.getSortants().size());
+			Noeud n1 = listNoeuds.get(0), n2 = listNoeuds.get(nombre/2), 
+				n3 = listNoeuds.get(nombre);
+			assertEquals(i1,n1.getSortants().size());
+			assertEquals(i2,n2.getSortants().size());
+			assertEquals(i3, n3.getSortants().size());
 			
 			inputPlan.close();
 			
@@ -52,37 +57,38 @@ public class ParseurTest {
 		}
 	}
 	
-	/**@Test
-    
-    public void testLireLivraison() throws Exception {
-        
-        FileInputStream inputStream = null;
-        FileInputStream inputStreamPlan = null;
-        ZoneGeographique zone = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:m:s");
-        try {
-            inputStream = new FileInputStream("./src/test/resources/livraison10x10-1.xml");
-            inputStreamPlan = new FileInputStream("./src/test/resources/plan10x10.xml");
-            zone = Parseur.lirePlan(inputStreamPlan);
-
-            List<PlageHoraire> plages = Parseur.lireLivraison(inputStream,zone);
-            for (PlageHoraire plage : plages) {
-                List<Livraison> livraisons = plage.getLivraisons();
-                assertEquals(NB_LIVRAISON_1, livraisons.size());
-                for (int i = 1; i <= NB_LIVRAISON_1; ++i) {
-                    //assertEquals(i, livraisons.get(i - 1).getPointLivraison().getId());
-                }
-            }
-            
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            if (inputStreamPlan != null) {
-                inputStreamPlan.close();
-            }
-        }
-    }
-    */
+	@Test
+	public void testLireLivraisonsCorrectes(){
+		testLireLivraisonCorrecte("./src/test/resources/livraison10x10-1.xml",
+				"./src/test/resources/plan10x10.xml",8);
+//		testLireLivraisonCorrecte("./src/test/resources/livraison10x10-2.xml","./src/test/resources/plan10x10.xml",);
+//		testLireLivraisonCorrecte("./src/test/resources/livraison10x10-3.xml","./src/test/resources/plan10x10.xml",);
+//		testLireLivraisonCorrecte("./src/test/resources/livraison20x20-1.xml","./src/test/resources/plan20x20.xml",);
+//		testLireLivraisonCorrecte("./src/test/resources/livraison20x20-2.xml","./src/test/resources/plan20x20.xml",);
+	}
+	
+	/**
+	 * 
+	 */
+	public void testLireLivraisonCorrecte(String pathLiv, String pathPlan, int nombre) {
+		FileInputStream inputPlan = null;
+		FileInputStream inputLivraison = null;
+		ZoneGeographique zoneGeo = null;
+		List<PlageHoraire> listPlages = null;
+		try {
+			inputPlan = new FileInputStream(pathPlan);
+			inputLivraison = new FileInputStream(pathLiv);
+			zoneGeo = Parseur.lirePlan(inputPlan);
+			listPlages = Parseur.lireLivraison(inputLivraison, zoneGeo);
+			for (PlageHoraire plage : listPlages) {
+				plage.getLivraisons();
+			}
+			
+			inputPlan.close();
+			inputLivraison.close();
+		} catch(Exception e) {
+			
+		}
+	}
 
 }
