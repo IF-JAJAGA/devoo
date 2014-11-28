@@ -18,9 +18,10 @@ public class Dijkstra {
 
     public static Chemin plusCourtChemin(ZoneGeographique zone, Noeud depart, Noeud arrivee) {
         final Map<Noeud, Float> distances = new HashMap<Noeud, Float>();
+        float maxArcCost = getMaxArcCost(zone);
 
         for (Noeud noeud : zone.getNoeuds()) {
-            distances.put(noeud, getMaxArcCost(zone) + 1f);
+            distances.put(noeud, maxArcCost + 1f);
         }
         distances.put(depart, 0f);
 
