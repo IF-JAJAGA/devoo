@@ -81,9 +81,9 @@ public class Parseur {
 
     // TODO tester cette methode dans {@link fr.insaif.jajagaa.control.ParseurTest}
     /**
-     * TODO
-     * @param inputStream TODO
-     * @return TODO
+     * Méthode permettant de déterminer la zone géographique contenant les noeuds et les tronçons associés
+     * @param inputStream Fichier XML contenant les noeuds et les tronçons composants la zone géographique
+     * @return La zone géographique contenant les noeuds passés en paramètre
      */
     public static ZoneGeographique lirePlan(InputStream inputStream) {
         List<Noeud> plan = new ArrayList<Noeud>();
