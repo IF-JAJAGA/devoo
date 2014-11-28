@@ -81,9 +81,9 @@ public class Parseur {
 
     // TODO tester cette methode dans {@link fr.insaif.jajagaa.control.ParseurTest}
     /**
-     * TODO
-     * @param inputStream TODO
-     * @return TODO
+     * Méthode permettant de déterminer la zone géographique contenant les noeuds et les tronçons associés
+     * @param inputStream Fichier XML contenant les noeuds et les tronçons composants la zone géographique
+     * @return La zone géographique contenant les noeuds passés en paramètre
      */
     public static ZoneGeographique lirePlan(InputStream inputStream) {
         List<Noeud> plan = new ArrayList<Noeud>();
@@ -120,17 +120,20 @@ public class Parseur {
             }
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");
-            System.exit(501);
+//            System.exit(501);
         } catch (JDOMException jdomex) {
             System.err.println("Ficher XML mal formé: mauvaise syntaxe XML");
-            System.exit(502);
+//            System.exit(502);
         } catch (NullPointerException nullptrex) {
             System.err.println("Ficher XML mal formé: element ou attribut manquant");
-            System.exit(502);
+//            System.exit(502);
         } catch (IndexOutOfBoundsException ioobe) {
             System.err.println("Fichier XML erroné: valeurs de certains attributs inexistants");
-            System.exit(503);
+//            System.exit(503);
         }
+        
+        //Quand attribut est empty or invalide -> NumberFormatException
+        //Et pour File Not Found???? Ce n'est pas là, nn?
         return (new ZoneGeographique(plan));
     }
 }

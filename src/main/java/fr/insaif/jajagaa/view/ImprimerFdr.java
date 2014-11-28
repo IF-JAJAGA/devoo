@@ -24,7 +24,7 @@ public class ImprimerFdr {
 		List<Chemin> chemins = tournee.getCheminsResultats();
 		Livraison liv = null;
 		for(Chemin chem : chemins) {
-			liv = chem.getLivraison();
+//			liv = chem.getLivraison();
 			Date heuDeb = liv.getHeureLivraison();
 			Date heuFin = liv.getHeureFin();
 			//TODO Infos personnelles

@@ -16,13 +16,10 @@ public class Chemin {
     protected LivraisonGraphVertex origine;
     
     protected LivraisonGraphVertex destination;
-    
-    //C'est la livraison destination
-    protected Livraison livraison;
 
     public Chemin(List<Troncon> troncons, LivraisonGraphVertex origine, LivraisonGraphVertex destination) {
-        this.origine = origine;
-        this.destination = destination;
+        this.setOrigine(origine);
+        this.setDestination(destination);
         this.troncons = troncons;
     }
 
@@ -54,14 +51,6 @@ public class Chemin {
         this.troncons = troncons;
     }
     
-    public Livraison getLivraison() {
-        return livraison;
-    }
-
-    public void setLivraison(Livraison livraison) {
-        this.livraison = livraison;
-    }
-    
     /**
      * Coût du chemin, calculé avec la somme de tous les tronçons
      * @return Coût du chemin
@@ -74,7 +63,16 @@ public class Chemin {
         return cost;                 
     }
     
-    public void recalculerHeuresLivraison(){
-        
+    public void recalculerHeuresLivraison() {
+        // TODO implémentation
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public void setOrigine(LivraisonGraphVertex origine) {
+        this.origine = origine;
+    }
+
+    public void setDestination(LivraisonGraphVertex destination) {
+        this.destination = destination;
     }
 }

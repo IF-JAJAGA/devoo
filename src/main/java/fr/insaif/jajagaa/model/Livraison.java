@@ -21,11 +21,6 @@ public class Livraison extends Noeud {
     public static final int TPS_LIVRAISON_MIN = 10;
 
     /**
-     * Nœud auquel il faut livrer la livraison
-     */
-    protected Noeud pointLivraison;
-
-    /**
      * Formatter/parser de dates
      */
     protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:m:s");

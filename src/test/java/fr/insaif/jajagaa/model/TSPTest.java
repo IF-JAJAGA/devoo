@@ -25,7 +25,7 @@ public class TSPTest {
     public void setUp() throws Exception{
         List<Noeud> noeuds = new ArrayList<Noeud>();
 
-        // Exemple de vueNoeuds (et d'entrepôt)
+        // Exemple de noeuds et de livraisons (s'il y a une livraison, un noeud est une livraison)
         noeuds.add(new Noeud(0, 63, 100));
         noeuds.add(new Noeud(1, 88, 171));
         noeuds.add(new Noeud(2, 103, 248));
@@ -39,40 +39,56 @@ public class TSPTest {
         noeuds.add(new Noeud(10, 154, 95));
 
         // Exemple de tronçons
-        //TODO mettre le bon nom de rue
         noeuds.get(0).addSortant(noeuds.get(1), 602.1f, 3.9f, "v0");
         noeuds.get(0).addSortant(noeuds.get(10), 729f, 4.2f, "h0");
         noeuds.get(1).addSortant(noeuds.get(0), 602.1f, 4.1f, "v0");
         noeuds.get(1).addSortant(noeuds.get(2), 627.5f, 3.8f, "v0");
         noeuds.get(2).addSortant(noeuds.get(3), 323.5f, 3.43f, "v0");
-        noeuds.get(2).addSortant(noeuds.get(1), 627.500000f, 4.600000f, "v0");
-        noeuds.get(2).addSortant(noeuds.get(3), 581.700000f, 4.100000f, "v0");
-        noeuds.get(3).addSortant(noeuds.get(2), 581.700000f, 4.000000f, "v0");
-        noeuds.get(3).addSortant(noeuds.get(4), 334.000000f, 4.500000f, "v0");
-        noeuds.get(4).addSortant(noeuds.get(3), 334.000000f, 4.200000f, "v0");
-        noeuds.get(4).addSortant(noeuds.get(5), 426.700000f, 4.100000f, "v0");
-        noeuds.get(5).addSortant(noeuds.get(4), 426.700000f, 4.100000f, "v0");
-        noeuds.get(5).addSortant(noeuds.get(6), 640.700000f, 4.000000f, "v0");
-        noeuds.get(6).addSortant(noeuds.get(5), 640.700000f, 4.700000f, "v0");
-        noeuds.get(6).addSortant(noeuds.get(7), 838.200000f, 4.200000f, "v0");
-        noeuds.get(7).addSortant(noeuds.get(6), 838.200000f, 4.300000f, "v0");
-        noeuds.get(7).addSortant(noeuds.get(8), 320.300000f, 4.100000f, "v0");
-        noeuds.get(8).addSortant(noeuds.get(7), 320.300000f, 4.700000f, "v0");
-        noeuds.get(8).addSortant(noeuds.get(9), 652.600000f, 4.500000f, "v0");
-        noeuds.get(9).addSortant(noeuds.get(8), 652.600000f, 4.600000f, "v0");
-        noeuds.get(10).addSortant(noeuds.get(0), 729.000000f, 4.500000f, "h0");
+        noeuds.get(2).addSortant(noeuds.get(1), 627.5f, 4.6f, "v0");
+        noeuds.get(2).addSortant(noeuds.get(3), 581.7f, 4.1f, "v0");
+        noeuds.get(3).addSortant(noeuds.get(2), 581.7f, 4.0f, "v0");
+        noeuds.get(3).addSortant(noeuds.get(4), 334.0f, 4.5f, "v0");
+        noeuds.get(4).addSortant(noeuds.get(3), 334.0f, 4.2f, "v0");
+        noeuds.get(4).addSortant(noeuds.get(5), 426.7f, 4.1f, "v0");
+        noeuds.get(5).addSortant(noeuds.get(4), 426.7f, 4.1f, "v0");
+        noeuds.get(5).addSortant(noeuds.get(6), 640.7f, 4.0f, "v0");
+        noeuds.get(6).addSortant(noeuds.get(5), 640.7f, 4.7f, "v0");
+        noeuds.get(6).addSortant(noeuds.get(7), 838.2f, 4.2f, "v0");
+        noeuds.get(7).addSortant(noeuds.get(6), 838.2f, 4.3f, "v0");
+        noeuds.get(7).addSortant(noeuds.get(8), 320.3f, 4.1f, "v0");
+        noeuds.get(8).addSortant(noeuds.get(7), 320.3f, 4.7f, "v0");
+        noeuds.get(8).addSortant(noeuds.get(9), 652.6f, 4.5f, "v0");
+        noeuds.get(9).addSortant(noeuds.get(8), 652.6f, 4.6f, "v0");
+        noeuds.get(10).addSortant(noeuds.get(0), 729f, 4.5f, "h0");
 
-        /*
-        ZoneGeographique zone = Parseur.lirePlan(new FileInputStream("./src/test/resources/plan-test.xml"));
-        List<PlageHoraire> plages = Parseur.lireLivraison(new FileInputStream("./src/test/resources/livraison-test.xml"), zone);
-        */
         ZoneGeographique zone = new ZoneGeographique(noeuds);
-        List<PlageHoraire> plages = new ArrayList<PlageHoraire>();
 
+        List<PlageHoraire> plages = new ArrayList<PlageHoraire>();
+        List<Livraison> livraisons = new ArrayList<Livraison>();
         plages.add(new PlageHoraire("8:0:0", "12:0:0"));
+
+        livraisons.add(new Livraison(noeuds.get(3), 1, 611));
+        livraisons.add(new Livraison(noeuds.get(4), 2, 276));
+        livraisons.add(new Livraison(noeuds.get(8), 3, 300));
+        livraisons.add(new Livraison(noeuds.get(1), 4, 591));
+        livraisons.add(new Livraison(noeuds.get(7), 5, 923));
+        livraisons.add(new Livraison(noeuds.get(5), 6, 68));
+        livraisons.add(new Livraison(noeuds.get(6), 7, 709));
+
+        plages.get(0).setLivraisons(livraisons);
+
+        zone.modifierNoeudEnLivraison(3, livraisons.get(0));
+        zone.modifierNoeudEnLivraison(4, livraisons.get(1));
+        zone.modifierNoeudEnLivraison(8, livraisons.get(2));
+        zone.modifierNoeudEnLivraison(1, livraisons.get(3));
+        zone.modifierNoeudEnLivraison(7, livraisons.get(4));
+        zone.modifierNoeudEnLivraison(5, livraisons.get(5));
+        zone.modifierNoeudEnLivraison(6, livraisons.get(6));
 
         Tournee tournee = new Tournee(zone);
         tournee.setPlagesHoraire(plages);
+
+        this.graph = tournee.getGraph();
     }
 
     @Test
