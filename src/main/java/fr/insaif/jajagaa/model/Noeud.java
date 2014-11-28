@@ -48,7 +48,15 @@ public class Noeud {
         this.sortants = new ArrayList<Troncon>();
         this.entrants = new ArrayList<Troncon>();
     }
-
+    
+    public Noeud(int id, int xMetre, int yMetre, List<Troncon> sortants, List<Troncon> entrants){
+        this.id = id;
+        this.xMetre = xMetre;
+        this.yMetre = yMetre;
+        this.sortants = sortants;
+        this.entrants = entrants;
+    }
+    
     /**
      * Identifiant du noeud
      * @return Identifiant du noeud
@@ -129,7 +137,7 @@ public class Noeud {
      */
     public void addSortant(Noeud destination, float longueurMetre, float vitesse, String rue) {
         assert !this.equals(destination);
-        this.sortants.add(new Troncon(this, destination, longueurMetre, vitesse,rue));
+        this.sortants.add(new Troncon(this.id, destination.id, longueurMetre, vitesse,rue));
     }
 
     /**
@@ -140,7 +148,7 @@ public class Noeud {
      */
     public void addEntrant(Noeud origine, float longueurMetre, float vitesse, String rue) {
         assert !this.equals(origine);
-        this.entrants.add(new Troncon(origine, this, longueurMetre, vitesse, rue));
+        this.entrants.add(new Troncon(origine.id, this.id, longueurMetre, vitesse, rue));
     }
 
     public int getX() {
