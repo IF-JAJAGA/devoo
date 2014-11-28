@@ -38,31 +38,6 @@ public class VuePlan extends JPanel{
 //        vueTournee.setTourneeModel(tournee);
 //    }
     
-    /**
-     * Permet de charger une liste de troncons dans la vue.
-     * @param troncons 
-     */
-    public void setTroncons(Troncon... troncons){
-        vueTroncons.clear();
-        for(Troncon troncon : troncons){
-            vueTroncons.add(new VueTroncon(troncon));
-        }
-    }
-    
-    /**
-     * Permet de charger une liste de noeuds dans la vue.
-     * <br>
-     * <b>Attention : </b> efface la liste des troncons de la vue
-     * @param noeuds
-     */
-    public void setNoeuds(Noeud... noeuds){
-        vueTroncons.clear();
-        vueNoeuds.clear();
-        for(Noeud noeud : noeuds){
-            vueNoeuds.add(new VueNoeud(noeud, Color.BLACK));
-        }
-    }
-    
     public List<VueNoeud> getVueNoeuds() {
         return vueNoeuds;
     }
