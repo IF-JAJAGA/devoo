@@ -27,7 +27,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- * Classe qui fait l'interface avec le controleur et qui implémente tous les écouteurs.
+ * Classe qui fait l'interface avec le controleur et qui implémente 
+ * tous les écouteurs.
  * @author alicia
  */
 public class Fenetre extends JFrame {
@@ -39,6 +40,12 @@ public class Fenetre extends JFrame {
             return fenetre;
         }
 	
+        /**
+         * Permet aux listeners de collaborer en évitant par exemple que le
+         * listener de la liste ne se déclenche lorsqu'on supprime la sélection
+         * en cliquant dans la vide dans le plan.
+         */
+        private static boolean listenersAllowed = true;
         private static Controleur controleur = new Controleur();
         
         private final VuePlan vuePlan;
@@ -168,12 +175,25 @@ public class Fenetre extends JFrame {
 
             @Override
             public void valueChanged(ListSelectionEvent lse) {
-                if(!lse.getValueIsAdjusting()){
+                if(listenersAllowed && !lse.getValueIsAdjusting()){
                     VueNoeud vNListe = (VueNoeud) conteneurDroite.getListeNoeuds().getModel().getElementAt(conteneurDroite.getListeNoeuds().getSelectedIndex());
+                    vuePlan.changerSelection(vNListe);
                     vuePlan.repaint();
                 }
             }
         });
+        
+        vuePlan.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                VueNoeud vN = vuePlan.noeudEstClique(e.getPoint());
+                listenersAllowed = false;
+                conteneurDroite.getListeNoeuds().SelectionnerNoeud(vN);
+                listenersAllowed = true;
+                repaint();
+            }
+	});
      }
     
     

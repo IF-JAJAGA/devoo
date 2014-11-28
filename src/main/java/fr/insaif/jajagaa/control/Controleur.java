@@ -23,15 +23,6 @@ public class Controleur {
         return controleur;
     }
     
-    /**
-     * Énumération des différents types d'actions possibles. 
-     */
-    public enum ACTION{
-        CHARGER_PLAN,
-        CHARGER_TOURNEE,
-        AJOUTER_LIVRAISON
-        
-    };
     protected ZoneGeographique zone;
     protected List<PlageHoraire> plagesHoraire;
 
