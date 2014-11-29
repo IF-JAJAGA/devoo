@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.FileInputStream;
 import java.util.List;
 
+import org.jdom.input.JDOMParseException;
 import org.junit.Test;
 
 import fr.insaif.jajagaa.model.Noeud;
@@ -98,17 +99,17 @@ public class ParseurTest {
 		}
 	}
 	
-	@Test
+	@Test (expected = JDOMParseException.class)
 	/**
 	 * 
 	 */
 	public void testErreurXMLMalForme(){
 		try {
 			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E1.xml");
-			//TODO Exception
-			inputPlan.close();
+			Parseur.lirePlan(inputPlan);
 		} catch (Exception e) {
-			//Exception ici?
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

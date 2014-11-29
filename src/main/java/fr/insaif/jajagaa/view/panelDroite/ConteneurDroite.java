@@ -7,10 +7,13 @@
 package fr.insaif.jajagaa.view.panelDroite;
 
 import fr.insaif.jajagaa.view.VueNoeud;
+
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SpringLayout;
 
 
@@ -59,6 +62,8 @@ public class ConteneurDroite extends JPanel{
         
         add(titre);
         add(listeNoeuds);
+//        JScrollPane pane = new JScrollPane(listeNoeuds);
+//        add(pane);  
         add(btnAddNoeud);
         
         final int espace = 5;

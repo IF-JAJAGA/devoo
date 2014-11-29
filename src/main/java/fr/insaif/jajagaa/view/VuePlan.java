@@ -1,11 +1,13 @@
 package fr.insaif.jajagaa.view;
 
 import fr.insaif.jajagaa.control.Controleur;
+import fr.insaif.jajagaa.control.Parseur;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,10 +15,12 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+
 import javax.swing.JPanel;
 
 /**
@@ -131,14 +135,31 @@ public class VuePlan extends JPanel{
         setBackground(Color.GRAY);
         initComponents();
     	
-    	//Pour l'instant ici
-        VueNoeud vn1 = new VueNoeud(new Noeud(0, 200, 200), Color.BLUE);
-        vn1.setEstPointDeLivraison(VueNoeud.Etat.LIVRAISON);
-    	vueNoeuds.add(vn1);
-    	vueNoeuds.add(new VueNoeud(new Noeud(1, 0, 0), Color.GREEN));
-    	vueNoeuds.add(new VueNoeud(new Noeud(2, 1000, 700), Color.ORANGE));
-    	vueNoeuds.add(new VueNoeud(new Noeud(3, 1000, 0), Color.YELLOW));
-    	vueNoeuds.add(new VueNoeud(new Noeud(4, 0, 700), Color.BLACK));
+        //ESSAI AVCE PLAN REEL
+        
+      try {
+	        FileInputStream zoneInputStream = new FileInputStream("./src/test/resources/plan10x10.xml");
+	    	ZoneGeographique zoneGeo = Parseur.lirePlan(zoneInputStream);
+	        List<Noeud> listNoeuds = zoneGeo.getNoeuds();
+	        for(Noeud noeud : listNoeuds) {
+	        	vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
+	        }
+      } catch (Exception e) {
+      	
+      }
+      //FIN ESSAI
+      
+        
+        //Pour l'instant ici
+//        VueNoeud vn1 = new VueNoeud(new Noeud(0, 200, 200), Color.BLUE);
+//        vn1.setEstPointDeLivraison(VueNoeud.Etat.LIVRAISON);
+//        
+//    	vueNoeuds.add(vn1);
+//    	vueNoeuds.add(new VueNoeud(new Noeud(1, 0, 0), Color.GREEN));
+//    	vueNoeuds.add(new VueNoeud(new Noeud(2, 1000, 700), Color.ORANGE));
+//    	vueNoeuds.add(new VueNoeud(new Noeud(3, 1000, 0), Color.YELLOW));
+//    	vueNoeuds.add(new VueNoeud(new Noeud(4, 0, 700), Color.BLACK));
+    	
 //        //Troncon t1 = new Troncon(new Noeud(0,200,200), new Noeud(2,1000,700), 400,4,"rue1");
 //        Troncon t1 = new Troncon(0, 2, 400,4,"rue1");
 //        vueTroncons.add(new VueTroncon(t1));
