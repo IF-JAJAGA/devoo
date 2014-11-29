@@ -74,6 +74,12 @@ public class Parseur {
         } catch (NullPointerException nullptrex) {
             System.err.println("Ficher XML mal formé: element ou attribut manquant");
             System.exit(502);
+        } catch (IndexOutOfBoundsException ioobe) {
+            System.err.println("Fichier XML erroné: valeurs de certains attributs inexistants");
+//            System.exit(503);
+        } catch (NumberFormatException nfe) {
+            System.err.println("Données du fichier XML non conforme");
+//            System.exit(504);
         }
 
         return plageList;
@@ -130,6 +136,9 @@ public class Parseur {
         } catch (IndexOutOfBoundsException ioobe) {
             System.err.println("Fichier XML erroné: valeurs de certains attributs inexistants");
 //            System.exit(503);
+        } catch (NumberFormatException nfe) {
+            System.err.println("Données du fichier XML non conforme");
+//            System.exit(504);
         }
         
         //Quand attribut est empty or invalide -> NumberFormatException
