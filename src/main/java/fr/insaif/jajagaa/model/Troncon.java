@@ -38,12 +38,21 @@ public class Troncon {
      * @param destination Noeud destination de ce Troncon
      * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
      * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
+     * Renvoie des erreurs lorsque des valeurs sont repérées comme aberrantes
      */
     public Troncon(int idOrigine, int idDestination, float longueurMetre, float vitesse, String rue) {
         this.idOrigine = idOrigine;
         this.idDestination = idDestination;
-        this.longueurMetre = longueurMetre;
-        this.vitesse = vitesse;
+        if (longueurMetre < 0 || longueurMetre > 1500) {
+            System.err.println("Longueur du troncon d'origine " + idOrigine +" et de destination " + idDestination + " incorrecte");
+        } else {
+            this.longueurMetre = longueurMetre;
+        }
+        if (vitesse < 0 || vitesse > 6) {
+            System.err.println("Vitesse du troncon d'origine " + idOrigine +" et de destination " + idDestination + " incorrecte");
+        } else {
+            this.vitesse = vitesse;
+        }
         this.nomRue = rue;
     }
 
