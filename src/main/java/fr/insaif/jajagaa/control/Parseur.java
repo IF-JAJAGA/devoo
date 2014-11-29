@@ -95,7 +95,7 @@ public class Parseur {
             @SuppressWarnings("unchecked")
             List<Element> noeuds = reseau.getChildren("Noeud");
             //Création des vueNoeuds contenus dans le fichier XML
-            //Et ajout de ceux-ci dans la liste plan
+            //Et ajout de ceux-ci dans la liste plan 
             for (Element noeudXml : noeuds) {
                 int noeudId = Integer.parseInt(noeudXml.getAttributeValue("id"));
                 Noeud noeud = new Noeud(noeudId,
