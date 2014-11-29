@@ -5,6 +5,7 @@
  */
 package fr.insaif.jajagaa.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,11 +18,11 @@ public class LivraisonGraphVertex {
     
     protected Noeud noeud;
     
-    protected List<Chemin> entrants;
+    protected List<Chemin> entrants = new ArrayList<Chemin>();
     
-    protected List<Chemin> sortants;
+    protected List<Chemin> sortants = new ArrayList<Chemin>();
 
-    public LivraisonGraphVertex(Noeud noeud) {
+    public LivraisonGraphVertex(Livraison noeud) {
         this.noeud = noeud;
     }
     
