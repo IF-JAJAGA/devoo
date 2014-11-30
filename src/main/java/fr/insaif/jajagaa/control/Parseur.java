@@ -33,10 +33,12 @@ public class Parseur {
      * @return Liste des plages horaires contenant chacune leur livraisons à effectuer
 
      */
-    public static List<PlageHoraire> lireLivraison(InputStream inputStream, ZoneGeographique zone) {
+    public static List<PlageHoraire> lireLivraison(String fichierEntree, ZoneGeographique zone) {
         List<PlageHoraire> plageList = new ArrayList<PlageHoraire>();
         SAXBuilder builder = new SAXBuilder();
+        FileInputStream inputStream = null;
         try {
+            inputStream = new FileInputStream(fichierEntree);            
             Document document = builder.build(inputStream);
             Element journee = document.getRootElement();
 
