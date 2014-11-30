@@ -4,6 +4,7 @@ import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.ZoneGeographique;
+import fr.insaif.jajagaa.view.Fenetre;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,7 +18,6 @@ import java.util.List;
 public class Controleur {
     private static Controleur controleur;
     public static Controleur getInstance(){
-        //TODO : mieu 
         if(controleur==null){  
             controleur = new Controleur();
         }
@@ -28,6 +28,10 @@ public class Controleur {
     protected List<PlageHoraire> plagesHoraire;
     
     protected List<Command> commands = new ArrayList<Command>();
+
+    private Controleur() {
+        Fenetre.getInstance();
+    }
 
     public ZoneGeographique getZone() {
         return zone;

@@ -49,7 +49,7 @@ public class ConteneurDroite extends JPanel{
     }
     
     private void initComponents(){
-        titre = new JLabel("Liste des vueNoeuds ici");
+        titre = new JLabel("Liste des Noeuds");
         
         listeNoeuds = new ListNoeuds();
 
@@ -62,18 +62,18 @@ public class ConteneurDroite extends JPanel{
         
         add(titre);
         add(listeNoeuds);
-//        JScrollPane pane = new JScrollPane(listeNoeuds);
-//        add(pane);  
+        JScrollPane scrollListe = new JScrollPane(listeNoeuds);
+        add(scrollListe);  
         add(btnAddNoeud);
         
         final int espace = 5;
         layout.putConstraint(SpringLayout.NORTH, titre, espace, SpringLayout.NORTH, this);
         layout.putConstraint(SpringLayout.WEST, titre, espace, SpringLayout.WEST, this);
         
-        layout.putConstraint(SpringLayout.NORTH, listeNoeuds, espace, SpringLayout.SOUTH, titre);
-        layout.putConstraint(SpringLayout.WEST, listeNoeuds, 0, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.EAST, listeNoeuds, 0, SpringLayout.EAST, this);
-        layout.putConstraint(SpringLayout.SOUTH, listeNoeuds, -espace, SpringLayout.NORTH, btnAddNoeud);
+        layout.putConstraint(SpringLayout.NORTH, scrollListe, espace, SpringLayout.SOUTH, titre);
+        layout.putConstraint(SpringLayout.WEST, scrollListe, 0, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.EAST, scrollListe, 0, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, btnAddNoeud);
         
         layout.putConstraint(SpringLayout.SOUTH, btnAddNoeud, -espace, SpringLayout.SOUTH, this);
         layout.putConstraint(SpringLayout.WEST, btnAddNoeud, 0, SpringLayout.WEST, titre);

@@ -4,7 +4,6 @@ import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.control.Parseur;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
-import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
@@ -13,10 +12,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -34,9 +30,9 @@ public class VuePlan extends JPanel{
     protected List<VueTroncon> vueTroncons = new Vector<VueTroncon>();
 //    protected VueTournee vueTournee =new VueTournee(null, Color.BLUE);
     
-    //Valeurs en mètres avant que le chargement soit implémenté.
-    protected final int XVille = 1000;
-    protected final int YVille = 700;
+    //Valeurs en mètres de la ville, s'actualise en fonction du chargement du plan.
+    private int XVille = 0;
+    private int YVille = 0;
     
 //    public void setTournee(Tournee tournee){
 //        vueTournee.setTourneeModel(tournee);
@@ -133,15 +129,18 @@ public class VuePlan extends JPanel{
      */
     public VuePlan() {
         setBackground(Color.GRAY);
-        initComponents();
-    	
-        //ESSAI AVCE PLAN REEL
         
       try {
 	        FileInputStream zoneInputStream = new FileInputStream("./src/test/resources/plan10x10.xml");
 	    	ZoneGeographique zoneGeo = Parseur.lirePlan(zoneInputStream);
 	        List<Noeud> listNoeuds = zoneGeo.getNoeuds();
 	        for(Noeud noeud : listNoeuds) {
+                        if(noeud.getXMetre()>XVille){
+                            XVille = noeud.getXMetre();
+                        }
+                        if(noeud.getYMetre()>YVille){
+                            YVille = noeud.getYMetre();
+                        }
 	        	vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
 	        }
       } catch (Exception e) {
@@ -198,19 +197,6 @@ public class VuePlan extends JPanel{
         //TODO 
     }
     
-    private void initComponents() {
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     

@@ -46,7 +46,6 @@ public class Fenetre extends JFrame {
          * en cliquant dans la vide dans le plan.
          */
         private static boolean listenersAllowed = true;
-        private static Controleur controleur = new Controleur();
         
         private final VuePlan vuePlan;
 	private final ConteneurDroite conteneurDroite;
@@ -66,11 +65,9 @@ public class Fenetre extends JFrame {
         
     private Fenetre(){
     	setVisible(true);
-    	setSize(new Dimension(1366,768));
         setTitle("OnlyLyon Livreur");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vuePlan = new VuePlan();
-    	getContentPane().add(vuePlan);
     	
         conteneurDroite = new ConteneurDroite();
         conteneurDroite.majListe(vuePlan.getVueNoeuds());
@@ -107,6 +104,7 @@ public class Fenetre extends JFrame {
         
         this.setJMenuBar(barreMenu);
         addListeners();
+        setSize(new Dimension(1366,768));
     }
     
     private void addListeners(){
@@ -148,7 +146,7 @@ public class Fenetre extends JFrame {
                         {
                             //Si les deux fichiers ont été sélectionnés :
                             FileInputStream fipLivr = new FileInputStream(fc.getSelectedFile());
-                            controleur.creerTournee(fipPlan, fipLivr);
+                            Controleur.getInstance().creerTournee(fipPlan, fipLivr);
                             
                         }
                         else{
