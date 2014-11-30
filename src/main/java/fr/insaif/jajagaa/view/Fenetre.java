@@ -35,13 +35,6 @@ public class Fenetre extends JFrame {
             return fenetre;
         }
 	
-        /**
-         * Permet aux listeners de collaborer en évitant par exemple que le
-         * listener de la liste ne se déclenche lorsqu'on supprime la sélection
-         * en cliquant dans la vide dans le plan.
-         */
-        private static boolean listenersAllowed = true;
-        
         private final VuePlan vuePlan;
 	private final ConteneurDroite conteneurDroite;
 	private final JSplitPane split;
@@ -136,6 +129,7 @@ public class Fenetre extends JFrame {
                     String fipPlan = null;
                     fipPlan = fc.getSelectedFile().getAbsolutePath();
                     Controleur.getInstance().lirePlan(fipPlan);
+                    actualiserPlan();
                 }
                 else{
                     System.out.println("Opération annulée, pour le plan.");
@@ -148,7 +142,7 @@ public class Fenetre extends JFrame {
 
             @Override
             public void valueChanged(ListSelectionEvent lse) {
-                if(listenersAllowed && !lse.getValueIsAdjusting()){
+                if(!lse.getValueIsAdjusting()){
                     VueNoeud vNListe = (VueNoeud) conteneurDroite.getListeNoeuds().getModel().getElementAt(conteneurDroite.getListeNoeuds().getSelectedIndex());
                     vuePlan.changerSelection(vNListe);
                     vuePlan.repaint();
@@ -161,9 +155,7 @@ public class Fenetre extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 VueNoeud vN = vuePlan.noeudEstClique(e.getPoint());
-                listenersAllowed = false;
                 conteneurDroite.getListeNoeuds().SelectionnerNoeud(vN);
-                listenersAllowed = true;
                 repaint();
             }
 	});
@@ -183,4 +175,12 @@ public class Fenetre extends JFrame {
     private void ChoisirTournee(){
         //TODO : appel de JFileChooser
     }
+    
+    /**
+     * Actualise l'affichage (le plan et la liste) lorsqu'un nouveau plan est chargé dans l'application.
+     */
+    private void actualiserPlan(){
+        vuePlan.actualiserPlan(Controleur.getInstance().getZone());
+        conteneurDroite.majListe(vuePlan.getVueNoeuds());
+    };
 }

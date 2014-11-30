@@ -8,8 +8,7 @@ package fr.insaif.jajagaa.control.Commands;
  *
  * @author alicia
  */
-public interface Command
-{
-  public void execute();
-  public void undo();
+public interface Command {
+    public void execute();
+    public void undo();
 }

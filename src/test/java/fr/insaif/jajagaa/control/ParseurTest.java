@@ -75,15 +75,11 @@ public class ParseurTest {
 	 * 
 	 */
 	public void testLireLivraisonCorrecte(String pathLiv, String pathPlan, int nombre) {
-		FileInputStream inputPlan = null;
-		FileInputStream inputLivraison = null;
 		ZoneGeographique zoneGeo = null;
 		List<PlageHoraire> listPlages = null;
 		try {
-			inputPlan = new FileInputStream(pathPlan);
-			inputLivraison = new FileInputStream(pathLiv);
 			zoneGeo = Parseur.lirePlan(pathPlan);
-			listPlages = Parseur.lireLivraison(inputLivraison, zoneGeo);
+			listPlages = Parseur.lireLivraison(pathLiv, zoneGeo);
 			
 			int cont = 0;
 			for (PlageHoraire plage : listPlages) {
@@ -92,8 +88,6 @@ public class ParseurTest {
 			
 			assertEquals(nombre, cont);
 			
-			inputPlan.close();
-			inputLivraison.close();
 		} catch(Exception e) {
 			
 		}

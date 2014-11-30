@@ -129,23 +129,9 @@ public class VuePlan extends JPanel{
     public VuePlan() {
         setBackground(Color.GRAY);
         
-      try {
-	    	ZoneGeographique zoneGeo = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
-	        List<Noeud> listNoeuds = zoneGeo.getNoeuds();
-	        for(Noeud noeud : listNoeuds) {
-                        if(noeud.getXMetre()>XVille){
-                            XVille = noeud.getXMetre();
-                        }
-                        if(noeud.getYMetre()>YVille){
-                            YVille = noeud.getYMetre();
-                        }
-	        	vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
-	        }
-      } catch (Exception e) {
-      	
-      }
-      //FIN ESSAI
-      
+        
+        
+        
         
         //Pour l'instant ici
 //        VueNoeud vn1 = new VueNoeud(new Noeud(0, 200, 200), Color.BLUE);
@@ -237,4 +223,26 @@ public class VuePlan extends JPanel{
 //    public VueTournee getVueTournee() {
 //        return vueTournee;
 //    }
+
+    protected void actualiserPlan(ZoneGeographique zoneGeo) {
+        viderPlan();
+        List<Noeud> listNoeuds = zoneGeo.getNoeuds();
+        for(Noeud noeud : listNoeuds) {
+                if(noeud.getXMetre()>XVille){
+                    XVille = noeud.getXMetre();
+                }
+                if(noeud.getYMetre()>YVille){
+                    YVille = noeud.getYMetre();
+                }
+                vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
+        }
+        
+        this.paint(getGraphics());
+    }
+    
+    private void viderPlan(){
+        vueNoeuds.clear();
+        vueTroncons.clear();
+//            vueTournee =new VueTournee(null, Color.BLUE);
+    }
 }
