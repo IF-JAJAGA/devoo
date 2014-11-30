@@ -80,10 +80,8 @@ public class ParseurTest {
 		ZoneGeographique zoneGeo = null;
 		List<PlageHoraire> listPlages = null;
 		try {
-			inputPlan = new FileInputStream(pathPlan);
-			inputLivraison = new FileInputStream(pathLiv);
 			zoneGeo = Parseur.lirePlan(pathPlan);
-			listPlages = Parseur.lireLivraison(inputLivraison, zoneGeo);
+			listPlages = Parseur.lireLivraison(pathLiv, zoneGeo);
 			
 			int cont = 0;
 			for (PlageHoraire plage : listPlages) {

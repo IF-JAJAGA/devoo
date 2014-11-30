@@ -62,7 +62,7 @@ public class Controleur {
      * @param fichierLivraison
      * @throws FileNotFoundException 
      */
-    public void creerTournee(FileInputStream fichierPlan, FileInputStream fichierLivraison) throws FileNotFoundException {
+    public void creerTournee(FileInputStream fichierPlan, String fichierLivraison) throws FileNotFoundException {
 //        ZoneGeographique zone = Parseur.lirePlan(fichierPlan);
         List<PlageHoraire> livraisons = Parseur.lireLivraison(fichierLivraison, zone);
     }
@@ -85,7 +85,7 @@ public class Controleur {
      * @throws FileNotFoundException 
      */
     public List<PlageHoraire> lireLivraisons(String fichierLivraison, ZoneGeographique zone) throws FileNotFoundException {
-        this.plagesHoraire = Parseur.lireLivraison(new FileInputStream(fichierLivraison), zone);
+        this.plagesHoraire = Parseur.lireLivraison(fichierLivraison, zone);
         return this.plagesHoraire;
     }
     
