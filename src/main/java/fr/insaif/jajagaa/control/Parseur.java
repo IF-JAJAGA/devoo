@@ -2,8 +2,7 @@ package fr.insaif.jajagaa.control;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.ZoneGeographique;
-import javax.sound.midi.SysexMessage;
 
 /**
  * Classe qui s'occupe de parser les fichiers XML de livraisons et de plan.
@@ -65,6 +63,9 @@ public class Parseur {
                 plageHoraire.setLivraisons(livraisonList);
                 plageList.add(plageHoraire);
             }
+        } catch (FileNotFoundException fnfe) {
+            System.err.println("Fichier inexistant");
+//            System.exit(500);
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");
             System.exit(501);
@@ -124,6 +125,9 @@ public class Parseur {
                     plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse, rue);
                 }
             }
+        } catch (FileNotFoundException fnfe) {
+            System.err.println("Fichier inexistant");
+//            System.exit(500);
         } catch (IOException io) {
             System.err.println("Impossible d'accéder au fichier correctement");
 //            System.exit(501);
