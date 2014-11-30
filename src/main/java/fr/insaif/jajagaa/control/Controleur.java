@@ -30,6 +30,7 @@ public class Controleur {
     }
     
     protected ZoneGeographique zone;
+    
     protected List<PlageHoraire> plagesHoraire;
     
     protected List<Command> commands = new ArrayList<Command>();

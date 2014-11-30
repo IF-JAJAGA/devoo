@@ -141,6 +141,10 @@ public class Troncon {
         this.vitesse = vitesse;
     }
     
+    /**
+     * Modifie le nom de la rue associée au tronçon
+     * @param nom 
+     */
     public void setNomRue(String nom) {
         this.nomRue = nom;
     }
