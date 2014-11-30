@@ -73,7 +73,7 @@ public class Controleur {
      * @return 
      */
     public void lirePlan(String fichierPlan) {
-        commandeCourante = new ElementListeCourante(commandeCourante, new LirePlanCommand(zone, fichierPlan));
+        creationCommande(new ElementListeCourante(new LirePlanCommand(zone, fichierPlan)));
         
         execute();
         
@@ -110,21 +110,58 @@ public class Controleur {
         
         if(commande instanceof LirePlanCommand){
             zone = ((LirePlanCommand)commande).getZone();
+            Fenetre.getInstance().actualiserPlan();
         }
-    }
-      
-    public void undo(){
-        if(commandeCourante.previous != null){
-            commandeCourante.commande.undo();
+        else {
+            //Autres types de commande
         }
-        commandeCourante = commandeCourante.previous;
-        //TODO
     }
     
+    /**
+     * On doit annuler la commande puis communiquer les changements au modèle et à la vue.
+     */
+    public void undo(){
+        Command commande = commandeCourante.commande;
+        commande.undo();
+        
+        if(commande instanceof LirePlanCommand){
+            zone = ((LirePlanCommand)commande).getZone();
+            Fenetre.getInstance().actualiserPlan();
+        }
+        else {
+            //Autres types de commande
+        }
+        
+        commandeCourante = commandeCourante.previous;
+        
+        Fenetre.getInstance().setRedoable(true);
+        if(commandeCourante.previous==null){
+            Fenetre.getInstance().setUndoable(false);
+        }
+    }
+    
+    /**
+     * On appelle execute sur la commande pointée sur next dans la liste chainée.
+     */
     public void redo(){
-        commandeCourante.commande.execute();
         commandeCourante = commandeCourante.next;
-        //TODO
+        execute();
+        
+        Fenetre.getInstance().setUndoable(true);
+        Fenetre.getInstance().setRedoable(commandeCourante.next != null);
+    }
+    
+    /**
+     * Ajout d'un élément à la liste chainée et communication à la fenêtre.
+     * Fonction à appeler pour toute création d'une commande.
+     * @param nouvelElement l'élément à ajouter à la liste chainée.
+     */
+    private void creationCommande(ElementListeCourante nouvelElement){
+        nouvelElement.previous = commandeCourante;
+        commandeCourante.next = nouvelElement;
+        commandeCourante = nouvelElement;
+        Fenetre.getInstance().setUndoable(true);
+        Fenetre.getInstance().setRedoable(false);
     }
     
     
@@ -137,16 +174,14 @@ public class Controleur {
         private ElementListeCourante next;
         private ElementListeCourante previous;
 
-        private ElementListeCourante(ElementListeCourante previous, Command commande) {
+        private ElementListeCourante(Command commande) {
+            this();
             this.commande = commande;
-            this.previous = previous;
-            previous.next = this;
-        }
-
-        private ElementListeCourante() {
-            
         }
         
-        
+        private ElementListeCourante(){
+            previous = null;
+            next = null;
+        }
     }
 }

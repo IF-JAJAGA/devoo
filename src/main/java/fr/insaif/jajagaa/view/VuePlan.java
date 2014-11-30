@@ -226,15 +226,17 @@ public class VuePlan extends JPanel{
 
     protected void actualiserPlan(ZoneGeographique zoneGeo) {
         viderPlan();
-        List<Noeud> listNoeuds = zoneGeo.getNoeuds();
-        for(Noeud noeud : listNoeuds) {
-                if(noeud.getXMetre()>XVille){
-                    XVille = noeud.getXMetre();
-                }
-                if(noeud.getYMetre()>YVille){
-                    YVille = noeud.getYMetre();
-                }
-                vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
+        if(zoneGeo != null){
+            List<Noeud> listNoeuds = zoneGeo.getNoeuds();
+            for(Noeud noeud : listNoeuds) {
+                    if(noeud.getXMetre()>XVille){
+                        XVille = noeud.getXMetre();
+                    }
+                    if(noeud.getYMetre()>YVille){
+                        YVille = noeud.getYMetre();
+                    }
+                    vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
+            }
         }
         
         this.paint(getGraphics());

@@ -11,6 +11,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -41,8 +42,8 @@ public class Fenetre extends JFrame {
         
         //Barre de menu
         private final JMenuBar barreMenu;
-        private final JMenu fichier, apparence;
-        JMenuItem importPlan, importLivr, quit;
+        private final JMenu fichier, apparence, actions;
+        JMenuItem importPlan, importLivr, annuler, refaire, quit;
         
         //On crée un nouveau sélecteur de fichier
         final JFileChooser fc = new JFileChooser();
@@ -71,10 +72,11 @@ public class Fenetre extends JFrame {
         //Initialisation des différents menus. 
         fichier = new JMenu("Fichier");
         apparence = new JMenu("Apparence");
+        actions = new JMenu("Actions");
         
         fichier.setMnemonic(KeyEvent.VK_A);
         fichier.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
-        barreMenu.add(fichier);
+        
         
         importPlan = new JMenuItem("Importer un fichier de plan", KeyEvent.VK_T);
         importPlan.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
@@ -86,9 +88,24 @@ public class Fenetre extends JFrame {
         importLivr.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
         fichier.add(importLivr);
         
+        quit = new JMenuItem("Quitter", KeyEvent.VK_T);
+        quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+        fichier.add(quit);
+        
+        annuler = new JMenuItem("Annuler", KeyEvent.VK_T);
+        annuler.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
+        annuler.setEnabled(false);
+        actions.add(annuler);
+        
+        refaire = new JMenuItem("Refaire", KeyEvent.VK_T);
+        refaire.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
+        refaire.setEnabled(false);
+        actions.add(refaire);
         
         
+        barreMenu.add(fichier);
         barreMenu.add(apparence);
+        barreMenu.add(actions);
         
         this.setJMenuBar(barreMenu);
         addListeners();
@@ -129,13 +146,36 @@ public class Fenetre extends JFrame {
                     String fipPlan = null;
                     fipPlan = fc.getSelectedFile().getAbsolutePath();
                     Controleur.getInstance().lirePlan(fipPlan);
-                    actualiserPlan();
                 }
                 else{
                     System.out.println("Opération annulée, pour le plan.");
                 }
             }
             
+        });
+        
+        annuler.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Controleur.getInstance().undo();
+            }
+        });
+        
+        refaire.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Controleur.getInstance().redo();
+            }
+        });
+        
+        quit.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                close();
+            }
         });
                 
         conteneurDroite.getListeNoeuds().addListSelectionListener(new ListSelectionListener() {
@@ -179,8 +219,23 @@ public class Fenetre extends JFrame {
     /**
      * Actualise l'affichage (le plan et la liste) lorsqu'un nouveau plan est chargé dans l'application.
      */
-    private void actualiserPlan(){
+    public void actualiserPlan(){
         vuePlan.actualiserPlan(Controleur.getInstance().getZone());
         conteneurDroite.majListe(vuePlan.getVueNoeuds());
     };
+    
+    /**
+     * Ferme la fenêtre.
+     */
+    private void close(){
+        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
+    public void setUndoable(boolean b) {
+        if(annuler.isEnabled() != b)    annuler.setEnabled(b);
+    }
+
+    public void setRedoable(boolean b) {
+        if(refaire.isEnabled() != b)    refaire.setEnabled(b);
+    }
 }
