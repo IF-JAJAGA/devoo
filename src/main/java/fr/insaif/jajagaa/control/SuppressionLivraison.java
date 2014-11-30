@@ -4,6 +4,8 @@
  */
 package fr.insaif.jajagaa.control;
 
+import fr.insaif.jajagaa.control.Commands.Command;
+
 /**
  *
  * @author alicia

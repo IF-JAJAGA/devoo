@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.control;
 
+import fr.insaif.jajagaa.control.Commands.Command;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.Tournee;
@@ -62,7 +63,7 @@ public class Controleur {
      * @throws FileNotFoundException 
      */
     public void creerTournee(FileInputStream fichierPlan, FileInputStream fichierLivraison) throws FileNotFoundException {
-        ZoneGeographique zone = Parseur.lirePlan(fichierPlan);
+//        ZoneGeographique zone = Parseur.lirePlan(fichierPlan);
         List<PlageHoraire> livraisons = Parseur.lireLivraison(fichierLivraison, zone);
     }
     /**
@@ -71,8 +72,8 @@ public class Controleur {
      * @return
      * @throws FileNotFoundException 
      */
-    public ZoneGeographique lirePlan(String fichierPlan) throws FileNotFoundException {
-        this.zone = Parseur.lirePlan(new FileInputStream(fichierPlan));
+    public ZoneGeographique lirePlan(String fichierPlan) {
+        this.zone = Parseur.lirePlan(fichierPlan);
         return this.zone;
     }
     

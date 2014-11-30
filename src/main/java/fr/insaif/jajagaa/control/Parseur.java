@@ -15,6 +15,9 @@ import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.ZoneGeographique;
+import java.io.FileInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Classe qui s'occupe de parser les fichiers XML de livraisons et de plan.
@@ -92,7 +95,15 @@ public class Parseur {
      * @param inputStream Fichier XML contenant les noeuds et les tronçons composants la zone géographique
      * @return La zone géographique contenant les noeuds passés en paramètre
      */
-    public static ZoneGeographique lirePlan(InputStream inputStream) {
+    public static ZoneGeographique lirePlan(String fichierEntree) {
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(fichierEntree);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Parseur.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
         List<Noeud> plan = new ArrayList<Noeud>();
         SAXBuilder builder = new SAXBuilder();
         try {

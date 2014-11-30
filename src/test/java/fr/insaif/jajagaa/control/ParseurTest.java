@@ -40,7 +40,7 @@ public class ParseurTest {
 		List<Noeud> listNoeuds = null;
 		try {
 			inputPlan = new FileInputStream(path);
-			zoneGeo = Parseur.lirePlan(inputPlan);
+			zoneGeo = Parseur.lirePlan(path);
 			listNoeuds = zoneGeo.getNoeuds();
 			assertEquals(nombre,listNoeuds.size());
 			
@@ -82,7 +82,7 @@ public class ParseurTest {
 		try {
 			inputPlan = new FileInputStream(pathPlan);
 			inputLivraison = new FileInputStream(pathLiv);
-			zoneGeo = Parseur.lirePlan(inputPlan);
+			zoneGeo = Parseur.lirePlan(pathPlan);
 			listPlages = Parseur.lireLivraison(inputLivraison, zoneGeo);
 			
 			int cont = 0;
@@ -106,7 +106,7 @@ public class ParseurTest {
 	public void testErreurXMLMalForme(){
 		try {
 			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E1.xml");
-			Parseur.lirePlan(inputPlan);
+			Parseur.lirePlan("./src/test/resources/plan10x10-E1.xml");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

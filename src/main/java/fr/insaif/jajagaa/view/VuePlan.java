@@ -12,7 +12,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.io.FileInputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -131,8 +130,7 @@ public class VuePlan extends JPanel{
         setBackground(Color.GRAY);
         
       try {
-	        FileInputStream zoneInputStream = new FileInputStream("./src/test/resources/plan10x10.xml");
-	    	ZoneGeographique zoneGeo = Parseur.lirePlan(zoneInputStream);
+	    	ZoneGeographique zoneGeo = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
 	        List<Noeud> listNoeuds = zoneGeo.getNoeuds();
 	        for(Noeud noeud : listNoeuds) {
                         if(noeud.getXMetre()>XVille){

@@ -11,11 +11,6 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -138,29 +133,9 @@ public class Fenetre extends JFrame {
             public void actionPerformed(ActionEvent e){
                 int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier du plan");
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    FileInputStream fipPlan = null;
-                    try {
-                        fipPlan = new FileInputStream(fc.getSelectedFile());
-                        returnVal = fc.showDialog(fenetre, "Ouvrir le fichier de livraison");
-                        if(returnVal==JFileChooser.APPROVE_OPTION)
-                        {
-                            //Si les deux fichiers ont été sélectionnés :
-                            FileInputStream fipLivr = new FileInputStream(fc.getSelectedFile());
-                            Controleur.getInstance().creerTournee(fipPlan, fipLivr);
-                            
-                        }
-                        else{
-                            System.out.println("Opération annulée, pour la livraison.");
-                        }
-                    } catch (FileNotFoundException ex) {
-                        Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
-                    } finally {
-                        try {
-                            fipPlan.close();
-                        } catch (IOException ex) {
-                            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
+                    String fipPlan = null;
+                    fipPlan = fc.getSelectedFile().getAbsolutePath();
+                    Controleur.getInstance().lirePlan(fipPlan);
                 }
                 else{
                     System.out.println("Opération annulée, pour le plan.");
@@ -207,10 +182,5 @@ public class Fenetre extends JFrame {
      */
     private void ChoisirTournee(){
         //TODO : appel de JFileChooser
-    }
-    
-    
-    public static void main(String ... args) throws Exception {
-    	Fenetre fen = Fenetre.getInstance();
     }
 }
