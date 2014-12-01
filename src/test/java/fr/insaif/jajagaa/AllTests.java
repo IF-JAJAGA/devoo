@@ -6,11 +6,6 @@ package fr.insaif.jajagaa;
  * and open the template in the editor.
  */
 
-import fr.insaif.jajagaa.model.PlageHoraireTest;
-import fr.insaif.jajagaa.model.TSPTest;
-import fr.insaif.jajagaa.model.TourneeTest;
-import fr.insaif.jajagaa.model.ZoneGeographiqueTest;
-import fr.insaif.jajagaa.view.VueNoeudTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,13 +13,20 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import fr.insaif.jajagaa.control.ParseurTest;
+import fr.insaif.jajagaa.model.PlageHoraireTest;
+import fr.insaif.jajagaa.model.TSPTest;
+import fr.insaif.jajagaa.model.TourneeTest;
+import fr.insaif.jajagaa.model.ZoneGeographiqueTest;
+import fr.insaif.jajagaa.view.VueNoeudTest;
+
 /**
  * Cette classe permet uniquement de lancer les tests dont les noms sont renseignés dans la liste @Suite.SuiteClasses
  * @author jeje
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({   AppTest.class,
-                        //ParseurTest.class,  //TODO : Parseur
+                        ParseurTest.class,
                         PlageHoraireTest.class, TSPTest.class, TourneeTest.class, ZoneGeographiqueTest.class,
                         VueNoeudTest.class})
 public class AllTests {

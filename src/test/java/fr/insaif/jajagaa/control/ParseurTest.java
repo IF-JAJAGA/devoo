@@ -3,9 +3,9 @@ package fr.insaif.jajagaa.control;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
+import java.util.Date;
 import java.util.List;
 
-import org.jdom.input.JDOMParseException;
 import org.junit.Test;
 
 import fr.insaif.jajagaa.model.Noeud;
@@ -93,73 +93,108 @@ public class ParseurTest {
 		}
 	}
 	
-	@Test (expected = JDOMParseException.class)
-	/**
-	 * 
-	 */
-	public void testErreurXMLMalForme(){
-		try {
-			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E1.xml");
-			Parseur.lirePlan("./src/test/resources/plan10x10-E1.xml");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	@Test
 	/**
 	 * 
 	 */
-	public void testErreurAttributInvalide(){
-		try {
-			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E2.xml");
-			//TODO Exception
-			inputPlan.close();
-		} catch (Exception e) {
-			//Exception ici?
-		}
+	public void testPlages() {
+		ZoneGeographique zoneGeo = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
+		ZoneGeographique zoneGeo2 = Parseur.lirePlan("./src/test/resources/plan20x20.xml");
+		//livraison10x10-1
+		List<PlageHoraire> listePlages = Parseur.lireLivraison("./src/test/resources/livraison10x10-3.xml",zoneGeo);
+		assertEquals("08:00:00",getHeure(listePlages.get(0).getHeureDebut())); 
+		assertEquals("12:00:00",getHeure(listePlages.get(0).getHeureFin()));
+		
+		//livraison10x10-2
+		listePlages = Parseur.lireLivraison("./src/test/resources/livraison10x10-2.xml", zoneGeo);
+		assertEquals("08:00:00",getHeure(listePlages.get(0).getHeureDebut())); 
+		assertEquals("09:30:00",getHeure(listePlages.get(0).getHeureFin()));
+		assertEquals("09:30:00",getHeure(listePlages.get(1).getHeureDebut())); 
+		assertEquals("11:00:00",getHeure(listePlages.get(1).getHeureFin()));
+		assertEquals("11:00:00",getHeure(listePlages.get(2).getHeureDebut())); 
+		assertEquals("12:30:00",getHeure(listePlages.get(2).getHeureFin()));
+		
+		listePlages = Parseur.lireLivraison("./src/test/resources/livraison10x10-3.xml", zoneGeo);
+		
+
+		listePlages = Parseur.lireLivraison("./src/test/resources/livraison20x20-1.xml", zoneGeo2);
+		listePlages = Parseur.lireLivraison("./src/test/resources/livraison20x20-2.xml", zoneGeo2);
 	}
 	
-	@Test
 	/**
 	 * 
 	 */
-	public void testErreurManqueAttribut(){
-		try {
-			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E3.xml");
-			//TODO Exception
-			inputPlan.close();
-		} catch (Exception e) {
-			//Exception ici?
-		}
+	@SuppressWarnings("deprecation")
+	public String getHeure(Date date) {
+		return date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 	}
-	
-	@Test
-	/**
-	 * 
-	 */
-	public void testErreurAttributVide(){
-		try {
-			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E4.xml");
-			//TODO Exception
-			inputPlan.close();
-		} catch (Exception e) {
-			//Exception ici?
-		}
-	}
-	
-	@Test
-	/**
-	 * 
-	 */
-	public void testErreurXMLNonExistant(){
-		try {
-			FileInputStream inputPlan = new FileInputStream("./src/test/resources/nexistepas.xml");
-			//TODO Exception
-			inputPlan.close();
-		} catch (Exception e) {
-			//Exception ici?
-		}
-	}
+//	@Test 
+//	/**
+//	 * 
+//	 */
+//	public void testErreurXMLMalForme(){
+//		try {
+//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E1.xml");
+//			Parseur.lirePlan("./src/test/resources/plan10x10-E1.xml");
+//		} catch (Exception e) {
+////			e.printStackTrace();
+//		}
+//	}
+//	
+//	@Test
+//	/**
+//	 * 
+//	 */
+//	public void testErreurAttributInvalide(){
+//		try {
+//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E2.xml");
+//			//TODO Exception
+//			inputPlan.close();
+//		} catch (Exception e) {
+//			//Exception ici?
+//		}
+//	}
+//	
+//	@Test
+//	/**
+//	 * 
+//	 */
+//	public void testErreurManqueAttribut(){
+//		try {
+//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E3.xml");
+//			//TODO Exception
+//			inputPlan.close();
+//		} catch (Exception e) {
+//			//Exception ici?
+//		}
+//	}
+//	
+//	@Test
+//	/**
+//	 * 
+//	 */
+//	public void testErreurAttributVide(){
+//		try {
+//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E4.xml");
+//			//TODO Exception
+//			inputPlan.close();
+//		} catch (Exception e) {
+//			//Exception ici?
+//		}
+//	}
+//	
+//	@Test
+//	/**
+//	 * 
+//	 */
+//	public void testErreurXMLNonExistant(){
+//		try {
+//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/nexistepas.xml");
+//			//TODO Exception
+//			inputPlan.close();
+//		} catch (Exception e) {
+//			//Exception ici?
+//		}
+//	}
 }

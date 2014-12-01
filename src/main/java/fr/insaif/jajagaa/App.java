@@ -1,10 +1,11 @@
 package fr.insaif.jajagaa;
 
-import java.io.FileInputStream;
 import java.util.List;
 
 import fr.insaif.jajagaa.control.Parseur;
+import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
@@ -13,28 +14,25 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
  * @author gustavemonod
  */
 public class App {
-//    public static void main(String ... args) throws Exception {
-//        Thread.sleep(6000);
-//        FileInputStream zoneInputStream = null,livInputStream = null;
-//        try {
-//            zoneInputStream = new FileInputStream("./src/test/resources/plan10x10.xml");
-////        	livInputStream = new FileInputStream("./src/test/resources/livraison10x10-1.xml");
-//        	ZoneGeographique zoneGeo = Parseur.lirePlan(zoneInputStream);
-//        	for(Noeud no : zoneGeo.getNoeuds()) {
-//        		List<Troncon> lt = no.getSortants();
-//        		for(Troncon tronco : lt) {
-//        			System.out.println(tronco.getIdOrigine()+": "+tronco.getLongueurMetre()+"m.   "+tronco.getVitesse()+"m/s");
-//        		}
-//        		
-//        	}
-////          Parseur.lireLivraison(livInputStream,zoneGeo);
-//        } finally {
-////            if (livInputStream != null) {
-////                livInputStream.close();
-////            }
-//            if (zoneInputStream != null) {
-//            	zoneInputStream.close();
-//            }
-//        }
-//    }
+	public static void main(String ... args) throws Exception {
+		Thread.sleep(6000);
+		ZoneGeographique zoneGeo = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
+//		for(Noeud no : zoneGeo.getNoeuds()) {
+//			List<Troncon> lt = no.getSortants();
+//			for(Troncon tronco : lt) {
+//				System.out.println("Noeud " + tronco.getIdOrigine()+": Longeur "+tronco.getLongueurMetre()+" m.   Vitesse: "+tronco.getVitesse()+" m/s");
+//			}
+//
+//		}
+		List<PlageHoraire> listePlages = Parseur.lireLivraison("./src/test/resources/livraison10x10-3.xml",zoneGeo);
+		for(PlageHoraire plage : listePlages) {
+			System.out.println("Plage" +plage.getHeureDebut() +" - "+ plage.getHeureFin());
+			List<Livraison> listLiv = plage.getLivraisons();
+//			for(Livraison liv : listLiv) {
+//				System.out.println("Livraison: "+ liv.getId() +". Livrer à "+liv.getHeureLivraison()+
+//						"heures. Finir à " + liv.getHeureFin() + "heures.");
+//			}
+			
+		}
+	}
 }
