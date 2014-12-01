@@ -3,7 +3,6 @@ package fr.insaif.jajagaa.model;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
 import fr.insaif.jajagaa.model.tsp.TSP;
 
-import java.awt.Point;
 import java.util.*;
 
 /**
@@ -202,11 +201,31 @@ public class Tournee {
     }
     
     /**
-     * @param pointMilieu point à ajouter à la tournée
-     * @param pointAvant point après lequel on doit ajouter pointMilieu
+     * @param noeudMilieu noeud à ajouter à la tournée
+     * @param noeudAvant noeud après lequel on doit ajouter pointMilieu
      * @return la tournée une fois qu'elle a été modifiée.
      */
-    public Tournee ajouterPointDeLivraison(Point pointMilieu, Point pointAvant){
+    public Tournee ajouterPointDeLivraison(Noeud noeudMilieu, Noeud noeudAvant){
+        boolean trouveChemin = false;
+        int i;
+        for (i=0; i<cheminsResultats.size();i++) {
+            //TODO : réimplémenter 
+            if (cheminsResultats.get(i).getOrigine().equals(noeudAvant)){
+                trouveChemin = true;
+                break;
+            }
+        }
+        if (trouveChemin){
+            //Supprimer le chemin
+            cheminsResultats.remove(i);
+            //Calculerplus court chemin entre noeud Avant et milieu
+            //Chemin cheminAvant = Dijkstra.plusCourtChemin(zone, null, null);
+            //Calculer plus court chemin entre noeud Milieu et noeud Après
+            //Chemin cheminAprès = Dijkstra.plusCourtChemin(zone, null, null);
+            //Ajouter les deux chemins crées à la place de celui supprimé
+            cheminsResultats.add(null);
+            cheminsResultats.add(null);
+        }
         return this;
     }
 }

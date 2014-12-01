@@ -104,6 +104,7 @@ public class Controleur {
      * @return la tournee une fois qu'elle a été modifiée
      */
     public Tournee ajouterPointLivraison (Tournee tourneeModel,Noeud noeudMilieu, Noeud noeudAvant) {
+        tourneeModel.ajouterPointDeLivraison(noeudMilieu, noeudAvant);
         return null;
     }
     
