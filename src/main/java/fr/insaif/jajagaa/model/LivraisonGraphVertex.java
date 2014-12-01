@@ -42,6 +42,16 @@ public class LivraisonGraphVertex {
     public List<Chemin> getSortants() {
         return sortants;
     }
+    
+    public Chemin getSortantByDest(LivraisonGraphVertex destination) {
+        List<Chemin> chemins = this.getSortants();
+        for(Chemin c : chemins) {
+            if(c.getDestination().equals(destination)) {
+                return c;
+            }
+        }
+        return null;
+    } 
 
     public Noeud getNoeud() {
         return noeud;

@@ -42,6 +42,10 @@ public class LivraisonGraph implements Graph {
         return this.noeuds;
     }
     
+    public int getIndexNoeudById(int id) {
+        return this.idToIndex.get(id);
+    }
+    
     public LivraisonGraphVertex getVertex(int index) {
         return this.noeuds.get(index);
     }
