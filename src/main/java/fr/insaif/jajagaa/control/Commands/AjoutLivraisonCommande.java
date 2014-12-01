@@ -2,17 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.insaif.jajagaa.control;
+package fr.insaif.jajagaa.control.Commands;
 
-import fr.insaif.jajagaa.control.Commands.Command;
+import fr.insaif.jajagaa.model.Noeud;
 
 /**
  *
  * @author alicia
  */
-public class SuppressionLivraison implements Command {
+public class AjoutLivraisonCommande implements Command {
     
-    public SuppressionLivraison(){
+    private Noeud noeudMilieu;
+    private Noeud noeudAvant;
+    //TODO : compléter.
+    
+    public AjoutLivraisonCommande(){
         //TODO : trouver les attributs
     }
     
@@ -25,5 +29,4 @@ public class SuppressionLivraison implements Command {
     public void undo(){
         //TODO : faire des actions
     }
-    
 }

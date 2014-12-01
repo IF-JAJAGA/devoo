@@ -1,9 +1,9 @@
 package fr.insaif.jajagaa.view;
 
 import fr.insaif.jajagaa.control.Controleur;
-import fr.insaif.jajagaa.control.Parseur;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
@@ -130,7 +130,7 @@ public class VuePlan extends JPanel{
         setBackground(Color.GRAY);
         
         
-        
+        System.out.println("Je passe ici !!!");
         
         
         //Pour l'instant ici
@@ -227,6 +227,7 @@ public class VuePlan extends JPanel{
     protected void actualiserPlan(ZoneGeographique zoneGeo) {
         viderPlan();
         if(zoneGeo != null){
+            Noeud entrepot = zoneGeo.getEntrepot();
             List<Noeud> listNoeuds = zoneGeo.getNoeuds();
             for(Noeud noeud : listNoeuds) {
                     if(noeud.getXMetre()>XVille){
@@ -235,11 +236,43 @@ public class VuePlan extends JPanel{
                     if(noeud.getYMetre()>YVille){
                         YVille = noeud.getYMetre();
                     }
-                    vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
+                    //TODO : redéfinir .equals 
+                    if ((entrepot != null) && (noeud.equals(entrepot))){
+                        vueNoeuds.add(new VueNoeud(noeud, Color. ORANGE));
+                    }
+                    else{
+                        vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
+                    }
+                    List<Troncon> listTroncon = noeud.getSortants();
+                    if (listTroncon != null) {
+                        for(Troncon troncon : listTroncon){
+                            vueTroncons.add(new VueTroncon(troncon));
+                        }
+                    }
             }
         }
         
         this.paint(getGraphics());
+    }
+    
+    protected void ajouterLivraisons(List<PlageHoraire> PL) {
+        for(PlageHoraire pl : PL){
+            List<Livraison> listNoeuds = pl.getLivraisons();
+            for (Livraison liv : listNoeuds){
+                if(liv.getXMetre()>XVille){
+                    XVille = liv.getXMetre();
+                }
+                if(liv.getYMetre()>YVille)
+                {
+                    YVille = liv.getYMetre();
+                }
+                vueNoeuds.add(new VueNoeud(liv, Color.YELLOW));
+                List<Troncon> listTroncon = liv.getSortants();
+                for(Troncon troncon : listTroncon){
+                    vueTroncons.add(new VueTroncon(troncon));
+                }
+            }
+        }
     }
     
     private void viderPlan(){

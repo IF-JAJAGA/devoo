@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.insaif.jajagaa.control;
+package fr.insaif.jajagaa.control.Commands;
 
 import fr.insaif.jajagaa.control.Commands.Command;
 
@@ -10,9 +10,9 @@ import fr.insaif.jajagaa.control.Commands.Command;
  *
  * @author alicia
  */
-public class AjoutLivraison implements Command {
+public class SuppressionLivraisonCommande implements Command {
     
-    public AjoutLivraison(){
+    public SuppressionLivraisonCommande(){
         //TODO : trouver les attributs
     }
     
@@ -25,4 +25,5 @@ public class AjoutLivraison implements Command {
     public void undo(){
         //TODO : faire des actions
     }
+    
 }
