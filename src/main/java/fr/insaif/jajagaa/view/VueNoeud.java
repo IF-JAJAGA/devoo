@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.view;
 
+import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 
 import java.awt.*;
@@ -15,7 +16,7 @@ public class VueNoeud {
 
     public static final int DIAMETRE = 15;        //Pour l'instant
     public static final int DIAMETRE_LIVRAISON = 20;
-    protected static int conv;
+    //protected static int conv;
     
     protected enum Etat{
         RIEN,
@@ -68,8 +69,12 @@ public class VueNoeud {
     public VueNoeud(Noeud unNoeud, Color couleur) {
         this.couleur = couleur;
         noeudModele = unNoeud;
-        vueX = unNoeud.getX() * conv;
-        vueY = unNoeud.getY() * conv;
+        
+        if (unNoeud instanceof Livraison) {
+            estPointDeLivraison = Etat.LIVRAISON;
+        }
+        vueX = unNoeud.getX();
+        vueY = unNoeud.getY();
     }
 
 

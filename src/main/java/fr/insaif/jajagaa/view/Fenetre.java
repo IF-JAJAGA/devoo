@@ -157,14 +157,14 @@ public class Fenetre extends JFrame {
         importLivr.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier du plan");
+                int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier de la livraison");
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     String fipLivraison = null;
                     fipLivraison = fc.getSelectedFile().getAbsolutePath();
                     Controleur.getInstance().lireLivraisons(fipLivraison);
                 }
                 else{
-                    System.out.println("Opération annulée, pour le plan.");
+                    System.out.println("Opération annulée, pour la livraison.");
                 }
             }
             
@@ -239,6 +239,10 @@ public class Fenetre extends JFrame {
         vuePlan.actualiserPlan(Controleur.getInstance().getZone());
         conteneurDroite.majListe(vuePlan.getVueNoeuds());
     };
+    
+    public void ajouterLivraisons(){
+        vuePlan.ajouterLivraisons(Controleur.getInstance().getPlagesHoraire());
+    }
     
     /**
      * Ferme la fenêtre.

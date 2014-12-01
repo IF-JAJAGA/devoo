@@ -122,6 +122,8 @@ public class Controleur {
         else if(commande instanceof LireLivraisonsCommand){
             zone = ((LireLivraisonsCommand)commande).getZone();
             plagesHoraire = ((LireLivraisonsCommand)commande).getPlages();
+            Fenetre.getInstance().actualiserPlan();
+            Fenetre.getInstance().ajouterLivraisons();
             System.out.println("execute LireLivraisonsCommand");
             //TODO (pas sûr) : appeler calcul de la tournée puis actualisation de l'affichage ?
         }
