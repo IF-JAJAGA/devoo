@@ -132,24 +132,36 @@ public class Tournee {
             int[] next = this.tsp.getNext();
             int indexEntrepot = this.graph.getIndexNoeudById(this.zone.getEntrepot().getId());
             List<LivraisonGraphVertex> vertices = this.graph.getNoeuds();
+            List<LivraisonGraphVertex> orderedVertices = new ArrayList<LivraisonGraphVertex>();
             if(next.length > 0) {
                 int i = indexEntrepot;
-                LivraisonGraphVertex depart = vertices.get(i);
-                LivraisonGraphVertex arrivee;
+                orderedVertices.add(vertices.get(i));
                 do {
                     i = next[i];
-                    arrivee  = vertices.get(i);
-                    Chemin chemin = depart.getSortantByDest(arrivee);
-                    if(chemin == null) throw new NullPointerException("Noeud sortant non trouvé");
-                    this.addCheminResultat(chemin);
-                    depart = arrivee;
+                    orderedVertices.add(vertices.get(i));
                 }
                 while(i != indexEntrepot);
+                this.buildCheminResultat(orderedVertices);
             }
         }
         return state;
     }
-
+    
+    protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) {
+        int i = 0;
+        LivraisonGraphVertex depart, arrivee;
+        while(i < (vertices.size()-1)) {
+            depart = vertices.get(i);
+            arrivee = vertices.get(i+1);
+            
+            Chemin chemin = depart.getSortantByDest(arrivee);
+            if(chemin == null) throw new NullPointerException("Noeud sortant non trouvé");
+            this.addCheminResultat(chemin);
+            
+            i++;
+        }
+    }
+ 
     public SolutionState getSolutionState() {
         return this.tsp.getSolutionState();
     }
