@@ -6,8 +6,10 @@
 package fr.insaif.jajagaa.control.Commands;
 
 import fr.insaif.jajagaa.control.Parseur;
+import fr.insaif.jajagaa.control.ParseurException;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.ZoneGeographique;
+
 import java.util.List;
 
 /**
@@ -28,12 +30,14 @@ public class LireLivraisonsCommand implements Command{
     }
 
     @Override
-    public void execute() {
+    public void execute(){
         if(plagesAvant == null){
             plagesAvant = plages;
-            plages = Parseur.lireLivraison(fichierLivraison, zone);
+            try{ plages = Parseur.lireLivraison(fichierLivraison, zone); }
+            catch(ParseurException pe) { }
             plagesApres = plages;
         }
+        //TODO arranger le catch
         else {
             plages = plagesApres;
         }

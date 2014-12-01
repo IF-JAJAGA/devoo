@@ -1,10 +1,12 @@
 package fr.insaif.jajagaa.control;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -15,16 +17,13 @@ import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.ZoneGeographique;
-import java.io.FileInputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Classe qui s'occupe de parser les fichiers XML de livraisons et de plan.
  * TODO Vérifier où cette classe est censée être
  * @author gustavemonod
  */
-public class Parseur {
+public class Parseur{
 	
 	/** TODO tester (test actuel incomplet/vieux)
      * Lit toutes les livraisons contenues dans un fichier de demande de livraisons et en renvoie une liste
@@ -33,7 +32,7 @@ public class Parseur {
      * @return Liste des plages horaires contenant chacune leur livraisons à effectuer
 
      */
-    public static List<PlageHoraire> lireLivraison(String fichierEntree, ZoneGeographique zone) {
+    public static List<PlageHoraire> lireLivraison(String fichierEntree, ZoneGeographique zone) throws ParseurException{
         List<PlageHoraire> plageList = new ArrayList<PlageHoraire>();
         SAXBuilder builder = new SAXBuilder();
         FileInputStream inputStream = null;
@@ -69,23 +68,17 @@ public class Parseur {
                 plageList.add(plageHoraire);
             }
         } catch (FileNotFoundException fnfe) {
-            System.err.println("Fichier inexistant");
-//            System.exit(500);
+            throw new ParseurException("Fichier inexistant");
         } catch (IOException io) {
-            System.err.println("Impossible d'accéder au fichier correctement");
-            System.exit(501);
+            throw new ParseurException("Impossible d'accéder au fichier correctement");
         } catch (JDOMException jdomex) {
-            System.err.println("Ficher XML mal formé: mauvaise syntaxe XML");
-            System.exit(502);
+            throw new ParseurException("Ficher XML mal formé: mauvaise syntaxe XML");
         } catch (NullPointerException nullptrex) {
-            System.err.println("Ficher XML mal formé: element ou attribut manquant");
-            System.exit(502);
+            throw new ParseurException("Ficher XML mal formé: element ou attribut manquant");
         } catch (IndexOutOfBoundsException ioobe) {
-            System.err.println("Fichier XML erroné: valeurs de certains attributs inexistants");
-//            System.exit(503);
+            throw new ParseurException("Fichier XML erroné: valeurs de certains attributs inexistants");
         } catch (NumberFormatException nfe) {
-            System.err.println("Données du fichier XML non conforme");
-//            System.exit(504);
+            throw new ParseurException("Données du fichier XML non conforme");
         }
 
         return plageList;
@@ -97,7 +90,7 @@ public class Parseur {
      * @param inputStream Fichier XML contenant les noeuds et les tronçons composants la zone géographique
      * @return La zone géographique contenant les noeuds passés en paramètre
      */
-    public static ZoneGeographique lirePlan(String fichierEntree) {
+    public static ZoneGeographique lirePlan(String fichierEntree) throws ParseurException{
         FileInputStream inputStream = null;
         try {
             inputStream = new FileInputStream(fichierEntree);
@@ -139,27 +132,19 @@ public class Parseur {
                 }
             }
         } catch (FileNotFoundException fnfe) {
-            System.err.println("Fichier inexistant");
-//            System.exit(500);
+            throw new ParseurException("Fichier inexistant");
         } catch (IOException io) {
-            System.err.println("Impossible d'accéder au fichier correctement");
-//            System.exit(501);
+            throw new ParseurException("Impossible d'accéder au fichier correctement");
         } catch (JDOMException jdomex) {
-            System.err.println("Ficher XML mal formé: mauvaise syntaxe XML");
-//            System.exit(502);
+            throw new ParseurException("Ficher XML mal formé: mauvaise syntaxe XML");
         } catch (NullPointerException nullptrex) {
-            System.err.println("Ficher XML mal formé: element ou attribut manquant");
-//            System.exit(502);
+            throw new ParseurException("Ficher XML mal formé: element ou attribut manquant");
         } catch (IndexOutOfBoundsException ioobe) {
-            System.err.println("Fichier XML erroné: valeurs de certains attributs inexistants");
-//            System.exit(503);
+            throw new ParseurException("Fichier XML erroné: valeurs de certains attributs inexistants");
         } catch (NumberFormatException nfe) {
-            System.err.println("Données du fichier XML non conforme");
-//            System.exit(504);
-        }
+            throw new ParseurException("Données du fichier XML non conforme");
+        } 
         
-        //Quand attribut est empty or invalide -> NumberFormatException
-        //Et pour File Not Found???? Ce n'est pas là, nn?
         return (new ZoneGeographique(plan));
     }
 }

@@ -1,12 +1,15 @@
 package fr.insaif.jajagaa.control;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.internal.runners.statements.Fail;
 
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.PlageHoraire;
@@ -99,50 +102,38 @@ public class ParseurTest {
 	 * 
 	 */
 	public void testPlages() {
-		ZoneGeographique zoneGeo = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
-		//livraison10x10-1
-		List<PlageHoraire> listePlages = Parseur.lireLivraison("./src/test/resources/livraison10x10-1.xml",zoneGeo);
-//		assertEquals("8:0:0",getHeure(listePlages.get(0).getHeureDebut())); 
-//		assertEquals("12:0:0",getHeure(listePlages.get(0).getHeureFin()));
-//		
-//		//livraison10x10-2
-		listePlages = Parseur.lireLivraison("./src/test/resources/livraison10x10-2.xml", zoneGeo);
-//		assertEquals("8:0:0",getHeure(listePlages.get(0).getHeureDebut())); 
-//		assertEquals("9:30:0",getHeure(listePlages.get(0).getHeureFin()));
-//		assertEquals("9:30:0",getHeure(listePlages.get(1).getHeureDebut())); 
-//		assertEquals("11:0:0",getHeure(listePlages.get(1).getHeureFin()));
-//		assertEquals("11:0:0",getHeure(listePlages.get(2).getHeureDebut())); 
-//		assertEquals("12:30:0",getHeure(listePlages.get(2).getHeureFin()));
-		
-		System.out.println(getHeure(listePlages.get(0).getHeureDebut()));
-		System.out.println(getHeure(listePlages.get(0).getHeureFin()));
-		System.out.println(getHeure(listePlages.get(1).getHeureDebut()));
-		System.out.println(getHeure(listePlages.get(1).getHeureFin()));
-		System.out.println(getHeure(listePlages.get(2).getHeureDebut()));
-		System.out.println(getHeure(listePlages.get(2).getHeureFin()));
-		
-//		//livraison10x10-3 mêmes plages qu'à livraison10x10-2
-//		
-//		ZoneGeographique zoneGeo2 = Parseur.lirePlan("./src/test/resources/plan20x20.xml");
-//		//livraison20x20-1
-//		listePlages = Parseur.lireLivraison("./src/test/resources/livraison20x20-1.xml", zoneGeo2);
-//		assertEquals("8:30:0",getHeure(listePlages.get(0).getHeureDebut())); 
-//		assertEquals("10:0:0",getHeure(listePlages.get(0).getHeureFin()));
-//		assertEquals("10:0:0",getHeure(listePlages.get(1).getHeureDebut())); 
-//		assertEquals("11:30:0",getHeure(listePlages.get(1).getHeureFin()));
-//		assertEquals("14:0:0",getHeure(listePlages.get(2).getHeureDebut()));
-//		assertEquals("16:0:0",getHeure(listePlages.get(2).getHeureFin()));
-		
-		
-//		System.out.println(getHeure(listePlages.get(0).getHeureDebut()));
-//		System.out.println(getHeure(listePlages.get(0).getHeureFin()));
-//		System.out.println(getHeure(listePlages.get(1).getHeureDebut()));
-//		System.out.println(getHeure(listePlages.get(1).getHeureFin()));
-//		System.out.println(getHeure(listePlages.get(2).getHeureDebut()));
-//		System.out.println(getHeure(listePlages.get(2).getHeureFin()));
+		try{
+			ZoneGeographique zoneGeo = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
+			//livraison10x10-1
+			List<PlageHoraire> listePlages = Parseur.lireLivraison("./src/test/resources/livraison10x10-1.xml",zoneGeo);
+			assertEquals("8:0:0",getHeure(listePlages.get(0).getHeureDebut())); 
+			assertEquals("12:0:0",getHeure(listePlages.get(0).getHeureFin()));
 
-//		
-		//livraison20x20-2 mêmes plages qu'à livraison20x20-1
+			//livraison10x10-2
+			listePlages = Parseur.lireLivraison("./src/test/resources/livraison10x10-2.xml", zoneGeo);
+			assertEquals("8:0:0",getHeure(listePlages.get(0).getHeureDebut())); 
+			assertEquals("9:30:0",getHeure(listePlages.get(0).getHeureFin()));
+			assertEquals("9:30:0",getHeure(listePlages.get(1).getHeureDebut())); 
+			assertEquals("11:0:0",getHeure(listePlages.get(1).getHeureFin()));
+			assertEquals("11:0:0",getHeure(listePlages.get(2).getHeureDebut())); 
+			assertEquals("12:30:0",getHeure(listePlages.get(2).getHeureFin()));
+
+			//livraison10x10-3 mêmes plages qu'à livraison10x10-2
+
+			ZoneGeographique zoneGeo2 = Parseur.lirePlan("./src/test/resources/plan20x20.xml");
+			//livraison20x20-1
+			listePlages = Parseur.lireLivraison("./src/test/resources/livraison20x20-1.xml", zoneGeo2);
+			assertEquals("8:30:0",getHeure(listePlages.get(0).getHeureDebut())); 
+			assertEquals("10:0:0",getHeure(listePlages.get(0).getHeureFin()));
+			assertEquals("10:0:0",getHeure(listePlages.get(1).getHeureDebut())); 
+			assertEquals("11:30:0",getHeure(listePlages.get(1).getHeureFin()));
+			assertEquals("14:0:0",getHeure(listePlages.get(2).getHeureDebut()));
+			assertEquals("16:0:0",getHeure(listePlages.get(2).getHeureFin()));
+
+			//livraison20x20-2 mêmes plages qu'à livraison20x20-1
+		} catch (Exception e) {
+			
+		}
 	}
 	
 	/**
@@ -152,72 +143,75 @@ public class ParseurTest {
 	public String getHeure(Date date) {
 		return date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 	}
-//	@Test 
-//	/**
-//	 * 
-//	 */
-//	public void testErreurXMLMalForme(){
-//		try {
-//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E1.xml");
-//			Parseur.lirePlan("./src/test/resources/plan10x10-E1.xml");
-//		} catch (Exception e) {
-////			e.printStackTrace();
-//		}
-//	}
-//	
-//	@Test
-//	/**
-//	 * 
-//	 */
-//	public void testErreurAttributInvalide(){
-//		try {
-//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E2.xml");
-//			//TODO Exception
-//			inputPlan.close();
-//		} catch (Exception e) {
-//			//Exception ici?
-//		}
-//	}
-//	
-//	@Test
-//	/**
-//	 * 
-//	 */
-//	public void testErreurManqueAttribut(){
-//		try {
-//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E3.xml");
-//			//TODO Exception
-//			inputPlan.close();
-//		} catch (Exception e) {
-//			//Exception ici?
-//		}
-//	}
-//	
-//	@Test
-//	/**
-//	 * 
-//	 */
-//	public void testErreurAttributVide(){
-//		try {
-//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/plan10x10-E4.xml");
-//			//TODO Exception
-//			inputPlan.close();
-//		} catch (Exception e) {
-//			//Exception ici?
-//		}
-//	}
-//	
-//	@Test
-//	/**
-//	 * 
-//	 */
-//	public void testErreurXMLNonExistant(){
-//		try {
-//			FileInputStream inputPlan = new FileInputStream("./src/test/resources/nexistepas.xml");
-//			//TODO Exception
-//			inputPlan.close();
-//		} catch (Exception e) {
-//			//Exception ici?
-//		}
-//	}
+	
+
+	@Test
+	/**
+	 * 
+	 */
+	public void testErreurXMLMalForme(){
+		try {
+			Parseur.lirePlan("./src/test/resources/plan10x10-E1.xml");
+		} catch (ParseurException pe) {
+			assertEquals("Ficher XML mal formé: mauvaise syntaxe XML",pe.getMessage());
+			assertSame(ParseurException.class, pe.getClass());
+			////TODO sont necessaires les deux asserts? Le premier contient le deuxieme?
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test 
+	/**
+	 * 
+	 */
+	public void testErreurAttributInvalide(){
+		try {
+			Parseur.lirePlan("./src/test/resources/plan10x10-E2.xml");
+		} catch (ParseurException pe) {
+			assertEquals("Ficher XML mal formé: mauvaise syntaxe XML",pe.getMessage());
+			assertSame(ParseurException.class, pe.getClass());
+			////TODO sont necessaires les deux asserts? Le premier contient le deuxieme?
+		}
+	}
+
+	@Test 
+	/**
+	 * 
+	 */
+	public void testErreurManqueAttribut(){
+		try {
+			Parseur.lirePlan("./src/test/resources/plan10x10-E3.xml");
+		} catch (ParseurException pe) {
+			assertEquals("Ficher XML mal formé: mauvaise syntaxe XML",pe.getMessage());
+			assertSame(ParseurException.class, pe.getClass());
+			//TODO sont necessaires les deux asserts? Le premier contient le deuxieme?
+		}
+	}
+
+	@Test 
+	/**
+	 * 
+	 */
+	public void testErreurAttributVide(){
+		try {
+			Parseur.lirePlan("./src/test/resources/plan10x10-E4.xml");
+		} catch (ParseurException pe) {
+			assertEquals("Ficher XML mal formé: mauvaise syntaxe XML",pe.getMessage());
+			assertSame(ParseurException.class, pe.getClass());
+			//TODO sont necessaires les deux asserts? Le premier contient le deuxieme?
+		}
+	}
+
+	@Test 
+	/**
+	 * 
+	 */
+	public void testErreurXMLNonExistant(){
+		try {
+			Parseur.lirePlan("./src/test/resources/nexistepas.xml");
+		} catch (ParseurException pe){
+			assertEquals("Fichier inexistant",pe.getMessage());
+		}
+	}
 }
