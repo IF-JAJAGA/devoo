@@ -31,6 +31,8 @@ public class LivraisonGraph implements Graph {
     protected List<Chemin> chemins;
     
     protected List<LivraisonGraphVertex> noeuds;
+    
+    protected Map<Integer,Integer> idToIndex;
 
     public LivraisonGraph(List<Chemin> chemins) {
         this.setChemins(chemins);
@@ -61,7 +63,11 @@ public class LivraisonGraph implements Graph {
         }
         this.noeuds = new ArrayList<LivraisonGraphVertex>(tree);
 
-        for (LivraisonGraphVertex noeud : this.getNoeuds()) {
+        this.idToIndex = new HashMap<Integer,Integer>();
+        int nbNoeuds = this.getNoeuds().size();
+        for (int i=0; i<nbNoeuds; i++) {
+            LivraisonGraphVertex noeud = this.getNoeuds().get(i);
+            this.idToIndex.put(noeud.getId(), i);
             for (Chemin chemin : noeud.getSortants()) {
                 int cost = chemin.getCost();
                 this.maxArcCost = cost > this.maxArcCost ? cost : this.maxArcCost;
@@ -99,25 +105,22 @@ public class LivraisonGraph implements Graph {
         int size = this.getNbVertices();
         int[][] costs = new int[size][size];
         for (int i = 0; i < size; ++i) {
-            int successors[] = this.getSucc(i);
-            int k = 0;
-            LivraisonGraphVertex noeud = this.getNoeuds().get(i);
-            for (int j = 0; j < size; ++j) {
-                if (k < successors.length && j == successors[k]) {
-                    costs[i][j] = noeud.getSortants().get(k).getCost();
-                    ++k;
-                } else {
-                    costs[i][j] = PAS_DE_TRONCON;
-                }
+            for(int j=0; j<size; j++) {
+                costs[i][j] = PAS_DE_TRONCON;
+            }
+            int[] successors = this.getSucc(i);
+            int[] succCosts = this.getSuccCost(i);
+            for (int j = 0; j < successors.length; ++j) {
+                costs[i][successors[j]] = succCosts[j];
             }
         }
         return costs;
     }
 
     /**
-     * Renvoie le tableau des ID des noeuds reliés avec un Troncon sortant
+     * Renvoie le tableau des ID des noeuds reliés avec un Chemin sortant
      * @param i a vertex such that <code>0 <= i < this.getNbVertices()</code>
-     * @return Tableau des ID des noeuds reliés avec un Troncon sortant
+     * @return Tableau des ID des noeuds reliés avec un Chemin sortant
      * @throws ArrayIndexOutOfBoundsException
      */
     public int[] getSucc(int i) throws ArrayIndexOutOfBoundsException {
@@ -125,13 +128,24 @@ public class LivraisonGraph implements Graph {
         int size = sortants.size();
         int succ[] = new int[size];
         for (int k = 0; k < size; ++k) {
-            succ[k] = sortants.get(k).getDestination().getId();
+            int id = sortants.get(k).getDestination().getId();
+            succ[k] = this.idToIndex.get(id);
         }
         return succ;
     }
 
     public int getNbSucc(int i) throws ArrayIndexOutOfBoundsException {
         return this.noeuds.get(i).getSortants().size();
+    }
+    
+    protected int[] getSuccCost(int i) {
+        List<Chemin> sortants = this.getNoeuds().get(i).getSortants();
+        int size = sortants.size();
+        int succCost[] = new int[size];
+        for (int k = 0; k < size; ++k) {
+            succCost[k] = sortants.get(k).getCost();
+        }
+        return succCost;
     }
     
 }

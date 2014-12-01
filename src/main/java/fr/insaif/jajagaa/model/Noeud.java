@@ -137,7 +137,7 @@ public class Noeud {
      */
     public void addSortant(Noeud destination, float longueurMetre, float vitesse, String rue) {
         assert !this.equals(destination);
-        this.sortants.add(new Troncon(this.id, destination.id, longueurMetre, vitesse,rue));
+        this.sortants.add(new Troncon(this.id, destination.getId(), longueurMetre, vitesse,rue));
     }
 
     /**
