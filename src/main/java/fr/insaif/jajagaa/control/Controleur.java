@@ -1,6 +1,7 @@
 package fr.insaif.jajagaa.control;
 
 import fr.insaif.jajagaa.control.Commands.Command;
+import fr.insaif.jajagaa.control.Commands.LireLivraisonsCommand;
 import fr.insaif.jajagaa.control.Commands.LirePlanCommand;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Noeud;
@@ -13,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  * Controleur qui permet de faire l'interface avec le modèle
@@ -82,12 +84,16 @@ public class Controleur {
     /**
      * Méthode permettant de générer la liste des plages horaires contenant les ensembles de livraisons à réaliser
      * @param fichierLivraison
-     * @param zone
      * @return 
      */
-    public List<PlageHoraire> lireLivraisons(String fichierLivraison, ZoneGeographique zone) {
-        this.plagesHoraire = Parseur.lireLivraison(fichierLivraison, zone);
-        return this.plagesHoraire;
+    public void lireLivraisons(String fichierLivraison) {
+        if(zone == null){
+            JOptionPane.showMessageDialog(null, "Impossible d'importer des livraisons sans aucun plan de la ville.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        creationCommande(new ElementListeCourante(new LireLivraisonsCommand(plagesHoraire, zone, fichierLivraison)));
+        
+        execute();
     }
     
     /**
@@ -108,9 +114,16 @@ public class Controleur {
         Command commande = commandeCourante.commande;
         commande.execute();
         
+        //Actualisation du modèle puis de la vue.
         if(commande instanceof LirePlanCommand){
             zone = ((LirePlanCommand)commande).getZone();
             Fenetre.getInstance().actualiserPlan();
+        }
+        else if(commande instanceof LireLivraisonsCommand){
+            zone = ((LireLivraisonsCommand)commande).getZone();
+            plagesHoraire = ((LireLivraisonsCommand)commande).getPlages();
+            System.out.println("execute LireLivraisonsCommand");
+            //TODO (pas sûr) : appeler calcul de la tournée puis actualisation de l'affichage ?
         }
         else {
             //Autres types de commande
@@ -124,9 +137,16 @@ public class Controleur {
         Command commande = commandeCourante.commande;
         commande.undo();
         
+        //Actualisation du modèle puis de la vue.
         if(commande instanceof LirePlanCommand){
             zone = ((LirePlanCommand)commande).getZone();
             Fenetre.getInstance().actualiserPlan();
+        }
+        else if(commande instanceof LireLivraisonsCommand){
+            zone = ((LireLivraisonsCommand)commande).getZone();
+            plagesHoraire = ((LireLivraisonsCommand)commande).getPlages();
+            System.out.println("undo LireLivraisonsCommand");
+            //TODO (pas sûr) : appeler calcul de la tournée puis actualisation de l'affichage ?
         }
         else {
             //Autres types de commande

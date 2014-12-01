@@ -154,6 +154,22 @@ public class Fenetre extends JFrame {
             
         });
         
+        importLivr.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier du plan");
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    String fipLivraison = null;
+                    fipLivraison = fc.getSelectedFile().getAbsolutePath();
+                    Controleur.getInstance().lireLivraisons(fipLivraison);
+                }
+                else{
+                    System.out.println("Opération annulée, pour le plan.");
+                }
+            }
+            
+        });
+        
         annuler.addActionListener(new ActionListener() {
 
             @Override
