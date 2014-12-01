@@ -4,6 +4,7 @@ import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.PlageHoraire;
+import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
@@ -27,18 +28,21 @@ public class VuePlan extends JPanel{
     
     protected List<VueNoeud> vueNoeuds = new Vector<VueNoeud>();
     protected List<VueTroncon> vueTroncons = new Vector<VueTroncon>();
-//    protected VueTournee vueTournee =new VueTournee(null, Color.BLUE);
+    protected VueTournee vueTournee;
     
     //Valeurs en mètres de la ville, s'actualise en fonction du chargement du plan.
     private int XVille = 0;
     private int YVille = 0;
     
-//    public void setTournee(Tournee tournee){
-//        vueTournee.setTourneeModel(tournee);
-//    }
+    public void setTournee(Tournee tournee){
+        vueTournee.setTourneeModel(tournee);
+    }
     
     public List<VueNoeud> getVueNoeuds() {
         return vueNoeuds;
+    }
+    public VueTournee getVueTournee() {
+        return vueTournee;
     }
     
     
@@ -48,10 +52,7 @@ public class VuePlan extends JPanel{
          * C'est ici que l'on peint tous les composants
          */
         super.paintComponent(g);
-        
-        Iterator<VueTroncon> itTroncon = vueTroncons.iterator();
-        Iterator<VueNoeud> itNoeud = vueNoeuds.iterator();
-        
+              
         ZoneGeographique zg = Controleur.getInstance().getZone();
 
         //On utilise un type différent pour avoir plus de possibilités et l'accès à de nouvelles méthodes
@@ -59,8 +60,7 @@ public class VuePlan extends JPanel{
         Graphics2D g2 = (Graphics2D) g;
         
         // Dessin des tronçons
-        while(itTroncon.hasNext()){
-            VueTroncon vTr = itTroncon.next();                    
+        for(VueTroncon vTr : vueTroncons){                    
             //Règle de trois pour afficher les points.
             vTr.setOrigViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
             vTr.setOrigViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
@@ -73,25 +73,23 @@ public class VuePlan extends JPanel{
         }
 
 
-//        Iterator itTr = getVueTournee().vTroncons.iterator();
-//        while (itTr.hasNext()) {
-//            VueTroncon vTr = (VueTroncon) itTr.next();
-//
-//                //Règle de trois pour afficher les points.
-//                vTr.setOrigViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
-//                vTr.setOrigViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
-//                vTr.setDestViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
-//                vTr.setDestViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
-//
-//                //g2.setColor(vTr.getCouleur());
-//                g2.setStroke(new BasicStroke(5));
-//                g2.setColor(Color.BLUE);
-//                g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
-//        }
+        if (vueTournee != null){
+            for (VueTroncon vTr : getVueTournee().vTroncons) {
+
+                //Règle de trois pour afficher les points.
+                vTr.setOrigViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+                vTr.setOrigViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
+                vTr.setDestViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+                vTr.setDestViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
+
+                //g2.setColor(vTr.getCouleur());
+                g2.setStroke(new BasicStroke(5));
+                g2.setColor(Color.BLUE);
+                g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
+            }
+        }
         
-        
-        while(itNoeud.hasNext()){
-                VueNoeud vN = itNoeud.next();
+        for(VueNoeud vN : vueNoeuds){
                 //Règle de trois pour afficher les points.
                 vN.setVueX(border + this.getX() + vN.getNoeudModele().getXMetre()*(this.getWidth() - 2*border) / XVille);
                 vN.setVueY(border + this.getY() + vN.getNoeudModele().getYMetre()*(this.getHeight() - 2*border) / YVille);
@@ -128,10 +126,6 @@ public class VuePlan extends JPanel{
      */
     public VuePlan() {
         setBackground(Color.GRAY);
-        
-        
-        System.out.println("Je passe ici !!!");
-        
         
         //Pour l'instant ici
 //        VueNoeud vn1 = new VueNoeud(new Noeud(0, 200, 200), Color.BLUE);

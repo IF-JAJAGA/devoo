@@ -213,22 +213,40 @@ public class Tournee {
         boolean trouveChemin = false;
         int i;
         for (i=0; i<cheminsResultats.size();i++) {
-            //TODO : réimplémenter 
-            if (cheminsResultats.get(i).getOrigine().equals(noeudAvant)){
+            //TODO : réimplémenter méthode TODO noeud !!
+            if (cheminsResultats.get(i).getOrigine().noeud.equals(noeudAvant)){
                 trouveChemin = true;
                 break;
             }
         }
         if (trouveChemin){
+            
+            //Création des variables nécessaires
+            LivraisonGraphVertex lgvAvant = new LivraisonGraphVertex(noeudAvant, false);
+            LivraisonGraphVertex lgvMilieu = new LivraisonGraphVertex(noeudMilieu, false);
+            LivraisonGraphVertex lgvApres = cheminsResultats.get(i).getDestination();
+            //Calculerplus court chemin entre noeud Avant et milieu
+            Chemin cheminAvant = Dijkstra.plusCourtChemin(zone, lgvAvant, lgvMilieu);
+            //Calculer plus court chemin entre noeud Milieu et noeud Après
+            Chemin cheminAprès = Dijkstra.plusCourtChemin(zone, lgvMilieu, lgvApres);
             //Supprimer le chemin
             cheminsResultats.remove(i);
-            //Calculerplus court chemin entre noeud Avant et milieu
-            //Chemin cheminAvant = Dijkstra.plusCourtChemin(zone, null, null);
-            //Calculer plus court chemin entre noeud Milieu et noeud Après
-            //Chemin cheminAprès = Dijkstra.plusCourtChemin(zone, null, null);
             //Ajouter les deux chemins crées à la place de celui supprimé
-            cheminsResultats.add(null);
-            cheminsResultats.add(null);
+            cheminsResultats.add(i, cheminAvant);
+            cheminsResultats.add(i+1, cheminAprès);
+            
+            /**
+             * TODO (Gustave ??): recalculer les horaires des livraisons. 
+             * GROS PAVé pour expliquer pourquoi j'ai pas réussi, et ce qu'il faut faire
+             * En fait la j'ai modifié la tournée et maintenant qu'on a ajouté la livraison,
+             * il faudrait savoir à quelle heure on l'a ajoutée, et s'il le faut, recalculer
+             * les heures de toutes les livraisons et dire celles qu'on va devoir virer !
+             */ 
+        }
+        else {
+            //Si on a pas trouvé le chemin, on renvoie une tournee nulle
+            //Il faut réagir à cette tournée nulle en disant qu'on a pas trouvé le chemin mais ne pas changer l'affichage.
+            return null;
         }
         return this;
     }

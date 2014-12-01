@@ -166,4 +166,10 @@ public class Noeud {
     public void setY(int y) {
         this.yMetre = y;
     }
+    
+    @Override
+    public boolean equals(Object obj){
+        //TODO !!!!!!!!<3
+        return false;
+    }
 }
