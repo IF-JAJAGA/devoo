@@ -78,7 +78,22 @@ public class Livraison extends Noeud {
             throw e;
         }
     }
+    
+    /**
+     * @return Id du client à livrer
+     */
+    public int getIdClient() {
+        return this.idClient;
+    }
 
+    /**
+     * Modifie l'Id du client à livrer
+     * @param Id du client à livrer
+     */
+    public void setIdClient(int idClient) {
+        this.idClient = idClient;
+    }
+    
     /**
      * Décale la livraison d'un cran dans le planning (avance l'heure de livraison de TPS_LIVRAISON_MIN minutes)
      */

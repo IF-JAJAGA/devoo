@@ -51,6 +51,10 @@ public class Tournee {
         this.zone = zone;
     }
 
+    public List<PlageHoraire> getPlagesHoraire() {
+    	return this.plagesHoraire;
+    }
+    
     public void setPlagesHoraire(List<PlageHoraire> plagesHoraire) {
         this.plagesHoraire = plagesHoraire;
         this.graph = new LivraisonGraph(this.getCheminsPossibles());

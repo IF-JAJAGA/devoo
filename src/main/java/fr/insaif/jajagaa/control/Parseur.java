@@ -50,20 +50,20 @@ public class Parseur {
             List<Element> plages = journee.getChild("PlagesHoraires").getChildren("Plage");
             for (Element plage : plages) {
                 PlageHoraire plageHoraire = new PlageHoraire(plage.getAttributeValue("heureDebut"),
-                        plage.getAttributeValue("heureFin"));
+                		plage.getAttributeValue("heureFin"));
                 List<Livraison> livraisonList = new ArrayList<Livraison>();
 
                 @SuppressWarnings("unchecked")
                 List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
                 List<Livraison> listLivraison = new ArrayList<Livraison>();
                 for (Element livraison : livraisons) {
-                    int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
-                    int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
-                    int idClient = Integer.parseInt(livraison.getAttributeValue("client"));
-                    
-                    Livraison l = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient);
-                    livraisonList.add(l);
-                    zone.modifierNoeudEnLivraison(idNoeud, l);
+                	int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
+                	int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
+                	int idClient = Integer.parseInt(livraison.getAttributeValue("client"));
+
+                	Livraison l = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient);
+                	livraisonList.add(l);
+                	zone.modifierNoeudEnLivraison(idNoeud, l);
                 }
                 plageHoraire.setLivraisons(livraisonList);
                 plageList.add(plageHoraire);
