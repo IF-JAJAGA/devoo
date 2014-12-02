@@ -1,6 +1,7 @@
 package fr.insaif.jajagaa.control;
 
 import fr.insaif.jajagaa.control.Commands.AjoutLivraisonCommande;
+import fr.insaif.jajagaa.control.Commands.CalculerTourneeCommand;
 import fr.insaif.jajagaa.control.Commands.Command;
 import fr.insaif.jajagaa.control.Commands.LireLivraisonsCommand;
 import fr.insaif.jajagaa.control.Commands.LirePlanCommand;
@@ -98,8 +99,10 @@ public class Controleur {
      * Permet de créer la commande pour calculer la tournée.
      * @param time 
      */
-    public void CalculerTournee(String time) {
+    public void CalculerTournee(int time) {
+        creationCommande(new ElementListeCourante(new CalculerTourneeCommand(zone.getTournee(), time)));
         
+        execute();
     }
     
     /**
@@ -134,6 +137,11 @@ public class Controleur {
 //            zone = ((AjoutLivraisonCommande)commande).getZone();
             Fenetre.getInstance().actualiserPlan();
         }
+        else if(commande instanceof CalculerTourneeCommand){
+            zone.getTournee().setCheminsResultats(((CalculerTourneeCommand)commande).getChemins());
+            Fenetre.getInstance().actualiserPlan();
+            System.out.println("Fin de calculTournee : " + zone.getTournee().getCheminsResultats());
+        }
         else {
             //Autres types de commande
         }
@@ -157,6 +165,10 @@ public class Controleur {
         }
         else if(commande instanceof AjoutLivraisonCommande){
             
+        }
+        else if(commande instanceof CalculerTourneeCommand){
+            zone.getTournee().setCheminsResultats(((CalculerTourneeCommand)commande).getChemins());
+            Fenetre.getInstance().actualiserPlan();
         }
         else {
             //Autres types de commande
