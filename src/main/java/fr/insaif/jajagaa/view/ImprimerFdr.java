@@ -13,6 +13,7 @@ import fr.insaif.jajagaa.model.Chemin;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Tournee;
+import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
 
@@ -26,10 +27,8 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 public class ImprimerFdr {
 	
 	/**
-	 * 
-	 * @param zoneGeo
-	 * @param plage
-	 * @param id
+	 * Méthode permettant de générer un fichier .txt qui va servir lors de l'impression de la feuille de route
+	 * @param tournee
 	 */
 	public static void ecrireFichierTri(Tournee tournee){
 		String id = Calendar.getInstance().toString();
@@ -37,20 +36,23 @@ public class ImprimerFdr {
 		try{
 			PrintWriter fichier  = new PrintWriter(new BufferedWriter(new FileWriter(NomFichier)));
 			List<Chemin> chemins = tournee.getCheminsResultats();
-//			List<Livraison> livraisons = null;
-//			List<Chemin> chemins = tournee.getCheminsResultats();
-//			for(PlageHoraire plage : plages) {
-//				livraisons = plage.getLivraisons();
-//				for(Livraison livraison : livraisons) {
-//					fichier.write("Livraison "+livraison.getId()+"\n");
-//					fichier.write("\tHeure début: "+getHeure(livraison.getHeureLivraison())+"\n");
-//					fichier.write("\tHeure fin: "+getHeure(livraison.getHeureFin())+"\n");
-//					fichier.write("\tId client: "+livraison.getIdClient()+"\n");
-//					
-//					fichier.write("\n");
-//				}
-//			}
-			
+                        fichier.write("Tournee du " + id + "\n");
+                        fichier.write("---------------------------------------------\n");
+                        for (int i=0; i < chemins.size(); i++) {
+                            Chemin chemin = chemins.get(i);
+                            Livraison destination = (Livraison) chemin.getDestination().getNoeud();
+                            List<Troncon> parcours = chemin.getTroncons();
+                            fichier.write("Livraison numero : " + destination.getId() + "\n");
+                            fichier.write("Heure d'arrivee prevue : " + destination.getHeureLivraison() + "\n");
+                            fichier.write("Heure de depart prevue : " + destination.getHeureFin() + "\n");
+                            fichier.write("Identifiant client : " + destination.getIdClient() + "\n");
+                            fichier.write("Itineraire :" + "\n");
+                            for (Troncon rue : parcours) {
+                                System.out.println("rue numero " + rue.getNomRue());
+                                fichier.write(rue.getNomRue() + "\n");
+                            }
+                            fichier.write("-----------------------------\n");
+                        }
 			fichier.flush();
 			fichier.close();
 		} catch(Exception e){
@@ -65,10 +67,9 @@ public class ImprimerFdr {
     	ZoneGeographique zone = Parseur.lirePlan("./src/main/resources/plan10x10.xml");
     	List<PlageHoraire> plage = Parseur.lireLivraison("./src/main/resources/livraison10x10-1.xml", zone);
     	Tournee tournee = new Tournee(zone);
-    	//TODO construire la tournee
+        System.out.println("test feuille de route");
     	ecrireFichierTri(tournee);
     }
-    
     
 	/**
 	 * 

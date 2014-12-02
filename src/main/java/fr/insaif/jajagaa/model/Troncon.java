@@ -142,6 +142,14 @@ public class Troncon {
     }
     
     /**
+     * Getteur du nom de la rue concernée par le Troncon désigné
+     * @return Nom de la rue sous forme de String
+     */
+    public String getNomRue() {
+        return nomRue;
+    }
+    
+    /**
      * Modifie le nom de la rue associée au tronçon
      * @param nom 
      */
