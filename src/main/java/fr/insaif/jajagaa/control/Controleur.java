@@ -113,8 +113,8 @@ public class Controleur {
      * @return la tournee une fois qu'elle a été modifiée
      */
     public Tournee ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
-        zone.getTournee().ajouterPointDeLivraison(noeudMilieu, noeudAvant);
-        return null;
+        return zone.getTournee().ajouterPointDeLivraison(noeudMilieu, noeudAvant);
+        
     }
     
     /**
