@@ -177,7 +177,18 @@ public class Noeud {
     
     @Override
     public boolean equals(Object obj){
-        //TODO !!!!!!!!<3
-        return false;
+        if (obj instanceof Noeud){
+            Noeud noeud = (Noeud) obj;
+            if ((noeud.id == this.id) && (noeud.xMetre==this.xMetre)  && (noeud.yMetre == this.yMetre))
+            {
+                return true;
+            }
+            else{
+                return false;    
+            }
+        }
+        else {
+            return false;
+        }
     }
 }

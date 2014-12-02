@@ -188,8 +188,8 @@ public class Fenetre extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                //TODO
-                Controleur.getInstance().ajouterPointLivraison(null, null, null);
+                //TODO :réussir à récupérer le noeud sélectionné
+//                Controleur.getInstance().ajouterPointLivraison(Controleur.getInstance().getTournee(), null, null);
             }
 
         });

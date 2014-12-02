@@ -27,12 +27,11 @@ public class ZoneGeographique {
      */
     public ZoneGeographique(List<Noeud> noeuds) {
         this.setNoeuds(noeuds);
-        this.setEntrepot(0);
     }
 
     public ZoneGeographique(ZoneGeographique zone) {
         tournee = new Tournee(zone.tournee, this);
-        entrepot = new Noeud(zone.entrepot);
+        entrepot = (zone.entrepot==null) ? null : new Noeud(zone.entrepot);
         noeuds = new ArrayList<>(zone.noeuds);
     }
     
@@ -106,3 +105,4 @@ public class ZoneGeographique {
         this.noeuds.add(l.id, l);
     }
 }
+

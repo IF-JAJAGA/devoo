@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.control;
 
+import fr.insaif.jajagaa.control.Commands.AjoutLivraisonCommande;
 import fr.insaif.jajagaa.control.Commands.Command;
 import fr.insaif.jajagaa.control.Commands.LireLivraisonsCommand;
 import fr.insaif.jajagaa.control.Commands.LirePlanCommand;
@@ -39,6 +40,7 @@ public class Controleur {
      * Équivalent à un pointeur sur le modèle.
      */
     protected ZoneGeographique zone;
+    
     
     /**
      * Permet de pointer sur la commande qui est concernée par l'interface.
@@ -128,6 +130,10 @@ public class Controleur {
             zone = ((LireLivraisonsCommand)commande).getZone();
             Fenetre.getInstance().actualiserPlan();
         }
+        else if (commande instanceof  AjoutLivraisonCommande){
+//            zone = ((AjoutLivraisonCommande)commande).getZone();
+            Fenetre.getInstance().actualiserPlan();
+        }
         else {
             //Autres types de commande
         }
@@ -148,6 +154,9 @@ public class Controleur {
         else if(commande instanceof LireLivraisonsCommand){
             zone = ((LireLivraisonsCommand)commande).getZone();
             Fenetre.getInstance().actualiserPlan();
+        }
+        else if(commande instanceof AjoutLivraisonCommande){
+            
         }
         else {
             //Autres types de commande
@@ -188,7 +197,6 @@ public class Controleur {
     public List<PlageHoraire> getPlagesHoraire() {
         return zone.getTournee().getPlagesHoraire();
     }
-
     
     /**
      * Classe permettant d'implémenter une liste chainée pour circuler entre les commandes.

@@ -44,7 +44,6 @@ public class LireLivraisonsCommand implements Command{
                 plages = Parseur.lireLivraison(fichierLivraison, zone);
             }
             catch(ParseurException pe) {
-                System.out.println("Problème lors du parsing, on arrête les modifications.");
                 return;
             }
             
