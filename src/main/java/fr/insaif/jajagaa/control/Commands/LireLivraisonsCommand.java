@@ -7,10 +7,9 @@ package fr.insaif.jajagaa.control.Commands;
 
 import fr.insaif.jajagaa.control.Parseur;
 import fr.insaif.jajagaa.control.ParseurException;
-import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.ZoneGeographique;
-import java.util.ArrayList;
 
 import java.util.List;
 
@@ -49,6 +48,7 @@ public class LireLivraisonsCommand implements Command{
             
             zone.getTournee().setPlagesHoraire(plages);
             zoneApres = new ZoneGeographique(zone);
+            
         }
         else {
             zone = zoneApres;

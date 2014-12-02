@@ -134,7 +134,7 @@ public class Controleur {
             Fenetre.getInstance().actualiserPlan();
         }
         else if (commande instanceof  AjoutLivraisonCommande){
-//            zone = ((AjoutLivraisonCommande)commande).getZone();
+            zone = ((AjoutLivraisonCommande)commande).getZone();
             Fenetre.getInstance().actualiserPlan();
         }
         else if(commande instanceof CalculerTourneeCommand){
@@ -164,7 +164,8 @@ public class Controleur {
             Fenetre.getInstance().actualiserPlan();
         }
         else if(commande instanceof AjoutLivraisonCommande){
-            
+            zone = ((LireLivraisonsCommand)commande).getZone();
+            Fenetre.getInstance().actualiserPlan();            
         }
         else if(commande instanceof CalculerTourneeCommand){
             zone.getTournee().setCheminsResultats(((CalculerTourneeCommand)commande).getChemins());
