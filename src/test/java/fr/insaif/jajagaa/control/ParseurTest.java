@@ -1,7 +1,6 @@
 package fr.insaif.jajagaa.control;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,14 +18,6 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
  * Test de {@link fr.insaif.jajagaa.control.Parseur}
  */
 public class ParseurTest {
-    /**
-     * Nombre de livraisons dans le fichier de test
-     */
-	
-	private static final int NB_LIVRAISON_1 = 8;
-	//TODO Test plan10x10, Test plan20x20, Test xml mal formé, Test xml n'existe pas
-	//XML mar formé: manque d'attributs, Noeuds pas fermés
-	//DONE???
     
 	@Test
 	public void testLirePlansCorrects(){
@@ -149,15 +140,14 @@ public class ParseurTest {
 	/**
 	 * 
 	 */
-	public void testErreurXMLMalForme(){
+	public void testErreurXMLMalForme_plan(){
 		try {
 			Parseur.lirePlan("./src/test/resources/plan10x10-E1.xml");
+			fail();
 		} catch (ParseurException pe) {
 			assertEquals("Ficher XML mal formé: mauvaise syntaxe XML",pe.getMessage());
-			assertSame(ParseurException.class, pe.getClass());
-			////TODO sont necessaires les deux asserts? Le premier contient le deuxieme?
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception otherE) {
+			fail();
 		}
 	}
 
@@ -165,13 +155,14 @@ public class ParseurTest {
 	/**
 	 * 
 	 */
-	public void testErreurAttributInvalide(){
+	public void testErreurAttributInvalide_plan(){
 		try {
 			Parseur.lirePlan("./src/test/resources/plan10x10-E2.xml");
+			fail();
 		} catch (ParseurException pe) {
-			assertEquals("Ficher XML mal formé: mauvaise syntaxe XML",pe.getMessage());
-			assertSame(ParseurException.class, pe.getClass());
-			////TODO sont necessaires les deux asserts? Le premier contient le deuxieme?
+			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
 		}
 	}
 
@@ -179,13 +170,14 @@ public class ParseurTest {
 	/**
 	 * 
 	 */
-	public void testErreurManqueAttribut(){
+	public void testErreurManqueAttribut_plan(){
 		try {
 			Parseur.lirePlan("./src/test/resources/plan10x10-E3.xml");
+			fail();
 		} catch (ParseurException pe) {
-			assertEquals("Ficher XML mal formé: mauvaise syntaxe XML",pe.getMessage());
-			assertSame(ParseurException.class, pe.getClass());
-			//TODO sont necessaires les deux asserts? Le premier contient le deuxieme?
+			assertEquals("Ficher XML mal formé: element ou attribut manquant",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
 		}
 	}
 
@@ -193,13 +185,14 @@ public class ParseurTest {
 	/**
 	 * 
 	 */
-	public void testErreurAttributVide(){
+	public void testErreurAttributVide_plan(){
 		try {
 			Parseur.lirePlan("./src/test/resources/plan10x10-E4.xml");
+			fail();
 		} catch (ParseurException pe) {
-			assertEquals("Ficher XML mal formé: mauvaise syntaxe XML",pe.getMessage());
-			assertSame(ParseurException.class, pe.getClass());
-			//TODO sont necessaires les deux asserts? Le premier contient le deuxieme?
+			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
 		}
 	}
 
@@ -207,11 +200,123 @@ public class ParseurTest {
 	/**
 	 * 
 	 */
-	public void testErreurXMLNonExistant(){
+	public void testErreurXMLNonExistant_plan(){
 		try {
 			Parseur.lirePlan("./src/test/resources/nexistepas.xml");
+			fail();
 		} catch (ParseurException pe){
 			assertEquals("Fichier inexistant",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
+		}
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void testErreurXMLMalForme_livraison(){
+		try {
+			ZoneGeographique zone = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
+			Parseur.lireLivraison("./src/test/resources/livraison10x10-3-E1.xml",zone);
+			fail();
+		} catch (ParseurException pe) {
+			assertEquals("Ficher XML mal formé: mauvaise syntaxe XML",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
+		}
+	}
+
+	@Test 
+	/**
+	 * 
+	 */
+	public void testErreurAttributInvalide_livraison(){
+		try {
+			ZoneGeographique zone = Parseur.lirePlan("./src/test/resources/plan20x20.xml");
+			Parseur.lireLivraison("./src/test/resources/livraison20x20-1-E2.xml",zone);
+			fail();
+		} catch (ParseurException pe) {
+			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
+		}
+	}
+
+	@Test 
+	/**
+	 * 
+	 */
+	public void testErreurManqueAttribut_livraison(){
+		try {
+			ZoneGeographique zone = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
+			Parseur.lireLivraison("./src/test/resources/livraison10x10-3-E3.xml",zone);
+			fail();
+		} catch (ParseurException pe) {
+			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
+		}
+	}
+
+	@Test 
+	/**
+	 * 
+	 */
+	public void testErreurAttributVide_livraison(){
+		try {
+			ZoneGeographique zone = Parseur.lirePlan("./src/test/resources/plan20x20.xml");
+			Parseur.lireLivraison("./src/test/resources/livraison20x20-1-E4.xml",zone);
+			fail();
+		} catch (ParseurException pe) {
+			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
+		}
+	}
+
+	@Test 
+	/**
+	 * 
+	 */
+	public void testErreurXMLNonExistant_livraison(){
+		try {
+			ZoneGeographique zone = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
+			Parseur.lireLivraison("./src/test/resources/nexistepas.xml",zone);
+			fail();
+		} catch (ParseurException pe){
+			assertEquals("Fichier inexistant",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
+		}
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void testPlanDifferent10_20(){
+		try {
+			ZoneGeographique zone = Parseur.lirePlan("./src/test/resources/plan10x10.xml");
+			Parseur.lireLivraison("./src/test/resources/livraison20x20-1.xml",zone);
+			fail();
+		} catch (ParseurException pe){
+			assertEquals("Fichier XML erroné: valeurs de certains attributs inexistants",pe.getMessage());
+		} catch (Exception otherE) {
+			fail();
+		}
+	}
+	
+	@Test
+	/**
+	 * 
+	 */
+	public void testPlanDifferent20_10(){
+		try {
+			ZoneGeographique zone = Parseur.lirePlan("./src/test/resources/plan20x20.xml");
+			Parseur.lireLivraison("./src/test/resources/livraison10x10-1.xml",zone);
+		} catch (Exception e) {
+			fail();
 		}
 	}
 }
