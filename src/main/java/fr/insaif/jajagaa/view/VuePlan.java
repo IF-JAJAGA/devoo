@@ -221,7 +221,10 @@ public class VuePlan extends JPanel{
     protected void actualiserPlan(ZoneGeographique zoneGeo) {
         viderPlan();
         if(zoneGeo != null){
-            Noeud entrepot = zoneGeo.getEntrepot();
+            Noeud entrepot = null;
+            if(zoneGeo.getEntrepot() != null){
+                entrepot = zoneGeo.getEntrepot();
+            }
             List<Noeud> listNoeuds = zoneGeo.getNoeuds();
             for(Noeud noeud : listNoeuds) {
                     if(noeud.getXMetre()>XVille){
@@ -230,7 +233,6 @@ public class VuePlan extends JPanel{
                     if(noeud.getYMetre()>YVille){
                         YVille = noeud.getYMetre();
                     }
-                    //TODO : redéfinir .equals 
                     if ((entrepot != null) && (noeud.equals(entrepot))){
                         vueNoeuds.add(new VueNoeud(noeud, Color. ORANGE));
                     }

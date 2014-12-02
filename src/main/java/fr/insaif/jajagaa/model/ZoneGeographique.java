@@ -26,7 +26,6 @@ public class ZoneGeographique {
      */
     public ZoneGeographique(List<Noeud> noeuds) {
         this.setNoeuds(noeuds);
-        this.setEntrepot(0);
     }
 
     /**
@@ -97,3 +96,4 @@ public class ZoneGeographique {
         this.noeuds.add(l.id, l);
     }
 }
+

@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.control;
 
+import fr.insaif.jajagaa.control.Commands.AjoutLivraisonCommande;
 import fr.insaif.jajagaa.control.Commands.Command;
 import fr.insaif.jajagaa.control.Commands.LireLivraisonsCommand;
 import fr.insaif.jajagaa.control.Commands.LirePlanCommand;
@@ -39,6 +40,11 @@ public class Controleur {
      * Équivalent à un pointeur sur le modèle.
      */
     protected ZoneGeographique zone;
+    
+    /**
+     * Équivalent à un pointeur sur le modèle.
+     */
+    protected Tournee tournee;
     
     /**
      * Permet de pointer sur la commande qui est concernée par l'interface.
@@ -124,6 +130,11 @@ public class Controleur {
             System.out.println("execute LireLivraisonsCommand");
             //TODO (pas sûr) : appeler calcul de la tournée puis actualisation de l'affichage ?
         }
+        else if (commande instanceof  AjoutLivraisonCommande){
+            tournee = ((AjoutLivraisonCommande)commande).getTournee();
+            Fenetre.getInstance().actualiserPlan();
+            Fenetre.getInstance().ajouterLivraisons();
+        }
         else {
             //Autres types de commande
         }
@@ -146,6 +157,9 @@ public class Controleur {
             zone.getTournee().setPlagesHoraire(((LireLivraisonsCommand)commande).getPlages());
             System.out.println("undo LireLivraisonsCommand");
             //TODO (pas sûr) : appeler calcul de la tournée puis actualisation de l'affichage ?
+        }
+        else if(commande instanceof AjoutLivraisonCommande){
+            
         }
         else {
             //Autres types de commande
@@ -185,6 +199,10 @@ public class Controleur {
 
     public List<PlageHoraire> getPlagesHoraire() {
         return zone.getTournee().getPlagesHoraire();
+    }
+    
+    public Tournee getTournee(){
+        return tournee;
     }
     
     

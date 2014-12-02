@@ -18,7 +18,6 @@ public class AjoutLivraisonCommande implements Command {
     private Tournee tournee;
     private Tournee tourneeAvant;
     private Tournee tourneeApres;
-    //TODO : compléter.
     
     public AjoutLivraisonCommande(Tournee tournee, Noeud noeudAvant, Noeud noeudMilieu){
         this.tournee = tournee;
