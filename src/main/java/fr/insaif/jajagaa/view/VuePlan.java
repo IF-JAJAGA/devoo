@@ -101,7 +101,6 @@ public class VuePlan extends JPanel{
             }
         }
         
-        int nbLivraisons = 0;
         for(VueNoeud vN : vueNoeuds){
                 //Règle de trois pour afficher les points.
                 vN.setVueX(border + this.getX() + vN.getNoeudModele().getXMetre()*(this.getWidth() - 2*border) / XVille);
@@ -110,14 +109,12 @@ public class VuePlan extends JPanel{
                 g2.setColor(vN.getCouleur());
                 if (vN.getPointDeLivraison()==VueNoeud.Etat.LIVRAISON)
                 {
-                    nbLivraisons++;
                     g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE_LIVRAISON/2, vN.getVueY()-VueNoeud.DIAMETRE_LIVRAISON/2, VueNoeud.DIAMETRE_LIVRAISON, VueNoeud.DIAMETRE_LIVRAISON);
                 }
                 else {
                     g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
                 }
         }
-            System.out.println("nbLivraisons : " + nbLivraisons);
     }
 //		TODO
 //    /**
@@ -249,10 +246,6 @@ public class VuePlan extends JPanel{
         ajouterNoeuds(zoneGeo.getEntrepot(), zoneGeo.getNoeuds());
         livraisonsPresentes = ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
         
-        if(!zoneGeo.getTournee().getCheminsResultats().isEmpty()){
-            System.out.println("\tDans actualiserPlan de VuePlan");
-            System.out.println("" + zoneGeo.getTournee().getCheminsResultats());
-        }
         
         this.paint(getGraphics());
     }
@@ -303,7 +296,7 @@ public class VuePlan extends JPanel{
                 {
                     YVille = liv.getYMetre();
                 }
-                vueNoeuds.add(new VueNoeud(liv, Color.YELLOW));
+                ajouterLivraisonAVueNoeuds(new VueNoeud(liv, Color.YELLOW));
                 List<Troncon> listTroncon = liv.getSortants();
                 for(Troncon troncon : listTroncon){
                     vueTroncons.add(new VueTroncon(troncon));
@@ -313,10 +306,25 @@ public class VuePlan extends JPanel{
         return true;
     }
     
+    private void ajouterTournee(Tournee tournee){
+        if(tournee.getCheminsResultats().isEmpty()) return;
+        
+        vueTournee = new VueTournee(tournee, Color.GREEN);
+    }
+    
+    private void ajouterLivraisonAVueNoeuds(VueNoeud vN){
+        for(int i=0,len=vueNoeuds.size() ; i<len ; i++){
+            if(vueNoeuds.get(i).getNoeudModele().getId() == vN.getNoeudModele().getId()){
+                vueNoeuds.set(i, vN);
+                i=len;
+            }
+        }
+    }
+    
     private void viderPlan(){
         vueNoeuds.clear();
         vueTroncons.clear();
-//            vueTournee =new VueTournee(null, Color.BLUE);
+        vueTournee = null;
     }
 
     boolean getLivraisonsPresente() {
