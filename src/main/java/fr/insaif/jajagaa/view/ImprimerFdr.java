@@ -47,9 +47,16 @@ public class ImprimerFdr {
                             fichier.write("Heure de depart prevue : " + destination.getHeureFin() + "\n");
                             fichier.write("Identifiant client : " + destination.getIdClient() + "\n");
                             fichier.write("Itineraire :" + "\n");
-                            for (Troncon rue : parcours) {
-                                System.out.println("rue numero " + rue.getNomRue());
-                                fichier.write(rue.getNomRue() + "\n");
+                            for (int j=0 ; j < parcours.size() ; j++) {
+                                if (j>0) {
+                                    if (parcours.get(j).getIdOrigine() == parcours.get(j-1).getIdDestination()) {
+                                        fichier.write(parcours.get(j).getNomRue() + "\n");
+                                    } else {
+                                        System.err.println("Erreur lors de la lecture des troncons de chemins");
+                                    }
+                                } else {
+                                    fichier.write(parcours.get(j).getNomRue() + "\n");
+                                }
                             }
                             fichier.write("-----------------------------\n");
                         }
