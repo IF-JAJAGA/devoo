@@ -10,9 +10,6 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 import fr.insaif.jajagaa.view.Fenetre;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -34,15 +31,22 @@ public class Controleur {
         return controleur;
     }
     
-    protected ZoneGeographique zone;
-    
-    protected List<PlageHoraire> plagesHoraire;
-    
-    private ElementListeCourante commandeCourante = new ElementListeCourante();
-    
     private Controleur() {
         Fenetre.getInstance();
     }
+    
+    /**
+     * Équivalent à un pointeur sur le modèle.
+     */
+    protected ZoneGeographique zone;
+    
+    /**
+     * Permet de pointer sur la commande qui est concernée par l'interface.
+     * Ce pointeur change lorsqu'on parcours la liste chainée (undo/redo).
+     */
+    private ElementListeCourante commandeCourante = new ElementListeCourante();
+    
+    
 
     /**
      * Getteur de ZoneGeographique 
@@ -50,14 +54,6 @@ public class Controleur {
      */
     public ZoneGeographique getZone() {
         return zone;
-    }
-
-    /**
-     * Getteur de la liste de PlageHoraire
-     * @return List<PlageHoraire> associée au controleur en question
-     */
-    public List<PlageHoraire> getPlagesHoraire() {
-        return plagesHoraire;
     }
     
     /**
@@ -91,7 +87,7 @@ public class Controleur {
             JOptionPane.showMessageDialog(null, "Impossible d'importer des livraisons sans aucun plan de la ville.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        creationCommande(new ElementListeCourante(new LireLivraisonsCommand(plagesHoraire, zone, fichierLivraison)));
+        creationCommande(new ElementListeCourante(new LireLivraisonsCommand(zone.getTournee().getPlagesHoraire(), zone, fichierLivraison)));
         
         execute();
     }
@@ -122,7 +118,7 @@ public class Controleur {
         }
         else if(commande instanceof LireLivraisonsCommand){
             zone = ((LireLivraisonsCommand)commande).getZone();
-            plagesHoraire = ((LireLivraisonsCommand)commande).getPlages();
+            zone.getTournee().setPlagesHoraire(((LireLivraisonsCommand)commande).getPlages());
             Fenetre.getInstance().actualiserPlan();
             Fenetre.getInstance().ajouterLivraisons();
             System.out.println("execute LireLivraisonsCommand");
@@ -147,7 +143,7 @@ public class Controleur {
         }
         else if(commande instanceof LireLivraisonsCommand){
             zone = ((LireLivraisonsCommand)commande).getZone();
-            plagesHoraire = ((LireLivraisonsCommand)commande).getPlages();
+            zone.getTournee().setPlagesHoraire(((LireLivraisonsCommand)commande).getPlages());
             System.out.println("undo LireLivraisonsCommand");
             //TODO (pas sûr) : appeler calcul de la tournée puis actualisation de l'affichage ?
         }
@@ -185,6 +181,10 @@ public class Controleur {
         commandeCourante = nouvelElement;
         Fenetre.getInstance().setUndoable(true);
         Fenetre.getInstance().setRedoable(false);
+    }
+
+    public List<PlageHoraire> getPlagesHoraire() {
+        return zone.getTournee().getPlagesHoraire();
     }
     
     

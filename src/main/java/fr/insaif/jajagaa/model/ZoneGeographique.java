@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class ZoneGeographique {
 
+    protected Tournee tournee = new Tournee(this);
+   
     /**
      * Noeud de la liste qui est l'entrepôt
      */
@@ -44,6 +46,11 @@ public class ZoneGeographique {
     public Noeud getEntrepot() {
         return this.entrepot;
     }
+
+    public Tournee getTournee() {
+        return tournee;
+    }
+    
 
     /**
      * Modifie la valeur de l'entrepôt (en choisissant un indice la liste)
