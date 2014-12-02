@@ -2,6 +2,7 @@ package fr.insaif.jajagaa.view;
 
 
 import fr.insaif.jajagaa.control.Controleur;
+import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -283,12 +284,23 @@ public class Fenetre extends JFrame {
                 vNAvant = null;
             } else {
                 vNAvant = vuePlan.getvNSelectionne();
-                conteneurDroite.getBtnAddNoeud().setEnabled(false);
+                //Doit être une livraison
+                if(vNAvant.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON ||
+                       vNAvant.getPointDeLivraison() == VueNoeud.Etat.RETARD){
+                    conteneurDroite.getBtnAddNoeud().setEnabled(false);
+                }else{
+                    vNAvant = null;
+                }
             }
         }
         else{
             vNAAjouter = vuePlan.getvNSelectionne();
-            conteneurDroite.setEtatBtnAddNoeud(1);
+            //Ne doit pas être une livraison.
+            if(vNAAjouter.getPointDeLivraison() == VueNoeud.Etat.RIEN && vuePlan.getLivraisonsPresente()){
+                conteneurDroite.setEtatBtnAddNoeud(1);
+            }else{
+                vNAAjouter = null;
+            }
         }
     }
     

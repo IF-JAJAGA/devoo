@@ -34,7 +34,11 @@ public class VuePlan extends JPanel{
     private int XVille = 0;
     private int YVille = 0;
     
+    /**
+     * Les 2 attributs ci-dessous donnent des informations sur les données dans la vue.
+     */
     private VueNoeud vNSelectionne = null;
+    private boolean livraisonsPresentes ;
     
     public void setTournee(Tournee tournee){
         vueTournee.setTourneeModel(tournee);
@@ -243,7 +247,7 @@ public class VuePlan extends JPanel{
         }
         
         ajouterNoeuds(zoneGeo.getEntrepot(), zoneGeo.getNoeuds());
-        ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
+        livraisonsPresentes = ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
         
         this.paint(getGraphics());
     }
@@ -281,8 +285,8 @@ public class VuePlan extends JPanel{
      * Ajoute les troncons à dessiner.
      * @param PL 
      */
-    private void ajouterLivraisons(List<PlageHoraire> PL) {
-        if(PL == null) return;
+    private boolean ajouterLivraisons(List<PlageHoraire> PL) {
+        if(PL == null || PL.isEmpty()) return false;
         
         for(PlageHoraire pl : PL){
             List<Livraison> listNoeuds = pl.getLivraisons();
@@ -301,11 +305,16 @@ public class VuePlan extends JPanel{
                 }
             }
         }
+        return true;
     }
     
     private void viderPlan(){
         vueNoeuds.clear();
         vueTroncons.clear();
 //            vueTournee =new VueTournee(null, Color.BLUE);
+    }
+
+    boolean getLivraisonsPresente() {
+        return livraisonsPresentes;
     }
 }
