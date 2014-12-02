@@ -220,6 +220,7 @@ public class Tournee {
      * @return la tournée une fois qu'elle a été modifiée.
      */
     public Tournee ajouterPointDeLivraison(Noeud noeudMilieu, Noeud noeudAvant){
+        System.out.println("début de ajouterPointDeLivraison");
         boolean trouveChemin = false;
         int i;
         for (i=0; i<cheminsResultats.size();i++) {

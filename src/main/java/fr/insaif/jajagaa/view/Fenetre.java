@@ -267,7 +267,7 @@ public class Fenetre extends JFrame {
         }catch (NumberFormatException | NullPointerException ne){
             JOptionPane.showMessageDialog(null, "Veuillez donner comme temps un nombre décimal ou entier.", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
-
+        conteneurDroite.setEtatBtnAddNoeud(0);
     }
     
     /**
@@ -277,16 +277,18 @@ public class Fenetre extends JFrame {
         if(vNAAjouter != null){
             if(vNAvant != null){
                 Controleur.getInstance().ajouterPointLivraison(vNAAjouter.getNoeudModele(), vNAvant.getNoeudModele());
-                conteneurDroite.setStateBtnAddNoeud(0);
+                conteneurDroite.setEtatBtnAddNoeud(0);
+                conteneurDroite.getBtnAddNoeud().setEnabled(true);
                 vNAAjouter = null;
                 vNAvant = null;
             } else {
                 vNAvant = vuePlan.getvNSelectionne();
-                conteneurDroite.setStateBtnAddNoeud(1);
+                conteneurDroite.getBtnAddNoeud().setEnabled(false);
             }
         }
         else{
             vNAAjouter = vuePlan.getvNSelectionne();
+            conteneurDroite.setEtatBtnAddNoeud(1);
         }
     }
     
