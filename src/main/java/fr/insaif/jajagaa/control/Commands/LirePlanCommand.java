@@ -6,6 +6,7 @@
 package fr.insaif.jajagaa.control.Commands;
 
 import fr.insaif.jajagaa.control.Parseur;
+import fr.insaif.jajagaa.control.ParseurException;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
@@ -33,9 +34,11 @@ public class LirePlanCommand implements Command{
     public void execute() {
         if(zoneAvant == null){
             zoneAvant = zone;
-            zone = Parseur.lirePlan(fichierPlan);
+            try { zone = Parseur.lirePlan(fichierPlan); }
+            catch ( ParseurException pe) { }
             zoneApres = zone;
         }
+        //TODO arranger le catch
         else {
             zone = zoneApres;
         }

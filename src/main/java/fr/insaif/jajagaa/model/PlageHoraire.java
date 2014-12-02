@@ -2,7 +2,6 @@ package fr.insaif.jajagaa.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -77,6 +76,9 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     public void setHeureDebut(String heureDebut) {
         try {
             this.heureDebut = this.simpleDateFormat.parse(heureDebut);
+            if(heureDebut.startsWith("12")){
+            	this.heureDebut.setHours(12);
+            }
         } catch (ParseException e) {
             System.err.println("Impossible de parser la date: pas de modification");
         }
@@ -104,6 +106,9 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     public void setHeureFin(String heureFin) {
         try {
             this.heureFin = this.simpleDateFormat.parse(heureFin);
+            if(heureFin.startsWith("12")){
+            	this.heureFin.setHours(12);
+            }
         } catch (ParseException e) {
             System.err.println("Impossible de parser la date: pas de modification");
         }

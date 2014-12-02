@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import fr.insaif.jajagaa.control.Parseur;
+import fr.insaif.jajagaa.control.ParseurException;
 import fr.insaif.jajagaa.model.Chemin;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.PlageHoraire;
@@ -60,7 +61,7 @@ public class ImprimerFdr {
 	 * 
 	 * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseurException{
     	ZoneGeographique zone = Parseur.lirePlan("./src/main/resources/plan10x10.xml");
     	List<PlageHoraire> plage = Parseur.lireLivraison("./src/main/resources/livraison10x10-1.xml", zone);
     	Tournee tournee = new Tournee(zone);

@@ -39,13 +39,11 @@ public class VueTournee {
      */
     public VueTournee(Tournee uneTournee, Color uneCouleur) {
         setTourneeModel(uneTournee);
-        Iterator<Chemin> itCh = uneTournee.getCheminsResultats().iterator();
-        while (itCh.hasNext()) {
-            Chemin ch = itCh.next();
-            Iterator<Troncon> itTo = ch.getTroncons().iterator();
-            while (itTo.hasNext()) {
-                Troncon tr = itTo.next();
-                vTroncons.add(new VueTroncon(tr));
+        if(uneTournee.getCheminsResultats() !=null){
+            for (Chemin ch : uneTournee.getCheminsResultats()) {
+                for(Troncon tr : ch.getTroncons()) {
+                    vTroncons.add(new VueTroncon(tr));
+                }
             }
         }
         couleur = uneCouleur;

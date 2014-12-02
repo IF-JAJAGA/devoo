@@ -5,6 +5,7 @@
 package fr.insaif.jajagaa.control.Commands;
 
 import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.Tournee;
 
 /**
  *
@@ -12,21 +13,38 @@ import fr.insaif.jajagaa.model.Noeud;
  */
 public class AjoutLivraisonCommande implements Command {
     
-    private Noeud noeudMilieu;
     private Noeud noeudAvant;
+    private Noeud noeudMilieu;
+    private Tournee tournee;
+    private Tournee tourneeAvant;
+    private Tournee tourneeApres;
     //TODO : compléter.
     
-    public AjoutLivraisonCommande(){
-        //TODO : trouver les attributs
+    public AjoutLivraisonCommande(Tournee tournee, Noeud noeudAvant, Noeud noeudMilieu){
+        this.tournee = tournee;
+        this.noeudAvant  = noeudAvant;
+        this.noeudMilieu = noeudMilieu;
     }
     
     @Override
     public void execute(){
-        //TODO : faire des actions
+        if (tourneeAvant == null){
+            tourneeAvant = tournee;
+            tournee = tournee.ajouterPointDeLivraison(noeudAvant, noeudMilieu);
+            tourneeApres = tournee;
+        }
+        else{
+            tournee = tourneeApres;
+        }
     }
     
     @Override
     public void undo(){
-        //TODO : faire des actions
+        tournee = tourneeAvant;
     }
+    
+    public Tournee getTournee(){
+        return tournee;
+    }
+    
 }
