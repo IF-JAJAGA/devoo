@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 
@@ -25,6 +26,9 @@ public class ConteneurDroite extends JPanel{
     private JLabel titre;
     private ListNoeuds listeNoeuds;
     private JButton btnAddNoeud;
+    private JTextField saisieTemps;
+    private final JLabel lblTemps = new JLabel("secondes");
+    private JButton btnCalculLivraison;
     
     private SpringLayout layout;
     
@@ -38,6 +42,14 @@ public class ConteneurDroite extends JPanel{
 
     public ListNoeuds getListeNoeuds() {
         return listeNoeuds;
+    }
+
+    public JTextField getSaisieTemps() {
+        return saisieTemps;
+    }
+
+    public JButton getBtnCalculLivraison() {
+        return btnCalculLivraison;
     }
 
     
@@ -54,6 +66,9 @@ public class ConteneurDroite extends JPanel{
         listeNoeuds = new ListNoeuds();
 
         btnAddNoeud = new JButton("Ajouter un noeud");
+        
+        btnCalculLivraison = new JButton("Calculer la livraison");
+        saisieTemps = new JTextField("10");
     }
     
     private void placeComponents(){
@@ -66,6 +81,10 @@ public class ConteneurDroite extends JPanel{
         add(scrollListe);  
         add(btnAddNoeud);
         
+        add(saisieTemps);
+        add(lblTemps);
+        add(btnCalculLivraison);
+        
         final int espace = 5;
         layout.putConstraint(SpringLayout.NORTH, titre, espace, SpringLayout.NORTH, this);
         layout.putConstraint(SpringLayout.WEST, titre, espace, SpringLayout.WEST, this);
@@ -73,10 +92,20 @@ public class ConteneurDroite extends JPanel{
         layout.putConstraint(SpringLayout.NORTH, scrollListe, espace, SpringLayout.SOUTH, titre);
         layout.putConstraint(SpringLayout.WEST, scrollListe, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, scrollListe, 0, SpringLayout.EAST, this);
-        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, btnAddNoeud);
+        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, saisieTemps);
+        
+        layout.putConstraint(SpringLayout.SOUTH, saisieTemps, -espace, SpringLayout.NORTH, btnCalculLivraison);
+        layout.putConstraint(SpringLayout.WEST, saisieTemps, 0, SpringLayout.WEST, titre);
+        layout.putConstraint(SpringLayout.EAST, saisieTemps, -espace, SpringLayout.WEST, lblTemps);
+        
+        layout.putConstraint(SpringLayout.VERTICAL_CENTER, lblTemps, 0, SpringLayout.VERTICAL_CENTER, saisieTemps);
+        layout.putConstraint(SpringLayout.EAST, lblTemps, 0, SpringLayout.EAST, btnCalculLivraison);
+        
+        layout.putConstraint(SpringLayout.SOUTH, btnCalculLivraison, -espace, SpringLayout.NORTH, btnAddNoeud);
+        layout.putConstraint(SpringLayout.WEST, btnCalculLivraison, espace, SpringLayout.WEST, this);
         
         layout.putConstraint(SpringLayout.SOUTH, btnAddNoeud, -espace, SpringLayout.SOUTH, this);
-        layout.putConstraint(SpringLayout.WEST, btnAddNoeud, 0, SpringLayout.WEST, titre);
+        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnAddNoeud, 0, SpringLayout.HORIZONTAL_CENTER, this);
 
 
     }

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -127,17 +128,6 @@ public class Fenetre extends JFrame {
                 public void componentHidden(ComponentEvent arg0) {}
         });
         
-        conteneurDroite.getBtnAddNoeud().addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                //TODO
-                Controleur.getInstance().ajouterPointLivraison(null, null, null);
-            }
-
-        });
-      
-        
         importPlan.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -204,6 +194,37 @@ public class Fenetre extends JFrame {
                     vuePlan.repaint();
                 }
             }
+        });
+        
+        conteneurDroite.getBtnAddNoeud().addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                //TODO
+                Controleur.getInstance().ajouterPointLivraison(null, null, null);
+            }
+
+        });
+        
+        conteneurDroite.getBtnCalculLivraison().addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                //TODO
+                System.out.println("Valeur à envoyer : " + conteneurDroite.getSaisieTemps().getText());
+            }
+
+        });
+        
+        conteneurDroite.getSaisieTemps().addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    System.out.println("Valeur à envoyer : " + conteneurDroite.getSaisieTemps().getText());
+                }
+            }
+            
         });
         
         vuePlan.addMouseListener(new MouseAdapter() {
