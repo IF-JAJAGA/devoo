@@ -34,6 +34,8 @@ public class VuePlan extends JPanel{
     private int XVille = 0;
     private int YVille = 0;
     
+    private VueNoeud vNSelectionne = null;
+    
     public void setTournee(Tournee tournee){
         vueTournee.setTourneeModel(tournee);
     }
@@ -44,6 +46,12 @@ public class VuePlan extends JPanel{
     public VueTournee getVueTournee() {
         return vueTournee;
     }
+
+    public VueNoeud getvNSelectionne() {
+        return vNSelectionne;
+    }
+    
+    
     
     
 	@Override
@@ -60,7 +68,7 @@ public class VuePlan extends JPanel{
         Graphics2D g2 = (Graphics2D) g;
         
         // Dessin des tronçons
-        for(VueTroncon vTr : vueTroncons){                    
+        for(VueTroncon vTr : vueTroncons){
             //Règle de trois pour afficher les points.
             vTr.setOrigViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
             vTr.setOrigViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
@@ -89,6 +97,7 @@ public class VuePlan extends JPanel{
             }
         }
         
+        int nbLivraisons = 0;
         for(VueNoeud vN : vueNoeuds){
                 //Règle de trois pour afficher les points.
                 vN.setVueX(border + this.getX() + vN.getNoeudModele().getXMetre()*(this.getWidth() - 2*border) / XVille);
@@ -97,12 +106,14 @@ public class VuePlan extends JPanel{
                 g2.setColor(vN.getCouleur());
                 if (vN.getPointDeLivraison()==VueNoeud.Etat.LIVRAISON)
                 {
+                    nbLivraisons++;
                     g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE_LIVRAISON/2, vN.getVueY()-VueNoeud.DIAMETRE_LIVRAISON/2, VueNoeud.DIAMETRE_LIVRAISON, VueNoeud.DIAMETRE_LIVRAISON);
                 }
                 else {
                     g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
                 }
         }
+            System.out.println("nbLivraisons : " + nbLivraisons);
     }
 //		TODO
 //    /**
@@ -202,11 +213,13 @@ public class VuePlan extends JPanel{
      * @param vueNoeud 
      */
     protected void changerSelection(VueNoeud vueNoeud){
+        vNSelectionne = null;
         Iterator<VueNoeud> itVN = vueNoeuds.iterator();
         while(itVN.hasNext()){
             VueNoeud vN = itVN.next();
             if(vN.equals(vueNoeud)){
                 vN.setEstSelectionne(true);
+                vNSelectionne = vN;
             }
             else{
                 if(vN.isEstSelectionne())   vN.setEstSelectionne(false);

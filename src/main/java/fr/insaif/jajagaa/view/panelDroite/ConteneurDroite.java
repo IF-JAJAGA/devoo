@@ -23,6 +23,9 @@ import javax.swing.SpringLayout;
  * @author jeje
  */
 public class ConteneurDroite extends JPanel{
+    private final String strBtnAddNoeud0 = "Ajouter un noeud";
+    private final String strBtnAddNoeud1 = "Ajouter un noeud";
+    
     private JLabel titre;
     private ListNoeuds listeNoeuds;
     private JButton btnAddNoeud;
@@ -52,6 +55,10 @@ public class ConteneurDroite extends JPanel{
         return btnCalculLivraison;
     }
 
+    public void setStateBtnAddNoeud(int e){
+        if(e==0)    btnAddNoeud.setText(strBtnAddNoeud0);
+        else if(e==1)    btnAddNoeud.setText(strBtnAddNoeud1);
+    }
     
 
     public ConteneurDroite() {
@@ -65,7 +72,7 @@ public class ConteneurDroite extends JPanel{
         
         listeNoeuds = new ListNoeuds();
 
-        btnAddNoeud = new JButton("Ajouter un noeud");
+        btnAddNoeud = new JButton();
         
         btnCalculLivraison = new JButton("Calculer la livraison");
         saisieTemps = new JTextField("10");

@@ -188,8 +188,7 @@ public class Fenetre extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                //TODO :réussir à récupérer le noeud sélectionné
-//                Controleur.getInstance().ajouterPointLivraison(Controleur.getInstance().getTournee(), null, null);
+                traitementAjoutLivraison();
             }
 
         });
@@ -269,6 +268,26 @@ public class Fenetre extends JFrame {
             JOptionPane.showMessageDialog(null, "Veuillez donner comme temps un nombre décimal ou entier.", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+    
+    /**
+     * Met à jour le bouton d'ajout de livraison et appelle le calcul de la tournee si on a saisi les deux noeuds.
+     */
+    private void traitementAjoutLivraison(){
+        if(vNAAjouter != null){
+            if(vNAvant != null){
+                Controleur.getInstance().ajouterPointLivraison(vNAAjouter.getNoeudModele(), vNAvant.getNoeudModele());
+                conteneurDroite.setStateBtnAddNoeud(0);
+                vNAAjouter = null;
+                vNAvant = null;
+            } else {
+                vNAvant = vuePlan.getvNSelectionne();
+                conteneurDroite.setStateBtnAddNoeud(1);
+            }
+        }
+        else{
+            vNAAjouter = vuePlan.getvNSelectionne();
+        }
     }
     
     /**

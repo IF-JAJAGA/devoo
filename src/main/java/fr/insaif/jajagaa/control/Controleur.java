@@ -109,8 +109,8 @@ public class Controleur {
      * @param noeudAvant noeud après lequel on veut ajouter noeudMilieu
      * @return la tournee une fois qu'elle a été modifiée
      */
-    public Tournee ajouterPointLivraison (Tournee tourneeModel,Noeud noeudMilieu, Noeud noeudAvant) {
-        tourneeModel.ajouterPointDeLivraison(noeudMilieu, noeudAvant);
+    public Tournee ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
+        zone.getTournee().ajouterPointDeLivraison(noeudMilieu, noeudAvant);
         return null;
     }
     

@@ -50,6 +50,18 @@ public class Livraison extends Noeud {
         // Date de livraison par défaut: heure de création
         this.heureLivraison = Calendar.getInstance();
     }
+    
+    /**
+     * Constructeur de copie.
+     * @param livraison
+     */
+    public Livraison(Livraison livraison){
+        super((Noeud)livraison);
+        heureLivraison = Calendar.getInstance();
+        heureLivraison.setTime(livraison.heureLivraison.getTime());
+        idClient = livraison.idClient;
+        idLivraison = livraison.idLivraison;
+    }
 
     /**
      * @return Heure exacte de la livraison
