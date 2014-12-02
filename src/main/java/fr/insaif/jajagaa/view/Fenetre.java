@@ -263,8 +263,8 @@ public class Fenetre extends JFrame {
     private void calculerLivraison(String time){
         time = time.replace(",", ".");
         try{
-            float timetime = Float.parseFloat(time);
-            Controleur.getInstance().CalculerTournee(time);
+            float timeFloat = Float.parseFloat(time);
+            Controleur.getInstance().CalculerTournee(((int) (1000*timeFloat)));
         }catch (NumberFormatException | NullPointerException ne){
             JOptionPane.showMessageDialog(null, "Veuillez donner comme temps un nombre décimal ou entier.", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -295,7 +295,7 @@ public class Fenetre extends JFrame {
         }
         else{
             vNAAjouter = vuePlan.getvNSelectionne();
-            //Ne doit pas être une livraison.
+            //Ne doit pas être une livraison + au moins un livraison doit être présente.
             if(vNAAjouter.getPointDeLivraison() == VueNoeud.Etat.RIEN && vuePlan.getLivraisonsPresente()){
                 conteneurDroite.setEtatBtnAddNoeud(1);
             }else{

@@ -249,6 +249,11 @@ public class VuePlan extends JPanel{
         ajouterNoeuds(zoneGeo.getEntrepot(), zoneGeo.getNoeuds());
         livraisonsPresentes = ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
         
+        if(!zoneGeo.getTournee().getCheminsResultats().isEmpty()){
+            System.out.println("\tDans actualiserPlan de VuePlan");
+            System.out.println("" + zoneGeo.getTournee().getCheminsResultats());
+        }
+        
         this.paint(getGraphics());
     }
     
