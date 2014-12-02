@@ -95,8 +95,9 @@ public class Parseur{
         try {
             inputStream = new FileInputStream(fichierEntree);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Parseur.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+        	//TODO: À quoi ça sert?
+//            Logger.getLogger(Parseur.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ParseurException("Fichier inexistant");
         }
         
         List<Noeud> plan = new ArrayList<Noeud>();
@@ -131,7 +132,7 @@ public class Parseur{
                     plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse, rue);
                 }
             }
-        } catch (FileNotFoundException fnfe) {
+        } catch (FileNotFoundException fnfe) { //TODO: il sert là maintenant? Car il se déclanche haut.
             throw new ParseurException("Fichier inexistant");
         } catch (IOException io) {
             throw new ParseurException("Impossible d'accéder au fichier correctement");
