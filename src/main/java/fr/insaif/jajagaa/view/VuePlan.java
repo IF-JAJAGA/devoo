@@ -245,7 +245,7 @@ public class VuePlan extends JPanel{
         
         ajouterNoeuds(zoneGeo.getEntrepot(), zoneGeo.getNoeuds());
         livraisonsPresentes = ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
-        
+        ajouterTournee(zoneGeo.getTournee());
         
         this.paint(getGraphics());
     }
