@@ -7,8 +7,10 @@ package fr.insaif.jajagaa.control.Commands;
 
 import fr.insaif.jajagaa.control.Parseur;
 import fr.insaif.jajagaa.control.ParseurException;
+import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.ZoneGeographique;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -17,40 +19,47 @@ import java.util.List;
  * @author Jérôme
  */
 public class LireLivraisonsCommand implements Command{
-    private List<PlageHoraire> plages;
-    private List<PlageHoraire> plagesAvant;
-    private List<PlageHoraire> plagesApres;
-    private final ZoneGeographique zone;
+    private ZoneGeographique zoneAvant ;
+    private ZoneGeographique zone ;
+    private ZoneGeographique zoneApres ;
     private final String fichierLivraison;
 
-    public LireLivraisonsCommand(List<PlageHoraire> plages, ZoneGeographique zone, String fichierLivraison) {
-        this.plages = plages;
+    /**
+     * La lecture d'un fichier de livraison par le parseur modifie chez la zone la liste des noeuds et les plages.
+     * @param zone
+     * @param fichierLivraison 
+     */
+    public LireLivraisonsCommand(ZoneGeographique zone, String fichierLivraison) {
         this.zone = zone;
         this.fichierLivraison = fichierLivraison;
     }
 
     @Override
     public void execute(){
-        if(plagesAvant == null){
-            plagesAvant = plages;
-            try{ plages = Parseur.lireLivraison(fichierLivraison, zone); }
-            catch(ParseurException pe) { }
-            plagesApres = plages;
+        if(zoneAvant == null){
+            zoneAvant = new ZoneGeographique(zone);
+            
+            List<PlageHoraire> plages;
+            try{
+                plages = Parseur.lireLivraison(fichierLivraison, zone);
+            }
+            catch(ParseurException pe) {
+                System.out.println("Problème lors du parsing, on arrête les modifications.");
+                return;
+            }
+            
+            zone.getTournee().setPlagesHoraire(plages);
+            zoneApres = new ZoneGeographique(zone);
         }
-        //TODO arranger le catch
         else {
-            plages = plagesApres;
+            zone = zoneApres;
         }
         
     }
 
     @Override
     public void undo() {
-        plages = plagesAvant;
-    }
-
-    public List<PlageHoraire> getPlages() {
-        return plages;
+        zone = zoneAvant;
     }
 
     public ZoneGeographique getZone() {

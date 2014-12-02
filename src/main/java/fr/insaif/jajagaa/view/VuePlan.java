@@ -218,38 +218,59 @@ public class VuePlan extends JPanel{
 //        return vueTournee;
 //    }
 
+    /**
+     * Redessine tout le plan en fonction du modèle (noeuds+troncons+livraison).
+     * @param zoneGeo 
+     */
     protected void actualiserPlan(ZoneGeographique zoneGeo) {
         viderPlan();
-        if(zoneGeo != null){
-            Noeud entrepot = zoneGeo.getEntrepot();
-            List<Noeud> listNoeuds = zoneGeo.getNoeuds();
-            for(Noeud noeud : listNoeuds) {
-                    if(noeud.getXMetre()>XVille){
-                        XVille = noeud.getXMetre();
-                    }
-                    if(noeud.getYMetre()>YVille){
-                        YVille = noeud.getYMetre();
-                    }
-                    //TODO : redéfinir .equals 
-                    if ((entrepot != null) && (noeud.equals(entrepot))){
-                        vueNoeuds.add(new VueNoeud(noeud, Color. ORANGE));
-                    }
-                    else{
-                        vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
-                    }
-                    List<Troncon> listTroncon = noeud.getSortants();
-                    if (listTroncon != null) {
-                        for(Troncon troncon : listTroncon){
-                            vueTroncons.add(new VueTroncon(troncon));
-                        }
-                    }
-            }
+        if(zoneGeo == null){
+            this.paint(getGraphics());
+            return;
         }
+        
+        ajouterNoeuds(zoneGeo.getEntrepot(), zoneGeo.getNoeuds());
+        ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
         
         this.paint(getGraphics());
     }
     
-    protected void ajouterLivraisons(List<PlageHoraire> PL) {
+    /**
+     * Ajoute les noeuds à dessiner.
+     * @param entrepot
+     * @param listNoeuds 
+     */
+    private void ajouterNoeuds(Noeud entrepot, List<Noeud> listNoeuds){
+        for(Noeud noeud : listNoeuds) {
+                if(noeud.getXMetre()>XVille){
+                    XVille = noeud.getXMetre();
+                }
+                if(noeud.getYMetre()>YVille){
+                    YVille = noeud.getYMetre();
+                }
+                //TODO : redéfinir .equals 
+                if ((entrepot != null) && (noeud.equals(entrepot))){
+                    vueNoeuds.add(new VueNoeud(noeud, Color. ORANGE));
+                }
+                else{
+                    vueNoeuds.add(new VueNoeud(noeud, Color.GREEN));
+                }
+                List<Troncon> listTroncon = noeud.getSortants();
+                if (listTroncon != null) {
+                    for(Troncon troncon : listTroncon){
+                        vueTroncons.add(new VueTroncon(troncon));
+                    }
+                }
+        }
+    }
+    
+    /**
+     * Ajoute les troncons à dessiner.
+     * @param PL 
+     */
+    private void ajouterLivraisons(List<PlageHoraire> PL) {
+        if(PL == null) return;
+        
         for(PlageHoraire pl : PL){
             List<Livraison> listNoeuds = pl.getLivraisons();
             for (Livraison liv : listNoeuds){

@@ -57,6 +57,14 @@ public class Noeud {
         this.entrants = entrants;
     }
     
+    public Noeud(Noeud noeud){
+        entrants = new ArrayList<>(noeud.entrants);
+        sortants = new ArrayList<>(noeud.sortants);
+        xMetre = noeud.xMetre;
+        yMetre = noeud.yMetre;
+        id = noeud.id;
+    }
+    
     /**
      * Identifiant du noeud
      * @return Identifiant du noeud

@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionEvent;
@@ -114,6 +115,7 @@ public class Fenetre extends JFrame {
     }
     
     private void addListeners(){
+        //Redimensionnement
         addComponentListener(new ComponentListener() {
 
                 public void componentShown(ComponentEvent arg0) {}
@@ -131,15 +133,7 @@ public class Fenetre extends JFrame {
         importPlan.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier du plan");
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    String fipPlan = null;
-                    fipPlan = fc.getSelectedFile().getAbsolutePath();
-                    Controleur.getInstance().lirePlan(fipPlan);
-                }
-                else{
-                    System.out.println("Opération annulée, pour le plan.");
-                }
+                choisirFichierPlan();
             }
             
         });
@@ -147,15 +141,7 @@ public class Fenetre extends JFrame {
         importLivr.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier de la livraison");
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    String fipLivraison = null;
-                    fipLivraison = fc.getSelectedFile().getAbsolutePath();
-                    Controleur.getInstance().lireLivraisons(fipLivraison);
-                }
-                else{
-                    System.out.println("Opération annulée, pour la livraison.");
-                }
+                choisirFichierLivraisons();
             }
             
         });
@@ -183,7 +169,8 @@ public class Fenetre extends JFrame {
                 close();
             }
         });
-                
+        
+        //Clic sur un élément de la liste.
         conteneurDroite.getListeNoeuds().addListSelectionListener(new ListSelectionListener() {
 
             @Override
@@ -196,6 +183,7 @@ public class Fenetre extends JFrame {
             }
         });
         
+        //Ajout d'un point de livraison.
         conteneurDroite.getBtnAddNoeud().addMouseListener(new MouseAdapter() {
 
             @Override
@@ -210,8 +198,7 @@ public class Fenetre extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                //TODO
-                System.out.println("Valeur à envoyer : " + conteneurDroite.getSaisieTemps().getText());
+                calculerLivraison(conteneurDroite.getSaisieTemps().getText());
             }
 
         });
@@ -221,7 +208,7 @@ public class Fenetre extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    System.out.println("Valeur à envoyer : " + conteneurDroite.getSaisieTemps().getText());
+                    calculerLivraison(conteneurDroite.getSaisieTemps().getText());
                 }
             }
             
@@ -242,15 +229,46 @@ public class Fenetre extends JFrame {
     /**
      * Appelée par un listener sur bouton
      */
-    private void ChoisirZoneGeographique(){
-        //TODO : appel de JFileChooser
+    private void choisirFichierPlan(){
+        int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier du plan");
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            String fipPlan = null;
+            fipPlan = fc.getSelectedFile().getAbsolutePath();
+            Controleur.getInstance().lirePlan(fipPlan);
+        }
+        else{
+            System.out.println("Opération annulée, pour le plan.");
+        }
     }
     
     /**
      * Appelée par un listener sur bouton
      */
-    private void ChoisirTournee(){
-        //TODO : appel de JFileChooser
+    private void choisirFichierLivraisons(){
+        int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier de la livraison");
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            String fipLivraison = null;
+            fipLivraison = fc.getSelectedFile().getAbsolutePath();
+            Controleur.getInstance().lireLivraisons(fipLivraison);
+        }
+        else{
+            System.out.println("Opération annulée, pour la livraison.");
+        }
+    }
+    
+    /**
+     * 
+     * @param time 
+     */
+    private void calculerLivraison(String time){
+        time = time.replace(",", ".");
+        try{
+            float timetime = Float.parseFloat(time);
+            Controleur.getInstance().CalculerTournee(time);
+        }catch (NumberFormatException | NullPointerException ne){
+            JOptionPane.showMessageDialog(null, "Veuillez donner comme temps un nombre décimal ou entier.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
     
     /**
@@ -260,10 +278,6 @@ public class Fenetre extends JFrame {
         vuePlan.actualiserPlan(Controleur.getInstance().getZone());
         conteneurDroite.majListe(vuePlan.getVueNoeuds());
     };
-    
-    public void ajouterLivraisons(){
-        vuePlan.ajouterLivraisons(Controleur.getInstance().getPlagesHoraire());
-    }
     
     /**
      * Ferme la fenêtre.

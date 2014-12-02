@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,14 @@ public class ZoneGeographique {
         this.setNoeuds(noeuds);
         this.setEntrepot(0);
     }
+
+    public ZoneGeographique(ZoneGeographique zone) {
+        tournee = new Tournee(zone.tournee, this);
+        entrepot = new Noeud(zone.entrepot);
+        noeuds = new ArrayList<>(zone.noeuds);
+    }
+    
+    
 
     /**
      * Renvoie le nœud d'id donné en paramètre

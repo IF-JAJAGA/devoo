@@ -87,9 +87,17 @@ public class Controleur {
             JOptionPane.showMessageDialog(null, "Impossible d'importer des livraisons sans aucun plan de la ville.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        creationCommande(new ElementListeCourante(new LireLivraisonsCommand(zone.getTournee().getPlagesHoraire(), zone, fichierLivraison)));
+        creationCommande(new ElementListeCourante(new LireLivraisonsCommand(zone, fichierLivraison)));
         
         execute();
+    }
+    
+    /**
+     * Permet de créer la commande pour calculer la tournée.
+     * @param time 
+     */
+    public void CalculerTournee(String time) {
+        
     }
     
     /**
@@ -112,17 +120,13 @@ public class Controleur {
         commande.execute();
         
         //Actualisation du modèle puis de la vue.
-        if(commande instanceof LirePlanCommand){
+        if(commande instanceof LirePlanCommand ){
             zone = ((LirePlanCommand)commande).getZone();
             Fenetre.getInstance().actualiserPlan();
         }
         else if(commande instanceof LireLivraisonsCommand){
             zone = ((LireLivraisonsCommand)commande).getZone();
-            zone.getTournee().setPlagesHoraire(((LireLivraisonsCommand)commande).getPlages());
             Fenetre.getInstance().actualiserPlan();
-            Fenetre.getInstance().ajouterLivraisons();
-            System.out.println("execute LireLivraisonsCommand");
-            //TODO (pas sûr) : appeler calcul de la tournée puis actualisation de l'affichage ?
         }
         else {
             //Autres types de commande
@@ -143,9 +147,7 @@ public class Controleur {
         }
         else if(commande instanceof LireLivraisonsCommand){
             zone = ((LireLivraisonsCommand)commande).getZone();
-            zone.getTournee().setPlagesHoraire(((LireLivraisonsCommand)commande).getPlages());
-            System.out.println("undo LireLivraisonsCommand");
-            //TODO (pas sûr) : appeler calcul de la tournée puis actualisation de l'affichage ?
+            Fenetre.getInstance().actualiserPlan();
         }
         else {
             //Autres types de commande
@@ -186,7 +188,7 @@ public class Controleur {
     public List<PlageHoraire> getPlagesHoraire() {
         return zone.getTournee().getPlagesHoraire();
     }
-    
+
     
     /**
      * Classe permettant d'implémenter une liste chainée pour circuler entre les commandes.

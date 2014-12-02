@@ -20,7 +20,7 @@ public class Tournee {
     /**
      * Liste des plages horaires au cours de laquelle se déroule la tournée. (Peut au maximum contenir 24h)
      */
-    protected List<PlageHoraire> plagesHoraire;
+    protected List<PlageHoraire> plagesHoraire = new ArrayList<>();
 
     /**
      * Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
@@ -33,7 +33,7 @@ public class Tournee {
     /**
      * Liste des livraisons à effectuer (non triées, voir {@link fr.insaif.jajagaa.model.Tournee} pour la liste triée)
      */
-    protected List<PlageHoraire> plages;
+//    protected List<PlageHoraire> plages;
 
     protected TSP tsp;
 
@@ -51,6 +51,14 @@ public class Tournee {
         this.zone = zone;
     }
 
+    Tournee(Tournee tournee, ZoneGeographique zone) {
+        this.zone = zone;
+        plagesHoraire = new ArrayList<>(zone.tournee.plagesHoraire);
+        cheminsResultats = new LinkedList<>(tournee.cheminsResultats);
+        graph = new LivraisonGraph(this.getCheminsPossibles());
+        tsp = new TSP(graph);
+    }
+    
     public List<PlageHoraire> getPlagesHoraire() {
     	return this.plagesHoraire;
     }
@@ -63,6 +71,8 @@ public class Tournee {
 
     protected List<Chemin> getCheminsPossibles() {
         List<Chemin> cheminsPossibles = new ArrayList<Chemin>();
+        if(plagesHoraire.isEmpty()) return cheminsPossibles;
+        
         LivraisonGraphVertex entrepot = new LivraisonGraphVertex(this.zone.getEntrepot(), true);
         Map<Integer, List<LivraisonGraphVertex>> graphVertexPerPlage = new HashMap<Integer, List<LivraisonGraphVertex>>();
         
