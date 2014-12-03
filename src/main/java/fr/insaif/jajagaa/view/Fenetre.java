@@ -2,6 +2,7 @@ package fr.insaif.jajagaa.view;
 
 
 import fr.insaif.jajagaa.control.Controleur;
+import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -198,6 +199,12 @@ public class Fenetre extends JFrame {
             public void valueChanged(ListSelectionEvent lse) {
                 if(!lse.getValueIsAdjusting()){
                     VueNoeud vNListe = (VueNoeud) conteneurDroite.getListeNoeuds().getModel().getElementAt(conteneurDroite.getListeNoeuds().getSelectedIndex());
+                    if(vNListe.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON){
+                        conteneurDroite.setTextFieldText((Livraison)vNListe.getNoeudModele());
+                    }
+                    else{
+                        conteneurDroite.resetTextFieldText();
+                    }
                     vuePlan.changerSelection(vNListe);
                     vuePlan.repaint();
                 }
@@ -237,6 +244,12 @@ public class Fenetre extends JFrame {
                 super.mouseClicked(e);
                 VueNoeud vN = vuePlan.noeudEstClique(e.getPoint());
                 conteneurDroite.getListeNoeuds().SelectionnerNoeud(vN);
+                if(vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON){
+                    conteneurDroite.setTextFieldText((Livraison)vN.getNoeudModele());
+                }
+                else{
+                    conteneurDroite.resetTextFieldText();
+                }
                 repaint();
             }
 	});
