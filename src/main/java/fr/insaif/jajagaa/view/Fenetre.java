@@ -2,7 +2,6 @@ package fr.insaif.jajagaa.view;
 
 
 import fr.insaif.jajagaa.control.Controleur;
-import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

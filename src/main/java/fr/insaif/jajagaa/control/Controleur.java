@@ -112,9 +112,12 @@ public class Controleur {
      * @param noeudAvant noeud après lequel on veut ajouter noeudMilieu
      * @return la tournee une fois qu'elle a été modifiée
      */
-    public Tournee ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
-        return zone.getTournee().ajouterPointDeLivraison(noeudMilieu, noeudAvant);
+    public void ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
+        System.out.println("ajouterPointLivraison");
+        creationCommande(new ElementListeCourante(new AjoutLivraisonCommande(zone, noeudAvant, noeudMilieu)));
+//        zone.getTournee().ajouterPointDeLivraison(noeudMilieu, noeudAvant);
         
+        execute();
     }
     
     /**

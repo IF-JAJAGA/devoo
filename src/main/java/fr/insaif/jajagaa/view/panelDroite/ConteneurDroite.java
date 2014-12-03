@@ -79,7 +79,7 @@ public class ConteneurDroite extends JPanel{
 
         btnAddNoeud = new JButton(strBtnAddNoeud0);
         
-        btnCalculLivraison = new JButton("Calculer la livraison");
+        btnCalculLivraison = new JButton("Calculer la tournée");
         saisieTemps = new JTextField("10");
     }
     
