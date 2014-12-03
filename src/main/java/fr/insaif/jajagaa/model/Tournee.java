@@ -386,11 +386,16 @@ public class Tournee {
 //                trouveChemins++;
 //            }
         }
+        
+        this.zone.modifierLivraisonEnNoeud(noeudASup.getId(), new Noeud(noeudASup.getId(), noeudASup.getXMetre(), noeudASup.getYMetre(),noeudASup.getSortants()));
+        
         if (trouve)
         {
             //Création des variables nécessaires
             LivraisonGraphVertex lgvOrigine = cheminAvant.getOrigine();
             LivraisonGraphVertex lgvDestination = cheminApres.getDestination();
+            LivraisonGraphVertex lgvMilieu = cheminAvant.getDestination();
+            
             
             
             Chemin chemin = Dijkstra.plusCourtChemin(zone, lgvOrigine, lgvDestination);
@@ -400,6 +405,7 @@ public class Tournee {
             cheminsResultats.remove(i);
             
             cheminsResultats.add(i, chemin);
+            graph.noeuds.remove(lgvMilieu);
             System.out.println("Après cheminsResultats.size()" + cheminsResultats.size());
             return true;
         }
