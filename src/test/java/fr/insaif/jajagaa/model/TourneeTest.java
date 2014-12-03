@@ -67,16 +67,10 @@ public class TourneeTest {
 
     @Test
     public void testAjout() {
-        List<Noeud> noeuds = this.zoneGeo.getNoeuds();
-        Random random = new Random();
+        Noeud noeudALivrer = this.zoneGeo.getNoeudId(20); // le noeud 20 n'est pas une livraison
+        Livraison precedent = this.tournee.getPlagesHoraire().get(1).getLivraisons().get(0);
 
-        Noeud aLivrer = noeuds.get(random.nextInt(noeuds.size()));
-        Noeud precedent = noeuds.get(random.nextInt(noeuds.size()));
-
-        // Pour être sûr d'avoir deux nœuds différents
-        while (aLivrer == precedent) precedent = noeuds.get(random.nextInt(noeuds.size()));
-
-        this.tournee.ajouterPointDeLivraison(aLivrer, precedent);
+        this.tournee.ajouterPointDeLivraison(noeudALivrer, 1, precedent);
         // TODO ajouter ici des tests
      }
 }
