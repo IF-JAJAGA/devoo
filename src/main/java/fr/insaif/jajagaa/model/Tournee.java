@@ -199,10 +199,6 @@ public class Tournee {
                         }
                     }
 
-                    // Mise à jour de l'heure de livraison
-                    currentLivraison.setHeureLivraison(currentTime.getTime());
-                    currentTime.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
-
                     // Ajout de la Livraison à la liste ordonnée
                     orderedVertices.add(currentVertex);
                 }
@@ -219,7 +215,10 @@ public class Tournee {
      */
     protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) {
         int i = 0;
+        float tempsSecondes;
         LivraisonGraphVertex depart, arrivee;
+        List<Troncon> listTroncons;
+        Livraison currentLivraison;
         while(i < (vertices.size()-1)) {
             depart = vertices.get(i);
             arrivee = vertices.get(i+1);
@@ -227,7 +226,20 @@ public class Tournee {
             Chemin chemin = depart.getSortantByDest(arrivee);
             if(chemin == null) throw new NullPointerException("Noeud sortant non trouvé");
             this.addCheminResultat(chemin);
-
+            
+            //TODO faire ici les horaires
+            listTroncons = chemin.getTroncons();
+            tempsSecondes = Livraison.TPS_LIVRAISON_MIN;
+            for(Troncon troncon : listTroncons) {
+            	tempsSecondes += troncon.getLongueurMetre()/troncon.getVitesse();
+            }
+            
+            currentLivraison = (Livraison) zone.getNoeudById(chemin.getOrigine().getIdNoeud());
+            //TODO: finir
+//            currentLivraison.setHeureLivraison();
+//            currentTime.add(Calendar.MINUTE, temps);
+            
+            
             i++;
         }
     }
