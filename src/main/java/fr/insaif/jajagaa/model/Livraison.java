@@ -44,7 +44,7 @@ public class Livraison extends Noeud {
      * Constructeur d'une livraison à partir du noeud qui la concerne
      */
     public Livraison(Noeud n, int idLiv, int idClientLiv) {
-        super(n.id, n.xMetre, n.yMetre, n.sortants, n.entrants);
+        super(n.id, n.xMetre, n.yMetre, n.sortants);
         this.idLivraison = idLiv;
         this.idClient = idClientLiv;
         // Date de livraison par défaut: heure de création
