@@ -121,6 +121,7 @@ public class Fenetre extends JFrame {
         this.setJMenuBar(barreMenu);
         addListeners();
         setSize(new Dimension(1366,768));
+        importLivr.setEnabled(false);
     }
     
     private void addListeners(){
@@ -143,6 +144,12 @@ public class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e){
                 choisirFichierPlan();
+                if(Controleur.getInstance().getZone().getNoeuds() != null && Controleur.getInstance().getZone().getNoeuds().size() != 0){
+                    importLivr.setEnabled(true);
+                }
+                else{
+                    importLivr.setEnabled(false);
+                }
             }
             
         });
@@ -151,6 +158,13 @@ public class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e){
                 choisirFichierLivraisons();
+                if(Controleur.getInstance().getZone().getTournee().getPlagesHoraire() != null 
+                        && Controleur.getInstance().getZone().getTournee().getPlagesHoraire().size() !=0){
+                    conteneurDroite.getBtnCalculLivraison().setEnabled(true);
+                }
+                else{
+                    conteneurDroite.getBtnCalculLivraison().setEnabled(false);
+                }
             }
             
         });
@@ -243,14 +257,26 @@ public class Fenetre extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                
                 VueNoeud vN = vuePlan.noeudEstClique(e.getPoint());
+                if((vN == null || vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON) && vNAAjouter == null){
+                    conteneurDroite.getBtnAddNoeud().setEnabled(false);
+                }
+                else{
+                    conteneurDroite.getBtnAddNoeud().setEnabled(true);
+                }
                 conteneurDroite.getListeNoeuds().SelectionnerNoeud(vN);
-                if(vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON){
+                if(vN != null && vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON){
                     conteneurDroite.setTextFieldText((Livraison)vN.getNoeudModele());
+                    if(vNAAjouter == null){
+                        conteneurDroite.getBtnSupNoeud().setEnabled(true);
+                    }
                 }
                 else{
                     conteneurDroite.resetTextFieldText();
+                    conteneurDroite.getBtnSupNoeud().setEnabled(false);
                 }
+                
                 repaint();
             }
 	});

@@ -108,8 +108,11 @@ public class ConteneurDroite extends JPanel{
         
         btnAddNoeud = new JButton(strBtnAddNoeud0);
         btnSupNoeud = new JButton(strBtnSupNoeud);
-        
         btnCalculLivraison = new JButton("Calculer la tournée");
+        
+        btnAddNoeud.setEnabled(false);
+        btnSupNoeud.setEnabled(false);
+        btnCalculLivraison.setEnabled(false);
     }
     
     private void placeComponents(){
