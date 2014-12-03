@@ -53,6 +53,7 @@ public class SuppressionLivraisonCommande implements Command {
         if(zoneAvant == null){
             zoneAvant = new ZoneGeographique(zone);
             
+            System.out.println("zone.getTournee().getCheminsResultats().size() : " + zone.getTournee().getCheminsResultats().size());
             suppressionOk = zone.getTournee().supprimerPointLivraison(noeudASup);
             System.out.println("zone.getTournee().getCheminsResultats().size() : " + zone.getTournee().getCheminsResultats().size());
             

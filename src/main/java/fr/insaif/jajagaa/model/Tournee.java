@@ -367,7 +367,9 @@ public class Tournee {
         for (i=0 ; i<cheminsResultats.size() ; i++) {
             int idNoeudASup = noeudASup.getId();
             if ((cheminsResultats.get(i).getDestination().getIdNoeud() == idNoeudASup) &&
-                    (cheminsResultats.get(i).getOrigine().getIdNoeud() == idNoeudASup)){
+                    (cheminsResultats.get(i+1).getOrigine().getIdNoeud() == idNoeudASup)){
+                cheminAvant = cheminsResultats.get(i);
+                cheminApres = cheminsResultats.get(i+1);
                 trouve = true;
                 break;
             }
