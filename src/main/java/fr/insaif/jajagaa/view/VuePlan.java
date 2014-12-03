@@ -258,6 +258,7 @@ public class VuePlan extends JPanel{
     private void ajouterNoeuds(Noeud entrepot, List<Noeud> listNoeuds){
         for(Noeud noeud : listNoeuds) {
             if(noeud instanceof Livraison){
+                if(!livraisonsPresentes)    livraisonsPresentes = true;
                 Livraison liv = (Livraison)noeud;
                 if(liv.getXMetre()>XVille){
                     XVille = liv.getXMetre();
