@@ -11,7 +11,7 @@ public class Chemin {
     /**
      * Liste des vueTroncons à emprunter (dans l'ordre) pour aller de l'origine du premier à la destination du dernier
      */
-    protected List<Troncon> troncons = new ArrayList<Troncon>();
+    protected List<Troncon> troncons;
     
     protected LivraisonGraphVertex origine;
     
@@ -28,8 +28,8 @@ public class Chemin {
         for(Troncon Tr : oldChemin.troncons){
             troncons.add(new Troncon(Tr));
         }
-        origine = new LivraisonGraphVertex(oldChemin.origine);
-        destination = new LivraisonGraphVertex(oldChemin.destination);
+        origine = new LivraisonGraphVertex(oldChemin.origine, this);
+        destination = new LivraisonGraphVertex(oldChemin.destination, this);
     }
 
     public void addTroncon(Troncon unTroncon){

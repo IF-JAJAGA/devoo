@@ -53,6 +53,7 @@ public class CalculerTourneeCommand implements Command{
                     tournee.getSolutionState() == SolutionState.SOLUTION_FOUND){
                 chemins = tournee.getCheminsResultats();
                 
+                cheminsApres = new LinkedList<>();
                 for(Chemin Ch : chemins){
                     cheminsApres.add(new Chemin(Ch));
                 }

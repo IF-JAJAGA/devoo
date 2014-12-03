@@ -31,14 +31,21 @@ public class LivraisonGraphVertex {
     
     /**
      * Constructeur par copie.
-     * @param old 
+     * @param old
      */
-    public LivraisonGraphVertex(LivraisonGraphVertex old){
+    public LivraisonGraphVertex(LivraisonGraphVertex old, Chemin cheminAppelant){
         estEntrepot = old.estEntrepot;
         idNoeud = old.idNoeud;
         sortants = new ArrayList<>();
         for(Chemin Chs : old.sortants){
-            sortants.add(new Chemin(Chs));
+            
+            if(Chs.getOrigine().getIdNoeud() == idNoeud){
+                sortants.add(cheminAppelant);
+            } else {
+                System.out.println("old.getIdNoeud() : " + old.getIdNoeud());
+            System.out.println("Chs.getOrigine().getIdNoeud() : " + Chs.getDestination());
+                sortants.add(new Chemin(Chs));
+            }
         }
     }
     
