@@ -34,22 +34,23 @@ public class LirePlanCommand implements Command{
     @Override
     public void execute() {
         if(zoneAvant == null){
-            zoneAvant = zone;
+            zoneAvant = new ZoneGeographique(zone);
+            
             try { zone = Parseur.lirePlan(fichierPlan); }
             catch ( ParseurException pe) { }
-            zoneApres = zone;
+            zoneApres = new ZoneGeographique(zone);
             Controleur.getInstance().setZoneVierge(zoneApres);
 
         }
         else {
-            zone = zoneApres;
+            zone = new ZoneGeographique(zoneApres);
         }
         
     }
 
     @Override
     public void undo() {
-        zone = zoneAvant;
+        zone = new ZoneGeographique(zoneAvant);
     }
 
     public ZoneGeographique getZone() {
