@@ -275,21 +275,20 @@ public class Fenetre extends JFrame {
      */
     private void traitementAjoutLivraison(){
         if(vNAAjouter != null){
-            if(vNAvant != null){
+            vNAvant = vuePlan.getvNSelectionne();
+            //Doit être une livraison
+            if(vNAvant.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON ||
+                   vNAvant.getPointDeLivraison() == VueNoeud.Etat.RETARD){
+                conteneurDroite.getBtnAddNoeud().setEnabled(false);
+                //Appel
+                System.out.println("Ajouter point de livraison");
                 Controleur.getInstance().ajouterPointLivraison(vNAAjouter.getNoeudModele(), vNAvant.getNoeudModele());
                 conteneurDroite.setEtatBtnAddNoeud(0);
                 conteneurDroite.getBtnAddNoeud().setEnabled(true);
                 vNAAjouter = null;
                 vNAvant = null;
-            } else {
-                vNAvant = vuePlan.getvNSelectionne();
-                //Doit être une livraison
-                if(vNAvant.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON ||
-                       vNAvant.getPointDeLivraison() == VueNoeud.Etat.RETARD){
-                    conteneurDroite.getBtnAddNoeud().setEnabled(false);
-                }else{
-                    vNAvant = null;
-                }
+            }else{
+                vNAvant = null;
             }
         }
         else{

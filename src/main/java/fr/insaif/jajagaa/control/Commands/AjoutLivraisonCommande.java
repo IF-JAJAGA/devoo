@@ -29,9 +29,12 @@ public class AjoutLivraisonCommande implements Command {
     @Override
     public void execute(){
         if (zoneAvant == null){
-            zoneAvant = zone;
+            zoneAvant = new ZoneGeographique(zone);
+            
+            System.out.println("noeudAvant : " + noeudAvant + " ; noeudMilieu : " + noeudMilieu);
             zone.setTournee(zone.getTournee().ajouterPointDeLivraison(noeudAvant, noeudMilieu));
-            zoneApres = zone;
+            
+            zoneApres = new ZoneGeographique(zone);
         }
         else{
             zone = zoneApres;
