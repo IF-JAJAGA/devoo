@@ -25,8 +25,8 @@ import javax.swing.SpringLayout;
  * @author jeje
  */
 public class ConteneurDroite extends JPanel{
-    private final String strBtnAddNoeud0 = "Ajouter une livraison";
-    private final String strBtnAddNoeud1 = "Choisir le noeud avant";
+    private final String strBtnAddNoeud0 = "Ajouter un noeud livraison";
+    private final String strBtnAddNoeud1 = "Choisir la livraison précédente";
     private final String strBtnSupNoeud  = "Supprimer une livraison";
     
     private JLabel titre;
