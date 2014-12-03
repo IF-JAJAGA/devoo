@@ -53,6 +53,8 @@ public class Fenetre extends JFrame {
         private VueNoeud vNAAjouter;
         private VueNoeud vNAvant;
         
+        private VueNoeud vnASupprimer;
+        
         
     private Fenetre(){
     	setVisible(true);
@@ -193,6 +195,15 @@ public class Fenetre extends JFrame {
 
         });
         
+        //Suppression d'un point de livraison
+        conteneurDroite.getBtnSupNoeud().addMouseListener(new MouseAdapter(){
+            
+            @Override
+            public void mouseClicked(MouseEvent me){
+                traitementSupprLivraison();
+            }
+        });
+        
         conteneurDroite.getBtnCalculLivraison().addMouseListener(new MouseAdapter() {
 
             @Override
@@ -300,6 +311,14 @@ public class Fenetre extends JFrame {
                 vNAAjouter = null;
             }
         }
+    }
+    /**
+     * Met à jour le bouton de suppression de livraison et appelle le calcul de la tournée si on valide la suppression. 
+     */
+    private void traitementSupprLivraison() {
+        //TODO
+        Controleur.getInstance().supprimerPointLivraison(vnASupprimer.getNoeudModele());
+        
     }
     
     /**

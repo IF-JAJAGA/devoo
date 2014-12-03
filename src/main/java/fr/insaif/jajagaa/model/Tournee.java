@@ -316,4 +316,9 @@ public class Tournee {
         }
         return this;
     }
+
+    public Tournee supprimerPointLivraison(Noeud noeudASup) {
+        
+        return this;
+    }
 }

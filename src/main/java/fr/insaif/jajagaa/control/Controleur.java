@@ -5,6 +5,7 @@ import fr.insaif.jajagaa.control.Commands.CalculerTourneeCommand;
 import fr.insaif.jajagaa.control.Commands.Command;
 import fr.insaif.jajagaa.control.Commands.LireLivraisonsCommand;
 import fr.insaif.jajagaa.control.Commands.LirePlanCommand;
+import fr.insaif.jajagaa.control.Commands.SuppressionLivraisonCommande;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.ZoneGeographique;
@@ -131,6 +132,13 @@ public class Controleur {
         execute();
     }
     
+    public void supprimerPointLivraison(Noeud noeudASup) {
+        System.out.println("Suppression Point Livraison");
+        creationCommande(new ElementListeCourante(new SuppressionLivraisonCommande(zone,noeudASup)));
+        
+        execute();
+    }
+    
     /**
      * On doit exécuter la commande puis communiquer les changements au modèle et à la vue.
      */
@@ -149,6 +157,10 @@ public class Controleur {
         }
         else if (commande instanceof  AjoutLivraisonCommande){
             zone = ((AjoutLivraisonCommande)commande).getZone();
+            Fenetre.getInstance().actualiserPlan();
+        }
+        else if(commande instanceof SuppressionLivraisonCommande){
+            zone = ((SuppressionLivraisonCommande)commande).getZone();
             Fenetre.getInstance().actualiserPlan();
         }
         else if(commande instanceof CalculerTourneeCommand){
@@ -178,7 +190,11 @@ public class Controleur {
             Fenetre.getInstance().actualiserPlan();
         }
         else if(commande instanceof AjoutLivraisonCommande){
-            zone = ((LireLivraisonsCommand)commande).getZone();
+            zone = ((AjoutLivraisonCommande)commande).getZone();
+            Fenetre.getInstance().actualiserPlan();            
+        }
+        else if(commande instanceof SuppressionLivraisonCommande){
+            zone = ((SuppressionLivraisonCommande)commande).getZone();
             Fenetre.getInstance().actualiserPlan();            
         }
         else if(commande instanceof CalculerTourneeCommand){
@@ -224,6 +240,7 @@ public class Controleur {
     public List<PlageHoraire> getPlagesHoraire() {
         return zone.getTournee().getPlagesHoraire();
     }
+
     
     /**
      * Classe permettant d'implémenter une liste chainée pour circuler entre les commandes.

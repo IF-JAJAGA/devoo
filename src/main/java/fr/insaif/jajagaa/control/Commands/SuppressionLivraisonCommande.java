@@ -5,6 +5,8 @@
 package fr.insaif.jajagaa.control.Commands;
 
 import fr.insaif.jajagaa.control.Commands.Command;
+import fr.insaif.jajagaa.model.Noeud;
+import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
  *
@@ -12,18 +14,34 @@ import fr.insaif.jajagaa.control.Commands.Command;
  */
 public class SuppressionLivraisonCommande implements Command {
     
-    public SuppressionLivraisonCommande(){
-        //TODO : trouver les attributs
+    private ZoneGeographique zoneAvant ;
+    private ZoneGeographique zone ;
+    private ZoneGeographique zoneApres ;
+    private Noeud noeudASup;
+
+    public SuppressionLivraisonCommande(ZoneGeographique zone, Noeud noeudASup) {
+        this.zone = zone;
+        this.noeudASup = noeudASup;
     }
     
     @Override
     public void execute(){
-        //TODO : faire des actions
+        if (zoneAvant == null){
+            zoneAvant = zone;
+            zone.setTournee(zone.getTournee().supprimerPointLivraison(noeudASup));
+            zoneApres = zone;
+        }
+        else{
+            zone = zoneApres;
+        }
     }
     
     @Override
     public void undo(){
-        //TODO : faire des actions
+        zone = zoneAvant;
     }
     
+    public ZoneGeographique getZone(){
+        return zone;
+    }
 }
