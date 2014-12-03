@@ -22,6 +22,15 @@ public class Chemin {
         this.setDestination(destination);
         this.troncons = troncons;
     }
+    
+    public Chemin(Chemin oldChemin){
+        troncons = new ArrayList<>();
+        for(Troncon Tr : oldChemin.troncons){
+            troncons.add(new Troncon(Tr));
+        }
+        origine = new LivraisonGraphVertex(oldChemin.origine);
+        destination = new LivraisonGraphVertex(oldChemin.destination);
+    }
 
     public void addTroncon(Troncon unTroncon){
         this.troncons.add(unTroncon);

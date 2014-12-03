@@ -57,12 +57,18 @@ public class Noeud {
         this.entrants = entrants;
     }
     
-    public Noeud(Noeud noeud){
-        entrants = new ArrayList<>(noeud.entrants);
-        sortants = new ArrayList<>(noeud.sortants);
-        xMetre = noeud.xMetre;
-        yMetre = noeud.yMetre;
-        id = noeud.id;
+    public Noeud(Noeud oldNoeud){
+        entrants = new ArrayList<>();
+        for(Troncon tr : oldNoeud.entrants){
+            entrants.add(new Troncon(tr));
+        }
+        sortants = new ArrayList<>();
+        for(Troncon tr : oldNoeud.sortants){
+            sortants.add(new Troncon(tr));
+        }
+        xMetre = oldNoeud.xMetre;
+        yMetre = oldNoeud.yMetre;
+        id = oldNoeud.id;
     }
     
     /**

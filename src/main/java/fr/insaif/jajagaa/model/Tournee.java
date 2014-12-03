@@ -28,7 +28,7 @@ public class Tournee {
      * Le dernier chemin doit arriver à l'entrepôt.
      * La fin d'un chemin doit être le début du chemin de l'autre.
      */
-    protected List<Chemin> cheminsResultats = new LinkedList<Chemin>();
+    protected List<Chemin> cheminsResultats = new LinkedList<>();
 
     /**
      * Liste des livraisons à effectuer (non triées, voir {@link fr.insaif.jajagaa.model.Tournee} pour la liste triée)
@@ -51,10 +51,21 @@ public class Tournee {
         this.zone = zone;
     }
 
-    Tournee(Tournee tournee, ZoneGeographique zone) {
+    /**
+     * Constructeur par copie.
+     * @param zoneCopiee
+     * @param zone 
+     */
+    public Tournee(ZoneGeographique zoneCopiee, ZoneGeographique zone) {
         this.zone = zone;
-        plagesHoraire = new ArrayList<>(zone.tournee.plagesHoraire);
-        cheminsResultats = new LinkedList<>(tournee.cheminsResultats);
+        plagesHoraire = new ArrayList<>();
+        for(PlageHoraire PH : zoneCopiee.tournee.plagesHoraire){
+            plagesHoraire.add(new PlageHoraire(PH));
+        }
+        cheminsResultats = new LinkedList<>();
+        for(Chemin Chr : zoneCopiee.tournee.cheminsResultats){
+            cheminsResultats.add(new Chemin(Chr));
+        }
         graph = new LivraisonGraph(this.getCheminsPossibles());
         tsp = new TSP(graph);
     }
@@ -87,6 +98,7 @@ public class Tournee {
         }
 
         // Chemins les plus courts de l'entrepôt vers tous les nœuds de la première plage horaire
+        //ICI
         for (LivraisonGraphVertex vertex: graphVertexPerPlage.get(0)) {
             Chemin plusCourt = Dijkstra.plusCourtChemin(this.zone, entrepot, vertex);
             if (plusCourt != null) {

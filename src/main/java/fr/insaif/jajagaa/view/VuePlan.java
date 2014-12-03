@@ -286,6 +286,8 @@ public class VuePlan extends JPanel{
     private boolean ajouterLivraisons(List<PlageHoraire> PL) {
         if(PL == null || PL.isEmpty()) return false;
         
+        System.out.println("PL.size() : " + PL.size());
+        
         for(PlageHoraire pl : PL){
             List<Livraison> listNoeuds = pl.getLivraisons();
             for (Livraison liv : listNoeuds){

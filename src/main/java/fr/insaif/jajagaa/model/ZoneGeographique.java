@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class ZoneGeographique {
 
-    protected Tournee tournee = new Tournee(this);
+    protected Tournee tournee;
    
     /**
      * Noeud de la liste qui est l'entrepôt
@@ -26,13 +26,21 @@ public class ZoneGeographique {
      * @param noeuds La liste des vueNoeuds qui sont dans la zone (contenant l'entrepôt, en première place par défaut)
      */
     public ZoneGeographique(List<Noeud> noeuds) {
+        tournee = new Tournee(this);
         this.setNoeuds(noeuds);
     }
 
+    /**
+     * Constructeur par copie.
+     * @param zone 
+     */
     public ZoneGeographique(ZoneGeographique zone) {
-        tournee = new Tournee(zone.tournee, this);
+        noeuds = new ArrayList<>();
+        for(Noeud n : zone.noeuds){
+            noeuds.add(new Noeud(n));
+        }
         entrepot = (zone.entrepot==null) ? null : new Noeud(zone.entrepot);
-        noeuds = new ArrayList<>(zone.noeuds);
+        tournee = new Tournee(zone, this);
     }
     
     

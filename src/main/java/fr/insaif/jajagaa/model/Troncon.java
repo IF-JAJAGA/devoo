@@ -55,6 +55,18 @@ public class Troncon {
         }
         this.nomRue = rue;
     }
+    
+    /**
+     * Constructeur par copie.
+     * @param oldTroncon 
+     */
+    public Troncon(Troncon oldTroncon){
+        idOrigine = oldTroncon.idOrigine;
+        idDestination = oldTroncon.idDestination;
+        longueurMetre = oldTroncon.longueurMetre;
+        vitesse = oldTroncon.vitesse;
+        nomRue = new String(oldTroncon.nomRue);
+    }
 
     /**
      * Coût d'un Troncon, calculé avec longueurMetre / vitesse

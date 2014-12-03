@@ -2,6 +2,7 @@ package fr.insaif.jajagaa.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     /**
      * TODO
      */
-    protected List<Livraison> livraisons;
+    protected List<Livraison> livraisons = new LinkedList<>();
 
     /**
      * Construit une plage horaire avec un début et une fin
@@ -51,6 +52,15 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     public PlageHoraire(String heureDebut, String heureFin) {
         this.setHeureDebut(heureDebut);
         this.setHeureFin(heureFin);
+    }
+    
+    public PlageHoraire(PlageHoraire PH){
+        heureDebut = new Date(PH.heureDebut.getTime());
+        heureFin = new Date(PH.heureFin.getTime());
+        livraisons = new LinkedList<>();
+        for(Livraison LV : PH.getLivraisons()){
+            livraisons.add(new Livraison(LV));
+        }
     }
 
     /**

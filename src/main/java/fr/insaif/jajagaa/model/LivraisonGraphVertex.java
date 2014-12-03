@@ -18,9 +18,9 @@ public class LivraisonGraphVertex {
     
     protected Noeud noeud;
     
-    protected List<Chemin> entrants = new ArrayList<Chemin>();
+    protected List<Chemin> entrants = new ArrayList<>();
     
-    protected List<Chemin> sortants = new ArrayList<Chemin>();
+    protected List<Chemin> sortants = new ArrayList<>();
 
     public LivraisonGraphVertex(Livraison noeud) {
         this.noeud = noeud;
@@ -29,6 +29,23 @@ public class LivraisonGraphVertex {
     public LivraisonGraphVertex(Noeud noeud, boolean estEntrepot) {
         this.noeud = noeud;
         this.estEntrepot = estEntrepot;
+    }
+    
+    /**
+     * Constructeur par copie.
+     * @param old 
+     */
+    public LivraisonGraphVertex(LivraisonGraphVertex old){
+        estEntrepot = old.estEntrepot;
+        noeud = new Noeud(old.noeud);
+        entrants = new ArrayList<>();
+        for(Chemin Che : old.entrants){
+            entrants.add(new Chemin(Che));
+        }
+        sortants = new ArrayList<>();
+        for(Chemin Chs : old.sortants){
+            sortants.add(new Chemin(Chs));
+        }
     }
     
     public int getId() {
