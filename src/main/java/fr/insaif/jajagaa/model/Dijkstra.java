@@ -46,7 +46,7 @@ public class Dijkstra {
                 }
                 Chemin chemin = new Chemin(troncons, depart, arrivee);
                 depart.getSortants().add(chemin);
-                arrivee.getEntrants().add(chemin);
+                //arrivee.getEntrants().add(chemin);
                 return chemin;
             }
             for (Troncon t : noeud.getSortants()) {
