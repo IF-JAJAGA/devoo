@@ -122,6 +122,7 @@ public class Fenetre extends JFrame {
         addListeners();
         setSize(new Dimension(1366,768));
         importLivr.setEnabled(false);
+        imprimer.setEnabled(false);
     }
     
     private void addListeners(){
@@ -231,6 +232,7 @@ public class Fenetre extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 calculerTournee();
+                imprimer.setEnabled(true);
             }
         });
         
