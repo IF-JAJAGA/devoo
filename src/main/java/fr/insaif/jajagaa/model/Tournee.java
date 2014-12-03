@@ -165,7 +165,7 @@ public class Tournee {
      * @param TIME_LIMIT_MS Temps limite donné pour résoudre le problème
      * @return L'état de réponse (trouvé, pas trouvé, optimal, etc.) après le temps utilisé
      */
-    public SolutionState solve(int TIME_LIMIT_MS) {
+    public SolutionState solve(int TIME_LIMIT_MS) throws Exception {
         SolutionState state = this.tsp.solve(TIME_LIMIT_MS, this.graph.getNbVertices() * this.graph.getMaxArcCost() + 1);
         if (state == SolutionState.OPTIMAL_SOLUTION_FOUND || state == SolutionState.SOLUTION_FOUND) {
             this.getCheminsResultats().clear();
@@ -213,7 +213,7 @@ public class Tournee {
      * TODO
      * @param vertices
      */
-    protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) {
+    protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) throws Exception{
         int i = 0;
         int tempsSecondes;
         LivraisonGraphVertex depart, arrivee;
@@ -244,6 +244,9 @@ public class Tournee {
                     nombreLivraisons = plage.getLivraisons().size();   
                 }
                 heureDebut.add(Calendar.SECOND, tempsSecondes);
+                if (heureDebut.getTime().after(plage.getHeureFin())){
+                    throw new Exception();
+                }
                 livraisonDest.setHeureLivraison(heureDebut.getTime());
                 heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
                 nombreLivraisons--;

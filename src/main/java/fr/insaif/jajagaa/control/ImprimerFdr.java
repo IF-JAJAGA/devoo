@@ -88,15 +88,15 @@ public class ImprimerFdr {
 	 * 
 	 * @param args
          */
-	public static void main(String[] args) throws ParseurException{
-		ZoneGeographique zone = Parseur.lirePlan("./src/main/resources/plan10x10.xml");
-		List<PlageHoraire> plage = Parseur.lireLivraison("./src/main/resources/livraison10x10-1.xml", zone);
-		Tournee tournee = new Tournee(zone);
-		tournee.setPlagesHoraire(plage);
-		tournee.solve(1000);
-                zone.setTournee(tournee);
-		ecrireFichier(zone);
-	}
+//	public static void main(String[] args) throws ParseurException{
+//		ZoneGeographique zone = Parseur.lirePlan("./src/main/resources/plan10x10.xml");
+//		List<PlageHoraire> plage = Parseur.lireLivraison("./src/main/resources/livraison10x10-1.xml", zone);
+//		Tournee tournee = new Tournee(zone);
+//		tournee.setPlagesHoraire(plage);
+//		tournee.solve(1000);
+//                zone.setTournee(tournee);
+//		ecrireFichier(zone);
+//	}
 
 	/**
 	 * 
