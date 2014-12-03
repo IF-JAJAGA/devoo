@@ -35,21 +35,25 @@ public class ZoneGeographique {
      * @param zone 
      */
     public ZoneGeographique(ZoneGeographique zone) {
-        noeuds = new ArrayList<>();
-        for(Noeud n : zone.noeuds){
-            noeuds.add(new Noeud(n));
-        }
         entrepot = (zone.entrepot==null) ? null : new Noeud(zone.entrepot);
+        noeuds = new ArrayList<>();
         for (Noeud n : zone.noeuds){
             if (n instanceof Noeud){
                 noeuds.add(n);
             }
             else if (n instanceof Livraison){
-                noeuds.add(n);
+                noeuds.add((Livraison)n);
             }
         }
+        tournee = new Tournee(zone, this);
     }
     
+    public Noeud getNoeudById(int id){
+        for(Noeud n : noeuds){
+            if(n.getId() == id) return n;
+        }
+        return null;
+    }
     
 
     /**

@@ -71,7 +71,7 @@ public class LivraisonGraph implements Graph {
         int nbNoeuds = this.getNoeuds().size();
         for (int i=0; i<nbNoeuds; i++) {
             LivraisonGraphVertex noeud = this.getNoeuds().get(i);
-            this.idToIndex.put(noeud.getId(), i);
+            this.idToIndex.put(noeud.getIdNoeud(), i);
             for (Chemin chemin : noeud.getSortants()) {
                 int cost = chemin.getCost();
                 this.maxArcCost = cost > this.maxArcCost ? cost : this.maxArcCost;
@@ -132,7 +132,7 @@ public class LivraisonGraph implements Graph {
         int size = sortants.size();
         int succ[] = new int[size];
         for (int k = 0; k < size; ++k) {
-            int id = sortants.get(k).getDestination().getId();
+            int id = sortants.get(k).getDestination().getIdNoeud();
             succ[k] = this.idToIndex.get(id);
         }
         return succ;

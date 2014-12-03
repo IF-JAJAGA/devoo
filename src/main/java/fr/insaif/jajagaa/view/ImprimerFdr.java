@@ -31,7 +31,8 @@ public class ImprimerFdr {
 	 * Méthode permettant de générer un fichier .txt qui va servir lors de l'impression de la feuille de route
 	 * @param tournee
 	 */
-	public static void ecrireFichierTri(Tournee tournee){
+	public static void ecrireFichierTri(ZoneGeographique zone){
+                Tournee tournee = zone.getTournee();
 		//TODO nom fichier
 		String nomFichier = "./src/test/resources/feuilleDeRoute_.txt";
 		BufferedWriter fichier = null;
@@ -43,7 +44,7 @@ public class ImprimerFdr {
 //			fichier.write("---------------------------------------------\n");
 			for (int i=0; i < chemins.size(); i++) {
 				Chemin chemin = chemins.get(i);
-				Livraison destination = (Livraison) chemin.getDestination().getNoeud();
+				Livraison destination = (Livraison) zone.getNoeudById(chemin.getDestination().getIdNoeud());
 				List<Troncon> parcours = chemin.getTroncons();
 				fichier.write("Livraison numero : " + destination.getId() + "\n");
 				fichier.write("\tHeure d'arrivee prevue : " + getHeure(destination.getHeureLivraison()) + "\n");
@@ -106,7 +107,7 @@ public class ImprimerFdr {
 		Tournee tournee = new Tournee(zone);
 		tournee.setPlagesHoraire(plage);
 		tournee.solve(1000);
-		ecrireFichierTri(tournee);
+		ecrireFichierTri(zone);
 	}
 
 	/**

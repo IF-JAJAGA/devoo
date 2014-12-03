@@ -16,18 +16,18 @@ public class LivraisonGraphVertex {
     
     protected boolean estEntrepot = false;
     
-    protected Noeud noeud;
+    protected int idNoeud;
     
     protected List<Chemin> entrants = new ArrayList<>();
     
     protected List<Chemin> sortants = new ArrayList<>();
 
-    public LivraisonGraphVertex(Livraison noeud) {
-        this.noeud = noeud;
+    public LivraisonGraphVertex(int idNoeud) {
+        this.idNoeud = idNoeud;
     }
     
-    public LivraisonGraphVertex(Noeud noeud, boolean estEntrepot) {
-        this.noeud = noeud;
+    public LivraisonGraphVertex(int idNoeud, boolean estEntrepot) {
+        this.idNoeud = idNoeud;
         this.estEntrepot = estEntrepot;
     }
     
@@ -37,7 +37,7 @@ public class LivraisonGraphVertex {
      */
     public LivraisonGraphVertex(LivraisonGraphVertex old){
         estEntrepot = old.estEntrepot;
-        noeud = new Noeud(old.noeud);
+        idNoeud = old.idNoeud;
         entrants = new ArrayList<>();
         for(Chemin Che : old.entrants){
             entrants.add(new Chemin(Che));
@@ -48,8 +48,8 @@ public class LivraisonGraphVertex {
         }
     }
     
-    public int getId() {
-        return this.getNoeud().getId();
+    public int getIdNoeud() {
+        return idNoeud;
     }
 
     public List<Chemin> getEntrants() {
@@ -69,8 +69,4 @@ public class LivraisonGraphVertex {
         }
         return null;
     } 
-
-    public Noeud getNoeud() {
-        return noeud;
-    }
 }

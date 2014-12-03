@@ -95,7 +95,7 @@ public class Tournee {
         List<Chemin> cheminsPossibles = new ArrayList<Chemin>();
         if(plagesHoraire.isEmpty()) return cheminsPossibles;
         
-        LivraisonGraphVertex entrepot = new LivraisonGraphVertex(this.zone.getEntrepot(), true);
+        LivraisonGraphVertex entrepot = new LivraisonGraphVertex(this.zone.getEntrepot().getId(), true);
         Map<Integer, List<LivraisonGraphVertex>> graphVertexPerPlage = new HashMap<Integer, List<LivraisonGraphVertex>>();
         
         int taille = this.plagesHoraire.size();
@@ -104,7 +104,7 @@ public class Tournee {
             List<Livraison> livs = this.plagesHoraire.get(i).getLivraisons();
             int nbLivraisons = livs.size();
             for(int j=0; j<nbLivraisons; j++) {
-                graphVertexPerPlage.get(i).add(new LivraisonGraphVertex(livs.get(j)));
+                graphVertexPerPlage.get(i).add(new LivraisonGraphVertex(livs.get(j).getId()));
             }
         }
 
@@ -126,7 +126,7 @@ public class Tournee {
                     LivraisonGraphVertex vJ = vertices.get(j);
                     LivraisonGraphVertex vK = vertices.get(k);
                     // On ne crée le chemin que pour deux sommets différents
-                    if (vJ.getId() != vK.getId()) {
+                    if (vJ.getIdNoeud()!= vK.getIdNoeud()) {
                         Chemin plusCourt = Dijkstra.plusCourtChemin(zone, vJ, vK);
                         if (plusCourt != null) {
                             cheminsPossibles.add(plusCourt);
@@ -185,7 +185,7 @@ public class Tournee {
                 // Pour tous les points de livraison suivants, on ajoute à la liste ordonnée en mettant à jour l'horaire
                 for (int i = next[indexEntrepot]; i != indexEntrepot; i = next[i]) {
                     LivraisonGraphVertex currentVertex = vertices.get(i);
-                    Livraison currentLivraison = ((Livraison) currentVertex.getNoeud());
+                    Livraison currentLivraison = ((Livraison) zone.getNoeudById(currentVertex.getIdNoeud()));
 
                     // Recherche de la plage horaire d'une livraison
                     for (PlageHoraire plage : this.getPlagesHoraire()) {
@@ -280,7 +280,7 @@ public class Tournee {
         int i;
         for (i=0; i<cheminsResultats.size();i++) {
             //TODO : réimplémenter méthode TODO noeud !!
-            if (cheminsResultats.get(i).getOrigine().noeud.equals(noeudAvant)){
+            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == noeudAvant.getId()){
                 trouveChemin = true;
                 break;
             }
@@ -288,8 +288,8 @@ public class Tournee {
         if (trouveChemin){
             
             //Création des variables nécessaires
-            LivraisonGraphVertex lgvAvant = new LivraisonGraphVertex(noeudAvant, false);
-            LivraisonGraphVertex lgvMilieu = new LivraisonGraphVertex(noeudMilieu, false);
+            LivraisonGraphVertex lgvAvant = new LivraisonGraphVertex(noeudAvant.getId(), false);
+            LivraisonGraphVertex lgvMilieu = new LivraisonGraphVertex(noeudMilieu.getId(), false);
             LivraisonGraphVertex lgvApres = cheminsResultats.get(i).getDestination();
             //Calculerplus court chemin entre noeud Avant et milieu
             Chemin cheminAvant = Dijkstra.plusCourtChemin(zone, lgvAvant, lgvMilieu);

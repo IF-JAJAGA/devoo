@@ -7,7 +7,6 @@ import fr.insaif.jajagaa.control.Commands.LireLivraisonsCommand;
 import fr.insaif.jajagaa.control.Commands.LirePlanCommand;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Noeud;
-import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 import fr.insaif.jajagaa.view.Fenetre;
 
@@ -42,12 +41,25 @@ public class Controleur {
      */
     protected ZoneGeographique zone;
     
+    /**
+     * Etat de la dernière zone chargée avant de charger les livraisons.
+     */
+    private ZoneGeographique zoneVierge;
     
     /**
      * Permet de pointer sur la commande qui est concernée par l'interface.
      * Ce pointeur change lorsqu'on parcours la liste chainée (undo/redo).
      */
     private ElementListeCourante commandeCourante = new ElementListeCourante();
+
+    public ZoneGeographique getZoneVierge() {
+        return zoneVierge;
+    }
+
+    public void setZoneVierge(ZoneGeographique zoneVierge) {
+        this.zoneVierge = zoneVierge;
+    }
+    
     
     
 
@@ -90,7 +102,7 @@ public class Controleur {
             JOptionPane.showMessageDialog(null, "Impossible d'importer des livraisons sans aucun plan de la ville.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        creationCommande(new ElementListeCourante(new LireLivraisonsCommand(zone, fichierLivraison)));
+        creationCommande(new ElementListeCourante(new LireLivraisonsCommand(fichierLivraison)));
         
         execute();
     }
@@ -115,7 +127,6 @@ public class Controleur {
     public void ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
         System.out.println("ajouterPointLivraison");
         creationCommande(new ElementListeCourante(new AjoutLivraisonCommande(zone, noeudAvant, noeudMilieu)));
-//        zone.getTournee().ajouterPointDeLivraison(noeudMilieu, noeudAvant);
         
         execute();
     }
