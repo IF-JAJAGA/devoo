@@ -352,23 +352,29 @@ public class Tournee {
         return true;
     }
 
-    public Tournee supprimerPointLivraison(Noeud noeudASup) {
-        int trouveChemins = 0;
+    public boolean supprimerPointLivraison(Noeud noeudASup) {
+        boolean trouve = false;
         int i;
         Chemin cheminAvant = null;
         Chemin cheminApres = null;
-        for (i=0; ((i<cheminsResultats.size()) || (trouveChemins==2));i++) {
-            //TODO : réimplémenter méthode TODO noeud !!
-            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == noeudASup.getId()){
-                cheminApres = cheminsResultats.get(i); //TODO Const par copie???
-                trouveChemins++;
+        for (i=0 ; i<cheminsResultats.size() ; i++) {
+            int idNoeudASup = noeudASup.getId();
+            if ((cheminsResultats.get(i).getDestination().getIdNoeud() == idNoeudASup) &&
+                    (cheminsResultats.get(i).getOrigine().getIdNoeud() == idNoeudASup)){
+                trouve = true;
+                break;
             }
-            else if (cheminsResultats.get(i).getDestination().getIdNoeud() == noeudASup.getId()){
-                cheminAvant = cheminsResultats.get(i);//TODO Const par copie???
-                trouveChemins++;
-            }
+  
+//            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == noeudASup.getId()){
+//                cheminApres = cheminsResultats.get(i); //TODO Const par copie???
+//                trouveChemins++;
+//            }
+//            else if (cheminsResultats.get(i).getDestination().getIdNoeud() == noeudASup.getId()){
+//                cheminAvant = cheminsResultats.get(i);//TODO Const par copie???
+//                trouveChemins++;
+//            }
         }
-        if (trouveChemins==2)
+        if (trouve)
         {
             //Création des variables nécessaires
             LivraisonGraphVertex lgvOrigine = cheminAvant.getOrigine();
@@ -377,11 +383,15 @@ public class Tournee {
             
             Chemin chemin = Dijkstra.plusCourtChemin(zone, lgvOrigine, lgvDestination);
             
-            cheminsResultats.remove(cheminAvant);
-            cheminsResultats.remove(cheminApres);
+            System.out.println("Avant cheminsResultats.size()" + cheminsResultats.size());
+            cheminsResultats.remove(i);
+            cheminsResultats.remove(i);
             
             cheminsResultats.add(i, chemin);
+            System.out.println("Après cheminsResultats.size()" + cheminsResultats.size());
+            return true;
         }
-        return this;
+        return false;
+        
     }
 }

@@ -55,9 +55,6 @@ public class Fenetre extends JFrame {
         private VueNoeud vNAAjouter;
         private VueNoeud vNAvant;
         
-        private VueNoeud vnASupprimer;
-        
-        
     private Fenetre(){
     	setVisible(true);
         setTitle("OnlyLyon Livreur");
@@ -133,7 +130,7 @@ public class Fenetre extends JFrame {
 
                 public void componentResized(ComponentEvent arg0) {
                         //Maj de l'endroit de la séparation
-                    split.setDividerLocation(getWidth()-200);
+                    split.setDividerLocation(getWidth()-230);
                 }
 
                 public void componentMoved(ComponentEvent arg0) {}
@@ -360,8 +357,11 @@ public class Fenetre extends JFrame {
      * Met à jour le bouton de suppression de livraison et appelle le calcul de la tournée si on valide la suppression. 
      */
     private void traitementSupprLivraison() {
-        //TODO
-        Controleur.getInstance().supprimerPointLivraison(vnASupprimer.getNoeudModele());
+        VueNoeud vNASupprimer ;
+        if((vNASupprimer=vuePlan.getvNSelectionne())!=null){
+            Controleur.getInstance().supprimerPointLivraison(vNASupprimer.getNoeudModele());
+        }
+            
         
     }
     

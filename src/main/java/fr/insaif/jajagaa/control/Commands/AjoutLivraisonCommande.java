@@ -32,32 +32,6 @@ public class AjoutLivraisonCommande implements Command {
         this.noeudALivrer = noeudALivrer;
     }
     
-//    @Override
-//    public void execute(){
-//        ajoutOk = false;
-//        if (zoneAvant == null){
-//            zoneAvant = new ZoneGeographique(zone);
-//            
-//            System.out.println("noeudAvant : " + noeudAvant + " ; noeudALivrer : " + noeudALivrer);
-//            // TODO changer le 5 en vrai idClient
-//            ajoutOk = zone.getTournee().ajouterPointDeLivraison(noeudALivrer, 5, (Livraison) noeudAvant);
-//
-//            zoneApres = new ZoneGeographique(zone);
-//        }
-//        else{
-//            zone = new ZoneGeographique(zoneApres);
-//        }
-//    }
-//    
-//    @Override
-//    public void undo(){
-//        zone = new ZoneGeographique(zoneAvant);
-//    }
-//    
-//    public ZoneGeographique getZone(){
-//        return zone;
-//    }
-    
     @Override
     public void execute(){
         ajoutOk = false;

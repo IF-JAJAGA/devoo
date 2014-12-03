@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 
@@ -135,7 +134,7 @@ public class ConteneurDroite extends JPanel{
         
         layout.putConstraint(SpringLayout.NORTH, scrollListe, espace, SpringLayout.SOUTH, titre);
         layout.putConstraint(SpringLayout.WEST, scrollListe, 0, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.EAST, scrollListe, 0, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.EAST, scrollListe, -10, SpringLayout.EAST, this);
         layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, textFiDescriptionLivraison);
         
         layout.putConstraint(SpringLayout.NORTH, textFiDescriptionLivraison, -70, SpringLayout.SOUTH, textFiDescriptionLivraison);
@@ -144,10 +143,8 @@ public class ConteneurDroite extends JPanel{
         layout.putConstraint(SpringLayout.SOUTH, textFiDescriptionLivraison, -espace, SpringLayout.NORTH, btnCalculLivraison);
         
         
-        
-        
         layout.putConstraint(SpringLayout.SOUTH, btnCalculLivraison, -espace, SpringLayout.NORTH, btnSupNoeud);
-        layout.putConstraint(SpringLayout.WEST, btnCalculLivraison, espace, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnCalculLivraison, 0, SpringLayout.HORIZONTAL_CENTER, this);
         
         layout.putConstraint(SpringLayout.SOUTH, btnSupNoeud, -espace, SpringLayout.NORTH, btnAddNoeud);
         layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnSupNoeud, 0, SpringLayout.HORIZONTAL_CENTER, this);
