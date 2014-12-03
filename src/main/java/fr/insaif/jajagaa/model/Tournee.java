@@ -234,7 +234,10 @@ public class Tournee {
             	tempsSecondes += troncon.getLongueurMetre()/troncon.getVitesse();
             }
             
-            currentLivraison = (Livraison) zone.getNoeudById(chemin.getOrigine().getIdNoeud());
+            Noeud noeud = zone.getNoeudById(chemin.getOrigine().getIdNoeud());
+            if(noeud.getId() != zone.getEntrepot().getId()){
+                currentLivraison = (Livraison) noeud;
+            }
             //TODO: finir
 //            currentLivraison.setHeureLivraison();
 //            currentTime.add(Calendar.MINUTE, temps);
