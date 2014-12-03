@@ -31,8 +31,6 @@ public class ConteneurDroite extends JPanel{
     private ListNoeuds listeNoeuds;
     private JButton btnAddNoeud;
     private JButton btnSupNoeud;
-    private JTextField saisieTemps;
-    private final JLabel lblTemps = new JLabel("secondes");
     private JButton btnCalculLivraison;
     
     private SpringLayout layout;
@@ -51,10 +49,6 @@ public class ConteneurDroite extends JPanel{
 
     public ListNoeuds getListeNoeuds() {
         return listeNoeuds;
-    }
-
-    public JTextField getSaisieTemps() {
-        return saisieTemps;
     }
 
     public JButton getBtnCalculLivraison() {
@@ -91,7 +85,6 @@ public class ConteneurDroite extends JPanel{
         btnSupNoeud = new JButton(strBtnSupNoeud);
         
         btnCalculLivraison = new JButton("Calculer la tournée");
-        saisieTemps = new JTextField("10");
     }
     
     private void placeComponents(){
@@ -105,8 +98,6 @@ public class ConteneurDroite extends JPanel{
         add(btnAddNoeud);
         add(btnSupNoeud);
         
-        add(saisieTemps);
-        add(lblTemps);
         add(btnCalculLivraison);
         
         final int espace = 5;
@@ -116,14 +107,8 @@ public class ConteneurDroite extends JPanel{
         layout.putConstraint(SpringLayout.NORTH, scrollListe, espace, SpringLayout.SOUTH, titre);
         layout.putConstraint(SpringLayout.WEST, scrollListe, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, scrollListe, 0, SpringLayout.EAST, this);
-        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, saisieTemps);
+        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, btnSupNoeud);
         
-        layout.putConstraint(SpringLayout.SOUTH, saisieTemps, -espace, SpringLayout.NORTH, btnCalculLivraison);
-        layout.putConstraint(SpringLayout.WEST, saisieTemps, 0, SpringLayout.WEST, titre);
-        layout.putConstraint(SpringLayout.EAST, saisieTemps, -espace, SpringLayout.WEST, lblTemps);
-        
-        layout.putConstraint(SpringLayout.VERTICAL_CENTER, lblTemps, 0, SpringLayout.VERTICAL_CENTER, saisieTemps);
-        layout.putConstraint(SpringLayout.EAST, lblTemps, 0, SpringLayout.EAST, btnCalculLivraison);
         
         layout.putConstraint(SpringLayout.SOUTH, btnSupNoeud, -espace, SpringLayout.NORTH, btnAddNoeud);
         layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnSupNoeud, 0, SpringLayout.HORIZONTAL_CENTER, this);

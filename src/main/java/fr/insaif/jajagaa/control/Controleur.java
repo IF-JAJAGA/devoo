@@ -22,6 +22,8 @@ import javax.swing.JOptionPane;
 public class Controleur {
     private static Controleur controleur;
     
+    private final int timeCalculMs = 20000;
+    
     /**
      * Singleton pour la création d'un Controleur
      * @return instance du controleur si existant sinon en crée un nouveau
@@ -112,8 +114,8 @@ public class Controleur {
      * Permet de créer la commande pour calculer la tournée.
      * @param time 
      */
-    public void CalculerTournee(int time) {
-        creationCommande(new ElementListeCourante(new CalculerTourneeCommand(zone.getTournee(), time)));
+    public void CalculerTournee() {
+        creationCommande(new ElementListeCourante(new CalculerTourneeCommand(zone.getTournee(), timeCalculMs)));
         
         execute();
     }
@@ -265,7 +267,7 @@ public class Controleur {
     /**
      * Classe qui lance l'impresion de la feuille de route pour une tournnée
      */
-    public boolean lancerImpresion() {
+    public boolean lancerImpression() {
     	return ImprimerFdr.ecrireFichier(zone);
     }
 }

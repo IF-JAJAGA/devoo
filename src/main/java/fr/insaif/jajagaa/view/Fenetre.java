@@ -45,7 +45,7 @@ public class Fenetre extends JFrame {
         //Barre de menu
         private final JMenuBar barreMenu;
         private final JMenu fichier, apparence, actions;
-        JMenuItem importPlan, importLivr, annuler, refaire, quit;
+        JMenuItem importPlan, importLivr, imprimer, annuler, refaire, quit;
         
         //On crée un nouveau sélecteur de fichier
         final JFileChooser fc = new JFileChooser();
@@ -91,6 +91,11 @@ public class Fenetre extends JFrame {
         importLivr.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK));
         importLivr.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
         fichier.add(importLivr);
+        
+        imprimer = new JMenuItem("Imprimer la tournée", KeyEvent.VK_T);
+        imprimer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+        imprimer.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+        fichier.add(imprimer);
         
         quit = new JMenuItem("Quitter", KeyEvent.VK_T);
         quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
@@ -148,6 +153,20 @@ public class Fenetre extends JFrame {
             
         });
         
+        imprimer.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if(Controleur.getInstance().lancerImpression()){
+                    JOptionPane.showMessageDialog(null, "L'impression a été effectuée avec succès.", "Impression terminée", JOptionPane.INFORMATION_MESSAGE);
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "Il y a eu un problème lors de l'impression.", "Erreur", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+        });
+        
         annuler.addActionListener(new ActionListener() {
 
             @Override
@@ -185,6 +204,14 @@ public class Fenetre extends JFrame {
             }
         });
         
+        conteneurDroite.getBtnAddNoeud().addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                calculerTournee();
+            }
+        });
+        
         //Ajout d'un point de livraison.
         conteneurDroite.getBtnAddNoeud().addMouseListener(new MouseAdapter() {
 
@@ -202,26 +229,6 @@ public class Fenetre extends JFrame {
             public void mouseClicked(MouseEvent me){
                 traitementSupprLivraison();
             }
-        });
-        
-        conteneurDroite.getBtnCalculLivraison().addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                calculerLivraison(conteneurDroite.getSaisieTemps().getText());
-            }
-
-        });
-        
-        conteneurDroite.getSaisieTemps().addKeyListener(new KeyAdapter() {
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    calculerLivraison(conteneurDroite.getSaisieTemps().getText());
-                }
-            }
-            
         });
         
         vuePlan.addMouseListener(new MouseAdapter() {
@@ -270,11 +277,9 @@ public class Fenetre extends JFrame {
      * 
      * @param time 
      */
-    private void calculerLivraison(String time){
-        time = time.replace(",", ".");
+    private void calculerTournee(){
         try{
-            float timeFloat = Float.parseFloat(time);
-            Controleur.getInstance().CalculerTournee(((int) (1000*timeFloat)));
+            Controleur.getInstance().CalculerTournee();
         }catch (NumberFormatException | NullPointerException ne){
             JOptionPane.showMessageDialog(null, "Veuillez donner comme temps un nombre décimal ou entier.", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
