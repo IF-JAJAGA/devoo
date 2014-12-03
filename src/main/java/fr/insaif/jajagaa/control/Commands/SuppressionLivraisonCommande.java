@@ -4,7 +4,6 @@
  */
 package fr.insaif.jajagaa.control.Commands;
 
-import fr.insaif.jajagaa.control.Commands.Command;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 

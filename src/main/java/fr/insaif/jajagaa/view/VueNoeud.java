@@ -18,7 +18,7 @@ public class VueNoeud {
     public static final int DIAMETRE_LIVRAISON = 20;
     //protected static int conv;
     
-    protected enum Etat{
+    public enum Etat{
         RIEN,
         LIVRAISON,
         RETARD
