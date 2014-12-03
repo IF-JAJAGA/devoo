@@ -37,13 +37,13 @@ public class AjoutLivraisonCommande implements Command {
             zoneApres = new ZoneGeographique(zone);
         }
         else{
-            zone = zoneApres;
+            zone = new ZoneGeographique(zoneApres);
         }
     }
     
     @Override
     public void undo(){
-        zone = zoneAvant;
+        zone = new ZoneGeographique(zoneAvant);
     }
     
     public ZoneGeographique getZone(){
