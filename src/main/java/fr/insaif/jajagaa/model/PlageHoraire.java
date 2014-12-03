@@ -2,7 +2,6 @@ package fr.insaif.jajagaa.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,7 +82,8 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
      * Modifie l'heure de début de la livraison
      * @param heureDebut La nouvelle heure de début sous forme de chaîne
      */
-    public void setHeureDebut(String heureDebut) {
+    @SuppressWarnings("deprecation")
+	public void setHeureDebut(String heureDebut) {
         try {
             this.heureDebut = this.simpleDateFormat.parse(heureDebut);
             if(heureDebut.startsWith("12")){
@@ -113,7 +113,8 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
      * Modifie l'heure de fin de la livraison
      * @param heureFin La nouvelle heure de fin sous forme de chaîne
      */
-    public void setHeureFin(String heureFin) {
+    @SuppressWarnings("deprecation")
+	public void setHeureFin(String heureFin) {
         try {
             this.heureFin = this.simpleDateFormat.parse(heureFin);
             if(heureFin.startsWith("12")){

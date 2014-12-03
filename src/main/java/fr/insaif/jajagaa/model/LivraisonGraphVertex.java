@@ -17,9 +17,7 @@ public class LivraisonGraphVertex {
     protected boolean estEntrepot = false;
     
     protected int idNoeud;
-    
-    protected List<Chemin> entrants = new ArrayList<>();
-    
+
     protected List<Chemin> sortants = new ArrayList<>();
 
     public LivraisonGraphVertex(int idNoeud) {
@@ -38,10 +36,6 @@ public class LivraisonGraphVertex {
     public LivraisonGraphVertex(LivraisonGraphVertex old){
         estEntrepot = old.estEntrepot;
         idNoeud = old.idNoeud;
-        entrants = new ArrayList<>();
-        for(Chemin Che : old.entrants){
-            entrants.add(new Chemin(Che));
-        }
         sortants = new ArrayList<>();
         for(Chemin Chs : old.sortants){
             sortants.add(new Chemin(Chs));
@@ -50,10 +44,6 @@ public class LivraisonGraphVertex {
     
     public int getIdNoeud() {
         return idNoeud;
-    }
-
-    public List<Chemin> getEntrants() {
-        return entrants;
     }
 
     public List<Chemin> getSortants() {

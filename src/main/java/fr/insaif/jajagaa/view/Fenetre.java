@@ -1,19 +1,16 @@
 package fr.insaif.jajagaa.view;
 
 
-import fr.insaif.jajagaa.control.Controleur;
-import fr.insaif.jajagaa.model.Livraison;
-import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,6 +21,10 @@ import javax.swing.JSplitPane;
 import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import fr.insaif.jajagaa.control.Controleur;
+import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
+import fr.insaif.jajagaa.model.Livraison;
 
 /**
  * Classe qui fait l'interface avec le controleur et qui implémente 

@@ -27,18 +27,20 @@ public class SuppressionLivraisonCommande implements Command {
     @Override
     public void execute(){
         if (zoneAvant == null){
-            zoneAvant = zone;
+            zoneAvant = new ZoneGeographique(zone);
+            
             zone.setTournee(zone.getTournee().supprimerPointLivraison(noeudASup));
-            zoneApres = zone;
+            
+            zoneApres = new ZoneGeographique(zone);
         }
         else{
-            zone = zoneApres;
+            zone = new ZoneGeographique(zoneApres);
         }
     }
     
     @Override
     public void undo(){
-        zone = zoneAvant;
+        zone = new ZoneGeographique(zoneAvant);
     }
     
     public ZoneGeographique getZone(){

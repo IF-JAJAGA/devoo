@@ -103,8 +103,8 @@ public class Tournee {
             graphVertexPerPlage.put(i, new ArrayList<LivraisonGraphVertex>());
             List<Livraison> livs = this.plagesHoraire.get(i).getLivraisons();
             int nbLivraisons = livs.size();
-            for(int j=0; j<nbLivraisons; j++) {
-                graphVertexPerPlage.get(i).add(new LivraisonGraphVertex(livs.get(j).getId()));
+            for (Livraison liv : livs) {
+                graphVertexPerPlage.get(i).add(new LivraisonGraphVertex(liv.getId(), false));
             }
         }
 
@@ -122,12 +122,11 @@ public class Tournee {
             List<LivraisonGraphVertex> vertices = graphVertexPerPlage.get(i);
             int size = vertices.size();
             for (int j = 0; j < size; j++) {
-                for (int k = 0; k < size; k++) {
+                for (LivraisonGraphVertex vertice : vertices) {
                     LivraisonGraphVertex vJ = vertices.get(j);
-                    LivraisonGraphVertex vK = vertices.get(k);
                     // On ne crée le chemin que pour deux sommets différents
-                    if (vJ.getIdNoeud()!= vK.getIdNoeud()) {
-                        Chemin plusCourt = Dijkstra.plusCourtChemin(zone, vJ, vK);
+                    if (vJ.getIdNoeud()!= vertice.getIdNoeud()) {
+                        Chemin plusCourt = Dijkstra.plusCourtChemin(zone, vJ, vertice);
                         if (plusCourt != null) {
                             cheminsPossibles.add(plusCourt);
                         }
@@ -200,10 +199,6 @@ public class Tournee {
                         }
                     }
 
-                    // Mise à jour de l'heure de livraison
-                    currentLivraison.setHeureLivraison(currentTime.getTime());
-                    currentTime.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
-
                     // Ajout de la Livraison à la liste ordonnée
                     orderedVertices.add(currentVertex);
                 }
@@ -220,14 +215,30 @@ public class Tournee {
      */
     protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) {
         int i = 0;
+        float tempsSecondes;
         LivraisonGraphVertex depart, arrivee;
+        List<Troncon> listTroncons;
+        Livraison currentLivraison;
         while(i < (vertices.size()-1)) {
             depart = vertices.get(i);
             arrivee = vertices.get(i+1);
-            
+
             Chemin chemin = depart.getSortantByDest(arrivee);
             if(chemin == null) throw new NullPointerException("Noeud sortant non trouvé");
             this.addCheminResultat(chemin);
+            
+            //TODO faire ici les horaires
+            listTroncons = chemin.getTroncons();
+            tempsSecondes = Livraison.TPS_LIVRAISON_MIN;
+            for(Troncon troncon : listTroncons) {
+            	tempsSecondes += troncon.getLongueurMetre()/troncon.getVitesse();
+            }
+            
+            currentLivraison = (Livraison) zone.getNoeudById(chemin.getOrigine().getIdNoeud());
+            //TODO: finir
+//            currentLivraison.setHeureLivraison();
+//            currentTime.add(Calendar.MINUTE, temps);
+            
             
             i++;
         }
@@ -270,17 +281,32 @@ public class Tournee {
 
     /**
      * Ajoute un point de livraison dans la tournée, en recalculant localement le meilleur chemin et les horaires
-     * @param noeudMilieu noeud à ajouter à la tournée
-     * @param noeudAvant noeud après lequel on doit ajouter pointMilieu
+     * @param noeudALivrer noeud à ajouter à la tournée
+     * @param livraisonAvant livraison après laquelle on doit ajouter noeudALivrer
      * @return la tournée une fois qu'elle a été modifiée.
      */
-    public Tournee ajouterPointDeLivraison(Noeud noeudMilieu, Noeud noeudAvant){
+    public Tournee ajouterPointDeLivraison(Noeud noeudALivrer, int idClient, Livraison livraisonAvant) {
+        // Recherche de la plage horaire de precedent
+        PlageHoraire plageInsertion = null;
+        int maxId = 0;
+        for (PlageHoraire plage : this.getPlagesHoraire()) {
+            for (Livraison livraison : plage.getLivraisons()) {
+                if (livraison == livraisonAvant) {
+                    plageInsertion = plage;
+                }
+                maxId = livraison.getId() > maxId ? livraison.getId() : maxId;
+            }
+        }
+
+        this.zone.modifierNoeudEnLivraison(noeudALivrer.getId(), new Livraison(noeudALivrer, ++maxId, idClient));
+        Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudId(noeudALivrer.getId());
+
+        /*
         System.out.println("début de ajouterPointDeLivraison");
         boolean trouveChemin = false;
         int i;
         for (i=0; i<cheminsResultats.size();i++) {
-            //TODO : réimplémenter méthode TODO noeud !!
-            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == noeudAvant.getId()){
+            if (cheminsResultats.get(i).getOrigine().noeud.equals(livraisonAvant)){
                 trouveChemin = true;
                 break;
             }
@@ -288,8 +314,8 @@ public class Tournee {
         if (trouveChemin){
             
             //Création des variables nécessaires
-            LivraisonGraphVertex lgvAvant = new LivraisonGraphVertex(noeudAvant.getId(), false);
-            LivraisonGraphVertex lgvMilieu = new LivraisonGraphVertex(noeudMilieu.getId(), false);
+            LivraisonGraphVertex lgvAvant = new LivraisonGraphVertex(livraisonAvant, false);
+            LivraisonGraphVertex lgvMilieu = new LivraisonGraphVertex(noeudALivrer, false);
             LivraisonGraphVertex lgvApres = cheminsResultats.get(i).getDestination();
             //Calculerplus court chemin entre noeud Avant et milieu
             Chemin cheminAvant = Dijkstra.plusCourtChemin(zone, lgvAvant, lgvMilieu);
@@ -301,24 +327,53 @@ public class Tournee {
             cheminsResultats.add(i, cheminAvant);
             cheminsResultats.add(i+1, cheminAprès);
             
-            /**
+             **
              * TODO (Gustave ??): recalculer les horaires des livraisons. 
              * GROS PAVé pour expliquer pourquoi j'ai pas réussi, et ce qu'il faut faire
              * En fait la j'ai modifié la tournée et maintenant qu'on a ajouté la livraison,
              * il faudrait savoir à quelle heure on l'a ajoutée, et s'il le faut, recalculer
              * les heures de toutes les livraisons et dire celles qu'on va devoir virer !
-             */ 
+             *
         }
         else {
             //Si on a pas trouvé le chemin, on renvoie une tournee nulle
             //Il faut réagir à cette tournée nulle en disant qu'on a pas trouvé le chemin mais ne pas changer l'affichage.
             return null;
         }
+                */
         return this;
     }
 
     public Tournee supprimerPointLivraison(Noeud noeudASup) {
-        
+        int trouveChemins = 0;
+        int i;
+        Chemin cheminAvant = null;
+        Chemin cheminApres = null;
+        for (i=0; ((i<cheminsResultats.size()) || (trouveChemins==2));i++) {
+            //TODO : réimplémenter méthode TODO noeud !!
+            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == noeudASup.getId()){
+                cheminApres = cheminsResultats.get(i); //TODO Const par copie???
+                trouveChemins++;
+            }
+            else if (cheminsResultats.get(i).getDestination().getIdNoeud() == noeudASup.getId()){
+                cheminAvant = cheminsResultats.get(i);//TODO Const par copie???
+                trouveChemins++;
+            }
+        }
+        if (trouveChemins==2)
+        {
+            //Création des variables nécessaires
+            LivraisonGraphVertex lgvOrigine = cheminAvant.getOrigine();
+            LivraisonGraphVertex lgvDestination = cheminApres.getDestination();
+            
+            
+            Chemin chemin = Dijkstra.plusCourtChemin(zone, lgvOrigine, lgvDestination);
+            
+            cheminsResultats.remove(cheminAvant);
+            cheminsResultats.remove(cheminApres);
+            
+            cheminsResultats.add(i, chemin);
+        }
         return this;
     }
 }

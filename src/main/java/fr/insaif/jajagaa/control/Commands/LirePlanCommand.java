@@ -35,6 +35,7 @@ public class LirePlanCommand implements Command{
     public void execute() {
         if(zoneAvant == null){
             zoneAvant = zone;
+            
             try { zone = Parseur.lirePlan(fichierPlan); }
             catch ( ParseurException pe) { }
             zoneApres = zone;
@@ -42,14 +43,14 @@ public class LirePlanCommand implements Command{
 
         }
         else {
-            zone = zoneApres;
+            zone = new ZoneGeographique(zoneApres);
         }
         
     }
 
     @Override
     public void undo() {
-        zone = zoneAvant;
+        zone = (zoneAvant==null) ? null : new ZoneGeographique(zoneAvant);
     }
 
     public ZoneGeographique getZone() {
