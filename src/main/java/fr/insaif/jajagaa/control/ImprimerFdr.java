@@ -38,7 +38,6 @@ public class ImprimerFdr {
 			fichier = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(nomFichier), "utf-8"));
 			List<Chemin> chemins = tournee.getCheminsResultats();
 			//TODO: ID fdr
-                        System.out.println("taille de chemins : " + chemins.size());
 			for (int i=0; i < chemins.size(); i++) {
 				Chemin chemin = chemins.get(i);
 				Livraison destination = (Livraison) zone.getNoeudById(chemin.getDestination().getIdNoeud());
