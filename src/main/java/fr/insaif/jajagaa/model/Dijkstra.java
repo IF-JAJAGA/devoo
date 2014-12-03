@@ -20,8 +20,8 @@ public class Dijkstra {
         final Map<Noeud, Float> distances = new HashMap<Noeud, Float>();
         float maxArcCost = getMaxArcCost(zone);
 
-        Noeud arriveeNoeud = arrivee.getNoeud();
-        Noeud departNoeud = depart.getNoeud();
+        Noeud arriveeNoeud = zone.getNoeudById(arrivee.getIdNoeud());
+        Noeud departNoeud = zone.getNoeudById(depart.getIdNoeud());
         
         for (Noeud noeud : zone.getNoeuds()) {
             distances.put(noeud, maxArcCost + 1f);

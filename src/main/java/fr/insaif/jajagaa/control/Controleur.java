@@ -5,9 +5,9 @@ import fr.insaif.jajagaa.control.Commands.CalculerTourneeCommand;
 import fr.insaif.jajagaa.control.Commands.Command;
 import fr.insaif.jajagaa.control.Commands.LireLivraisonsCommand;
 import fr.insaif.jajagaa.control.Commands.LirePlanCommand;
+import fr.insaif.jajagaa.control.Commands.SuppressionLivraisonCommande;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Noeud;
-import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 import fr.insaif.jajagaa.view.Fenetre;
 
@@ -21,6 +21,8 @@ import javax.swing.JOptionPane;
  */
 public class Controleur {
     private static Controleur controleur;
+    
+    private final int timeCalculMs = 20000;
     
     /**
      * Singleton pour la création d'un Controleur
@@ -42,12 +44,25 @@ public class Controleur {
      */
     protected ZoneGeographique zone;
     
+    /**
+     * Etat de la dernière zone chargée avant de charger les livraisons.
+     */
+    private ZoneGeographique zoneVierge;
     
     /**
      * Permet de pointer sur la commande qui est concernée par l'interface.
      * Ce pointeur change lorsqu'on parcours la liste chainée (undo/redo).
      */
     private ElementListeCourante commandeCourante = new ElementListeCourante();
+
+    public ZoneGeographique getZoneVierge() {
+        return zoneVierge;
+    }
+
+    public void setZoneVierge(ZoneGeographique zoneVierge) {
+        this.zoneVierge = zoneVierge;
+    }
+    
     
     
 
@@ -99,8 +114,8 @@ public class Controleur {
      * Permet de créer la commande pour calculer la tournée.
      * @param time 
      */
-    public void CalculerTournee(int time) {
-        creationCommande(new ElementListeCourante(new CalculerTourneeCommand(zone.getTournee(), time)));
+    public void CalculerTournee() {
+        creationCommande(new ElementListeCourante(new CalculerTourneeCommand(zone.getTournee(), timeCalculMs)));
         
         execute();
     }
@@ -115,7 +130,13 @@ public class Controleur {
     public void ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
         System.out.println("ajouterPointLivraison");
         creationCommande(new ElementListeCourante(new AjoutLivraisonCommande(zone, noeudAvant, noeudMilieu)));
-//        zone.getTournee().ajouterPointDeLivraison(noeudMilieu, noeudAvant);
+        
+        execute();
+    }
+    
+    public void supprimerPointLivraison(Noeud noeudASup) {
+        System.out.println("Suppression Point Livraison");
+        creationCommande(new ElementListeCourante(new SuppressionLivraisonCommande(zone,noeudASup)));
         
         execute();
     }
@@ -138,6 +159,10 @@ public class Controleur {
         }
         else if (commande instanceof  AjoutLivraisonCommande){
             zone = ((AjoutLivraisonCommande)commande).getZone();
+            Fenetre.getInstance().actualiserPlan();
+        }
+        else if(commande instanceof SuppressionLivraisonCommande){
+            zone = ((SuppressionLivraisonCommande)commande).getZone();
             Fenetre.getInstance().actualiserPlan();
         }
         else if(commande instanceof CalculerTourneeCommand){
@@ -167,7 +192,11 @@ public class Controleur {
             Fenetre.getInstance().actualiserPlan();
         }
         else if(commande instanceof AjoutLivraisonCommande){
-            zone = ((LireLivraisonsCommand)commande).getZone();
+            zone = ((AjoutLivraisonCommande)commande).getZone();
+            Fenetre.getInstance().actualiserPlan();            
+        }
+        else if(commande instanceof SuppressionLivraisonCommande){
+            zone = ((SuppressionLivraisonCommande)commande).getZone();
             Fenetre.getInstance().actualiserPlan();            
         }
         else if(commande instanceof CalculerTourneeCommand){
@@ -213,6 +242,7 @@ public class Controleur {
     public List<PlageHoraire> getPlagesHoraire() {
         return zone.getTournee().getPlagesHoraire();
     }
+
     
     /**
      * Classe permettant d'implémenter une liste chainée pour circuler entre les commandes.
@@ -232,5 +262,12 @@ public class Controleur {
             previous = null;
             next = null;
         }
+    }
+    
+    /**
+     * Classe qui lance l'impresion de la feuille de route pour une tournnée
+     */
+    public boolean lancerImpression() {
+    	return ImprimerFdr.ecrireFichier(zone);
     }
 }

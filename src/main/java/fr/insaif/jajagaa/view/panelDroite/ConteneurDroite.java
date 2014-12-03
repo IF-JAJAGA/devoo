@@ -29,10 +29,9 @@ public class ConteneurDroite extends JPanel{
     
     private JLabel titre;
     private ListNoeuds listeNoeuds;
+    private JTextField textFiDescriptionLivraison;
     private JButton btnAddNoeud;
     private JButton btnSupNoeud;
-    private JTextField saisieTemps;
-    private final JLabel lblTemps = new JLabel("secondes");
     private JButton btnCalculLivraison;
     
     private SpringLayout layout;
@@ -44,13 +43,13 @@ public class ConteneurDroite extends JPanel{
     public JButton getBtnAddNoeud() {
         return btnAddNoeud;
     }
+    
+     public JButton getBtnSupNoeud() {
+        return btnSupNoeud;
+    }    
 
     public ListNoeuds getListeNoeuds() {
         return listeNoeuds;
-    }
-
-    public JTextField getSaisieTemps() {
-        return saisieTemps;
     }
 
     public JButton getBtnCalculLivraison() {
@@ -83,11 +82,13 @@ public class ConteneurDroite extends JPanel{
         
         listeNoeuds = new ListNoeuds();
 
+        textFiDescriptionLivraison = new JTextField();
+        textFiDescriptionLivraison.setEditable(false);
+        
         btnAddNoeud = new JButton(strBtnAddNoeud0);
         btnSupNoeud = new JButton(strBtnSupNoeud);
         
         btnCalculLivraison = new JButton("Calculer la tournée");
-        saisieTemps = new JTextField("10");
     }
     
     private void placeComponents(){
@@ -98,11 +99,10 @@ public class ConteneurDroite extends JPanel{
         add(listeNoeuds);
         JScrollPane scrollListe = new JScrollPane(listeNoeuds);
         add(scrollListe);  
+        add(textFiDescriptionLivraison);
         add(btnAddNoeud);
         add(btnSupNoeud);
         
-        add(saisieTemps);
-        add(lblTemps);
         add(btnCalculLivraison);
         
         final int espace = 5;
@@ -112,14 +112,13 @@ public class ConteneurDroite extends JPanel{
         layout.putConstraint(SpringLayout.NORTH, scrollListe, espace, SpringLayout.SOUTH, titre);
         layout.putConstraint(SpringLayout.WEST, scrollListe, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, scrollListe, 0, SpringLayout.EAST, this);
-        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, saisieTemps);
+        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, textFiDescriptionLivraison);
         
-        layout.putConstraint(SpringLayout.SOUTH, saisieTemps, -espace, SpringLayout.NORTH, btnCalculLivraison);
-        layout.putConstraint(SpringLayout.WEST, saisieTemps, 0, SpringLayout.WEST, titre);
-        layout.putConstraint(SpringLayout.EAST, saisieTemps, -espace, SpringLayout.WEST, lblTemps);
+        layout.putConstraint(SpringLayout.NORTH, textFiDescriptionLivraison, -50, SpringLayout.SOUTH, textFiDescriptionLivraison);
+        layout.putConstraint(SpringLayout.WEST, textFiDescriptionLivraison, 0, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.EAST, textFiDescriptionLivraison, 0, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.SOUTH, textFiDescriptionLivraison, -espace, SpringLayout.NORTH, btnSupNoeud);
         
-        layout.putConstraint(SpringLayout.VERTICAL_CENTER, lblTemps, 0, SpringLayout.VERTICAL_CENTER, saisieTemps);
-        layout.putConstraint(SpringLayout.EAST, lblTemps, 0, SpringLayout.EAST, btnCalculLivraison);
         
         layout.putConstraint(SpringLayout.SOUTH, btnSupNoeud, -espace, SpringLayout.NORTH, btnAddNoeud);
         layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnSupNoeud, 0, SpringLayout.HORIZONTAL_CENTER, this);

@@ -1,4 +1,4 @@
-package fr.insaif.jajagaa.view;
+package fr.insaif.jajagaa.control;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -8,8 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import fr.insaif.jajagaa.control.Parseur;
-import fr.insaif.jajagaa.control.ParseurException;
 import fr.insaif.jajagaa.model.Chemin;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.PlageHoraire;
@@ -31,7 +29,8 @@ public class ImprimerFdr {
 	 * Méthode permettant de générer un fichier .txt qui va servir lors de l'impression de la feuille de route
 	 * @param tournee
 	 */
-	public static void ecrireFichierTri(Tournee tournee){
+	public static boolean ecrireFichier(ZoneGeographique zone){
+                Tournee tournee = zone.getTournee();
 		//TODO nom fichier
 		String nomFichier = "./src/test/resources/feuilleDeRoute_.txt";
 		BufferedWriter fichier = null;
@@ -43,7 +42,7 @@ public class ImprimerFdr {
 //			fichier.write("---------------------------------------------\n");
 			for (int i=0; i < chemins.size(); i++) {
 				Chemin chemin = chemins.get(i);
-				Livraison destination = (Livraison) chemin.getDestination().getNoeud();
+				Livraison destination = (Livraison) zone.getNoeudById(chemin.getDestination().getIdNoeud());
 				List<Troncon> parcours = chemin.getTroncons();
 				fichier.write("Livraison numero : " + destination.getId() + "\n");
 				fichier.write("\tHeure d'arrivee prevue : " + getHeure(destination.getHeureLivraison()) + "\n");
@@ -84,8 +83,10 @@ public class ImprimerFdr {
 			}
 			fichier.flush();
 			fichier.close();
+			return true;
 		} catch ( IOException ioe) {
 			ioe.printStackTrace();
+			return false;
 		}
 		finally {
 			try {
@@ -96,18 +97,18 @@ public class ImprimerFdr {
 	}
 
 
-	/**
-	 * 
-	 * @param args
-     */
-	public static void main(String[] args) throws ParseurException{
-		ZoneGeographique zone = Parseur.lirePlan("./src/main/resources/plan10x10.xml");
-		List<PlageHoraire> plage = Parseur.lireLivraison("./src/main/resources/livraison10x10-1.xml", zone);
-		Tournee tournee = new Tournee(zone);
-		tournee.setPlagesHoraire(plage);
-		tournee.solve(1000);
-		ecrireFichierTri(tournee);
-	}
+//	/**
+//	 * 
+//	 * @param args
+//     */
+//	public static void main(String[] args) throws ParseurException{
+//		ZoneGeographique zone = Parseur.lirePlan("./src/main/resources/plan10x10.xml");
+//		List<PlageHoraire> plage = Parseur.lireLivraison("./src/main/resources/livraison10x10-1.xml", zone);
+//		Tournee tournee = new Tournee(zone);
+//		tournee.setPlagesHoraire(plage);
+//		tournee.solve(1000);
+//		ecrireFichier(zone);
+//	}
 
 	/**
 	 * 

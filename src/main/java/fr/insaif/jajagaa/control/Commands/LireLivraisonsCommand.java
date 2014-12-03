@@ -5,6 +5,7 @@
  */
 package fr.insaif.jajagaa.control.Commands;
 
+import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.control.Parseur;
 import fr.insaif.jajagaa.control.ParseurException;
 import fr.insaif.jajagaa.model.Livraison;
@@ -29,6 +30,7 @@ public class LireLivraisonsCommand implements Command{
      * @param fichierLivraison 
      */
     public LireLivraisonsCommand(ZoneGeographique zone, String fichierLivraison) {
+//        this.zone = new ZoneGeographique(Controleur.getInstance().getZoneVierge());
         this.zone = zone;
         this.fichierLivraison = fichierLivraison;
     }
@@ -38,6 +40,7 @@ public class LireLivraisonsCommand implements Command{
         if(zoneAvant == null){
             zoneAvant = new ZoneGeographique(zone);
             
+            zone = new ZoneGeographique(Controleur.getInstance().getZoneVierge());
             List<PlageHoraire> plages;
             try{
                 plages = Parseur.lireLivraison(fichierLivraison, zone);
@@ -48,7 +51,6 @@ public class LireLivraisonsCommand implements Command{
             
             zone.getTournee().setPlagesHoraire(plages);
             zoneApres = new ZoneGeographique(zone);
-            
         }
         else {
             zone = zoneApres;
