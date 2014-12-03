@@ -6,7 +6,9 @@
 
 package fr.insaif.jajagaa.view.panelDroite;
 
+import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.view.VueNoeud;
+import java.text.SimpleDateFormat;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
@@ -29,7 +32,7 @@ public class ConteneurDroite extends JPanel{
     
     private JLabel titre;
     private ListNoeuds listeNoeuds;
-    private JTextField textFiDescriptionLivraison;
+    private JTextArea textFiDescriptionLivraison;
     private JButton btnAddNoeud;
     private JButton btnSupNoeud;
     private JButton btnCalculLivraison;
@@ -70,6 +73,24 @@ public class ConteneurDroite extends JPanel{
         //TODO !!
     }
     
+    public void setTextFieldText(Livraison l){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String s = "";
+        s += "Id Commande : ";
+        s += l.getId();
+        s += "\nId Client : ";
+        s += l.getIdClient();
+        s += "\nHoraire prévu d'arrivée : ";
+        s += sdf.format(l.getHeureLivraison()).toString();
+        s += "\nHoraire prévu de fin : ";
+        s += sdf.format(l.getHeureFin()).toString();
+        
+        textFiDescriptionLivraison.setText(s);
+    }
+    
+    public void resetTextFieldText(){
+        textFiDescriptionLivraison.setText("");
+    }
 
     public ConteneurDroite() {
         initComponents();
@@ -82,7 +103,7 @@ public class ConteneurDroite extends JPanel{
         
         listeNoeuds = new ListNoeuds();
 
-        textFiDescriptionLivraison = new JTextField();
+        textFiDescriptionLivraison = new JTextArea();
         textFiDescriptionLivraison.setEditable(false);
         
         btnAddNoeud = new JButton(strBtnAddNoeud0);
@@ -114,7 +135,7 @@ public class ConteneurDroite extends JPanel{
         layout.putConstraint(SpringLayout.EAST, scrollListe, 0, SpringLayout.EAST, this);
         layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, textFiDescriptionLivraison);
         
-        layout.putConstraint(SpringLayout.NORTH, textFiDescriptionLivraison, -50, SpringLayout.SOUTH, textFiDescriptionLivraison);
+        layout.putConstraint(SpringLayout.NORTH, textFiDescriptionLivraison, -70, SpringLayout.SOUTH, textFiDescriptionLivraison);
         layout.putConstraint(SpringLayout.WEST, textFiDescriptionLivraison, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, textFiDescriptionLivraison, 0, SpringLayout.EAST, this);
         layout.putConstraint(SpringLayout.SOUTH, textFiDescriptionLivraison, -espace, SpringLayout.NORTH, btnCalculLivraison);
