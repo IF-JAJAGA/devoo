@@ -144,7 +144,7 @@ public class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e){
                 choisirFichierPlan();
-                if(Controleur.getInstance().getZone().getNoeuds() != null && Controleur.getInstance().getZone().getNoeuds().size() != 0){
+                if(Controleur.getInstance().getZone().getNoeuds() != null && !Controleur.getInstance().getZone().getNoeuds().isEmpty()){
                     importLivr.setEnabled(true);
                 }
                 else{
@@ -159,7 +159,7 @@ public class Fenetre extends JFrame {
             public void actionPerformed(ActionEvent e){
                 choisirFichierLivraisons();
                 if(Controleur.getInstance().getZone().getTournee().getPlagesHoraire() != null 
-                        && Controleur.getInstance().getZone().getTournee().getPlagesHoraire().size() !=0){
+                        && !Controleur.getInstance().getZone().getTournee().getPlagesHoraire().isEmpty()){
                     conteneurDroite.getBtnCalculLivraison().setEnabled(true);
                 }
                 else{
