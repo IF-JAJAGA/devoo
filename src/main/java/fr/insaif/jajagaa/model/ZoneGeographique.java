@@ -123,6 +123,18 @@ public class ZoneGeographique {
         this.noeuds.remove(idNoeud);
         this.noeuds.add(l.id, l);
     }
+    
+    
+    /**
+     * Supprime la livraison qui possède l'id idLivraison et ajoute le noeud n à la place.
+     * La livraison à supprimer et le Noeud à ajouter doivent avoir le même id de Noeud.
+     * @param idLivraison
+     * @param n 
+     */
+    public void modifierLivraisonEnNoeud(int idLivraison, Noeud n){
+        this.noeuds.remove(idLivraison);
+        this.noeuds.add(n.id,n);
+    }
 
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
