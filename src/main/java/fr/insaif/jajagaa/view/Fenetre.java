@@ -130,7 +130,7 @@ public class Fenetre extends JFrame {
 
                 public void componentResized(ComponentEvent arg0) {
                         //Maj de l'endroit de la séparation
-                    split.setDividerLocation(getWidth()-230);
+                    split.setDividerLocation(getWidth()-250);
                 }
 
                 public void componentMoved(ComponentEvent arg0) {}
