@@ -13,6 +13,7 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
  * @author alicia
  */
 public class AjoutLivraisonCommande implements Command {
+    private boolean ajoutOk = false;
     
     private Noeud noeudAvant;
     private Noeud noeudALivrer;
@@ -28,12 +29,13 @@ public class AjoutLivraisonCommande implements Command {
     
     @Override
     public void execute(){
+        ajoutOk = false;
         if (zoneAvant == null){
             zoneAvant = new ZoneGeographique(zone);
             
             System.out.println("noeudAvant : " + noeudAvant + " ; noeudALivrer : " + noeudALivrer);
             // TODO changer le 5 en vrai idClient
-            zone.setTournee(zone.getTournee().ajouterPointDeLivraison(noeudALivrer, 5, (Livraison) noeudAvant));
+            ajoutOk = zone.getTournee().ajouterPointDeLivraison(noeudALivrer, 5, (Livraison) noeudAvant);
 
             zoneApres = new ZoneGeographique(zone);
         }

@@ -36,6 +36,11 @@ public class Livraison extends Noeud {
     protected int idClient;
     
     /**
+     * Plage dans laquelle se déroule la livraison
+     */
+    protected PlageHoraire plageHoraire;
+    
+    /**
      * Id de la livraison
      */
     protected int idLivraison;
@@ -43,10 +48,11 @@ public class Livraison extends Noeud {
     /**
      * Constructeur d'une livraison à partir du noeud qui la concerne
      */
-    public Livraison(Noeud n, int idLiv, int idClientLiv) {
+    public Livraison(Noeud n, int idLiv, int idClientLiv, PlageHoraire plageHoraire) {
         super(n.id, n.xMetre, n.yMetre, n.sortants);
         this.idLivraison = idLiv;
         this.idClient = idClientLiv;
+        this.plageHoraire = plageHoraire;
         // Date de livraison par défaut: heure de création
         this.heureLivraison = Calendar.getInstance();
     }
@@ -120,5 +126,19 @@ public class Livraison extends Noeud {
         Calendar heureFin = ((Calendar) this.heureLivraison.clone());
         heureFin.add(Calendar.MINUTE, TPS_LIVRAISON_MIN);
     	return heureFin.getTime();
+    }
+    
+    /**
+     * @return la Plage dans laquelle se déroule la livraison
+     */
+    public PlageHoraire getPlage() {
+    	return plageHoraire;
+    }
+    
+    /**
+     * @param la nouvelle plage dans laquelle se déroule la livraison
+     */
+    public void setPlage(PlageHoraire plageHoraire) {
+    	this.plageHoraire = plageHoraire;
     }
 }
