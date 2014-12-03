@@ -6,6 +6,7 @@ package fr.insaif.jajagaa.control.Commands;
 
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.Tournee;
+import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
  *
@@ -15,35 +16,35 @@ public class AjoutLivraisonCommande implements Command {
     
     private Noeud noeudAvant;
     private Noeud noeudMilieu;
-    private Tournee tournee;
-    private Tournee tourneeAvant;
-    private Tournee tourneeApres;
+    private ZoneGeographique zoneAvant ;
+    private ZoneGeographique zone ;
+    private ZoneGeographique zoneApres ;
     
-    public AjoutLivraisonCommande(Tournee tournee, Noeud noeudAvant, Noeud noeudMilieu){
-        this.tournee = tournee;
+    public AjoutLivraisonCommande(ZoneGeographique zone, Noeud noeudAvant, Noeud noeudMilieu){
+        this.zone = zone;
         this.noeudAvant  = noeudAvant;
         this.noeudMilieu = noeudMilieu;
     }
     
     @Override
     public void execute(){
-        if (tourneeAvant == null){
-            tourneeAvant = tournee;
-            tournee = tournee.ajouterPointDeLivraison(noeudAvant, noeudMilieu);
-            tourneeApres = tournee;
+        if (zoneAvant == null){
+            zoneAvant = zone;
+            zone.setTournee(zone.getTournee().ajouterPointDeLivraison(noeudAvant, noeudMilieu));
+            zoneApres = zone;
         }
         else{
-            tournee = tourneeApres;
+            zone = zoneApres;
         }
     }
     
     @Override
     public void undo(){
-        tournee = tourneeAvant;
+        zone = zoneAvant;
     }
     
-    public Tournee getTournee(){
-        return tournee;
+    public ZoneGeographique getZone(){
+        return zone;
     }
     
 }

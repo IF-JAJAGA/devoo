@@ -23,7 +23,7 @@ public class Tournee {
     protected List<PlageHoraire> plagesHoraire = new ArrayList<>();
 
     /**
-     * Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
+     * Liste ordonnée des cheminsResultats à parcourir au cours de la tournée.
      * Le premier chemin doit partir de l'entrepôt de la zone géographique.
      * Le dernier chemin doit arriver à l'entrepôt.
      * La fin d'un chemin doit être le début du chemin de l'autre.
@@ -31,18 +31,14 @@ public class Tournee {
     protected List<Chemin> cheminsResultats = new LinkedList<>();
 
     /**
-     * Liste des livraisons à effectuer (non triées, voir {@link fr.insaif.jajagaa.model.Tournee} pour la liste triée)
+     * Résolveur de contraintes pour un graphe
      */
-//    protected List<PlageHoraire> plages;
-
     protected TSP tsp;
 
-    protected LivraisonGraph graph;
-
     /**
-     * Jour au cours duquel se déroule la tournée (non pas l'heure, seulement la date).
+     * Graphe des livraisons (transformé pour prendre en compte les plages horaires)
      */
-    protected Date jour;
+    protected LivraisonGraph graph;
 
     /**
      * Création d'une tournée à partir d'une zone et d'une demande de livraisons (List<PlageHoraire>)
@@ -69,17 +65,32 @@ public class Tournee {
         graph = new LivraisonGraph(this.getCheminsPossibles());
         tsp = new TSP(graph);
     }
-    
+
+    /**
+     * Liste des plages horaires au cours de laquelle se déroule la tournée. (Peut au maximum contenir 24h)
+     * @return Liste des plages horaires au cours de laquelle se déroule la tournée. (Peut au maximum contenir 24h)
+     */
     public List<PlageHoraire> getPlagesHoraire() {
     	return this.plagesHoraire;
     }
-    
+
+    /**
+     * Modifie la liste des plages horaires au cours de laquelle se déroule la tournée. (Peut au maximum contenir 24h)
+     * @param plagesHoraire Liste des plages horaires au cours de laquelle se déroule la tournée. (Peut au maximum contenir 24h)
+     */
     public void setPlagesHoraire(List<PlageHoraire> plagesHoraire) {
         this.plagesHoraire = plagesHoraire;
         this.graph = new LivraisonGraph(this.getCheminsPossibles());
         this.tsp = new TSP(graph);
     }
 
+    /**
+     * Liste ordonnée des cheminsResultats à parcourir au cours de la tournée.
+     * Le premier chemin doit partir de l'entrepôt de la zone géographique.
+     * Le dernier chemin doit arriver à l'entrepôt.
+     * La fin d'un chemin doit être le début du chemin de l'autre.
+     * @return Liste ordonnée des cheminsResultats à parcourir au cours de la tournée.
+     */
     protected List<Chemin> getCheminsPossibles() {
         List<Chemin> cheminsPossibles = new ArrayList<Chemin>();
         if(plagesHoraire.isEmpty()) return cheminsPossibles;
@@ -150,28 +161,63 @@ public class Tournee {
         return cheminsPossibles;
     }
 
+    /**
+     * Résoud le problème de tournée la plus courte avec les plages horaires
+     * @param TIME_LIMIT_MS Temps limite donné pour résoudre le problème
+     * @return L'état de réponse (trouvé, pas trouvé, optimal, etc.) après le temps utilisé
+     */
     public SolutionState solve(int TIME_LIMIT_MS) {
         SolutionState state = this.tsp.solve(TIME_LIMIT_MS, this.graph.getNbVertices() * this.graph.getMaxArcCost() + 1);
-        if(state == SolutionState.OPTIMAL_SOLUTION_FOUND || state == SolutionState.SOLUTION_FOUND) {
+        if (state == SolutionState.OPTIMAL_SOLUTION_FOUND || state == SolutionState.SOLUTION_FOUND) {
             this.getCheminsResultats().clear();
             int[] next = this.tsp.getNext();
             int indexEntrepot = this.graph.getIndexNoeudById(this.zone.getEntrepot().getId());
             List<LivraisonGraphVertex> vertices = this.graph.getNoeuds();
             List<LivraisonGraphVertex> orderedVertices = new ArrayList<LivraisonGraphVertex>();
             if(next.length > 0) {
-                int i = indexEntrepot;
-                orderedVertices.add(vertices.get(i));
-                do {
-                    i = next[i];
-                    orderedVertices.add(vertices.get(i));
+
+                // On ajoute l'entrepôt
+                orderedVertices.add(vertices.get(indexEntrepot));
+
+                PlageHoraire currentPlage = null;
+                Calendar currentTime = Calendar.getInstance();
+
+                // Pour tous les points de livraison suivants, on ajoute à la liste ordonnée en mettant à jour l'horaire
+                for (int i = next[indexEntrepot]; i != indexEntrepot; i = next[i]) {
+                    LivraisonGraphVertex currentVertex = vertices.get(i);
+                    Livraison currentLivraison = ((Livraison) currentVertex.getNoeud());
+
+                    // Recherche de la plage horaire d'une livraison
+                    for (PlageHoraire plage : this.getPlagesHoraire()) {
+                        if (plage.getLivraisons().contains(currentLivraison)) {
+
+                            // Si c'est une nouvelle plage horaire, on remet le temps courant au départ
+                            if (plage != currentPlage) {
+                                currentPlage = plage;
+                                currentTime.setTime(currentPlage.getHeureDebut());
+                            }
+                            break;
+                        }
+                    }
+
+                    // Mise à jour de l'heure de livraison
+                    currentLivraison.setHeureLivraison(currentTime.getTime());
+                    currentTime.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
+
+                    // Ajout de la Livraison à la liste ordonnée
+                    orderedVertices.add(currentVertex);
                 }
-                while(i != indexEntrepot);
+
                 this.buildCheminResultat(orderedVertices);
             }
         }
         return state;
     }
-    
+
+    /**
+     * TODO
+     * @param vertices
+     */
     protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) {
         int i = 0;
         LivraisonGraphVertex depart, arrivee;
@@ -186,13 +232,13 @@ public class Tournee {
             i++;
         }
     }
- 
+
+    /**
+     * L'état de résolution du problème actuel (après le dernier appel à solve)
+     * @return L'état de résolution du problème actuel (après le dernier appel à solve)
+     */
     public SolutionState getSolutionState() {
         return this.tsp.getSolutionState();
-    }
-
-    public LivraisonGraph getGraph() {
-        return this.graph;
     }
 
     /**
@@ -222,11 +268,8 @@ public class Tournee {
         this.cheminsResultats = cheminsResultats;
     }
 
-    public Chemin calculerPlusCourtChemin(Noeud depart, Noeud arrivee) {
-        return null;
-    }
-    
     /**
+     * Ajoute un point de livraison dans la tournée, en recalculant localement le meilleur chemin et les horaires
      * @param noeudMilieu noeud à ajouter à la tournée
      * @param noeudAvant noeud après lequel on doit ajouter pointMilieu
      * @return la tournée une fois qu'elle a été modifiée.

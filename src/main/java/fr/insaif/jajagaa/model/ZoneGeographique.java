@@ -19,7 +19,7 @@ public class ZoneGeographique {
     /**
      * Liste des noeuds qui composent la zone géographique.
      */
-    protected List<Noeud> noeuds;
+    protected List<Noeud> noeuds = new ArrayList<>();
 
     /**
      * Constructeur de la zone géographique à partir de la liste des vueNoeuds (non vide)
@@ -40,7 +40,14 @@ public class ZoneGeographique {
             noeuds.add(new Noeud(n));
         }
         entrepot = (zone.entrepot==null) ? null : new Noeud(zone.entrepot);
-        tournee = new Tournee(zone, this);
+        for (Noeud n : zone.noeuds){
+            if (n instanceof Noeud){
+                noeuds.add(n);
+            }
+            else if (n instanceof Livraison){
+                noeuds.add(n);
+            }
+        }
     }
     
     
@@ -111,6 +118,10 @@ public class ZoneGeographique {
     public void modifierNoeudEnLivraison(int idNoeud, Livraison l){
         this.noeuds.remove(idNoeud);
         this.noeuds.add(l.id, l);
+    }
+
+    public void setTournee(Tournee tournee) {
+        this.tournee = tournee;
     }
 }
 
