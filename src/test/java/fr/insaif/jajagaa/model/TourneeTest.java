@@ -32,7 +32,12 @@ public class TourneeTest {
     @Test
     public void testSolve() throws ParseurException {
         System.out.println("Debut calcul");
-        SolutionState solutionState = tournee.solve(MAX_TIME_SEC * 1000);
+        SolutionState solutionState = null;
+        try{
+        	solutionState = tournee.solve(MAX_TIME_SEC * 1000);
+        } catch (Exception e) {
+        	System.err.println("blabla");
+        }
         System.out.println("Fin calcul");
 
         if (solutionState == SolutionState.OPTIMAL_SOLUTION_FOUND || solutionState == SolutionState.SOLUTION_FOUND) {

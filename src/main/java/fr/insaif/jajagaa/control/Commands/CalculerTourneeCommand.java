@@ -48,7 +48,11 @@ public class CalculerTourneeCommand implements Command{
             
             
             System.out.println("Appel de solve");
-            tournee.solve((time));
+            try{
+                tournee.solve((time));
+            } catch (Exception e) {
+                System.err.println("blabla");
+            }
             System.out.println("Retour de solve");
             if(tournee.getSolutionState() == SolutionState.OPTIMAL_SOLUTION_FOUND ||
                     tournee.getSolutionState() == SolutionState.SOLUTION_FOUND){
