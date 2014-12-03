@@ -5,12 +5,14 @@
  */
 package fr.insaif.jajagaa.control.Commands;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import fr.insaif.jajagaa.control.Controleur;
+import fr.insaif.jajagaa.control.HorsPlageException;
 import fr.insaif.jajagaa.model.Chemin;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Ce qui change pour un objet tournee :
@@ -35,7 +37,7 @@ public class CalculerTourneeCommand implements Command{
         System.out.println("chemins.size() : " + chemins.size());
     }
 
-    @Override
+    
     public void execute() {
         if(cheminsAvant == null){
             
@@ -48,11 +50,12 @@ public class CalculerTourneeCommand implements Command{
             
             
             System.out.println("Appel de solve");
-            try{
-                tournee.solve((time));
-            } catch (Exception e) {
-                System.err.println("blabla");
+            try {
+            	tournee.solve((time));
+            } catch ( HorsPlageException hpe) {
+            	Controleur.getInstance().notifyError(hpe);
             }
+            
             System.out.println("Retour de solve");
             if(tournee.getSolutionState() == SolutionState.OPTIMAL_SOLUTION_FOUND ||
                     tournee.getSolutionState() == SolutionState.SOLUTION_FOUND){
