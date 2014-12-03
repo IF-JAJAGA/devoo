@@ -244,4 +244,11 @@ public class Controleur {
             next = null;
         }
     }
+    
+    /**
+     * Classe qui lance l'impresion de la feuille de route pour une tournnée
+     */
+    public boolean lancerImpresion() {
+    	return ImprimerFdr.ecrireFichier(zone);
+    }
 }
