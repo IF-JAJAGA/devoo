@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -54,7 +52,6 @@ public class Parseur{
 
                 @SuppressWarnings("unchecked")
                 List<Element> livraisons = plage.getChild("Livraisons").getChildren("Livraison");
-                List<Livraison> listLivraison = new ArrayList<Livraison>();
                 for (Element livraison : livraisons) {
                 	int idNoeud = Integer.parseInt(livraison.getAttributeValue("adresse"));
                 	int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
