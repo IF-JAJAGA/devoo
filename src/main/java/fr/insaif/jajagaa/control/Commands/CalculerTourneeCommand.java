@@ -5,6 +5,7 @@
  */
 package fr.insaif.jajagaa.control.Commands;
 
+import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.model.Chemin;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
@@ -51,7 +52,7 @@ public class CalculerTourneeCommand implements Command{
             try{
                 tournee.solve((time));
             } catch (Exception e) {
-                System.err.println("blabla");
+                Controleur.getInstance().notifyError(new Exception("blabla"));
             }
             System.out.println("Retour de solve");
             if(tournee.getSolutionState() == SolutionState.OPTIMAL_SOLUTION_FOUND ||
