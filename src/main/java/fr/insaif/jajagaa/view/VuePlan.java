@@ -26,8 +26,8 @@ import javax.swing.JPanel;
 public class VuePlan extends JPanel{
     protected static int border = VueNoeud.DIAMETRE;
     
-    protected List<VueNoeud> vueNoeuds = new Vector<VueNoeud>();
-    protected List<VueTroncon> vueTroncons = new Vector<VueTroncon>();
+    protected List<VueNoeud> vueNoeuds = new Vector<>();
+    protected List<VueTroncon> vueTroncons = new Vector<>();
     protected VueTournee vueTournee;
     
     //Valeurs en mètres de la ville, s'actualise en fonction du chargement du plan.
@@ -244,7 +244,7 @@ public class VuePlan extends JPanel{
         }
         
         ajouterNoeuds(zoneGeo.getEntrepot(), zoneGeo.getNoeuds());
-        livraisonsPresentes = ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
+//        livraisonsPresentes = ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
         ajouterTournee(zoneGeo.getTournee());
         
         this.paint(getGraphics());
@@ -257,6 +257,23 @@ public class VuePlan extends JPanel{
      */
     private void ajouterNoeuds(Noeud entrepot, List<Noeud> listNoeuds){
         for(Noeud noeud : listNoeuds) {
+            if(noeud instanceof Livraison){
+                if(!livraisonsPresentes)    livraisonsPresentes = true;
+                Livraison liv = (Livraison)noeud;
+                if(liv.getXMetre()>XVille){
+                    XVille = liv.getXMetre();
+                }
+                if(liv.getYMetre()>YVille)
+                {
+                    YVille = liv.getYMetre();
+                }
+                vueNoeuds.add(new VueNoeud(liv, Color.YELLOW));
+                List<Troncon> listTroncon = liv.getSortants();
+                for(Troncon troncon : listTroncon){
+                    vueTroncons.add(new VueTroncon(troncon));
+                }
+            }
+            else{
                 if(noeud.getXMetre()>XVille){
                     XVille = noeud.getXMetre();
                 }
@@ -276,6 +293,7 @@ public class VuePlan extends JPanel{
                         vueTroncons.add(new VueTroncon(troncon));
                     }
                 }
+            }
         }
     }
     

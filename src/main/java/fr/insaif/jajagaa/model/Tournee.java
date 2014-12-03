@@ -310,16 +310,28 @@ public class Tournee {
         int i;
         for (i=0; i<cheminsResultats.size();i++) {
             if (cheminsResultats.get(i).getOrigine().getIdNoeud() == livraisonAvant.getId()){
-                ajouterMilieuTournee(i, noeudALivrer, livraisonAvant);
-                i = cheminsResultats.size();
-            }
-            else if (cheminsResultats.get(i).getDestination().getIdNoeud() == (livraisonAvant.getId()) ){
-                ajouterQueueTrournee();
                 trouveChemin = true;
                 break;
             }
         }
-        if (trouveChemin){
+        
+        if(trouveChemin){
+            //Création des variables nécessaires
+            LivraisonGraphVertex lgvAvant = new LivraisonGraphVertex(livraisonAvant.getId(), false);
+            LivraisonGraphVertex lgvMilieu = new LivraisonGraphVertex(noeudALivrer.getId(), false);
+            LivraisonGraphVertex lgvApres = cheminsResultats.get(i).getDestination();
+            //Calculerplus court chemin entre noeud Avant et milieu
+            Chemin cheminAvant = Dijkstra.plusCourtChemin(zone, lgvAvant, lgvMilieu);
+            //Calculer plus court chemin entre noeud Milieu et noeud Après
+            Chemin cheminAprès = Dijkstra.plusCourtChemin(zone, lgvMilieu, lgvApres);
+            //Supprimer le chemin
+            System.out.println("Taille avant : " + cheminsResultats);
+            cheminsResultats.remove(i);
+            //Ajouter les deux chemins crées à la place de celui supprimé
+            cheminsResultats.add(i, cheminAvant);
+            cheminsResultats.add(i+1, cheminAprès);
+            System.out.println("Taille après : " + cheminsResultats);
+        
             
             
             
@@ -338,26 +350,6 @@ public class Tournee {
         }
                 
         return true;
-    }
-    
-    private void ajouterQueueTrournee(){
-        
-    }
-    
-    private void ajouterMilieuTournee(int i, Noeud noeudALivrer, Livraison livraisonAvant){
-        //Création des variables nécessaires
-        LivraisonGraphVertex lgvAvant = new LivraisonGraphVertex(livraisonAvant.getId(), false);
-        LivraisonGraphVertex lgvMilieu = new LivraisonGraphVertex(noeudALivrer.getId(), false);
-        LivraisonGraphVertex lgvApres = cheminsResultats.get(i).getDestination();
-        //Calculerplus court chemin entre noeud Avant et milieu
-        Chemin cheminAvant = Dijkstra.plusCourtChemin(zone, lgvAvant, lgvMilieu);
-        //Calculer plus court chemin entre noeud Milieu et noeud Après
-        Chemin cheminAprès = Dijkstra.plusCourtChemin(zone, lgvMilieu, lgvApres);
-        //Supprimer le chemin
-        cheminsResultats.remove(i);
-        //Ajouter les deux chemins crées à la place de celui supprimé
-        cheminsResultats.add(i, cheminAvant);
-        cheminsResultats.add(i+1, cheminAprès);
     }
 
     public Tournee supprimerPointLivraison(Noeud noeudASup) {

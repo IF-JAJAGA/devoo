@@ -39,6 +39,7 @@ public class VueTournee {
      */
     public VueTournee(Tournee uneTournee, Color uneCouleur) {
         setTourneeModel(uneTournee);
+        System.out.println("uneTournee.getCheminsResultats() : " + uneTournee.getCheminsResultats().size());
         if(uneTournee.getCheminsResultats() !=null){
             for (Chemin ch : uneTournee.getCheminsResultats()) {
                 for(Troncon tr : ch.getTroncons()) {
