@@ -29,6 +29,7 @@ public class ConteneurDroite extends JPanel{
     
     private JLabel titre;
     private ListNoeuds listeNoeuds;
+    private JTextField textFiDescriptionLivraison;
     private JButton btnAddNoeud;
     private JButton btnSupNoeud;
     private JButton btnCalculLivraison;
@@ -81,6 +82,9 @@ public class ConteneurDroite extends JPanel{
         
         listeNoeuds = new ListNoeuds();
 
+        textFiDescriptionLivraison = new JTextField();
+        textFiDescriptionLivraison.setEditable(false);
+        
         btnAddNoeud = new JButton(strBtnAddNoeud0);
         btnSupNoeud = new JButton(strBtnSupNoeud);
         
@@ -95,6 +99,7 @@ public class ConteneurDroite extends JPanel{
         add(listeNoeuds);
         JScrollPane scrollListe = new JScrollPane(listeNoeuds);
         add(scrollListe);  
+        add(textFiDescriptionLivraison);
         add(btnAddNoeud);
         add(btnSupNoeud);
         
@@ -107,7 +112,12 @@ public class ConteneurDroite extends JPanel{
         layout.putConstraint(SpringLayout.NORTH, scrollListe, espace, SpringLayout.SOUTH, titre);
         layout.putConstraint(SpringLayout.WEST, scrollListe, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, scrollListe, 0, SpringLayout.EAST, this);
-        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, btnSupNoeud);
+        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, textFiDescriptionLivraison);
+        
+        layout.putConstraint(SpringLayout.NORTH, textFiDescriptionLivraison, -50, SpringLayout.SOUTH, textFiDescriptionLivraison);
+        layout.putConstraint(SpringLayout.WEST, textFiDescriptionLivraison, 0, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.EAST, textFiDescriptionLivraison, 0, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.SOUTH, textFiDescriptionLivraison, -espace, SpringLayout.NORTH, btnSupNoeud);
         
         
         layout.putConstraint(SpringLayout.SOUTH, btnSupNoeud, -espace, SpringLayout.NORTH, btnAddNoeud);
