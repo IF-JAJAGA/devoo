@@ -102,7 +102,7 @@ public class Controleur {
             JOptionPane.showMessageDialog(null, "Impossible d'importer des livraisons sans aucun plan de la ville.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        creationCommande(new ElementListeCourante(new LireLivraisonsCommand(fichierLivraison)));
+        creationCommande(new ElementListeCourante(new LireLivraisonsCommand(zone, fichierLivraison)));
         
         execute();
     }

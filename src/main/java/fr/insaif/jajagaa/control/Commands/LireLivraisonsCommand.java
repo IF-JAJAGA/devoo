@@ -29,8 +29,9 @@ public class LireLivraisonsCommand implements Command{
      * @param zone
      * @param fichierLivraison 
      */
-    public LireLivraisonsCommand(String fichierLivraison) {
-        this.zone = new ZoneGeographique(Controleur.getInstance().getZoneVierge());
+    public LireLivraisonsCommand(ZoneGeographique zone, String fichierLivraison) {
+//        this.zone = new ZoneGeographique(Controleur.getInstance().getZoneVierge());
+        this.zone = zone;
         this.fichierLivraison = fichierLivraison;
     }
 
@@ -39,6 +40,7 @@ public class LireLivraisonsCommand implements Command{
         if(zoneAvant == null){
             zoneAvant = new ZoneGeographique(zone);
             
+            zone = new ZoneGeographique(Controleur.getInstance().getZoneVierge());
             List<PlageHoraire> plages;
             try{
                 plages = Parseur.lireLivraison(fichierLivraison, zone);
@@ -49,13 +51,6 @@ public class LireLivraisonsCommand implements Command{
             
             zone.getTournee().setPlagesHoraire(plages);
             zoneApres = new ZoneGeographique(zone);
-            
-            System.out.println("zone.getNoeuds().size() : " + zone.getNoeuds().size() + "zoneApres.getNoeuds().size() : " + zoneApres.getNoeuds().size());
-            for(int i=0, len=zone.getNoeuds().size() ; i<len ; i++){
-                if(zone.getNoeuds().get(i) instanceof Livraison){
-                    System.out.println("Livraison : " + zoneApres.getNoeuds().get(i));
-                }
-            }
         }
         else {
             zone = zoneApres;
