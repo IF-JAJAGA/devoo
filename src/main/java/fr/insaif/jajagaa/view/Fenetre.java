@@ -205,7 +205,7 @@ public class Fenetre extends JFrame {
             }
         });
         
-        conteneurDroite.getBtnAddNoeud().addMouseListener(new MouseAdapter() {
+        conteneurDroite.getBtnCalculLivraison().addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -279,11 +279,7 @@ public class Fenetre extends JFrame {
      * @param time 
      */
     private void calculerTournee(){
-        try{
-            Controleur.getInstance().CalculerTournee();
-        }catch (NumberFormatException | NullPointerException ne){
-            JOptionPane.showMessageDialog(null, "Veuillez donner comme temps un nombre décimal ou entier.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
+        Controleur.getInstance().CalculerTournee();
         conteneurDroite.setEtatBtnAddNoeud(0);
     }
     
