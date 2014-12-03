@@ -37,7 +37,7 @@ public class LirePlanCommand implements Command{
             zoneAvant = zone;
             
             try { zone = Parseur.lirePlan(fichierPlan); }
-            catch ( ParseurException pe) { }
+            catch ( ParseurException pe) { Controleur.getInstance().notifyError(pe); }
             zoneApres = zone;
             Controleur.getInstance().setZoneVierge(zoneApres);
 

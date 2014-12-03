@@ -247,6 +247,10 @@ public class Controleur {
         return zone.getTournee().getPlagesHoraire();
     }
 
+    public void notifyError(Exception e) {
+        
+    }
+
     
     /**
      * Classe permettant d'implémenter une liste chainée pour circuler entre les commandes.
