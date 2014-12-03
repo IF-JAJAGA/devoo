@@ -46,7 +46,7 @@ public class TourneeTest {
     protected void verifierHoraires() {
         int plageIndex = 0;
         for (Chemin chemin : this.tournee.getCheminsResultats()) {
-            Livraison currentLivraison = ((Livraison) chemin.getDestination().getNoeud());
+            Livraison currentLivraison = ((Livraison) zoneGeo.getNoeudById(chemin.getDestination().getIdNoeud()));
             PlageHoraire currentPlage = null;
 
             // Recherche de la plage horaire d'une livraison
