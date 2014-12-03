@@ -288,63 +288,76 @@ public class Tournee {
      * @param livraisonAvant livraison après laquelle on doit ajouter noeudALivrer
      * @return la tournée une fois qu'elle a été modifiée.
      */
-    public Tournee ajouterPointDeLivraison(Noeud noeudALivrer, int idClient, Livraison livraisonAvant) {
+    public boolean ajouterPointDeLivraison(Noeud noeudALivrer, int idClient, Livraison livraisonAvant) {
         // Recherche de la plage horaire de precedent
-        PlageHoraire plageInsertion = null;
-        int maxId = 0;
-        for (PlageHoraire plage : this.getPlagesHoraire()) {
-            for (Livraison livraison : plage.getLivraisons()) {
-                if (livraison == livraisonAvant) {
-                    plageInsertion = plage;
-                }
-                maxId = livraison.getId() > maxId ? livraison.getId() : maxId;
-            }
-        }
+//        PlageHoraire plageInsertion = null;
+//        int maxId = 0;
+//        for (PlageHoraire plage : this.getPlagesHoraire()) {
+//            for (Livraison livraison : plage.getLivraisons()) {
+//                if (livraison == livraisonAvant) {
+//                    plageInsertion = plage;
+//                }
+//                maxId = livraison.getId() > maxId ? livraison.getId() : maxId;
+//            }
+//        }
+//
+//        this.zone.modifierNoeudEnLivraison(noeudALivrer.getId(), new Livraison(noeudALivrer, ++maxId, idClient));
+//        Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudId(noeudALivrer.getId());
 
-        this.zone.modifierNoeudEnLivraison(noeudALivrer.getId(), new Livraison(noeudALivrer, ++maxId, idClient));
-        Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudId(noeudALivrer.getId());
-
-        /*
+        
         System.out.println("début de ajouterPointDeLivraison");
         boolean trouveChemin = false;
         int i;
         for (i=0; i<cheminsResultats.size();i++) {
-            if (cheminsResultats.get(i).getOrigine().noeud.equals(livraisonAvant)){
+            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == livraisonAvant.getId()){
+//                ajouterMilieuTournee(i);
+                i = cheminsResultats.size();
+            }
+            else if (cheminsResultats.get(i).getDestination().getIdNoeud() == (livraisonAvant.getId()) ){
+                ajouterQueueTrournee();
                 trouveChemin = true;
                 break;
             }
         }
         if (trouveChemin){
             
-            //Création des variables nécessaires
-            LivraisonGraphVertex lgvAvant = new LivraisonGraphVertex(livraisonAvant, false);
-            LivraisonGraphVertex lgvMilieu = new LivraisonGraphVertex(noeudALivrer, false);
-            LivraisonGraphVertex lgvApres = cheminsResultats.get(i).getDestination();
-            //Calculerplus court chemin entre noeud Avant et milieu
-            Chemin cheminAvant = Dijkstra.plusCourtChemin(zone, lgvAvant, lgvMilieu);
-            //Calculer plus court chemin entre noeud Milieu et noeud Après
-            Chemin cheminAprès = Dijkstra.plusCourtChemin(zone, lgvMilieu, lgvApres);
-            //Supprimer le chemin
-            cheminsResultats.remove(i);
-            //Ajouter les deux chemins crées à la place de celui supprimé
-            cheminsResultats.add(i, cheminAvant);
-            cheminsResultats.add(i+1, cheminAprès);
             
-             **
+            
+             /**
              * TODO (Gustave ??): recalculer les horaires des livraisons. 
              * GROS PAVé pour expliquer pourquoi j'ai pas réussi, et ce qu'il faut faire
              * En fait la j'ai modifié la tournée et maintenant qu'on a ajouté la livraison,
              * il faudrait savoir à quelle heure on l'a ajoutée, et s'il le faut, recalculer
              * les heures de toutes les livraisons et dire celles qu'on va devoir virer !
-             *
+             */
         }
         else {
             //Si on a pas trouvé le chemin, on renvoie une tournee nulle
             //Il faut réagir à cette tournée nulle en disant qu'on a pas trouvé le chemin mais ne pas changer l'affichage.
-            return null;
+            return false;
         }
-                */
-        return this;
+                
+        return true;
+    }
+    
+    private void ajouterQueueTrournee(){
+        
+    }
+    
+    private void ajouterMilieuTournee(int i, Noeud noeudALivrer, Livraison livraisonAvant){
+        //Création des variables nécessaires
+        LivraisonGraphVertex lgvAvant = new LivraisonGraphVertex(livraisonAvant.getId(), false);
+        LivraisonGraphVertex lgvMilieu = new LivraisonGraphVertex(noeudALivrer.getId(), false);
+        LivraisonGraphVertex lgvApres = cheminsResultats.get(i).getDestination();
+        //Calculerplus court chemin entre noeud Avant et milieu
+        Chemin cheminAvant = Dijkstra.plusCourtChemin(zone, lgvAvant, lgvMilieu);
+        //Calculer plus court chemin entre noeud Milieu et noeud Après
+        Chemin cheminAprès = Dijkstra.plusCourtChemin(zone, lgvMilieu, lgvApres);
+        //Supprimer le chemin
+        cheminsResultats.remove(i);
+        //Ajouter les deux chemins crées à la place de celui supprimé
+        cheminsResultats.add(i, cheminAvant);
+        cheminsResultats.add(i+1, cheminAprès);
     }
 
     public Tournee supprimerPointLivraison(Noeud noeudASup) {
