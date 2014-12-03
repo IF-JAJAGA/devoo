@@ -40,12 +40,6 @@ public class Controleur {
     }
     
     private Controleur() {
-        
-        try {
-            System.out.println((new File(".")).getCanonicalPath());
-        } catch (IOException ex) {
-            Logger.getLogger(Controleur.class.getName()).log(Level.SEVERE, null, ex);
-        }
         Fenetre.getInstance();
     }
     
