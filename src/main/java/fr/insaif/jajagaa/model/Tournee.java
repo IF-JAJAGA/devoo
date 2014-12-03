@@ -318,7 +318,35 @@ public class Tournee {
     }
 
     public Tournee supprimerPointLivraison(Noeud noeudASup) {
-        
+        int trouveChemins = 0;
+        int i;
+        Chemin cheminAvant = null;
+        Chemin cheminApres = null;
+        for (i=0; ((i<cheminsResultats.size()) || (trouveChemins==2));i++) {
+            //TODO : réimplémenter méthode TODO noeud !!
+            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == noeudASup.getId()){
+                cheminApres = cheminsResultats.get(i); //TODO Const par copie???
+                trouveChemins++;
+            }
+            else if (cheminsResultats.get(i).getDestination().getIdNoeud() == noeudASup.getId()){
+                cheminAvant = cheminsResultats.get(i);//TODO Const par copie???
+                trouveChemins++;
+            }
+        }
+        if (trouveChemins==2)
+        {
+            //Création des variables nécessaires
+            LivraisonGraphVertex lgvOrigine = cheminAvant.getOrigine();
+            LivraisonGraphVertex lgvDestination = cheminApres.getDestination();
+            
+            
+            Chemin chemin = Dijkstra.plusCourtChemin(zone, lgvOrigine, lgvDestination);
+            
+            cheminsResultats.remove(cheminAvant);
+            cheminsResultats.remove(cheminApres);
+            
+            cheminsResultats.add(i, chemin);
+        }
         return this;
     }
 }
