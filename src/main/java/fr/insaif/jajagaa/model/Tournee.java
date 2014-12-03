@@ -215,10 +215,12 @@ public class Tournee {
      */
     protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) {
         int i = 0;
-        float tempsSecondes;
+        int tempsSecondes;
         LivraisonGraphVertex depart, arrivee;
         List<Troncon> listTroncons;
-        Livraison currentLivraison;
+        PlageHoraire plage = null;
+        int nombreLivraisons = 0;
+        Calendar heureDebut = Calendar.getInstance();
         while(i < (vertices.size()-1)) {
             depart = vertices.get(i);
             arrivee = vertices.get(i+1);
@@ -229,20 +231,23 @@ public class Tournee {
             
             //TODO faire ici les horaires
             listTroncons = chemin.getTroncons();
-            tempsSecondes = Livraison.TPS_LIVRAISON_MIN;
+            tempsSecondes = 0;
             for(Troncon troncon : listTroncons) {
             	tempsSecondes += troncon.getLongueurMetre()/troncon.getVitesse();
             }
-            
-            Noeud noeud = zone.getNoeudById(chemin.getOrigine().getIdNoeud());
-            if(noeud.getId() != zone.getEntrepot().getId()){
-                currentLivraison = (Livraison) noeud;
+            Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
+            if(noeudDest.getId() != zone.getEntrepot().getId()){
+                Livraison livraisonDest = (Livraison) noeudDest;
+                if(plage == null || nombreLivraisons == 0){
+                    plage = livraisonDest.getPlage();
+                    heureDebut.setTime(plage.getHeureDebut());
+                    nombreLivraisons = plage.getLivraisons().size();   
+                }
+                heureDebut.add(Calendar.SECOND, tempsSecondes);
+                livraisonDest.setHeureLivraison(heureDebut.getTime());
+                heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
+                nombreLivraisons--;
             }
-            //TODO: finir
-//            currentLivraison.setHeureLivraison();
-//            currentTime.add(Calendar.MINUTE, temps);
-            
-            
             i++;
         }
     }
@@ -303,6 +308,7 @@ public class Tournee {
 
         this.zone.modifierNoeudEnLivraison(noeudALivrer.getId(), new Livraison(noeudALivrer, ++maxId, idClient, plageInsertion));
         Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudId(noeudALivrer.getId());
+        plageInsertion.getLivraisons().add(aAjouterLivraison);
 
         
         System.out.println("début de ajouterPointDeLivraison");
@@ -331,6 +337,7 @@ public class Tournee {
             cheminsResultats.add(i, cheminAvant);
             cheminsResultats.add(i+1, cheminAprès);
             System.out.println("Taille après : " + cheminsResultats);
+            this.graph.noeuds.add(lgvMilieu);
         
             
             
