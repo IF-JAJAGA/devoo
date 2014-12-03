@@ -10,11 +10,6 @@ import java.util.List;
  */
 public class Noeud {
     /**
-     * Liste des vueTroncons qui ont ce noeud comme destination
-     */
-    protected List<Troncon> entrants;
-
-    /**
      * Liste des vueTroncons qui ont ce noeud comme origine
      */
     protected List<Troncon> sortants;
@@ -46,22 +41,16 @@ public class Noeud {
         this.setXMetre(xMetre);
         this.setYMetre(yMetre);
         this.sortants = new ArrayList<Troncon>();
-        this.entrants = new ArrayList<Troncon>();
     }
     
-    public Noeud(int id, int xMetre, int yMetre, List<Troncon> sortants, List<Troncon> entrants){
+    public Noeud(int id, int xMetre, int yMetre, List<Troncon> sortants){
         this.id = id;
         this.xMetre = xMetre;
         this.yMetre = yMetre;
         this.sortants = sortants;
-        this.entrants = entrants;
     }
     
     public Noeud(Noeud oldNoeud){
-        entrants = new ArrayList<>();
-        for(Troncon tr : oldNoeud.entrants){
-            entrants.add(new Troncon(tr));
-        }
         sortants = new ArrayList<>();
         for(Troncon tr : oldNoeud.sortants){
             sortants.add(new Troncon(tr));
@@ -77,22 +66,6 @@ public class Noeud {
      */
     public int getId() {
         return this.id;
-    }
-
-    /**
-     * Liste des vueTroncons qui ont ce noeud comme destination
-     * @return Liste des vueTroncons qui ont ce noeud comme destination
-     */
-    public List<Troncon> getEntrants() {
-        return entrants;
-    }
-
-    /**
-     * Modifie la liste des vueTroncons qui ont ce noeud comme destination
-     * @param entrants Liste des vueTroncons qui ont ce noeud comme origine
-     */
-    public void setEntrants(List<Troncon> entrants) {
-        this.entrants = entrants;
     }
 
     /**
@@ -154,17 +127,6 @@ public class Noeud {
         this.sortants.add(new Troncon(this.id, destination.getId(), longueurMetre, vitesse,rue));
     }
 
-    /**
-     * Ajoute un Troncon entrant avec l'origine en paramètre
-     * @param origine Noeud origine du Troncon à rajouter
-     * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
-     * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
-     */
-    public void addEntrant(Noeud origine, float longueurMetre, float vitesse, String rue) {
-        assert !this.equals(origine);
-        this.entrants.add(new Troncon(origine.id, this.id, longueurMetre, vitesse, rue));
-    }
-
     public int getX() {
         return xMetre;
     }
@@ -185,13 +147,7 @@ public class Noeud {
     public boolean equals(Object obj){
         if (obj instanceof Noeud){
             Noeud noeud = (Noeud) obj;
-            if ((noeud.id == this.id) && (noeud.xMetre==this.xMetre)  && (noeud.yMetre == this.yMetre))
-            {
-                return true;
-            }
-            else{
-                return false;    
-            }
+            return (noeud.id == this.id) && (noeud.xMetre==this.xMetre)  && (noeud.yMetre == this.yMetre);
         }
         else {
             return false;
