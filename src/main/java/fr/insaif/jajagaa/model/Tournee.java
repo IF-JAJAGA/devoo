@@ -220,7 +220,7 @@ public class Tournee {
         List<Troncon> listTroncons;
         PlageHoraire plage = null;
         int nombreLivraisons = 0;
-        Calendar heureDebut = null;
+        Calendar heureDebut = Calendar.getInstance();
         while(i < (vertices.size()-1)) {
             depart = vertices.get(i);
             arrivee = vertices.get(i+1);
@@ -230,24 +230,24 @@ public class Tournee {
             this.addCheminResultat(chemin);
             
             //TODO faire ici les horaires
-//            listTroncons = chemin.getTroncons();
-//            tempsSecondes = 0;
-//            for(Troncon troncon : listTroncons) {
-//            	tempsSecondes += troncon.getLongueurMetre()/troncon.getVitesse();
-//            }
-//            Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
-//            if(noeudDest.getId() != zone.getEntrepot().getId()){
-//                Livraison livraisonDest = (Livraison) noeudDest;
-//                if(plage == null || nombreLivraisons == 0){
-//                    plage = livraisonDest.getPlage();
-//                    heureDebut.setTime(plage.getHeureDebut());
-//                    nombreLivraisons = plage.getLivraisons().size();   
-//                }
-//                heureDebut.add(Calendar.SECOND, tempsSecondes);
-//                livraisonDest.setHeureLivraison(heureDebut.getTime());
-//                heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
-//                nombreLivraisons--;
-//            }
+            listTroncons = chemin.getTroncons();
+            tempsSecondes = 0;
+            for(Troncon troncon : listTroncons) {
+            	tempsSecondes += troncon.getLongueurMetre()/troncon.getVitesse();
+            }
+            Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
+            if(noeudDest.getId() != zone.getEntrepot().getId()){
+                Livraison livraisonDest = (Livraison) noeudDest;
+                if(plage == null || nombreLivraisons == 0){
+                    plage = livraisonDest.getPlage();
+                    heureDebut.setTime(plage.getHeureDebut());
+                    nombreLivraisons = plage.getLivraisons().size();   
+                }
+                heureDebut.add(Calendar.SECOND, tempsSecondes);
+                livraisonDest.setHeureLivraison(heureDebut.getTime());
+                heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
+                nombreLivraisons--;
+            }
             i++;
         }
     }
