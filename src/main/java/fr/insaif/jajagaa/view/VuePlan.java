@@ -191,7 +191,7 @@ public class VuePlan extends JPanel{
     // End of variables declaration//GEN-END:variables
     
     /**
-     * 
+     * Détermine quel noeud est cliqué et met à jour en conséquence vNSelectionne.
      * @param locationOnPanel point cliqué sur le panel
      * @return le noeud qui a été cliqué, null si aucun noeud n'est cliqué.
      */

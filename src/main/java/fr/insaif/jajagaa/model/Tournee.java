@@ -220,7 +220,7 @@ public class Tournee {
         List<Troncon> listTroncons;
         PlageHoraire plage = null;
         int nombreLivraisons = 0;
-        Calendar heureDebut = null;
+        Calendar heureDebut = Calendar.getInstance();
         while(i < (vertices.size()-1)) {
             depart = vertices.get(i);
             arrivee = vertices.get(i+1);
@@ -230,24 +230,24 @@ public class Tournee {
             this.addCheminResultat(chemin);
             
             //TODO faire ici les horaires
-//            listTroncons = chemin.getTroncons();
-//            tempsSecondes = 0;
-//            for(Troncon troncon : listTroncons) {
-//            	tempsSecondes += troncon.getLongueurMetre()/troncon.getVitesse();
-//            }
-//            Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
-//            if(noeudDest.getId() != zone.getEntrepot().getId()){
-//                Livraison livraisonDest = (Livraison) noeudDest;
-//                if(plage == null || nombreLivraisons == 0){
-//                    plage = livraisonDest.getPlage();
-//                    heureDebut.setTime(plage.getHeureDebut());
-//                    nombreLivraisons = plage.getLivraisons().size();   
-//                }
-//                heureDebut.add(Calendar.SECOND, tempsSecondes);
-//                livraisonDest.setHeureLivraison(heureDebut.getTime());
-//                heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
-//                nombreLivraisons--;
-//            }
+            listTroncons = chemin.getTroncons();
+            tempsSecondes = 0;
+            for(Troncon troncon : listTroncons) {
+            	tempsSecondes += troncon.getLongueurMetre()/troncon.getVitesse();
+            }
+            Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
+            if(noeudDest.getId() != zone.getEntrepot().getId()){
+                Livraison livraisonDest = (Livraison) noeudDest;
+                if(plage == null || nombreLivraisons == 0){
+                    plage = livraisonDest.getPlage();
+                    heureDebut.setTime(plage.getHeureDebut());
+                    nombreLivraisons = plage.getLivraisons().size();   
+                }
+                heureDebut.add(Calendar.SECOND, tempsSecondes);
+                livraisonDest.setHeureLivraison(heureDebut.getTime());
+                heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
+                nombreLivraisons--;
+            }
             i++;
         }
     }
@@ -308,6 +308,7 @@ public class Tournee {
 
         this.zone.modifierNoeudEnLivraison(noeudALivrer.getId(), new Livraison(noeudALivrer, ++maxId, idClient, plageInsertion));
         Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudId(noeudALivrer.getId());
+        plageInsertion.getLivraisons().add(aAjouterLivraison);
 
         
         System.out.println("début de ajouterPointDeLivraison");
@@ -336,6 +337,7 @@ public class Tournee {
             cheminsResultats.add(i, cheminAvant);
             cheminsResultats.add(i+1, cheminAprès);
             System.out.println("Taille après : " + cheminsResultats);
+            this.graph.noeuds.add(lgvMilieu);
         
             
             
@@ -357,23 +359,31 @@ public class Tournee {
         return true;
     }
 
-    public Tournee supprimerPointLivraison(Noeud noeudASup) {
-        int trouveChemins = 0;
+    public boolean supprimerPointLivraison(Noeud noeudASup) {
+        boolean trouve = false;
         int i;
         Chemin cheminAvant = null;
         Chemin cheminApres = null;
-        for (i=0; ((i<cheminsResultats.size()) || (trouveChemins==2));i++) {
-            //TODO : réimplémenter méthode TODO noeud !!
-            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == noeudASup.getId()){
-                cheminApres = cheminsResultats.get(i); //TODO Const par copie???
-                trouveChemins++;
+        for (i=0 ; i<cheminsResultats.size() ; i++) {
+            int idNoeudASup = noeudASup.getId();
+            if ((cheminsResultats.get(i).getDestination().getIdNoeud() == idNoeudASup) &&
+                    (cheminsResultats.get(i+1).getOrigine().getIdNoeud() == idNoeudASup)){
+                cheminAvant = cheminsResultats.get(i);
+                cheminApres = cheminsResultats.get(i+1);
+                trouve = true;
+                break;
             }
-            else if (cheminsResultats.get(i).getDestination().getIdNoeud() == noeudASup.getId()){
-                cheminAvant = cheminsResultats.get(i);//TODO Const par copie???
-                trouveChemins++;
-            }
+  
+//            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == noeudASup.getId()){
+//                cheminApres = cheminsResultats.get(i); //TODO Const par copie???
+//                trouveChemins++;
+//            }
+//            else if (cheminsResultats.get(i).getDestination().getIdNoeud() == noeudASup.getId()){
+//                cheminAvant = cheminsResultats.get(i);//TODO Const par copie???
+//                trouveChemins++;
+//            }
         }
-        if (trouveChemins==2)
+        if (trouve)
         {
             //Création des variables nécessaires
             LivraisonGraphVertex lgvOrigine = cheminAvant.getOrigine();
@@ -382,11 +392,15 @@ public class Tournee {
             
             Chemin chemin = Dijkstra.plusCourtChemin(zone, lgvOrigine, lgvDestination);
             
-            cheminsResultats.remove(cheminAvant);
-            cheminsResultats.remove(cheminApres);
+            System.out.println("Avant cheminsResultats.size()" + cheminsResultats.size());
+            cheminsResultats.remove(i);
+            cheminsResultats.remove(i);
             
             cheminsResultats.add(i, chemin);
+            System.out.println("Après cheminsResultats.size()" + cheminsResultats.size());
+            return true;
         }
-        return this;
+        return false;
+        
     }
 }
