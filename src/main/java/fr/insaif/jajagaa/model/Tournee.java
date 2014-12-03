@@ -303,6 +303,7 @@ public class Tournee {
 
         this.zone.modifierNoeudEnLivraison(noeudALivrer.getId(), new Livraison(noeudALivrer, ++maxId, idClient, plageInsertion));
         Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudId(noeudALivrer.getId());
+        plageInsertion.getLivraisons().add(aAjouterLivraison);
 
         
         System.out.println("début de ajouterPointDeLivraison");
@@ -331,6 +332,7 @@ public class Tournee {
             cheminsResultats.add(i, cheminAvant);
             cheminsResultats.add(i+1, cheminAprès);
             System.out.println("Taille après : " + cheminsResultats);
+            this.graph.noeuds.add(lgvMilieu);
         
             
             
