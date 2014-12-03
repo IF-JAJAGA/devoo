@@ -4,11 +4,13 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import fr.insaif.jajagaa.model.Chemin;
 import fr.insaif.jajagaa.model.Livraison;
+import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
@@ -28,16 +30,14 @@ public class ImprimerFdr {
 	 * @param tournee
 	 */
 	public static boolean ecrireFichier(ZoneGeographique zone){
-                Tournee tournee = zone.getTournee();
-		//TODO nom fichier
-		String nomFichier = "./src/test/resources/feuilleDeRoute_.txt";
+        Tournee tournee = zone.getTournee();
+        String idFichier = getHeure(Calendar.getInstance().getTime()).replace(":", "");
+		String nomFichier = "./src/test/resources/feuilleDeRoute_"+idFichier+".txt";
 		BufferedWriter fichier = null;
 		try{
 			fichier = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(nomFichier), "utf-8"));
 			List<Chemin> chemins = tournee.getCheminsResultats();
-			//TODO: Numero fdr
-//			fichier.write("Tournee du " + id + "\n");
-//			fichier.write("---------------------------------------------\n");
+			//TODO: ID fdr
 			for (int i=0; i < chemins.size(); i++) {
 				Chemin chemin = chemins.get(i);
 				Livraison destination = (Livraison) zone.getNoeudById(chemin.getDestination().getIdNoeud());
@@ -95,18 +95,18 @@ public class ImprimerFdr {
 	}
 
 
-//	/**
-//	 * 
-//	 * @param args
-//     */
-//	public static void main(String[] args) throws ParseurException{
-//		ZoneGeographique zone = Parseur.lirePlan("./src/main/resources/plan10x10.xml");
-//		List<PlageHoraire> plage = Parseur.lireLivraison("./src/main/resources/livraison10x10-1.xml", zone);
-//		Tournee tournee = new Tournee(zone);
-//		tournee.setPlagesHoraire(plage);
-//		tournee.solve(1000);
-//		ecrireFichier(zone);
-//	}
+	/**
+	 * 
+	 * @param args
+     */
+	public static void main(String[] args) throws ParseurException{
+		ZoneGeographique zone = Parseur.lirePlan("./src/main/resources/plan10x10.xml");
+		List<PlageHoraire> plage = Parseur.lireLivraison("./src/main/resources/livraison10x10-1.xml", zone);
+		Tournee tournee = new Tournee(zone);
+		tournee.setPlagesHoraire(plage);
+		tournee.solve(1000);
+		ecrireFichier(zone);
+	}
 
 	/**
 	 * 
