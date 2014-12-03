@@ -8,6 +8,8 @@ package fr.insaif.jajagaa.control.Commands;
 import fr.insaif.jajagaa.model.Chemin;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -35,29 +37,47 @@ public class CalculerTourneeCommand implements Command{
     @Override
     public void execute() {
         if(cheminsAvant == null){
-            cheminsAvant = chemins;
+            
+            if(chemins != null){
+                cheminsAvant = new LinkedList<>();
+                for(Chemin Ch : chemins){
+                    cheminsAvant.add(new Chemin(Ch));
+                }
+            }
+            
+            
             System.out.println("Appel de solve");
             tournee.solve((time));
             System.out.println("Retour de solve");
             if(tournee.getSolutionState() == SolutionState.OPTIMAL_SOLUTION_FOUND ||
                     tournee.getSolutionState() == SolutionState.SOLUTION_FOUND){
                 chemins = tournee.getCheminsResultats();
+                
+                for(Chemin Ch : chemins){
+                    cheminsApres.add(new Chemin(Ch));
+                }
             }
             else{
                 cheminsAvant = null;
             }
             
-            cheminsApres = chemins;
+            
         }
         //TODO arranger le catch
         else {
-            chemins = cheminsApres;
+            chemins = new LinkedList<>();
+            for(Chemin Ch : cheminsApres){
+                chemins.add(new Chemin(Ch));
+            }
         }
     }
 
     @Override
     public void undo() {
-        chemins = cheminsAvant;    
+        chemins = new LinkedList<>();
+            for(Chemin Ch : cheminsAvant){
+                chemins.add(new Chemin(Ch));
+            }    
     }
 
     public List<Chemin> getChemins() {

@@ -43,14 +43,14 @@ public class LirePlanCommand implements Command{
 
         }
         else {
-            zone = zoneApres;
+            zone = new ZoneGeographique(zoneApres);
         }
         
     }
 
     @Override
     public void undo() {
-        zone = zoneAvant;
+        zone = (zoneAvant==null) ? null : new ZoneGeographique(zoneAvant);
     }
 
     public ZoneGeographique getZone() {
