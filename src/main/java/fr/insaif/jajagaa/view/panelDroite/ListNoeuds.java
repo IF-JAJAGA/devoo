@@ -110,7 +110,7 @@ class ListNoeudsRenderer extends JLabel implements ListCellRenderer{
     public Component getListCellRendererComponent(JList jlist, Object e, int index, boolean isSelected, boolean cellHasFocus) {
         if(e instanceof VueNoeud){
             VueNoeud vN = (VueNoeud)e;
-            setText("Noeud " + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY());
+            setText("Noeud " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
             if (isSelected) {
                 setBackground(Color.CYAN);
             } else {

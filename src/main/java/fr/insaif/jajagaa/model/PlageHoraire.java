@@ -28,7 +28,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     protected Date heureFin;
 
     /**
-     * TODO
+     * Attribut List<Livraison> de PlageHoraire
      */
     protected List<Livraison> livraisons = new LinkedList<>();
 
@@ -53,6 +53,10 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
         this.setHeureFin(heureFin);
     }
     
+    /**
+     * Constructeur par copie de PlageHoraire
+     * @param PH PlageHoraire à copier 
+     */
     public PlageHoraire(PlageHoraire PH){
         heureDebut = new Date(PH.heureDebut.getTime());
         heureFin = new Date(PH.heureFin.getTime());
@@ -141,8 +145,13 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
         return livraisons;
     }
     
-    
-
+    /**
+     * Compare les horaires de début et de fin de deux PlageHoraire
+     * @param t : PlageHoraire avec lequel on va comparer la PlageHoraire this
+     * @return -1 si l'heure de début de t est supérieure ou égale à l'heure de début de this
+     *          1 si l'heure de fin de t est inférieure ou égale à l'heure de début de this
+     *          0 sinon.
+     */
     public int compareTo(PlageHoraire t) {
         if(this.heureFin.before(t.getHeureDebut()) || this.heureFin.equals(t.getHeureDebut())) {
             return -1;

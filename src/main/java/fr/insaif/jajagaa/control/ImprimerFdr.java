@@ -38,16 +38,18 @@ public class ImprimerFdr {
 			fichier = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(nomFichier), "utf-8"));
 			List<Chemin> chemins = tournee.getCheminsResultats();
 			//TODO: ID fdr
+                        System.out.println("taille de chemins : " + chemins.size());
 			for (int i=0; i < chemins.size(); i++) {
 				Chemin chemin = chemins.get(i);
 				Livraison destination = (Livraison) zone.getNoeudById(chemin.getDestination().getIdNoeud());
 				List<Troncon> parcours = chemin.getTroncons();
-				fichier.write("Livraison numero : " + destination.getId() + "\n");
+                                
+				fichier.write( (i+1) + ") Livraison numero : " + destination.getId() + "\n");
 				fichier.write("\tHeure d'arrivee prevue : " + getHeure(destination.getHeureLivraison()) + "\n");
 				fichier.write("\tHeure de depart prevue : " + getHeure(destination.getHeureFin()) + "\n");
 				fichier.write("\tIdentifiant client : " + destination.getIdClient() + "\n");
 				fichier.write("\tItineraire : \n");
-//TODO: Choisir boucle
+                                
 				Troncon avant = null;
 				for(Troncon troncon : parcours) {
 					if (avant != null){
@@ -64,33 +66,21 @@ public class ImprimerFdr {
 					}
 					avant=troncon;
 				}
-
-				
-//				for (int j=0 ; j < parcours.size() ; j++) {
-//					if (j>0) {
-//						if (parcours.get(j).getIdOrigine() == parcours.get(j-1).getIdDestination()) {
-//							fichier.write("\t\t- "+parcours.get(j).getNomRue() + "\n");
-//						} else {
-//							System.err.println("Erreur lors de la lecture des troncons de chemins");
-//						}
-//					} else {
-//						fichier.write("\t\t- "+parcours.get(j).getNomRue() + "\n");
-//					}
-//				}
 				fichier.write("-----------------------------\n");
 			}
-			fichier.flush();
-			fichier.close();
-			return true;
 		} catch ( IOException ioe) {
 			ioe.printStackTrace();
 			return false;
 		}
 		finally {
-			try {
-				fichier.close();
-
-			}catch (Exception ex) {}
+                    try {
+			fichier.flush();
+                        fichier.close();
+                        return true;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        return false;
+                    }
 		}
 	}
 
@@ -98,13 +88,14 @@ public class ImprimerFdr {
 	/**
 	 * 
 	 * @param args
-     */
+         */
 	public static void main(String[] args) throws ParseurException{
 		ZoneGeographique zone = Parseur.lirePlan("./src/main/resources/plan10x10.xml");
 		List<PlageHoraire> plage = Parseur.lireLivraison("./src/main/resources/livraison10x10-1.xml", zone);
 		Tournee tournee = new Tournee(zone);
 		tournee.setPlagesHoraire(plage);
 		tournee.solve(1000);
+                zone.setTournee(tournee);
 		ecrireFichier(zone);
 	}
 
@@ -113,7 +104,7 @@ public class ImprimerFdr {
 	 */
 	@SuppressWarnings("deprecation")
 	public static String getHeure(Date date) {
-		return date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+		return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 	}
 
 }
