@@ -318,6 +318,7 @@ public class Fenetre extends JFrame {
      * @param time 
      */
     private void calculerTournee(){
+        System.out.println("Controleur.getInstance().getZone().getTournee().getCheminsResultats().size() : " + Controleur.getInstance().getZone().getTournee().getCheminsResultats().size());
         Controleur.getInstance().CalculerTournee();
         conteneurDroite.setEtatBtnAddNoeud(0);
     }

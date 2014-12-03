@@ -28,9 +28,20 @@ public class Chemin {
         for(Troncon Tr : oldChemin.troncons){
             troncons.add(new Troncon(Tr));
         }
-        origine = new LivraisonGraphVertex(oldChemin.origine, this);
-        destination = new LivraisonGraphVertex(oldChemin.destination, this);
+        origine = new LivraisonGraphVertex(oldChemin.origine, this, true);
+        destination = new LivraisonGraphVertex(oldChemin.destination, this, false);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Chemin){
+            Chemin Ch = (Chemin)o;
+            return (origine.equals(Ch.origine) && destination.equals(Ch.origine));
+        }
+        return super.equals(o); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
     public void addTroncon(Troncon unTroncon){
         this.troncons.add(unTroncon);

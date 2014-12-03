@@ -32,6 +32,7 @@ public class CalculerTourneeCommand implements Command{
         this.time = time;
         this.tournee = tournee;
         chemins = tournee.getCheminsResultats();
+        System.out.println("chemins.size() : " + chemins.size());
     }
 
     @Override

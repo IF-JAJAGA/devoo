@@ -32,22 +32,31 @@ public class LivraisonGraphVertex {
     /**
      * Constructeur par copie.
      * @param old
+     * @param cheminAppelant
+     * @param isOrigine true si l'objet que l'on construit est à l'origine du chemin cheminAppelant.
      */
-    public LivraisonGraphVertex(LivraisonGraphVertex old, Chemin cheminAppelant){
+    public LivraisonGraphVertex(LivraisonGraphVertex old, Chemin cheminAppelant, boolean isOrigine){
         estEntrepot = old.estEntrepot;
         idNoeud = old.idNoeud;
         sortants = new ArrayList<>();
         for(Chemin Chs : old.sortants){
             
-            if(Chs.getOrigine().getIdNoeud() == idNoeud){
+            if(isOrigine && Chs.getOrigine().getIdNoeud() == idNoeud){
                 sortants.add(cheminAppelant);
-            } else {
-                System.out.println("old.getIdNoeud() : " + old.getIdNoeud());
-            System.out.println("Chs.getOrigine().getIdNoeud() : " + Chs.getDestination());
-                sortants.add(new Chemin(Chs));
-            }
+            } 
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof LivraisonGraphVertex){
+            LivraisonGraphVertex LGV = (LivraisonGraphVertex)o;
+            return idNoeud==LGV.idNoeud;
+        }
+        return super.equals(o); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
     public int getIdNoeud() {
         return idNoeud;

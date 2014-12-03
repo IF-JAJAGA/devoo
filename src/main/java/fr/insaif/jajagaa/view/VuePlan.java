@@ -298,6 +298,7 @@ public class VuePlan extends JPanel{
     }
     
     /**
+     * Deprecated TODO Jérôme
      * Ajoute les troncons à dessiner.
      * @param PL 
      */
