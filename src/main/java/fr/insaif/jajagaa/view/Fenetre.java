@@ -49,7 +49,7 @@ public class Fenetre extends JFrame {
         JMenuItem importPlan, importLivr, imprimer, annuler, refaire, quit;
         
         //On crée un nouveau sélecteur de fichier
-        final JFileChooser fc = new JFileChooser();
+        final JFileChooser fc = new JFileChooser("./src/main/resources");
         
         private VueNoeud vNAAjouter;
         private VueNoeud vNAvant;

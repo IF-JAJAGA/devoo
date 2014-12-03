@@ -10,9 +10,13 @@ import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 import fr.insaif.jajagaa.view.Fenetre;
+import java.io.File;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,6 +40,12 @@ public class Controleur {
     }
     
     private Controleur() {
+        
+        try {
+            System.out.println((new File(".")).getCanonicalPath());
+        } catch (IOException ex) {
+            Logger.getLogger(Controleur.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Fenetre.getInstance();
     }
     
