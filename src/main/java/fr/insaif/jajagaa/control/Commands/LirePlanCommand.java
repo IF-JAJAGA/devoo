@@ -50,7 +50,7 @@ public class LirePlanCommand implements Command{
 
     @Override
     public void undo() {
-        zone = new ZoneGeographique(zoneAvant);
+        zone = (zoneAvant==null) ? null : new ZoneGeographique(zoneAvant);
     }
 
     public ZoneGeographique getZone() {
