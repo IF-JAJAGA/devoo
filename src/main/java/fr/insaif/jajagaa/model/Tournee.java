@@ -290,19 +290,19 @@ public class Tournee {
      */
     public boolean ajouterPointDeLivraison(Noeud noeudALivrer, int idClient, Livraison livraisonAvant) {
         // Recherche de la plage horaire de precedent
-//        PlageHoraire plageInsertion = null;
-//        int maxId = 0;
-//        for (PlageHoraire plage : this.getPlagesHoraire()) {
-//            for (Livraison livraison : plage.getLivraisons()) {
-//                if (livraison == livraisonAvant) {
-//                    plageInsertion = plage;
-//                }
-//                maxId = livraison.getId() > maxId ? livraison.getId() : maxId;
-//            }
-//        }
-//
-//        this.zone.modifierNoeudEnLivraison(noeudALivrer.getId(), new Livraison(noeudALivrer, ++maxId, idClient));
-//        Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudId(noeudALivrer.getId());
+        PlageHoraire plageInsertion = null;
+        int maxId = 0;
+        for (PlageHoraire plage : this.getPlagesHoraire()) {
+            for (Livraison livraison : plage.getLivraisons()) {
+                if (livraison == livraisonAvant) {
+                    plageInsertion = plage;
+                }
+                maxId = livraison.getId() > maxId ? livraison.getId() : maxId;
+            }
+        }
+
+        this.zone.modifierNoeudEnLivraison(noeudALivrer.getId(), new Livraison(noeudALivrer, ++maxId, idClient, plageInsertion));
+        Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudId(noeudALivrer.getId());
 
         
         System.out.println("début de ajouterPointDeLivraison");
@@ -310,7 +310,7 @@ public class Tournee {
         int i;
         for (i=0; i<cheminsResultats.size();i++) {
             if (cheminsResultats.get(i).getOrigine().getIdNoeud() == livraisonAvant.getId()){
-//                ajouterMilieuTournee(i);
+                ajouterMilieuTournee(i, noeudALivrer, livraisonAvant);
                 i = cheminsResultats.size();
             }
             else if (cheminsResultats.get(i).getDestination().getIdNoeud() == (livraisonAvant.getId()) ){
