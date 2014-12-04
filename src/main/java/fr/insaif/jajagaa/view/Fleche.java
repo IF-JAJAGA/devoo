@@ -7,6 +7,7 @@ package fr.insaif.jajagaa.view;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.geom.Path2D;
 import static java.lang.Math.abs;
 
@@ -33,49 +34,50 @@ public class Fleche {
         
         float dg = (float) Math.sqrt(Math.pow(xg, 2) + Math.pow(yg, 2));
         
-        float dp = 25.0f;   //Longueur de la fleche projetée.
+        float dp = 15.0f;   //Longueur de la fleche projetée.
         
         float y = (yg * dp) / dg;
         
         double alpha = Math.atan(xg / yg);
-        float x = (float) (y * Math.tan((Math.PI/4) - alpha));
+        float x = (float) (y * Math.tan((Math.PI/12) - alpha));
         
         
-        Path2D.Float path = new Path2D.Float();
+        Graphics2D g2 = (Graphics2D) g;
         
+        Polygon polygon = new Polygon();
         if(xArrivee >= xDepart){
             if(yArrivee >= yDepart){
                 
                 //Flèche vers le bas à droite
-                path.moveTo ( xArrivee+x, yArrivee-y );
-                path.lineTo ( xArrivee, yArrivee );
-                path.lineTo ( xArrivee - y, yArrivee-x );
+                polygon.addPoint((int) (xArrivee+x), (int) (yArrivee-y));
+                polygon.addPoint((int) (xArrivee), (int) (yArrivee));
+                polygon.addPoint((int) (xArrivee-y), (int) (yArrivee-x));
                 
             }
             else{
                 //Fleche vers le haut à droite
-                path.moveTo ( xArrivee+x, yArrivee+y );
-                path.lineTo ( xArrivee, yArrivee );
-                path.lineTo ( xArrivee - y, yArrivee+x );
+                polygon.addPoint((int) (xArrivee+x), (int) (yArrivee+y));
+                polygon.addPoint((int) (xArrivee), (int) (yArrivee));
+                polygon.addPoint((int) (xArrivee-y), (int) (yArrivee+x));
             }
         }
         else {
             if(yArrivee >= yDepart){
                 //Flèche vers le bas à gauche
-                path.moveTo ( xArrivee-x, yArrivee-y );
-                path.lineTo ( xArrivee, yArrivee );
-                path.lineTo ( xArrivee + y, yArrivee-x );
+                polygon.addPoint((int) (xArrivee-x), (int) (yArrivee-y));
+                polygon.addPoint((int) (xArrivee), (int) (yArrivee));
+                polygon.addPoint((int) (xArrivee+y), (int) (yArrivee-x));
             }
             else{
                 //Fleche vers le haut à gauche
-                path.moveTo ( xArrivee-x, yArrivee+y );
-                path.lineTo ( xArrivee, yArrivee );
-                path.lineTo ( xArrivee + y, yArrivee+x );
+                polygon.addPoint((int) (xArrivee-x), (int) (yArrivee+y));
+                polygon.addPoint((int) (xArrivee), (int) (yArrivee));
+                polygon.addPoint((int) (xArrivee+y), (int) (yArrivee+x));
             }
         }
         
-        g.setColor ( Color.BLUE );
-        g.draw ( path );
+         g2.setColor ( Color.MAGENTA );
+         g2.fillPolygon(polygon);
         
         
         
