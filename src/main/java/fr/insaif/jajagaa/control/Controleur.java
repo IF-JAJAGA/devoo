@@ -37,7 +37,7 @@ public class Controleur {
     }
     
     /**
-     * Méthode permettant de récupérer l'instance de la fenêtre associée au contrôleur
+     * Constructeur de Controleur qui instancie la fenêtre pour la vue.
      */
     private Controleur() {
         Fenetre.getInstance();
