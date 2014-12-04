@@ -34,12 +34,12 @@ public class Fleche {
         
         float dg = (float) Math.sqrt(Math.pow(xg, 2) + Math.pow(yg, 2));
         
-        float dp = 15.0f;   //Longueur de la fleche projetée.
+        float dp = 20.0f;   //Longueur de la fleche projetée.
         
         float y = (yg * dp) / dg;
         
         double alpha = Math.atan(xg / yg);
-        float x = (float) (y * Math.tan((Math.PI/12) - alpha));
+        float x = (float) (y * Math.tan((Math.PI/6) - alpha));
         
         
         Graphics2D g2 = (Graphics2D) g;
