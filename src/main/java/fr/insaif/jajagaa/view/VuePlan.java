@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -38,6 +39,17 @@ public class VuePlan extends JPanel{
      * Les 2 attributs ci-dessous donnent des informations sur les données dans la vue.
      */
     private VueNoeud vNSelectionne = null;
+    
+    private final List<Color> colors  =  new  ArrayList<Color>(){{
+        add(Color.CYAN);
+        add(Color.YELLOW);
+        add(Color.PINK);
+        add(Color.WHITE);
+        add(Color.BLACK);
+        add(Color.LIGHT_GRAY);
+    }};
+    
+    
     private boolean livraisonsPresentes ;
     
     public void setTournee(Tournee tournee){
@@ -259,9 +271,14 @@ public class VuePlan extends JPanel{
      * @param listNoeuds 
      */
     private void ajouterNoeuds(Noeud entrepot, List<Noeud> listNoeuds){
+        PlageHoraire PL = null;
+        Color c = null;
+        int i  = 0;
         for(Noeud noeud : listNoeuds) {
             if(noeud instanceof Livraison){
-                if(!livraisonsPresentes)    livraisonsPresentes = true;
+                if(!livraisonsPresentes){
+                    livraisonsPresentes = true;
+                }
                 Livraison liv = (Livraison)noeud;
                 if(liv.getXMetre()>XVille){
                     XVille = liv.getXMetre();
@@ -270,7 +287,12 @@ public class VuePlan extends JPanel{
                 {
                     YVille = liv.getYMetre();
                 }
-                vueNoeuds.add(new VueNoeud(liv, Color.YELLOW));
+                if ((PL== null) || (liv.getPlage().compareTo(PL) !=0)){
+                    c = colors.get(i);
+                    i++;
+                    PL = liv.getPlage();
+                }
+                vueNoeuds.add(new VueNoeud(liv, c));
                 List<Troncon> listTroncon = liv.getSortants();
                 for(Troncon troncon : listTroncon){
                     vueTroncons.add(new VueTroncon(troncon));
