@@ -142,12 +142,14 @@ public class Fenetre extends JFrame {
         importPlan.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                choisirFichierPlan();
-                if(Controleur.getInstance().getZone().getNoeuds() != null && !Controleur.getInstance().getZone().getNoeuds().isEmpty()){
-                    importLivr.setEnabled(true);
-                }
-                else{
-                    importLivr.setEnabled(false);
+                if(importPlan.isEnabled()){
+                    choisirFichierPlan();
+                    if(Controleur.getInstance().getZone().getNoeuds() != null && !Controleur.getInstance().getZone().getNoeuds().isEmpty()){
+                        importLivr.setEnabled(true);
+                    }
+                    else{
+                        importLivr.setEnabled(false);
+                    }
                 }
             }
             
@@ -156,14 +158,16 @@ public class Fenetre extends JFrame {
         importLivr.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                choisirFichierLivraisons();
-                if(Controleur.getInstance().getZone().getTournee().getPlagesHoraire() != null 
-                        && !Controleur.getInstance().getZone().getTournee().getPlagesHoraire().isEmpty()
-                        /*&& Controleur.getInstance().getZone().getTournee() !=null*/){
-                    conteneurDroite.getBtnCalculLivraison().setEnabled(true);
-                }
-                else{
-                    conteneurDroite.getBtnCalculLivraison().setEnabled(false);
+                if(importLivr.isEnabled()){
+                    choisirFichierLivraisons();
+                    if(Controleur.getInstance().getZone().getTournee().getPlagesHoraire() != null 
+                            && !Controleur.getInstance().getZone().getTournee().getPlagesHoraire().isEmpty()
+                            /*&& Controleur.getInstance().getZone().getTournee() !=null*/){
+                        conteneurDroite.getBtnCalculLivraison().setEnabled(true);
+                    }
+                    else{
+                        conteneurDroite.getBtnCalculLivraison().setEnabled(false);
+                    }
                 }
             }
             
@@ -173,12 +177,14 @@ public class Fenetre extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if(Controleur.getInstance().lancerImpression()){
-                    JOptionPane.showMessageDialog(null, "L'impression a été effectuée avec succès.", "Impression terminée", JOptionPane.INFORMATION_MESSAGE);
+                if(imprimer.isEnabled()){
+                    if(Controleur.getInstance().lancerImpression()){
+                        JOptionPane.showMessageDialog(null, "L'impression a été effectuée avec succès.", "Impression terminée", JOptionPane.INFORMATION_MESSAGE);
 
-                }else{
-                    JOptionPane.showMessageDialog(null, "Il y a eu un problème lors de l'impression.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Il y a eu un problème lors de l'impression.", "Erreur", JOptionPane.ERROR_MESSAGE);
 
+                    }
                 }
             }
         });
@@ -187,18 +193,20 @@ public class Fenetre extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Controleur.getInstance().undo();
-                if(Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty()){
-                    conteneurDroite.getBtnCalculLivraison().setEnabled(false);
-                }
-                else{
-                    conteneurDroite.getBtnCalculLivraison().setEnabled(true);
-                }
-                if(Controleur.getInstance().getZone().getTournee().getCheminsResultats() == null 
-                        || Controleur.getInstance().getZone().getTournee().getCheminsResultats().isEmpty()){
-                    imprimer.setEnabled(false);
-                }else{
-                    imprimer.setEnabled(true);
+                if(annuler.isEnabled()){
+                    Controleur.getInstance().undo();
+                    if(Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty()){
+                        conteneurDroite.getBtnCalculLivraison().setEnabled(false);
+                    }
+                    else{
+                        conteneurDroite.getBtnCalculLivraison().setEnabled(true);
+                    }
+                    if(Controleur.getInstance().getZone().getTournee().getCheminsResultats() == null 
+                            || Controleur.getInstance().getZone().getTournee().getCheminsResultats().isEmpty()){
+                        imprimer.setEnabled(false);
+                    }else{
+                        imprimer.setEnabled(true);
+                    }
                 }
             }
         });
@@ -207,18 +215,27 @@ public class Fenetre extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Controleur.getInstance().redo();
-                if(Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty()){
-                    conteneurDroite.getBtnCalculLivraison().setEnabled(false);
-                }
-                else{
-                    conteneurDroite.getBtnCalculLivraison().setEnabled(true);
-                }
-                if(Controleur.getInstance().getZone().getTournee().getCheminsResultats() == null 
-                        || Controleur.getInstance().getZone().getTournee().getCheminsResultats().isEmpty()){
-                    imprimer.setEnabled(false);
-                }else{
-                    imprimer.setEnabled(true);
+                if(refaire.isEnabled()){
+                    Controleur.getInstance().redo();
+                    //Grisage BtnCalculLivraison avec redo
+                    if(Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty() 
+                            || !Controleur.getInstance().getZone().getTournee().getCheminsResultats().isEmpty()){
+                        conteneurDroite.getBtnCalculLivraison().setEnabled(false);
+                    }
+                    else{
+                        conteneurDroite.getBtnCalculLivraison().setEnabled(true);
+                    }
+
+                    //Grisage imprimer avec redo
+                    if(Controleur.getInstance().getZone().getTournee().getCheminsResultats() == null 
+                            || Controleur.getInstance().getZone().getTournee().getCheminsResultats().isEmpty()){
+                        imprimer.setEnabled(false);
+                    }else{
+                        imprimer.setEnabled(true);
+                    }
+
+                    //Grisage BtnAjouterLivraison
+                            //TODO
                 }
             }
         });
@@ -254,10 +271,13 @@ public class Fenetre extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                calculerTournee();
-                imprimer.setEnabled(true);
-                conteneurDroite.getBtnCalculLivraison().setEnabled(false);
-                conteneurDroite.getBtnAddNoeud().setEnabled(false);
+                if(conteneurDroite.getBtnCalculLivraison().isEnabled()){
+                    calculerTournee();
+                    //TODO
+                    imprimer.setEnabled(true);
+                    conteneurDroite.getBtnCalculLivraison().setEnabled(false);
+                    conteneurDroite.getBtnAddNoeud().setEnabled(false);
+                }
             }
         });
         
@@ -266,7 +286,9 @@ public class Fenetre extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                traitementAjoutLivraison();
+                if(conteneurDroite.getBtnAddNoeud().isEnabled()){
+                    traitementAjoutLivraison();
+                }
             }
 
         });
@@ -276,7 +298,9 @@ public class Fenetre extends JFrame {
             
             @Override
             public void mouseClicked(MouseEvent me){
-                traitementSupprLivraison();
+                if(conteneurDroite.getBtnSupNoeud().isEnabled()){
+                    traitementSupprLivraison();
+                }
             }
         });
         
