@@ -68,9 +68,9 @@ public class Fleche {
             }
             else{
                 //Fleche vers le haut à gauche
-                path.moveTo ( xArrivee+x, yArrivee+y );
+                path.moveTo ( xArrivee-x, yArrivee+y );
                 path.lineTo ( xArrivee, yArrivee );
-                path.lineTo ( xArrivee - y, yArrivee+x );
+                path.lineTo ( xArrivee + y, yArrivee+x );
             }
         }
         
