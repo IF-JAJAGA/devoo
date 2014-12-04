@@ -13,8 +13,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -38,7 +41,20 @@ public class VuePlan extends JPanel{
      * Les 2 attributs ci-dessous donnent des informations sur les données dans la vue.
      */
     private VueNoeud vNSelectionne = null;
+    
+    private final List<Color> colors  =  new  ArrayList<Color>(){{
+        add(Color.CYAN);
+        add(Color.YELLOW);
+        add(Color.PINK);
+        add(Color.WHITE);
+        add(Color.BLACK);
+        add(Color.LIGHT_GRAY);
+    }};
+    private final Map<PlageHoraire,Color>  colorsPL = new HashMap<>();
+    
+    
     private boolean livraisonsPresentes ;
+    private final List<Livraison> livraisons  = new ArrayList<>();
     
     public void setTournee(Tournee tournee){
         vueTournee.setTourneeModel(tournee);
@@ -98,6 +114,9 @@ public class VuePlan extends JPanel{
                 g2.setStroke(new BasicStroke(5));
                 g2.setColor(Color.BLUE);
                 g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
+                
+                g2.setStroke(new BasicStroke(3));
+                new Fleche(vTr).draw(g2);
             }
         }
         
@@ -182,11 +201,16 @@ public class VuePlan extends JPanel{
     	
     	this.paint(getGraphics());
     }
-     
+     /**
+     *
+     * @param noeuds
+     * @param troncons
+     * @param livraisons
+     */
     public VuePlan (List<Noeud> noeuds, List<Troncon> troncons, List<Livraison> livraisons) {
         //TODO 
     }
-    
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     
@@ -243,6 +267,13 @@ public class VuePlan extends JPanel{
             return;
         }
         
+        List<PlageHoraire> listPl = Controleur.getInstance().getPlagesHoraire();
+        int i =0;
+        for(PlageHoraire PL : listPl){
+            colorsPL.put(PL,colors.get(i));
+            i++;
+        }
+        
         ajouterNoeuds(zoneGeo.getEntrepot(), zoneGeo.getNoeuds());
 //        livraisonsPresentes = ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
         ajouterTournee(zoneGeo.getTournee());
@@ -256,9 +287,12 @@ public class VuePlan extends JPanel{
      * @param listNoeuds 
      */
     private void ajouterNoeuds(Noeud entrepot, List<Noeud> listNoeuds){
+        Color c;
         for(Noeud noeud : listNoeuds) {
             if(noeud instanceof Livraison){
-                if(!livraisonsPresentes)    livraisonsPresentes = true;
+                if(!livraisonsPresentes){
+                    livraisonsPresentes = true;
+                }
                 Livraison liv = (Livraison)noeud;
                 if(liv.getXMetre()>XVille){
                     XVille = liv.getXMetre();
@@ -267,7 +301,8 @@ public class VuePlan extends JPanel{
                 {
                     YVille = liv.getYMetre();
                 }
-                vueNoeuds.add(new VueNoeud(liv, Color.YELLOW));
+                c = colorsPL.get(liv.getPlage());
+                vueNoeuds.add(new VueNoeud(liv, c));
                 List<Troncon> listTroncon = liv.getSortants();
                 for(Troncon troncon : listTroncon){
                     vueTroncons.add(new VueTroncon(troncon));
