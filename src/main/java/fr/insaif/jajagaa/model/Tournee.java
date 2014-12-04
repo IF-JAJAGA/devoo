@@ -191,9 +191,7 @@ public class Tournee {
                     Livraison currentLivraison = null;
                     try{
                     	currentLivraison = ((Livraison) zone.getNoeudById(currentVertex.getIdNoeud()));
-                    } catch (Exception e) {
-                    	System.err.println("JAJAGA");
-                    }
+                    } catch (Exception e) {  }
 
                     // Recherche de la plage horaire d'une livraison
                     for (PlageHoraire plage : this.getPlagesHoraire()) {
@@ -241,7 +239,6 @@ public class Tournee {
                 this.getCheminsResultats().get(this.getCheminsResultats().size() - 1).getDestination(),
                 this.getCheminsResultats().get(0).getOrigine()));
             
-        //TODO faire ici les horaires
         calculerHeuresLivraison();
     }
     
@@ -255,11 +252,9 @@ public class Tournee {
         for(Chemin chemin : this.getCheminsResultats()) {
             listTroncons = chemin.getTroncons();
             tempsSecondes = 0;
-            int metres = 0;
             for(Troncon troncon : listTroncons) {
                 vitesseKmH = ((troncon.getVitesse()*10)/3.6);
                 tempsSecondes += (troncon.getLongueurMetre()/(vitesseKmH));
-                metres+=troncon.getLongueurMetre();
             }
             Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
             if(noeudDest.getId() != zone.getEntrepot().getId()){
