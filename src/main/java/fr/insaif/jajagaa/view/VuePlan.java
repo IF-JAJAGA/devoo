@@ -43,6 +43,8 @@ public class VuePlan extends JPanel{
      */
     private VueNoeud vNSelectionne = null;
     
+    private boolean isGray = true;
+    
     private final List<Color> colors  =  new  ArrayList<Color>(){{
         add(Color.CYAN);
         add(Color.YELLOW);
@@ -348,5 +350,15 @@ public class VuePlan extends JPanel{
 
     boolean getLivraisonsPresente() {
         return livraisonsPresentes;
+    }
+
+    void changeBackGround() {
+        if(isGray){
+            setBackground(Color.WHITE);
+        }
+        else{
+            setBackground(Color.GRAY);
+        }
+        isGray = !isGray;
     }
 }

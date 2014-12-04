@@ -48,7 +48,7 @@ public class Fenetre extends JFrame {
         //Barre de menu
         private final JMenuBar barreMenu;
         private final JMenu fichier, apparence, actions;
-        JMenuItem importPlan, importLivr, imprimer, annuler, refaire, quit;
+        JMenuItem importPlan, importLivr, imprimer, changeBG, annuler, refaire, quit;
         
         //On crée un nouveau sélecteur de fichier
         final JFileChooser fc = new JFileChooser("./src/main/resources");
@@ -100,6 +100,11 @@ public class Fenetre extends JFrame {
         quit = new JMenuItem("Quitter", KeyEvent.VK_T);
         quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
         fichier.add(quit);
+        
+        changeBG = new JMenuItem("Changer la couleur du fond d'écran", KeyEvent.VK_T);
+        changeBG.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.CTRL_MASK));
+        changeBG.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+        apparence.add(changeBG);
         
         annuler = new JMenuItem("Annuler", KeyEvent.VK_T);
         annuler.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
@@ -259,6 +264,13 @@ public class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 close();
+            }
+        });
+        
+        changeBG.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                vuePlan.changeBackGround();
             }
         });
         
