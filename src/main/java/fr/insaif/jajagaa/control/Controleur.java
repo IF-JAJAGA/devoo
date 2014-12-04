@@ -36,6 +36,9 @@ public class Controleur {
         return controleur;
     }
     
+    /**
+     * Méthode permettant de récupérer l'instance de la fenêtre associée au contrôleur
+     */
     private Controleur() {
         Fenetre.getInstance();
     }
@@ -56,19 +59,24 @@ public class Controleur {
      */
     private ElementListeCourante commandeCourante = new ElementListeCourante();
 
+    /**
+     * Récupérateur de la zoneVierge de l'instance de Controleur
+     * @return 
+     */
     public ZoneGeographique getZoneVierge() {
         return zoneVierge;
     }
 
+    /**
+     * Mutateur de l'attribut ZoneVierge du controleur
+     * @param zoneVierge 
+     */
     public void setZoneVierge(ZoneGeographique zoneVierge) {
         this.zoneVierge = zoneVierge;
     }
-    
-    
-    
 
     /**
-     * Getteur de ZoneGeographique 
+     * Accesseur de ZoneGeographique 
      * @return ZoneGeographique associée au controleur en question
      */
     public ZoneGeographique getZone() {
@@ -107,7 +115,6 @@ public class Controleur {
             return;
         }
         creationCommande(new ElementListeCourante(new LireLivraisonsCommand(zone, fichierLivraison)));
-        
         execute();
     }
     
@@ -146,6 +153,10 @@ public class Controleur {
         execute();
     }
     
+    /**
+     * Méthode prenant une Livraison en paramètre et créant une commande pour la suppression de la livraison.
+     * @param noeudASup 
+     */
     public void supprimerPointLivraison(Noeud noeudASup) {
         System.out.println("Suppression Point Livraison");
         creationCommande(new ElementListeCourante(new SuppressionLivraisonCommande(zone,noeudASup)));
@@ -182,9 +193,6 @@ public class Controleur {
             Fenetre.getInstance().actualiserPlan();
             System.out.println("Fin de calculTournee : " + zone.getTournee().getCheminsResultats());
         }
-        else {
-            //Autres types de commande
-        }
     }
     
     /**
@@ -214,9 +222,6 @@ public class Controleur {
         else if(commande instanceof CalculerTourneeCommand){
             zone.getTournee().setCheminsResultats(((CalculerTourneeCommand)commande).getChemins());
             Fenetre.getInstance().actualiserPlan();
-        }
-        else {
-            //Autres types de commande
         }
         
         commandeCourante = commandeCourante.previous;
