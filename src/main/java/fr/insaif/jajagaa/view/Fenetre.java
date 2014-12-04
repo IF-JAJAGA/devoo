@@ -195,18 +195,29 @@ public class Fenetre extends JFrame {
             public void actionPerformed(ActionEvent ae) {
                 if(annuler.isEnabled()){
                     Controleur.getInstance().undo();
-                    if(Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty()){
+                    
+                    //Grisage BtnCalculLivraison
+                    if(Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty() 
+                            || !Controleur.getInstance().getZone().getTournee().getCheminsResultats().isEmpty()){
                         conteneurDroite.getBtnCalculLivraison().setEnabled(false);
                     }
                     else{
                         conteneurDroite.getBtnCalculLivraison().setEnabled(true);
                     }
+                    
+                    //Grisage imprimer
                     if(Controleur.getInstance().getZone().getTournee().getCheminsResultats() == null 
                             || Controleur.getInstance().getZone().getTournee().getCheminsResultats().isEmpty()){
                         imprimer.setEnabled(false);
                     }else{
                         imprimer.setEnabled(true);
                     }
+                    
+                    //Grisage BtnAjouterLivraison
+                    conteneurDroite.getBtnAddNoeud().setEnabled(false); //Toujours le désactiver car quand on fait un undo, pas de noeud sélectionné
+                    
+                    //Grisage BtnSupprimerLivraison
+                    conteneurDroite.getBtnSupNoeud().setEnabled(false); //Toujours le désactiver car quand on fait un undo, pas de noeud sélectionné
                 }
             }
         });
@@ -314,7 +325,8 @@ public class Fenetre extends JFrame {
                 
                 VueNoeud vN = vuePlan.noeudEstClique(e.getPoint());
                 if(((vN == null || vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON) && vNAAjouter == null) 
-                        || (Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty())){
+                        || (Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty())
+                        || Controleur.getInstance().getZone().getTournee().getCheminsResultats().isEmpty()){
                     conteneurDroite.getBtnAddNoeud().setEnabled(false);
                 }
                 else{
