@@ -61,17 +61,6 @@ public class VueTournee {
     }
 
     /**
-     * Ajoute un point de livraison à la tournée en recalculant localement
-     * @param aAjouter Le noeud qui doit devenir un point de livraison
-     * @param pointLivraisonAvant Point de livraison après lequel insérer aAjouter
-     * @return La tournée modifiée
-     */
-    public Tournee ajouterPointLivraison(Noeud aAjouter, Noeud pointLivraisonAvant) {
-        // TODO
-        throw new UnsupportedOperationException("A IMPLEMENTER");
-    }
-
-    /**
      * Tournée du modèle que VueTournee implémente.
      * @return Tournée du modèle que VueTournee implémente.
      */

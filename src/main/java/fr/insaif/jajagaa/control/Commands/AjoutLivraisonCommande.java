@@ -22,14 +22,16 @@ public class AjoutLivraisonCommande implements Command {
     private ZoneGeographique zoneAvant;
     private ZoneGeographique zone;
     private ZoneGeographique zoneApres;
+    private int idClient;
     
     
-    public AjoutLivraisonCommande(ZoneGeographique zone, Noeud noeudAvant, Noeud noeudALivrer){
+    public AjoutLivraisonCommande(ZoneGeographique zone, int idClient, Noeud noeudAvant, Noeud noeudALivrer){
         this.zone = zone;
         this.noeudAvant = noeudAvant;
         this.noeudALivrer = noeudALivrer;
         this.noeudAvant  = noeudAvant;
         this.noeudALivrer = noeudALivrer;
+        this.idClient = idClient;
     }
     
     @Override
@@ -38,7 +40,7 @@ public class AjoutLivraisonCommande implements Command {
         if(zoneAvant == null){
             zoneAvant = new ZoneGeographique(zone);
             
-            ajoutOk = zone.getTournee().ajouterPointDeLivraison(noeudALivrer, 5, (Livraison) noeudAvant);
+            ajoutOk = zone.getTournee().ajouterPointDeLivraison(noeudALivrer, this.idClient, (Livraison) noeudAvant);
             System.out.println("zone.getTournee().getCheminsResultats().size() : " + zone.getTournee().getCheminsResultats().size());
             
             zoneApres = new ZoneGeographique(zone);

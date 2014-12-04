@@ -129,7 +129,18 @@ public class Controleur {
      */
     public void ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
         System.out.println("ajouterPointLivraison");
-        creationCommande(new ElementListeCourante(new AjoutLivraisonCommande(zone, noeudAvant, noeudMilieu)));
+        
+        int idClient = -1;
+        while(idClient <= 0) {
+            String rep = JOptionPane.showInputDialog(null, "Entrez le numéro du client", "Ajout d'une livraison", JOptionPane.QUESTION_MESSAGE);
+            try {
+                idClient = Integer.parseInt(rep);
+            }
+            catch(NumberFormatException e) {
+                idClient = -1;
+            }
+        }
+        creationCommande(new ElementListeCourante(new AjoutLivraisonCommande(zone, idClient, noeudAvant, noeudMilieu)));
         
         execute();
     }
