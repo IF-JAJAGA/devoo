@@ -23,12 +23,12 @@ public class LirePlanCommand implements Command{
     private ZoneGeographique zone;
     
     /**
-     * 
+     * ZoneGeographique servant de sauvegarde.
      */
     private ZoneGeographique zoneApres;
     
     /**
-     * 
+     * ZoneGeographique obtenu après nouvelle lecture.
      */
     private ZoneGeographique zoneAvant;
     

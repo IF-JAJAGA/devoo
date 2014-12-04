@@ -29,7 +29,7 @@ public class CalculerTourneeCommand implements Command{
     private final int time;
     
     /**
-     * 
+     * List<Chemin> servant de sauvegarde.
      */
     private List<Chemin> cheminsAvant;
     
@@ -39,7 +39,7 @@ public class CalculerTourneeCommand implements Command{
     private List<Chemin> chemins;
     
     /**
-     * 
+     * List<Chemin> obtenu après calcul de la Tournée.
      */
     private List<Chemin> cheminsApres;
     

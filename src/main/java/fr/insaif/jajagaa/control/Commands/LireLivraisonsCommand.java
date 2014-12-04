@@ -21,7 +21,7 @@ import java.util.List;
 public class LireLivraisonsCommand implements Command{
     
     /**
-     * 
+     * ZoneGeographique de sauvegarde.
      */
     private ZoneGeographique zoneAvant ;
     
@@ -31,12 +31,12 @@ public class LireLivraisonsCommand implements Command{
     private ZoneGeographique zone ;
     
     /**
-     * 
+     * ZoneGeographique obtenu après lecture des Livraisons.
      */
     private ZoneGeographique zoneApres ;
     
     /**
-     * String menant au fichier XML où on récupère les Livraisons
+     * String menant au fichier XML où on récupère les Livraisons.
      */
     private final String fichierLivraison;
 
