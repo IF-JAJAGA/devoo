@@ -116,6 +116,9 @@ class ListNoeudsRenderer extends JLabel implements ListCellRenderer{
             else if(vN.getPointDeLivraison() == VueNoeud.Etat.RETARD){
                 setText("Livraison retard" + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
             }
+            else if(vN.getCouleur() == Color.ORANGE){
+                setText("Entrepôt " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
+            }
             else{
                 setText("Noeud " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
             }

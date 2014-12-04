@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -129,6 +130,9 @@ public class VuePlan extends JPanel{
                 if (vN.getPointDeLivraison()==VueNoeud.Etat.LIVRAISON)
                 {
                     g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE_LIVRAISON/2, vN.getVueY()-VueNoeud.DIAMETRE_LIVRAISON/2, VueNoeud.DIAMETRE_LIVRAISON, VueNoeud.DIAMETRE_LIVRAISON);
+                }
+                else if (vN.getCouleur() == Color.ORANGE){
+                    g2.draw(new Rectangle2D.Double((vN.getVueX()-7.5),(vN.getVueY()-7.5),15,15));
                 }
                 else {
                     g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
