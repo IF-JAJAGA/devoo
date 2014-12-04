@@ -98,6 +98,9 @@ public class VuePlan extends JPanel{
                 g2.setStroke(new BasicStroke(5));
                 g2.setColor(Color.BLUE);
                 g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
+                
+                g2.setStroke(new BasicStroke(3));
+                new Fleche(vTr).draw(g2);
             }
         }
         
