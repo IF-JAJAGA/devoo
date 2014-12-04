@@ -258,7 +258,6 @@ public class Tournee {
                 this.getCheminsResultats().get(this.getCheminsResultats().size() - 1).getDestination(),
                 this.getCheminsResultats().get(0).getOrigine()));
             
-        //TODO faire ici les horaires
         calculerHeuresLivraison();
     }
     
