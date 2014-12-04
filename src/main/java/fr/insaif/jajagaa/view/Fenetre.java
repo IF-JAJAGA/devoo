@@ -235,7 +235,10 @@ public class Fenetre extends JFrame {
                     }
 
                     //Grisage BtnAjouterLivraison
-                            //TODO
+                    conteneurDroite.getBtnAddNoeud().setEnabled(false); //Toujours le désactiver car quand on fait un redo, pas de noeud sélectionné
+                    
+                    //Grisage BtnSupprimerLivraison
+                    conteneurDroite.getBtnSupNoeud().setEnabled(false); //Toujours le désactiver car quand on fait un redo, pas de noeud sélectionné
                 }
             }
         });
@@ -273,7 +276,7 @@ public class Fenetre extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if(conteneurDroite.getBtnCalculLivraison().isEnabled()){
                     calculerTournee();
-                    //TODO
+                    //TODO Amaury
                     imprimer.setEnabled(true);
                     conteneurDroite.getBtnCalculLivraison().setEnabled(false);
                     conteneurDroite.getBtnAddNoeud().setEnabled(false);
@@ -310,7 +313,8 @@ public class Fenetre extends JFrame {
                 super.mouseClicked(e);
                 
                 VueNoeud vN = vuePlan.noeudEstClique(e.getPoint());
-                if(((vN == null || vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON) && vNAAjouter == null) || (Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty())){
+                if(((vN == null || vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON) && vNAAjouter == null) 
+                        || (Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty())){
                     conteneurDroite.getBtnAddNoeud().setEnabled(false);
                 }
                 else{
