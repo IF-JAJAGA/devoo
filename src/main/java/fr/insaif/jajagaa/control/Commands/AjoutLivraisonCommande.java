@@ -33,13 +33,19 @@ public class AjoutLivraisonCommande implements Command {
      */
     private Noeud noeudALivrer;
     
+    /**
+     * 
+     */
     private ZoneGeographique zoneAvant;
     
     /**
-     * ZoneGeographique dans laquelle la Livraison devra être ajouté.
+     * ZoneGeographique dans laquelle la Livraison devra être ajoutée.
      */
     private ZoneGeographique zone;
     
+    /**
+     * 
+     */
     private ZoneGeographique zoneApres;
     
     /**
@@ -47,7 +53,13 @@ public class AjoutLivraisonCommande implements Command {
      */
     private final int idClient;
     
-    
+    /**
+     * Constructeur de l'ajout de livraison dans le design pattern Command
+     * @param zone où la Livraison sera ajoutée
+     * @param idClient qui sera associé à la Livraison
+     * @param noeudAvant Livraison qui précédera la nouvelle Livraison
+     * @param noeudALivrer attribué à la nouvelle Livraison
+     */
     public AjoutLivraisonCommande(ZoneGeographique zone, int idClient, Noeud noeudAvant, Noeud noeudALivrer){
         this.zone = zone;
         this.noeudAvant = noeudAvant;
