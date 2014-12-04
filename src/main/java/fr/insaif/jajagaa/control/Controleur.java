@@ -95,7 +95,6 @@ public class Controleur {
     /**
      * Méthode permettant de générer la zone géographique correspondant à la liste de noeuds listés dans le fichier xml passé en paramètre
      * @param fichierPlan
-     * @return 
      */
     public void lirePlan(String fichierPlan) {
         creationCommande(new ElementListeCourante(new LirePlanCommand(zone, fichierPlan)));
@@ -107,7 +106,6 @@ public class Controleur {
     /**
      * Méthode permettant de générer la liste des plages horaires contenant les ensembles de livraisons à réaliser
      * @param fichierLivraison
-     * @return 
      */
     public void lireLivraisons(String fichierLivraison) {
         if(zone == null){
@@ -120,7 +118,6 @@ public class Controleur {
     
     /**
      * Permet de créer la commande pour calculer la tournée.
-     * @param time 
      */
     public void CalculerTournee() {
         creationCommande(new ElementListeCourante(new CalculerTourneeCommand(zone.getTournee(), timeCalculMs)));
@@ -130,10 +127,8 @@ public class Controleur {
     
     /**
      * Méthode qui permet d'ajouter un point dans une tournee, juste après un autre point (spécifié)
-     * @param tourneeModel tournee que l'on veut modifier
      * @param noeudMilieu noeud que l'on veut ajouter à la tournee
      * @param noeudAvant noeud après lequel on veut ajouter noeudMilieu
-     * @return la tournee une fois qu'elle a été modifiée
      */
     public void ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
         System.out.println("ajouterPointLivraison");
@@ -292,6 +287,7 @@ public class Controleur {
     
     /**
      * Classe qui lance l'impresion de la feuille de route pour une tournnée
+     * @return booléen indiquant la réussite ou non de l'impression
      */
     public boolean lancerImpression() {
     	return ImprimerFdr.ecrireFichier(zone);

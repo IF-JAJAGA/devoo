@@ -10,7 +10,6 @@ import java.util.List;
 
 import fr.insaif.jajagaa.model.Chemin;
 import fr.insaif.jajagaa.model.Livraison;
-import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
@@ -84,9 +83,11 @@ public class ImprimerFdr {
 	}
 
 	/**
-	 * Fonction permettant de mettre l'heure au format sous lequel nous 
+         * Fonction permettant de mettre l'heure au format sous lequel nous 
          * voulons qu'il soit affiché dans la feuille de route 
-	 */
+         * @param date que nous voulons mettre au format souhaité
+         * @return 
+         */
 	@SuppressWarnings("deprecation")
 	public static String getHeure(Date date) {
 		return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();

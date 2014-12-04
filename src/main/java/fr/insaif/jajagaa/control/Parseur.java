@@ -33,7 +33,7 @@ public class Parseur{
     public static List<PlageHoraire> lireLivraison(String fichierEntree, ZoneGeographique zone) throws ParseurException{
         List<PlageHoraire> plageList = new ArrayList<PlageHoraire>();
         SAXBuilder builder = new SAXBuilder();
-        FileInputStream inputStream = null;
+        FileInputStream inputStream;
         try {
             inputStream = new FileInputStream(fichierEntree);            
             Document document = builder.build(inputStream);
@@ -88,7 +88,7 @@ public class Parseur{
      * @throws ParseurException 
      */
     public static ZoneGeographique lirePlan(String fichierEntree) throws ParseurException{
-        FileInputStream inputStream = null;
+        FileInputStream inputStream;
         List<Noeud> plan = new ArrayList<Noeud>();
         SAXBuilder builder = new SAXBuilder();
         try {
