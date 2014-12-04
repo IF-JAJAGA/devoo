@@ -358,8 +358,8 @@ public class Fenetre extends JFrame {
             if(vNAvant.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON ||
                    vNAvant.getPointDeLivraison() == VueNoeud.Etat.RETARD){
                 conteneurDroite.getBtnAddNoeud().setEnabled(false);
+                conteneurDroite.getBtnCalculLivraison().setEnabled(true);
                 //Appel
-                System.out.println("Ajouter point de livraison");
                 Controleur.getInstance().ajouterPointLivraison(vNAAjouter.getNoeudModele(), vNAvant.getNoeudModele());
                 conteneurDroite.setEtatBtnAddNoeud(0);
                 conteneurDroite.getBtnAddNoeud().setEnabled(true);
@@ -374,6 +374,7 @@ public class Fenetre extends JFrame {
             //Ne doit pas être une livraison + au moins un livraison doit être présente.
             if(vNAAjouter.getPointDeLivraison() == VueNoeud.Etat.RIEN && vuePlan.getLivraisonsPresente()){
                 conteneurDroite.setEtatBtnAddNoeud(1);
+                conteneurDroite.getBtnCalculLivraison().setEnabled(false);
             }else{
                 vNAAjouter = null;
             }

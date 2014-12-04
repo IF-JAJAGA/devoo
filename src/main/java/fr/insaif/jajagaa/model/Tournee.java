@@ -188,7 +188,12 @@ public class Tournee {
                 // Pour tous les points de livraison suivants, on ajoute à la liste ordonnée en mettant à jour l'horaire
                 for (int i = next[indexEntrepot]; i != indexEntrepot; i = next[i]) {
                     LivraisonGraphVertex currentVertex = vertices.get(i);
-                    Livraison currentLivraison = ((Livraison) zone.getNoeudById(currentVertex.getIdNoeud()));
+                    Livraison currentLivraison = null;
+                    try{
+                    	currentLivraison = ((Livraison) zone.getNoeudById(currentVertex.getIdNoeud()));
+                    } catch (Exception e) {
+                    	System.err.println("JAJAGA");
+                    }
 
                     // Recherche de la plage horaire d'une livraison
                     for (PlageHoraire plage : this.getPlagesHoraire()) {
