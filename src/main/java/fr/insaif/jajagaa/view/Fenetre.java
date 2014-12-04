@@ -118,7 +118,7 @@ public class Fenetre extends JFrame {
         
         this.setJMenuBar(barreMenu);
         addListeners();
-        setSize(new Dimension(1366,768));
+        setSize(new Dimension(1366, 768));
         importLivr.setEnabled(false);
         imprimer.setEnabled(false);
     }
@@ -290,14 +290,19 @@ public class Fenetre extends JFrame {
                     conteneurDroite.getBtnAddNoeud().setEnabled(true);
                 }
                 conteneurDroite.getListeNoeuds().SelectionnerNoeud(vN);
-                Tournee t = vuePlan.vueTournee.tourneeModel;
-                if(vN != null && vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON && !(t.getCheminsResultats().isEmpty())){
-                    conteneurDroite.setTextFieldText((Livraison)vN.getNoeudModele());
-                    if(vNAAjouter == null){
-                        conteneurDroite.getBtnSupNoeud().setEnabled(true);
+                if(vN != null && vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON){
+                    Tournee t = vuePlan.vueTournee.tourneeModel;
+                    if (!t.getCheminsResultats().isEmpty()) {
+                        conteneurDroite.setTextFieldText((Livraison)vN.getNoeudModele());
+                        if(vNAAjouter == null){
+                            conteneurDroite.getBtnSupNoeud().setEnabled(true);
+                        }
+                    } else {
+                        conteneurDroite.resetTextFieldText();
+                        conteneurDroite.getBtnSupNoeud().setEnabled(false);
                     }
                 }
-                else{
+                else {
                     conteneurDroite.resetTextFieldText();
                     conteneurDroite.getBtnSupNoeud().setEnabled(false);
                 }
