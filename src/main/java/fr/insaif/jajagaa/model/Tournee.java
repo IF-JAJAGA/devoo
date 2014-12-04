@@ -242,23 +242,19 @@ public class Tournee {
             	tempsSecondes += (troncon.getLongueurMetre()/(vitesseKmH));
             	metres+=troncon.getLongueurMetre();
             }
-            System.out.println(vitesseKmH+"---"+metres+"---"+tempsSecondes);
             Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
             if(noeudDest.getId() != zone.getEntrepot().getId()){
                 Livraison livraisonDest = (Livraison) noeudDest;
                 if(plage == null){
                     plage = livraisonDest.getPlage();
                     heureDebut.setTime(plage.getHeureDebut());
-                    System.out.println(heureDebut.getTime());
                 }
                 heureDebut.add(Calendar.SECOND, tempsSecondes);
-                System.out.println(heureDebut.getTime());
                 if (heureDebut.getTime().after(livraisonDest.getPlage().getHeureFin())){
                     throw new HorsPlageException();
                 } else if (heureDebut.getTime().before((livraisonDest.getPlage().getHeureDebut()))) {
                 	heureDebut.setTime(livraisonDest.getPlage().getHeureDebut());
                 }
-                System.out.println(heureDebut.getTime());
                 livraisonDest.setHeureLivraison(heureDebut.getTime());
                 heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
             }
@@ -329,7 +325,6 @@ public class Tournee {
         plageInsertion.getLivraisons().add(aAjouterLivraison);
 
         
-        System.out.println("début de ajouterPointDeLivraison");
         boolean trouveChemin = false;
         int i;
         for (i=0; i<cheminsResultats.size();i++) {
@@ -349,12 +344,10 @@ public class Tournee {
             //Calculer plus court chemin entre noeud Milieu et noeud Après
             Chemin cheminAprès = Dijkstra.plusCourtChemin(zone, lgvMilieu, lgvApres);
             //Supprimer le chemin
-            System.out.println("Taille avant : " + cheminsResultats);
             cheminsResultats.remove(i);
             //Ajouter les deux chemins crées à la place de celui supprimé
             cheminsResultats.add(i, cheminAvant);
             cheminsResultats.add(i+1, cheminAprès);
-            System.out.println("Taille après : " + cheminsResultats);
             this.graph.noeuds.add(lgvMilieu);
         
             
@@ -415,13 +408,11 @@ public class Tournee {
             
             Chemin chemin = Dijkstra.plusCourtChemin(zone, lgvOrigine, lgvDestination);
             
-            System.out.println("Avant cheminsResultats.size()" + cheminsResultats.size());
             cheminsResultats.remove(i);
             cheminsResultats.remove(i);
             
             cheminsResultats.add(i, chemin);
             graph.noeuds.remove(lgvMilieu);
-            System.out.println("Après cheminsResultats.size()" + cheminsResultats.size());
             return true;
         }
         return false;
