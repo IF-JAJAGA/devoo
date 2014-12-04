@@ -324,7 +324,9 @@ public class VuePlan extends JPanel{
     }
     
     private void ajouterTournee(Tournee tournee){
-        if(tournee.getCheminsResultats().isEmpty()) return;
+        if(tournee.getCheminsResultats().isEmpty()){
+            return;
+        }
         
         vueTournee = new VueTournee(tournee, Color.GREEN);
     }

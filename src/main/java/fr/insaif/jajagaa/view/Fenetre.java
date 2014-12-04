@@ -158,7 +158,8 @@ public class Fenetre extends JFrame {
             public void actionPerformed(ActionEvent e){
                 choisirFichierLivraisons();
                 if(Controleur.getInstance().getZone().getTournee().getPlagesHoraire() != null 
-                        && !Controleur.getInstance().getZone().getTournee().getPlagesHoraire().isEmpty()){
+                        && !Controleur.getInstance().getZone().getTournee().getPlagesHoraire().isEmpty()
+                        /*&& Controleur.getInstance().getZone().getTournee() !=null*/){
                     conteneurDroite.getBtnCalculLivraison().setEnabled(true);
                 }
                 else{
@@ -255,6 +256,8 @@ public class Fenetre extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 calculerTournee();
                 imprimer.setEnabled(true);
+                conteneurDroite.getBtnCalculLivraison().setEnabled(false);
+                conteneurDroite.getBtnAddNoeud().setEnabled(false);
             }
         });
         
