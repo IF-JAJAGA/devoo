@@ -48,6 +48,11 @@ public class ZoneGeographique {
         tournee = new Tournee(zone, this);
     }
     
+    /**
+     * Renvoie le nœud d'id donné en paramètre
+     * @param id L'id du nœud à renvoyer
+     * @return Le nœud d'id donné en paramètre
+     */
     public Noeud getNoeudById(int id){
         for(Noeud n : noeuds){
             if(n.getId() == id) return n;
@@ -55,7 +60,6 @@ public class ZoneGeographique {
         return null;
     }
     
-
     /**
      * Renvoie le nœud d'id donné en paramètre
      * @param id L'id du nœud à renvoyer

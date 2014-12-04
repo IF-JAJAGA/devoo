@@ -82,11 +82,6 @@ public class Chemin {
         }
         return cost;                 
     }
-    
-    public void recalculerHeuresLivraison() {
-        // TODO implémentation
-        throw new UnsupportedOperationException("TODO");
-    }
 
     public void setOrigine(LivraisonGraphVertex origine) {
         this.origine = origine;

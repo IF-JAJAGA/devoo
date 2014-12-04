@@ -222,14 +222,10 @@ public class Tournee {
      * TODO
      * @param vertices
      */
-    protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) throws HorsPlageException{
+    protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) throws HorsPlageException {
         int i = 0;
-        int tempsSecondes;
         LivraisonGraphVertex depart, arrivee;
-        List<Troncon> listTroncons;
-        PlageHoraire plage = null;
-        Calendar heureDebut = Calendar.getInstance();
-        double vitesseKmH=0;
+        
         while(i < (vertices.size()-1)) {
             depart = vertices.get(i);
             arrivee = vertices.get(i+1);
@@ -238,14 +234,32 @@ public class Tournee {
             if(chemin == null) throw new NullPointerException("Noeud sortant non trouvé");
             this.addCheminResultat(chemin);
             
-            //TODO faire ici les horaires
+            i++;
+        }
+
+        this.addCheminResultat(Dijkstra.plusCourtChemin(this.zone,
+                this.getCheminsResultats().get(this.getCheminsResultats().size() - 1).getDestination(),
+                this.getCheminsResultats().get(0).getOrigine()));
+            
+        //TODO faire ici les horaires
+        calculerHeuresLivraison();
+    }
+    
+    private void calculerHeuresLivraison() throws HorsPlageException {
+        int tempsSecondes;
+        List<Troncon> listTroncons;
+        PlageHoraire plage = null;
+        Calendar heureDebut = Calendar.getInstance();
+        double vitesseKmH=0;
+        
+        for(Chemin chemin : this.getCheminsResultats()) {
             listTroncons = chemin.getTroncons();
             tempsSecondes = 0;
             int metres = 0;
             for(Troncon troncon : listTroncons) {
-            	vitesseKmH = ((troncon.getVitesse()*10)/3.6);
-            	tempsSecondes += (troncon.getLongueurMetre()/(vitesseKmH));
-            	metres+=troncon.getLongueurMetre();
+                vitesseKmH = ((troncon.getVitesse()*10)/3.6);
+                tempsSecondes += (troncon.getLongueurMetre()/(vitesseKmH));
+                metres+=troncon.getLongueurMetre();
             }
             Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
             if(noeudDest.getId() != zone.getEntrepot().getId()){
@@ -258,17 +272,12 @@ public class Tournee {
                 if (heureDebut.getTime().after(livraisonDest.getPlage().getHeureFin())){
                     throw new HorsPlageException();
                 } else if (heureDebut.getTime().before((livraisonDest.getPlage().getHeureDebut()))) {
-                	heureDebut.setTime(livraisonDest.getPlage().getHeureDebut());
+                        heureDebut.setTime(livraisonDest.getPlage().getHeureDebut());
                 }
                 livraisonDest.setHeureLivraison(heureDebut.getTime());
                 heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
             }
-            i++;
         }
-
-        this.addCheminResultat(Dijkstra.plusCourtChemin(this.zone,
-                this.getCheminsResultats().get(this.getCheminsResultats().size() - 1).getDestination(),
-                this.getCheminsResultats().get(0).getOrigine()));
     }
 
     /**
@@ -312,7 +321,7 @@ public class Tournee {
      * @param livraisonAvant livraison après laquelle on doit ajouter noeudALivrer
      * @return la tournée une fois qu'elle a été modifiée.
      */
-    public boolean ajouterPointDeLivraison(Noeud noeudALivrer, int idClient, Livraison livraisonAvant) {
+    public boolean ajouterPointDeLivraison(Noeud noeudALivrer, int idClient, Livraison livraisonAvant) throws HorsPlageException {
         // Recherche de la plage horaire de precedent
         PlageHoraire plageInsertion = null;
         int maxId = 0;
@@ -365,6 +374,7 @@ public class Tournee {
              * il faudrait savoir à quelle heure on l'a ajoutée, et s'il le faut, recalculer
              * les heures de toutes les livraisons et dire celles qu'on va devoir virer !
              */
+            this.calculerHeuresLivraison();
         }
         else {
             //Si on a pas trouvé le chemin, on renvoie une tournee nulle
