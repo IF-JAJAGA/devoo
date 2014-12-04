@@ -46,6 +46,17 @@ public class ZoneGeographique {
             }
         }
         tournee = new Tournee(zone, this);
+        
+        //On remet la correspondance entre les plages horaire des objets 
+        //livraison et de l'objet tournée.
+        List<PlageHoraire> plages = new ArrayList<>();
+        for (Noeud n : zone.noeuds){
+            if(n instanceof Livraison){
+                Livraison lv = (Livraison)n;
+                if(!plages.contains(lv.getPlage()))     plages.add(lv.getPlage());
+            }
+        }
+        tournee.setPlagesHoraire(plages);
     }
     
     /**

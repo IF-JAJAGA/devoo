@@ -10,6 +10,7 @@ import java.util.Map;
 import fr.insaif.jajagaa.control.HorsPlageException;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
 import fr.insaif.jajagaa.model.tsp.TSP;
+import java.util.Date;
 
 /**
  * Itinéraire d'un livreur dans une seule zone géographique, partant du dépôt et revenant au dépôt,
@@ -78,6 +79,22 @@ public class Tournee {
      */
     public List<PlageHoraire> getPlagesHoraire() {
     	return this.plagesHoraire;
+    }
+    
+    /**
+     * Cherche une plage horaire selon les heures de début et de fin.
+     * @param heureDebut
+     * @param heureFin
+     * @return 
+     */
+    public PlageHoraire getPlageByHours(Date heureDebut, Date heureFin){
+        for(PlageHoraire pl : plagesHoraire){
+            if(pl.getHeureDebut().equals(heureDebut) &&
+                    pl.getHeureFin().equals(heureFin)){
+                return pl;
+            }
+        }
+        return null;
     }
 
     /**

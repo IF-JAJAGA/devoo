@@ -7,10 +7,13 @@
 package fr.insaif.jajagaa.view.panelDroite;
 
 import fr.insaif.jajagaa.model.Livraison;
+import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.view.VueNoeud;
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,6 +28,9 @@ import javax.swing.SpringLayout;
  * @author jeje
  */
 public class ConteneurDroite extends JPanel{
+    private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+    
     private final String strBtnAddNoeud0 = "Ajouter un noeud livraison";
     private final String strBtnAddNoeud1 = "Choisir la livraison précédente";
     private final String strBtnSupNoeud  = "Supprimer une livraison";
@@ -32,6 +38,7 @@ public class ConteneurDroite extends JPanel{
     private JLabel titre;
     private ListNoeuds listeNoeuds;
     private JTextArea textFiDescriptionLivraison;
+    private JTextArea legendeCouleurs;
     private JButton btnAddNoeud;
     private JButton btnSupNoeud;
     private JButton btnCalculLivraison;
@@ -73,7 +80,6 @@ public class ConteneurDroite extends JPanel{
     }
     
     public void setTextFieldText(Livraison l){
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String s = "";
         s += "Id Commande : ";
         s += l.getId();
@@ -105,6 +111,9 @@ public class ConteneurDroite extends JPanel{
         textFiDescriptionLivraison = new JTextArea();
         textFiDescriptionLivraison.setEditable(false);
         
+        legendeCouleurs = new JTextArea();
+        legendeCouleurs.setEditable(false);
+        
         btnAddNoeud = new JButton(strBtnAddNoeud0);
         btnSupNoeud = new JButton(strBtnSupNoeud);
         btnCalculLivraison = new JButton("Calculer la tournée");
@@ -122,6 +131,7 @@ public class ConteneurDroite extends JPanel{
         add(listeNoeuds);
         JScrollPane scrollListe = new JScrollPane(listeNoeuds);
         add(scrollListe);  
+        add(legendeCouleurs);
         add(textFiDescriptionLivraison);
         add(btnAddNoeud);
         add(btnSupNoeud);
@@ -129,15 +139,21 @@ public class ConteneurDroite extends JPanel{
         add(btnCalculLivraison);
         
         final int espace = 5;
+        final int hauteurTextes = 70;
         layout.putConstraint(SpringLayout.NORTH, titre, espace, SpringLayout.NORTH, this);
         layout.putConstraint(SpringLayout.WEST, titre, espace, SpringLayout.WEST, this);
         
         layout.putConstraint(SpringLayout.NORTH, scrollListe, espace, SpringLayout.SOUTH, titre);
         layout.putConstraint(SpringLayout.WEST, scrollListe, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, scrollListe, -10, SpringLayout.EAST, this);
-        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, textFiDescriptionLivraison);
+        layout.putConstraint(SpringLayout.SOUTH, scrollListe, -espace, SpringLayout.NORTH, legendeCouleurs);
         
-        layout.putConstraint(SpringLayout.NORTH, textFiDescriptionLivraison, -70, SpringLayout.SOUTH, textFiDescriptionLivraison);
+        layout.putConstraint(SpringLayout.NORTH, legendeCouleurs, -hauteurTextes, SpringLayout.SOUTH, legendeCouleurs);
+        layout.putConstraint(SpringLayout.WEST, legendeCouleurs, 0, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.EAST, legendeCouleurs, 0, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.SOUTH, legendeCouleurs, -espace, SpringLayout.NORTH, textFiDescriptionLivraison);
+        
+        layout.putConstraint(SpringLayout.NORTH, textFiDescriptionLivraison, -hauteurTextes, SpringLayout.SOUTH, textFiDescriptionLivraison);
         layout.putConstraint(SpringLayout.WEST, textFiDescriptionLivraison, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, textFiDescriptionLivraison, 0, SpringLayout.EAST, this);
         layout.putConstraint(SpringLayout.SOUTH, textFiDescriptionLivraison, -espace, SpringLayout.NORTH, btnCalculLivraison);
@@ -156,5 +172,36 @@ public class ConteneurDroite extends JPanel{
     }
     
     private void addListeners(){
+    }
+
+    public void majLegendeCouleurs(Map<PlageHoraire, Color> colorsPL) {
+        legendeCouleurs.setText("Pas de plages horaires chargées");
+        
+        String text = "";
+        for (Map.Entry<PlageHoraire,Color> entry : colorsPL.entrySet()){
+            PlageHoraire pl = entry.getKey();
+            Color couleur = entry.getValue();
+            if(couleur == Color.CYAN){
+                text += "Cyan : " + sdf.format(pl.getHeureDebut()) + " -> " + sdf.format(pl.getHeureFin()) + "\n";
+            }
+            else if(couleur == Color.YELLOW){
+                text += "Jaune : " + sdf.format(pl.getHeureDebut()) + " -> " + sdf.format(pl.getHeureFin()) + "\n";
+            }
+            else if(couleur == Color.PINK){
+                text += "Rose : " + sdf.format(pl.getHeureDebut()) + " -> " + sdf.format(pl.getHeureFin()) + "\n";
+            }
+            else if(couleur == Color.WHITE){
+                text += "Blanc : " + sdf.format(pl.getHeureDebut()) + " -> " + sdf.format(pl.getHeureFin()) + "\n";
+            }
+            else if(couleur == Color.BLACK){
+                text += "Noir : " + sdf.format(pl.getHeureDebut()) + " -> " + sdf.format(pl.getHeureFin()) + "\n";
+            }
+            else if(couleur == Color.LIGHT_GRAY){
+                text += "Gris clair : " + sdf.format(pl.getHeureDebut()) + " -> " + sdf.format(pl.getHeureFin()) + "\n";
+            }
+        }
+        
+        if(!text.equals(""))     legendeCouleurs.setText(text);
+        
     }
 }

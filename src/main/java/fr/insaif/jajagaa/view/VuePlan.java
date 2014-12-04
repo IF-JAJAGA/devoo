@@ -226,8 +226,7 @@ public class VuePlan extends JPanel{
             i++;
         }
         
-        ajouterNoeuds(zoneGeo.getEntrepot(), zoneGeo.getNoeuds());
-//        livraisonsPresentes = ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
+        ajouterNoeuds(zoneGeo);
         ajouterTournee(zoneGeo.getTournee());
         
         this.paint(getGraphics());
@@ -238,7 +237,9 @@ public class VuePlan extends JPanel{
      * @param entrepot
      * @param listNoeuds 
      */
-    private void ajouterNoeuds(Noeud entrepot, List<Noeud> listNoeuds){
+    private void ajouterNoeuds(ZoneGeographique zoneGeo){
+        Noeud entrepot = zoneGeo.getEntrepot();
+        List<Noeud> listNoeuds = zoneGeo.getNoeuds();
         Color c;
         for(Noeud noeud : listNoeuds) {
             if(noeud instanceof Livraison){
@@ -284,35 +285,6 @@ public class VuePlan extends JPanel{
         }
     }
     
-    /**
-     * Deprecated TODO Jérôme
-     * Ajoute les troncons à dessiner.
-     * @param PL 
-     */
-    private boolean ajouterLivraisons(List<PlageHoraire> PL) {
-        if(PL == null || PL.isEmpty()) return false;
-        
-        System.out.println("PL.size() : " + PL.size());
-        
-        for(PlageHoraire pl : PL){
-            List<Livraison> listNoeuds = pl.getLivraisons();
-            for (Livraison liv : listNoeuds){
-                if(liv.getXMetre()>XVille){
-                    XVille = liv.getXMetre();
-                }
-                if(liv.getYMetre()>YVille)
-                {
-                    YVille = liv.getYMetre();
-                }
-                ajouterLivraisonAVueNoeuds(new VueNoeud(liv, Color.YELLOW));
-                List<Troncon> listTroncon = liv.getSortants();
-                for(Troncon troncon : listTroncon){
-                    vueTroncons.add(new VueTroncon(troncon));
-                }
-            }
-        }
-        return true;
-    }
     
     private void ajouterTournee(Tournee tournee){
         if(tournee.getCheminsResultats().isEmpty()){
@@ -332,6 +304,7 @@ public class VuePlan extends JPanel{
     }
     
     private void viderPlan(){
+        colorsPL.clear();
         vueNoeuds.clear();
         vueTroncons.clear();
         vueTournee = null;
@@ -340,6 +313,11 @@ public class VuePlan extends JPanel{
     boolean getLivraisonsPresente() {
         return livraisonsPresentes;
     }
+
+    public Map<PlageHoraire, Color> getColorsPL() {
+        return colorsPL;
+    }
+    
 
     void changeBackGround() {
         if(isGray){
