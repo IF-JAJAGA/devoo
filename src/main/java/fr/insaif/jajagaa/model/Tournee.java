@@ -256,11 +256,10 @@ public class Tournee {
             }
             i++;
         }
-        /*
+
         this.addCheminResultat(Dijkstra.plusCourtChemin(this.zone,
                 this.getCheminsResultats().get(this.getCheminsResultats().size() - 1).getDestination(),
                 this.getCheminsResultats().get(0).getOrigine()));
-        */
     }
 
     /**

@@ -24,7 +24,7 @@ public class Dijkstra {
         Noeud departNoeud = zone.getNoeudById(depart.getIdNoeud());
         
         for (Noeud noeud : zone.getNoeuds()) {
-            distances.put(noeud, maxArcCost + 1f);
+            distances.put(noeud, zone.getNoeuds().size() * (maxArcCost + 1f));
         }
         distances.put(departNoeud, 0f);
 
@@ -37,7 +37,7 @@ public class Dijkstra {
 
         q.add(departNoeud);
         while (!q.isEmpty()) {
-            Noeud plusProche = q.remove();
+            Noeud plusProche = q.poll();
             if (plusProche == arriveeNoeud) {
                 List<Troncon> troncons = new LinkedList<Troncon>();
                 while (plusProche != departNoeud) {
