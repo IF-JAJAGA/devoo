@@ -23,8 +23,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import fr.insaif.jajagaa.control.Controleur;
-import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
 import fr.insaif.jajagaa.model.Livraison;
+import fr.insaif.jajagaa.model.Tournee;
+import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
 
 /**
  * Classe qui fait l'interface avec le controleur et qui implémente 
@@ -289,7 +290,8 @@ public class Fenetre extends JFrame {
                     conteneurDroite.getBtnAddNoeud().setEnabled(true);
                 }
                 conteneurDroite.getListeNoeuds().SelectionnerNoeud(vN);
-                if(vN != null && vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON){
+                Tournee t = vuePlan.vueTournee.tourneeModel;
+                if(vN != null && vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON && !(t.getCheminsResultats().isEmpty())){
                     conteneurDroite.setTextFieldText((Livraison)vN.getNoeudModele());
                     if(vNAAjouter == null){
                         conteneurDroite.getBtnSupNoeud().setEnabled(true);
