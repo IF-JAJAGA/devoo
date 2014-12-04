@@ -224,6 +224,7 @@ public class Tournee {
         List<Troncon> listTroncons;
         PlageHoraire plage = null;
         Calendar heureDebut = Calendar.getInstance();
+        double vitesseKmH=0;
         while(i < (vertices.size()-1)) {
             depart = vertices.get(i);
             arrivee = vertices.get(i+1);
@@ -235,22 +236,29 @@ public class Tournee {
             //TODO faire ici les horaires
             listTroncons = chemin.getTroncons();
             tempsSecondes = 0;
+            int metres = 0;
             for(Troncon troncon : listTroncons) {
-            	tempsSecondes += troncon.getLongueurMetre()/troncon.getVitesse();
+            	vitesseKmH = ((troncon.getVitesse()*10)/3.6);
+            	tempsSecondes += (troncon.getLongueurMetre()/(vitesseKmH));
+            	metres+=troncon.getLongueurMetre();
             }
+            System.out.println(vitesseKmH+"---"+metres+"---"+tempsSecondes);
             Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
             if(noeudDest.getId() != zone.getEntrepot().getId()){
                 Livraison livraisonDest = (Livraison) noeudDest;
                 if(plage == null){
                     plage = livraisonDest.getPlage();
                     heureDebut.setTime(plage.getHeureDebut());
+                    System.out.println(heureDebut.getTime());
                 }
                 heureDebut.add(Calendar.SECOND, tempsSecondes);
-                if (heureDebut.getTime().after(plage.getHeureFin())){
+                System.out.println(heureDebut.getTime());
+                if (heureDebut.getTime().after(livraisonDest.getPlage().getHeureFin())){
                     throw new HorsPlageException();
                 } else if (heureDebut.getTime().before((livraisonDest.getPlage().getHeureDebut()))) {
                 	heureDebut.setTime(livraisonDest.getPlage().getHeureDebut());
                 }
+                System.out.println(heureDebut.getTime());
                 livraisonDest.setHeureLivraison(heureDebut.getTime());
                 heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
             }
