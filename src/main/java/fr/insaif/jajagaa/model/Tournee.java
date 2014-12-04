@@ -225,7 +225,6 @@ public class Tournee {
         LivraisonGraphVertex depart, arrivee;
         List<Troncon> listTroncons;
         PlageHoraire plage = null;
-        int nombreLivraisons = 0;
         Calendar heureDebut = Calendar.getInstance();
         while(i < (vertices.size()-1)) {
             depart = vertices.get(i);
@@ -244,18 +243,18 @@ public class Tournee {
             Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
             if(noeudDest.getId() != zone.getEntrepot().getId()){
                 Livraison livraisonDest = (Livraison) noeudDest;
-                if(plage == null || nombreLivraisons == 0){
+                if(plage == null){
                     plage = livraisonDest.getPlage();
                     heureDebut.setTime(plage.getHeureDebut());
-                    nombreLivraisons = plage.getLivraisons().size();   
                 }
                 heureDebut.add(Calendar.SECOND, tempsSecondes);
                 if (heureDebut.getTime().after(plage.getHeureFin())){
                     throw new HorsPlageException();
+                } else if (heureDebut.getTime().before((livraisonDest.getPlage().getHeureDebut()))) {
+                	heureDebut.setTime(livraisonDest.getPlage().getHeureDebut());
                 }
                 livraisonDest.setHeureLivraison(heureDebut.getTime());
                 heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
-                nombreLivraisons--;
             }
             i++;
         }

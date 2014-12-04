@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 public class Controleur {
     private static Controleur controleur;
     
-    private final int timeCalculMs = 20000;
+    private final int timeCalculMs = 2000000000;
     
     /**
      * Singleton pour la création d'un Controleur
