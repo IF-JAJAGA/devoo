@@ -14,8 +14,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -48,9 +50,11 @@ public class VuePlan extends JPanel{
         add(Color.BLACK);
         add(Color.LIGHT_GRAY);
     }};
+    private final Map<PlageHoraire,Color>  colorsPL = new HashMap<>();
     
     
     private boolean livraisonsPresentes ;
+    private final List<Livraison> livraisons  = new ArrayList<>();
     
     public void setTournee(Tournee tournee){
         vueTournee.setTourneeModel(tournee);
@@ -197,11 +201,16 @@ public class VuePlan extends JPanel{
     	
     	this.paint(getGraphics());
     }
-     
+     /**
+     *
+     * @param noeuds
+     * @param troncons
+     * @param livraisons
+     */
     public VuePlan (List<Noeud> noeuds, List<Troncon> troncons, List<Livraison> livraisons) {
         //TODO 
     }
-    
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     
@@ -258,6 +267,13 @@ public class VuePlan extends JPanel{
             return;
         }
         
+        List<PlageHoraire> listPl = Controleur.getInstance().getPlagesHoraire();
+        int i =0;
+        for(PlageHoraire PL : listPl){
+            colorsPL.put(PL,colors.get(i));
+            i++;
+        }
+        
         ajouterNoeuds(zoneGeo.getEntrepot(), zoneGeo.getNoeuds());
 //        livraisonsPresentes = ajouterLivraisons(zoneGeo.getTournee().getPlagesHoraire());
         ajouterTournee(zoneGeo.getTournee());
@@ -271,9 +287,7 @@ public class VuePlan extends JPanel{
      * @param listNoeuds 
      */
     private void ajouterNoeuds(Noeud entrepot, List<Noeud> listNoeuds){
-        PlageHoraire PL = null;
-        Color c = null;
-        int i  = 0;
+        Color c;
         for(Noeud noeud : listNoeuds) {
             if(noeud instanceof Livraison){
                 if(!livraisonsPresentes){
@@ -287,11 +301,7 @@ public class VuePlan extends JPanel{
                 {
                     YVille = liv.getYMetre();
                 }
-                if ((PL== null) || (liv.getPlage().compareTo(PL) !=0)){
-                    c = colors.get(i);
-                    i++;
-                    PL = liv.getPlage();
-                }
+                c = colorsPL.get(liv.getPlage());
                 vueNoeuds.add(new VueNoeud(liv, c));
                 List<Troncon> listTroncon = liv.getSortants();
                 for(Troncon troncon : listTroncon){
