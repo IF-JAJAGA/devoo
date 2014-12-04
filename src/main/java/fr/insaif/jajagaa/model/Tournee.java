@@ -1,9 +1,15 @@
 package fr.insaif.jajagaa.model;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import fr.insaif.jajagaa.control.HorsPlageException;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
 import fr.insaif.jajagaa.model.tsp.TSP;
-
-import java.util.*;
 
 /**
  * Itinéraire d'un livreur dans une seule zone géographique, partant du dépôt et revenant au dépôt,
@@ -165,7 +171,7 @@ public class Tournee {
      * @param TIME_LIMIT_MS Temps limite donné pour résoudre le problème
      * @return L'état de réponse (trouvé, pas trouvé, optimal, etc.) après le temps utilisé
      */
-    public SolutionState solve(int TIME_LIMIT_MS) throws Exception {
+    public SolutionState solve(int TIME_LIMIT_MS) throws HorsPlageException {
         SolutionState state = this.tsp.solve(TIME_LIMIT_MS, this.graph.getNbVertices() * this.graph.getMaxArcCost() + 1);
         if (state == SolutionState.OPTIMAL_SOLUTION_FOUND || state == SolutionState.SOLUTION_FOUND) {
             this.getCheminsResultats().clear();
@@ -213,13 +219,12 @@ public class Tournee {
      * TODO
      * @param vertices
      */
-    protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) throws Exception{
+    protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) throws HorsPlageException{
         int i = 0;
         int tempsSecondes;
         LivraisonGraphVertex depart, arrivee;
         List<Troncon> listTroncons;
         PlageHoraire plage = null;
-        int nombreLivraisons = 0;
         Calendar heureDebut = Calendar.getInstance();
         while(i < (vertices.size()-1)) {
             depart = vertices.get(i);
@@ -238,18 +243,18 @@ public class Tournee {
             Noeud noeudDest = zone.getNoeudById(chemin.getDestination().getIdNoeud());
             if(noeudDest.getId() != zone.getEntrepot().getId()){
                 Livraison livraisonDest = (Livraison) noeudDest;
-                if(plage == null || nombreLivraisons == 0){
+                if(plage == null){
                     plage = livraisonDest.getPlage();
                     heureDebut.setTime(plage.getHeureDebut());
-                    nombreLivraisons = plage.getLivraisons().size();   
                 }
                 heureDebut.add(Calendar.SECOND, tempsSecondes);
                 if (heureDebut.getTime().after(plage.getHeureFin())){
-                    throw new Exception();
+                    throw new HorsPlageException();
+                } else if (heureDebut.getTime().before((livraisonDest.getPlage().getHeureDebut()))) {
+                	heureDebut.setTime(livraisonDest.getPlage().getHeureDebut());
                 }
                 livraisonDest.setHeureLivraison(heureDebut.getTime());
                 heureDebut.add(Calendar.MINUTE, Livraison.TPS_LIVRAISON_MIN);
-                nombreLivraisons--;
             }
             i++;
         }
