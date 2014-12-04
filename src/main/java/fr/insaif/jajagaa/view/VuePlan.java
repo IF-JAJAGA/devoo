@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.view;
 
+import fr.insaif.jajagaa.model.EtatNoeud;
 import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
@@ -127,7 +128,7 @@ public class VuePlan extends JPanel{
                 vN.setVueY(border + this.getY() + vN.getNoeudModele().getYMetre()*(this.getHeight() - 2*border) / YVille);
 
                 g2.setColor(vN.getCouleur());
-                if (vN.getPointDeLivraison()==VueNoeud.Etat.LIVRAISON)
+                if (vN.getEtatLivraison()==EtatNoeud.LIVRAISON)
                 {
                     g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE_LIVRAISON/2, vN.getVueY()-VueNoeud.DIAMETRE_LIVRAISON/2, VueNoeud.DIAMETRE_LIVRAISON, VueNoeud.DIAMETRE_LIVRAISON);
                 }

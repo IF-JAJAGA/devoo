@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.view;
 
+import fr.insaif.jajagaa.model.EtatNoeud;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 
@@ -17,12 +18,6 @@ public class VueNoeud {
     public static final int DIAMETRE = 15;        //Pour l'instant
     public static final int DIAMETRE_LIVRAISON = 20;
     //protected static int conv;
-    
-    public enum Etat{
-        RIEN,
-        LIVRAISON,
-        RETARD
-    }
     
     /**
      * Référence vers le noeud correspondant dans le package Modele
@@ -46,11 +41,6 @@ public class VueNoeud {
      */
     protected boolean estSelectionne;
 
-    //TODO : enum si le noeud est un point de livraison
-    /**
-     * Ce booléen est vrai si le noeud est un point de livraison.
-     */
-    protected Etat estPointDeLivraison = Etat.RIEN;
 
     /**
      * Si le noeud est un point de livraison alors cette Date est réglée à
@@ -70,9 +60,6 @@ public class VueNoeud {
         this.couleur = couleur;
         noeudModele = unNoeud;
         
-        if (unNoeud instanceof Livraison) {
-            estPointDeLivraison = Etat.LIVRAISON;
-        }
         vueX = unNoeud.getX();
         vueY = unNoeud.getY();
     }
@@ -111,12 +98,12 @@ public class VueNoeud {
         this.couleur = couleur;
     }
 
-    public Etat getPointDeLivraison() {
-        return estPointDeLivraison;
+    public EtatNoeud getEtatLivraison() {
+        return noeudModele.getEtatLivraison();
     }
 
-    public void setEstPointDeLivraison(Etat estPointDeLivraison) {
-        this.estPointDeLivraison = estPointDeLivraison;
+    public void setEtatLivraison(EtatNoeud etatLivraison) {
+        noeudModele.setEtatLivraison(etatLivraison);
     }
 
     public boolean isEstSelectionne() {

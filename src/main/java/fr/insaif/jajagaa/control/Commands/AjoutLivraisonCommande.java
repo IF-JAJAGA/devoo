@@ -5,9 +5,12 @@
 package fr.insaif.jajagaa.control.Commands;
 
 import fr.insaif.jajagaa.control.Controleur;
+import fr.insaif.jajagaa.control.HorsPlageException;
 import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.ZoneGeographique;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -40,7 +43,12 @@ public class AjoutLivraisonCommande implements Command {
         if(zoneAvant == null){
             zoneAvant = new ZoneGeographique(zone);
             
-            ajoutOk = zone.getTournee().ajouterPointDeLivraison(noeudALivrer, this.idClient, (Livraison) noeudAvant);
+            try {
+                ajoutOk = zone.getTournee().ajouterPointDeLivraison(noeudALivrer, this.idClient, (Livraison) noeudAvant);
+            } catch (HorsPlageException ex) {
+                Controleur.getInstance().notifyError(ex);
+                return;
+            }
             System.out.println("zone.getTournee().getCheminsResultats().size() : " + zone.getTournee().getCheminsResultats().size());
             
             zoneApres = new ZoneGeographique(zone);

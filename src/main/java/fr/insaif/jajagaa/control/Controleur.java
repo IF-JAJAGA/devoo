@@ -6,6 +6,7 @@ import fr.insaif.jajagaa.control.Commands.Command;
 import fr.insaif.jajagaa.control.Commands.LireLivraisonsCommand;
 import fr.insaif.jajagaa.control.Commands.LirePlanCommand;
 import fr.insaif.jajagaa.control.Commands.SuppressionLivraisonCommande;
+import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.PlageHoraire;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.ZoneGeographique;
@@ -255,7 +256,12 @@ public class Controleur {
     }
 
     public void notifyError(Exception e) {
-        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        String message = e.getMessage();
+        if(e instanceof HorsPlageException) {
+            Livraison liv = ((HorsPlageException)e).getLiv();
+            message += "\nLa livraison erronée est la "+liv.getId();
+        }
+        JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     

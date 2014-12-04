@@ -1,6 +1,7 @@
 package fr.insaif.jajagaa.view;
 
 
+import fr.insaif.jajagaa.model.EtatNoeud;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -238,7 +239,7 @@ public class Fenetre extends JFrame {
             public void valueChanged(ListSelectionEvent lse) {
                 if(!lse.getValueIsAdjusting()){
                     VueNoeud vNListe = (VueNoeud) conteneurDroite.getListeNoeuds().getModel().getElementAt(conteneurDroite.getListeNoeuds().getSelectedIndex());
-                    if(vNListe.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON){
+                    if(vNListe.getEtatLivraison() == EtatNoeud.LIVRAISON){
                         conteneurDroite.setTextFieldText((Livraison)vNListe.getNoeudModele());
                     }
                     else{
@@ -286,14 +287,14 @@ public class Fenetre extends JFrame {
                 super.mouseClicked(e);
                 
                 VueNoeud vN = vuePlan.noeudEstClique(e.getPoint());
-                if(((vN == null || vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON) && vNAAjouter == null) || (Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty())){
+                if(((vN == null || vN.getEtatLivraison() == EtatNoeud.LIVRAISON) && vNAAjouter == null) || (Controleur.getInstance().getPlagesHoraire() == null || Controleur.getInstance().getPlagesHoraire().isEmpty())){
                     conteneurDroite.getBtnAddNoeud().setEnabled(false);
                 }
                 else{
                     conteneurDroite.getBtnAddNoeud().setEnabled(true);
                 }
                 conteneurDroite.getListeNoeuds().SelectionnerNoeud(vN);
-                if(vN != null && vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON){
+                if(vN != null && vN.getEtatLivraison() == EtatNoeud.LIVRAISON){
                     Tournee t = vuePlan.vueTournee.tourneeModel;
                     if (!t.getCheminsResultats().isEmpty()) {
                         conteneurDroite.setTextFieldText((Livraison)vN.getNoeudModele());
@@ -363,8 +364,8 @@ public class Fenetre extends JFrame {
         if(vNAAjouter != null){
             vNAvant = vuePlan.getvNSelectionne();
             //Doit être une livraison
-            if(vNAvant.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON ||
-                   vNAvant.getPointDeLivraison() == VueNoeud.Etat.RETARD){
+            if(vNAvant.getEtatLivraison() == EtatNoeud.LIVRAISON ||
+                   vNAvant.getEtatLivraison() == EtatNoeud.RETARD){
                 conteneurDroite.getBtnAddNoeud().setEnabled(false);
                 conteneurDroite.getBtnCalculLivraison().setEnabled(true);
                 //Appel
@@ -380,7 +381,7 @@ public class Fenetre extends JFrame {
         else{
             vNAAjouter = vuePlan.getvNSelectionne();
             //Ne doit pas être une livraison + au moins un livraison doit être présente.
-            if(vNAAjouter.getPointDeLivraison() == VueNoeud.Etat.RIEN && vuePlan.getLivraisonsPresente()){
+            if(vNAAjouter.getEtatLivraison() == EtatNoeud.RIEN && vuePlan.getLivraisonsPresente()){
                 conteneurDroite.setEtatBtnAddNoeud(1);
                 conteneurDroite.getBtnCalculLivraison().setEnabled(false);
             }else{

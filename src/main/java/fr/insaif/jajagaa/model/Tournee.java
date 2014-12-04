@@ -270,7 +270,8 @@ public class Tournee {
                 }
                 heureDebut.add(Calendar.SECOND, tempsSecondes);
                 if (heureDebut.getTime().after(livraisonDest.getPlage().getHeureFin())){
-                    throw new HorsPlageException();
+                    livraisonDest.setEtatLivraison(EtatNoeud.NON_LIVRE);
+                    throw new HorsPlageException(livraisonDest);
                 } else if (heureDebut.getTime().before((livraisonDest.getPlage().getHeureDebut()))) {
                         heureDebut.setTime(livraisonDest.getPlage().getHeureDebut());
                 }

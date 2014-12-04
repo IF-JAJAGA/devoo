@@ -6,6 +6,7 @@
 
 package fr.insaif.jajagaa.view.panelDroite;
 
+import fr.insaif.jajagaa.model.EtatNoeud;
 import fr.insaif.jajagaa.view.VueNoeud;
 import java.awt.Color;
 import java.awt.Component;
@@ -110,10 +111,10 @@ class ListNoeudsRenderer extends JLabel implements ListCellRenderer{
     public Component getListCellRendererComponent(JList jlist, Object e, int index, boolean isSelected, boolean cellHasFocus) {
         if(e instanceof VueNoeud){
             VueNoeud vN = (VueNoeud)e;
-            if(vN.getPointDeLivraison() == VueNoeud.Etat.LIVRAISON){
+            if(vN.getEtatLivraison() == EtatNoeud.LIVRAISON){
                 setText("Livraison " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
             }
-            else if(vN.getPointDeLivraison() == VueNoeud.Etat.RETARD){
+            else if(vN.getEtatLivraison() == EtatNoeud.RETARD){
                 setText("Livraison retard" + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
             }
             else if(vN.getCouleur() == Color.ORANGE){

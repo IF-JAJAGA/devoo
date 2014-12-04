@@ -1,5 +1,6 @@
 package fr.insaif.jajagaa.model;
 
+import fr.insaif.jajagaa.control.HorsPlageException;
 import fr.insaif.jajagaa.control.Parseur;
 import fr.insaif.jajagaa.control.ParseurException;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
@@ -7,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -50,7 +53,13 @@ public class TourneeTest {
     protected void verifierHoraires() {
         int plageIndex = 0;
         for (Chemin chemin : this.tournee.getCheminsResultats()) {
-            Livraison currentLivraison = ((Livraison) zoneGeo.getNoeudById(chemin.getDestination().getIdNoeud()));
+            Livraison currentLivraison;
+            try {
+                currentLivraison = ((Livraison) zoneGeo.getNoeudById(chemin.getDestination().getIdNoeud()));
+            }
+            catch(ClassCastException e) {
+                continue;
+            }
             PlageHoraire currentPlage = null;
 
             // Recherche de la plage horaire d'une livraison
@@ -74,7 +83,11 @@ public class TourneeTest {
         Noeud noeudALivrer = this.zoneGeo.getNoeudId(20); // le noeud 20 n'est pas une livraison
         Livraison precedent = this.tournee.getPlagesHoraire().get(1).getLivraisons().get(0);
 
-        this.tournee.ajouterPointDeLivraison(noeudALivrer, 1, precedent);
-        // TODO ajouter ici des tests
+        try {
+            this.tournee.ajouterPointDeLivraison(noeudALivrer, 1, precedent);
+            // TODO ajouter ici des tests
+        } catch (HorsPlageException ex) {
+            Logger.getLogger(TourneeTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
      }
 }
