@@ -19,7 +19,7 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 public class AjoutLivraisonCommande implements Command {
     
     /**
-     * Booléen indiquant si l'ajout est possible.
+     * Booléen indiquant si l'ajout a été réalisé.
      */
     private boolean ajoutOk = false;
     
@@ -34,7 +34,7 @@ public class AjoutLivraisonCommande implements Command {
     private Noeud noeudALivrer;
     
     /**
-     * 
+     * ZoneGeographique servant de sauvegarde.
      */
     private ZoneGeographique zoneAvant;
     
@@ -44,7 +44,7 @@ public class AjoutLivraisonCommande implements Command {
     private ZoneGeographique zone;
     
     /**
-     * 
+     * ZoneGeographique après ajout de Livraison.
      */
     private ZoneGeographique zoneApres;
     
