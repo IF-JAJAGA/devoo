@@ -386,7 +386,7 @@ public class Tournee {
         return true;
     }
 
-    public boolean supprimerPointLivraison(Noeud noeudASup) {
+    public boolean supprimerPointLivraison(Noeud noeudASup) throws HorsPlageException{
         boolean trouve = false;
         int i;
         Chemin cheminAvant = null;
@@ -429,6 +429,9 @@ public class Tournee {
             
             cheminsResultats.add(i, chemin);
             graph.noeuds.remove(lgvMilieu);
+            
+            this.calculerHeuresLivraison();
+            
             return true;
         }
         return false;

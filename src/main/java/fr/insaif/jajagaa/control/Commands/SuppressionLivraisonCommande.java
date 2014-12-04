@@ -4,8 +4,12 @@
  */
 package fr.insaif.jajagaa.control.Commands;
 
+import fr.insaif.jajagaa.control.Controleur;
+import fr.insaif.jajagaa.control.HorsPlageException;
 import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.ZoneGeographique;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -54,7 +58,12 @@ public class SuppressionLivraisonCommande implements Command {
             zoneAvant = new ZoneGeographique(zone);
             
             System.out.println("zone.getTournee().getCheminsResultats().size() : " + zone.getTournee().getCheminsResultats().size());
-            suppressionOk = zone.getTournee().supprimerPointLivraison(noeudASup);
+            try {
+                suppressionOk = zone.getTournee().supprimerPointLivraison(noeudASup);
+            } catch (HorsPlageException ex) {
+                Controleur.getInstance().notifyError(ex);
+                return;
+            }
             System.out.println("zone.getTournee().getCheminsResultats().size() : " + zone.getTournee().getCheminsResultats().size());
             
             zoneApres = new ZoneGeographique(zone);
