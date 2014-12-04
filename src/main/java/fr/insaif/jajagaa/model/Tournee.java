@@ -102,21 +102,19 @@ public class Tournee {
         if(plagesHoraire.isEmpty()) return cheminsPossibles;
         
         LivraisonGraphVertex entrepot = new LivraisonGraphVertex(this.zone.getEntrepot().getId(), true);
-        Map<Integer, List<LivraisonGraphVertex>> graphVertexPerPlage = new HashMap<Integer, List<LivraisonGraphVertex>>();
+        Map<Integer, List<LivraisonGraphVertex>> graphVertexPerPlage = new HashMap<>();
         
-        int taille = this.plagesHoraire.size();
-        for(int i=0; i<taille; i++) {
+        int nbPlagesHoraire = this.plagesHoraire.size();
+        for(int i = 0; i < nbPlagesHoraire; ++i) {
             graphVertexPerPlage.put(i, new ArrayList<LivraisonGraphVertex>());
             List<Livraison> livs = this.plagesHoraire.get(i).getLivraisons();
-            int nbLivraisons = livs.size();
             for (Livraison liv : livs) {
                 graphVertexPerPlage.get(i).add(new LivraisonGraphVertex(liv.getId(), false));
             }
         }
 
         // Chemins les plus courts de l'entrepôt vers tous les nœuds de la première plage horaire
-        //ICI
-        for (LivraisonGraphVertex vertex: graphVertexPerPlage.get(0)) {
+        for (LivraisonGraphVertex vertex : graphVertexPerPlage.get(0)) {
             Chemin plusCourt = Dijkstra.plusCourtChemin(this.zone, entrepot, vertex);
             if (plusCourt != null) {
                 cheminsPossibles.add(plusCourt);
@@ -124,7 +122,7 @@ public class Tournee {
         }
         
         // Tous les chemins entre les nœuds d'une même plage horaire
-        for (int i = 0; i < taille; i++) {
+        for (int i = 0; i < nbPlagesHoraire; i++) {
             List<LivraisonGraphVertex> vertices = graphVertexPerPlage.get(i);
             int size = vertices.size();
             for (int j = 0; j < size; j++) {
@@ -142,7 +140,7 @@ public class Tournee {
         }
 
         // Tous les chemins possibles de tous les nœuds de la plage horaire n vers la plage horaire n + 1
-        for (int i = 1; i < taille; ++i) {
+        for (int i = 1; i < nbPlagesHoraire; ++i) {
             List<LivraisonGraphVertex> verticesD = graphVertexPerPlage.get(i-1);
             List<LivraisonGraphVertex> verticesA = graphVertexPerPlage.get(i);
             for (LivraisonGraphVertex depart: verticesD) {
@@ -156,7 +154,7 @@ public class Tournee {
         }
 
         // Chemins les plus courts de tous les nœuds de la dernière plage horaire vers l'entrepôt
-        for (LivraisonGraphVertex vertex: graphVertexPerPlage.get(taille - 1)) {
+        for (LivraisonGraphVertex vertex: graphVertexPerPlage.get(nbPlagesHoraire - 1)) {
             Chemin plusCourt = Dijkstra.plusCourtChemin(this.zone, vertex, entrepot);
             if (plusCourt != null) {
                 cheminsPossibles.add(plusCourt);
@@ -258,6 +256,11 @@ public class Tournee {
             }
             i++;
         }
+        /*
+        this.addCheminResultat(Dijkstra.plusCourtChemin(this.zone,
+                this.getCheminsResultats().get(this.getCheminsResultats().size() - 1).getDestination(),
+                this.getCheminsResultats().get(0).getOrigine()));
+        */
     }
 
     /**

@@ -17,44 +17,43 @@ public class Dijkstra {
     public static int MAX_SEC = 200;
 
     public static Chemin plusCourtChemin(ZoneGeographique zone, LivraisonGraphVertex depart, LivraisonGraphVertex arrivee) {
-        final Map<Noeud, Float> distances = new HashMap<Noeud, Float>();
-        float maxArcCost = getMaxArcCost(zone);
-
-        Noeud arriveeNoeud = zone.getNoeudById(arrivee.getIdNoeud());
-        Noeud departNoeud = zone.getNoeudById(depart.getIdNoeud());
-        
-        for (Noeud noeud : zone.getNoeuds()) {
-            distances.put(noeud, maxArcCost + 1f);
-        }
-        distances.put(departNoeud, 0f);
-
-        Map<Noeud, Troncon> cheminMap = new HashMap<Noeud, Troncon>();
-        Queue<Noeud> q = new PriorityQueue<Noeud>(11, new Comparator<Noeud>() {
+        final Map<Noeud, Float> distances = new HashMap<>();
+        Map<Noeud, Troncon> predecesseurs = new HashMap<>();
+        Queue<Noeud> file = new PriorityQueue<>(11, new Comparator<Noeud>() {
             public int compare(Noeud n1, Noeud n2) {
                 return distances.get(n1).compareTo(distances.get(n2));
             }
         });
 
-        q.add(departNoeud);
-        while (!q.isEmpty()) {
-            Noeud plusProche = q.remove();
+        Noeud arriveeNoeud = zone.getNoeudById(arrivee.getIdNoeud());
+        Noeud departNoeud = zone.getNoeudById(depart.getIdNoeud());
+
+        float maxArcCost = getMaxArcCost(zone);
+        for (Noeud noeud : zone.getNoeuds()) {
+            // Infinity:
+            distances.put(noeud, maxArcCost + 1f);
+        }
+        distances.put(departNoeud, 0f);
+
+        file.add(departNoeud);
+
+        for (Troncon t : departNoeud.getSortants()) {
+            Noeud v = zone.getNoeudId(t.getIdDestination());
+        }
+
+        while (!file.isEmpty()) {
+            Noeud plusProche = file.remove();
             if (plusProche == arriveeNoeud) {
-                List<Troncon> troncons = new LinkedList<Troncon>();
-                while (plusProche != departNoeud) {
-                    troncons.add(0, cheminMap.get(plusProche));
-                    plusProche = zone.getNoeudId(cheminMap.get(plusProche).getIdOrigine());
-                }
-                Chemin chemin = new Chemin(troncons, depart, arrivee);
-                depart.getSortants().add(chemin);
-                return chemin;
+                return null;
             }
-            for (Troncon t : plusProche.getSortants()) {
-                Noeud voisin = zone.getNoeudId(t.getIdDestination());
-                float cost = distances.get(plusProche) + t.getCost();
-                if (cost < distances.get(voisin)) {
-                    distances.put(voisin, cost);
-                    cheminMap.put(voisin, t);
-                    q.add(voisin);
+            for (Troncon sortant : plusProche.getSortants()) {
+                Noeud voisin = zone.getNoeudId(sortant.getIdDestination());
+
+                float alt = distances.get(plusProche) + sortant.getCost();
+                if (alt < distances.get(voisin)) {
+                    distances.put(voisin, alt);
+                    predecesseurs.put(voisin, sortant);
+                    file.add(voisin);
                 }
             }
         }

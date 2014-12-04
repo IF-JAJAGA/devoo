@@ -60,6 +60,12 @@ public class CalculerTourneeCommand implements Command{
             if(tournee.getSolutionState() == SolutionState.OPTIMAL_SOLUTION_FOUND ||
                     tournee.getSolutionState() == SolutionState.SOLUTION_FOUND){
                 chemins = tournee.getCheminsResultats();
+
+                float totalCost = 0;
+                for (Chemin c : chemins) {
+                    totalCost += c.getCost();
+                }
+                System.out.println("coût total: " + totalCost);
                 
                 cheminsApres = new LinkedList<>();
                 for(Chemin Ch : chemins){

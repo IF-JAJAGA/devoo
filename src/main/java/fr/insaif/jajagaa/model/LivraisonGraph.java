@@ -60,16 +60,16 @@ public class LivraisonGraph implements Graph {
      * Met à jour les champs calculés
      */
     public void update() {
-        Set<LivraisonGraphVertex> tree = new HashSet<LivraisonGraphVertex>();
+        Set<LivraisonGraphVertex> tree = new HashSet<>();
         for(Chemin chemin : chemins) {
             tree.add(chemin.getOrigine());
             tree.add(chemin.getDestination());
         }
-        this.noeuds = new ArrayList<LivraisonGraphVertex>(tree);
+        this.noeuds = new ArrayList<>(tree);
 
-        this.idToIndex = new HashMap<Integer,Integer>();
+        this.idToIndex = new HashMap<>();
         int nbNoeuds = this.getNoeuds().size();
-        for (int i=0; i<nbNoeuds; i++) {
+        for (int i = 0; i < nbNoeuds; ++i) {
             LivraisonGraphVertex noeud = this.getNoeuds().get(i);
             this.idToIndex.put(noeud.getIdNoeud(), i);
             for (Chemin chemin : noeud.getSortants()) {
