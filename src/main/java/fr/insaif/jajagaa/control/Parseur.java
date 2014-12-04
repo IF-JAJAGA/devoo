@@ -22,7 +22,6 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
  */
 public class Parseur{
 	
-//      TODO tester (test actuel incomplet/vieux)
     /**
      * Lit toutes les livraisons contenues dans un fichier de demande de livraisons et en renvoie une liste
      * @param fichierEntree String menant au fichier XML d'entrée pour les livraisons
