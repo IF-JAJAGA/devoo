@@ -19,31 +19,31 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 public class AjoutLivraisonCommande implements Command {
     
     /**
-     * Booléen indiquant si l'ajout est possible
+     * Booléen indiquant si l'ajout est possible.
      */
     private boolean ajoutOk = false;
     
     /**
-     * Noeud (ou plutôt Livraison) précédent la livraison que l'on veut rajouter
+     * Noeud (ou plutôt Livraison) précédent la livraison que l'on veut rajouter.
      */
     private Noeud noeudAvant;
     
     /**
-     * Noeud désigné pour devenir une nouvelle Livraison
+     * Noeud désigné pour devenir une nouvelle Livraison.
      */
     private Noeud noeudALivrer;
     
     private ZoneGeographique zoneAvant;
     
     /**
-     * ZoneGeographique dans laquelle la Livraison devra être ajouté
+     * ZoneGeographique dans laquelle la Livraison devra être ajouté.
      */
     private ZoneGeographique zone;
     
     private ZoneGeographique zoneApres;
     
     /**
-     * Int désignant l'ID du client qui devra être livré avec cette nouvelle Livraison
+     * Int désignant l'ID du client qui devra être livré avec cette nouvelle Livraison.
      */
     private final int idClient;
     
@@ -57,7 +57,7 @@ public class AjoutLivraisonCommande implements Command {
     
     /**
      * Méthode permettant l'exécution de l'ajout d'une Livraison dans le design
-     * pattern Command
+     * pattern Command.
      */
     @Override
     public void execute(){
@@ -70,11 +70,7 @@ public class AjoutLivraisonCommande implements Command {
             } catch (HorsPlageException ex) {
                 Controleur.getInstance().notifyError(ex);
                 return;
-            }
-            
-            // A laisser ?
-            System.out.println("zone.getTournee().getCheminsResultats().size() : " + zone.getTournee().getCheminsResultats().size());
-            
+            }            
             zoneApres = new ZoneGeographique(zone);
         }
         else {
@@ -84,7 +80,7 @@ public class AjoutLivraisonCommande implements Command {
     }
 
     /**
-     * Méthode UNDO de l'ajout d'une livraison suivant le design pattern Command
+     * Méthode UNDO de l'ajout d'une livraison suivant le design pattern Command.
      */
     @Override
     public void undo() {

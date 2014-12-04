@@ -10,7 +10,7 @@ import fr.insaif.jajagaa.model.Livraison;
 public class HorsPlageException extends Exception{
     
     /**
-     * Livraison sur laquelle on va relever l'exception si cela est nécessaire
+     * Livraison sur laquelle on va relever l'exception si cela est nécessaire.
      */
     protected Livraison liv;
 
