@@ -19,6 +19,7 @@ import java.util.Date;
  * @author gustavemonod
  */
 public class Tournee {
+    
     /**
      * Zone Géographique (unique) dans laquelle se déroule la tournée.
      */
@@ -43,12 +44,12 @@ public class Tournee {
     protected TSP tsp;
 
     /**
-     * Graphe des livraisons (transformé pour prendre en compte les plages horaires)
+     * Graphe des livraisons (transformé pour prendre en compte les plages horaires).
      */
     protected LivraisonGraph graph;
 
     /**
-     * Création d'une tournée à partir d'une zone et d'une demande de livraisons (List<PlageHoraire>)
+     * Création d'une tournée à partir d'une zone et d'une demande de livraisons (List<PlageHoraire>).
      */
     public Tournee(ZoneGeographique zone) {
         this.zone = zone;
@@ -185,6 +186,7 @@ public class Tournee {
      * Résoud le problème de tournée la plus courte avec les plages horaires
      * @param TIME_LIMIT_MS Temps limite donné pour résoudre le problème
      * @return L'état de réponse (trouvé, pas trouvé, optimal, etc.) après le temps utilisé
+     * @throws HorsPlageException 
      */
     public SolutionState solve(int TIME_LIMIT_MS) throws HorsPlageException {
         SolutionState state = this.tsp.solve(TIME_LIMIT_MS, this.graph.getNbVertices() * this.graph.getMaxArcCost() + 1);
@@ -236,8 +238,9 @@ public class Tournee {
     }
 
     /**
-     * TODO
+     * Construit et ajoute les Chemins constituants la Tournee à la Tournee.
      * @param vertices
+     * @throws HorsPlageException 
      */
     protected void buildCheminResultat(List<LivraisonGraphVertex> vertices) throws HorsPlageException {
         int i = 0;
@@ -248,7 +251,11 @@ public class Tournee {
             arrivee = vertices.get(i+1);
 
             Chemin chemin = depart.getSortantByDest(arrivee);
-            if(chemin == null) throw new NullPointerException("Noeud sortant non trouvé");
+            
+            if(chemin == null) {
+                throw new NullPointerException("Noeud sortant non trouvé");
+            }
+            
             this.addCheminResultat(chemin);
             
             i++;
@@ -261,6 +268,10 @@ public class Tournee {
         calculerHeuresLivraison();
     }
     
+    /**
+     * Calcul l'heure prévue d'arrivée au point de Livraison en fonction des trajets.
+     * @throws HorsPlageException 
+     */
     private void calculerHeuresLivraison() throws HorsPlageException {
         int tempsSecondes;
         List<Troncon> listTroncons;
@@ -307,7 +318,6 @@ public class Tournee {
 
     /**
      * Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
-     *
      * @return Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      */
     public List<Chemin> getCheminsResultats() {
@@ -316,7 +326,6 @@ public class Tournee {
 
     /**
      * Ajoute un chemin à la liste ordonnée des cheminsResultats parcourus au cours de la tournée.
-     *
      * @param chemin Chemin à ajouter
      */
     public void addCheminResultat(Chemin chemin) {
@@ -325,7 +334,6 @@ public class Tournee {
 
     /**
      * Modifie la liste ordonnée des cheminsResultats parcourus au cours de la tournée.
-     *
      * @param cheminsResultats Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      */
     public void setCheminsResultats(List<Chemin> cheminsResultats) {
@@ -402,6 +410,13 @@ public class Tournee {
         return true;
     }
 
+    /**
+     * Supprime un point de Livraison appartennant à la Tournée et renvoie un
+     * booléen indiquant si cela a été réalisée sans problèmes
+     * @param noeudASup
+     * @return Booléen indiquant la réalisation de la suppression
+     * @throws HorsPlageException 
+     */
     public boolean supprimerPointLivraison(Noeud noeudASup) throws HorsPlageException{
         boolean trouve = false;
         int i;
@@ -416,15 +431,6 @@ public class Tournee {
                 trouve = true;
                 break;
             }
-  
-//            if (cheminsResultats.get(i).getOrigine().getIdNoeud() == noeudASup.getId()){
-//                cheminApres = cheminsResultats.get(i); //TODO Const par copie???
-//                trouveChemins++;
-//            }
-//            else if (cheminsResultats.get(i).getDestination().getIdNoeud() == noeudASup.getId()){
-//                cheminAvant = cheminsResultats.get(i);//TODO Const par copie???
-//                trouveChemins++;
-//            }
         }
         
         this.zone.modifierLivraisonEnNoeud(noeudASup.getId(), new Noeud(noeudASup.getId(), noeudASup.getXMetre(), noeudASup.getYMetre(),noeudASup.getSortants()));
@@ -435,8 +441,6 @@ public class Tournee {
             LivraisonGraphVertex lgvOrigine = cheminAvant.getOrigine();
             LivraisonGraphVertex lgvDestination = cheminApres.getDestination();
             LivraisonGraphVertex lgvMilieu = cheminAvant.getDestination();
-            
-            
             
             Chemin chemin = Dijkstra.plusCourtChemin(zone, lgvOrigine, lgvDestination);
             
