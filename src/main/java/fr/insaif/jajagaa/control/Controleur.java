@@ -133,7 +133,7 @@ public class Controleur {
         
         int idClient = -1;
         while(idClient <= 0) {
-            String rep = JOptionPane.showInputDialog(null, "Entrez le numéro du client", "Ajout d'une livraison", JOptionPane.QUESTION_MESSAGE);
+            String rep = JOptionPane.showInputDialog(null, "Entrez le numéro du client (entier positif)", "Ajout d'une livraison", JOptionPane.QUESTION_MESSAGE);
             try {
                 idClient = Integer.parseInt(rep);
             }
