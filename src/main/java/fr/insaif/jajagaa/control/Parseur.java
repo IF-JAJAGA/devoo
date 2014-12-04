@@ -75,7 +75,7 @@ public class Parseur{
         } catch (IndexOutOfBoundsException ioobe) {
             throw new ParseurException("Fichier XML erroné: valeurs de certains attributs inexistants");
         } catch (NumberFormatException nfe) {
-            throw new ParseurException("Données du fichier XML non conforme");
+            throw new ParseurException("Données du fichier XML non conformes");
         }
 
         return plageList;
@@ -143,7 +143,7 @@ public class Parseur{
         } catch (IndexOutOfBoundsException ioobe) {
             throw new ParseurException("Fichier XML erroné: valeurs de certains attributs inexistants");
         } catch (NumberFormatException nfe) {
-            throw new ParseurException("Données du fichier XML non conforme");
+            throw new ParseurException("Données du fichier XML non conformes");
         } 
         
         return (new ZoneGeographique(plan));

@@ -159,7 +159,7 @@ public class ParseurTest {
 			Parseur.lirePlan("./src/test/resources/plan10x10-E2.xml");
 			fail();
 		} catch (ParseurException pe) {
-			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+			assertEquals("Données du fichier XML non conformes",pe.getMessage());
 		} catch (Exception otherE) {
 			fail();
 		}
@@ -189,7 +189,7 @@ public class ParseurTest {
 			Parseur.lirePlan("./src/test/resources/plan10x10-E4.xml");
 			fail();
 		} catch (ParseurException pe) {
-			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+			assertEquals("Données du fichier XML non conformes",pe.getMessage());
 		} catch (Exception otherE) {
 			fail();
 		}
@@ -236,7 +236,7 @@ public class ParseurTest {
 			Parseur.lireLivraison("./src/test/resources/livraison20x20-1-E2.xml",zone);
 			fail();
 		} catch (ParseurException pe) {
-			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+			assertEquals("Données du fichier XML non conformes",pe.getMessage());
 		} catch (Exception otherE) {
 			fail();
 		}
@@ -252,7 +252,7 @@ public class ParseurTest {
 			Parseur.lireLivraison("./src/test/resources/livraison10x10-3-E3.xml",zone);
 			fail();
 		} catch (ParseurException pe) {
-			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+			assertEquals("Données du fichier XML non conformes",pe.getMessage());
 		} catch (Exception otherE) {
 			fail();
 		}
@@ -268,7 +268,7 @@ public class ParseurTest {
 			Parseur.lireLivraison("./src/test/resources/livraison20x20-1-E4.xml",zone);
 			fail();
 		} catch (ParseurException pe) {
-			assertEquals("Données du fichier XML non conforme",pe.getMessage());
+			assertEquals("Données du fichier XML non conformes",pe.getMessage());
 		} catch (Exception otherE) {
 			fail();
 		}
