@@ -41,11 +41,12 @@ public class LireLivraisonsCommand implements Command{
             zoneAvant = new ZoneGeographique(zone);
             
             zone = new ZoneGeographique(Controleur.getInstance().getZoneVierge());
-            List<PlageHoraire> plages;
+            List<PlageHoraire> plages = null;
             try{
                 plages = Parseur.lireLivraison(fichierLivraison, zone);
             }
             catch(ParseurException pe) {
+                Controleur.getInstance().notifyError(pe);
                 return;
             }
             

@@ -105,6 +105,9 @@ public class Parseur{
 
             @SuppressWarnings("unchecked")
             List<Element> noeuds = reseau.getChildren("Noeud");
+            if(noeuds.isEmpty()) {
+                throw new ParseurException("Fichier plan non valide : aucun noeud trouvé");
+            }
             //Création des vueNoeuds contenus dans le fichier XML
             //Et ajout de ceux-ci dans la liste plan 
             for (Element noeudXml : noeuds) {
