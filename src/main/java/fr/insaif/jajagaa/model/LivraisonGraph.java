@@ -1,18 +1,16 @@
 package fr.insaif.jajagaa.model;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import fr.insaif.jajagaa.model.tsp.Graph;
 
 import java.util.*;
 
 /**
- *              /////
- * @author aurelien
+ * LivraisonGraph représente le graph secondaire, utilisé par Choco.
+ * Il s'agit de l'implémentation de l'interface Graph.
+ * Chaque sommet du graphe est un {@link LivraisonGraphVertex}.
+ * Chaque arc est un {@link Chemin}.
+ * 
+ * @author H4201
  */
 public class LivraisonGraph implements Graph {
 
@@ -58,7 +56,7 @@ public class LivraisonGraph implements Graph {
     }
     
     /**
-     * Accesseur de l'ID de la Livraison correspondant au ////
+     * Accesseur de l'indice du noeud dont l'ID est donné
      * @param id
      * @return 
      */
@@ -177,7 +175,7 @@ public class LivraisonGraph implements Graph {
     }
 
     /**
-     *      ////
+     * Récupère le nombre d'arcs sortants du sommet d'indice donné
      * @param i
      * @return
      * @throws ArrayIndexOutOfBoundsException 
@@ -188,7 +186,7 @@ public class LivraisonGraph implements Graph {
     }
     
     /**
-     * Accesseur des coûts des ///
+     * Récupère les coûts de chaque arc sortant d'un sommet dont l'indice est donné
      * @param i
      * @return 
      */
