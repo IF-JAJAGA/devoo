@@ -131,8 +131,6 @@ public class Controleur {
      * @param noeudAvant noeud après lequel on veut ajouter noeudMilieu
      */
     public void ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
-        System.out.println("ajouterPointLivraison");
-        
         int idClient = -1;
         while(idClient <= 0) {
             String rep = JOptionPane.showInputDialog(null, "Entrez le numéro du client (entier positif)", "Ajout d'une livraison", JOptionPane.QUESTION_MESSAGE);
@@ -153,7 +151,6 @@ public class Controleur {
      * @param noeudASup 
      */
     public void supprimerPointLivraison(Noeud noeudASup) {
-        System.out.println("Suppression Point Livraison");
         creationCommande(new ElementListeCourante(new SuppressionLivraisonCommande(zone,noeudASup)));
         
         execute();
@@ -186,7 +183,6 @@ public class Controleur {
         else if(commande instanceof CalculerTourneeCommand){
             zone.getTournee().setCheminsResultats(((CalculerTourneeCommand)commande).getChemins());
             Fenetre.getInstance().actualiserPlan();
-            System.out.println("Fin de calculTournee : " + zone.getTournee().getCheminsResultats());
         }
     }
     

@@ -29,23 +29,52 @@ import javax.swing.JPanel;
  * @author H4201
  */
 public class VuePlan extends JPanel{
+    private static VuePlan vuePlan = null;
+    public static VuePlan getInstance(){
+        if(vuePlan == null)     vuePlan = new VuePlan();
+        return vuePlan;
+    }
+    /**
+     * Bordure du plan
+     */
     protected static int border = VueNoeud.DIAMETRE;
     
+    /**
+     * Noeuds à afficher
+     */
     protected List<VueNoeud> vueNoeuds = new Vector<>();
+    /**
+     * Troncons à afficher.
+     */
     protected List<VueTroncon> vueTroncons = new Vector<>();
+    /**
+     * Tournée à afficher. Null si aucune n'est calculée.
+     */
     protected VueTournee vueTournee;
     
-    //Valeurs en mètres de la ville, s'actualise en fonction du chargement du plan.
+    //Valeurs en mètres de la ville, s'
+    /**
+     * Largeur du plan selon la taille de la ville. S'actualise en fonction du chargement du plan.
+     */
     private int XVille = 0;
+    /**
+     * Hauteur du plan selon la taille de la ville. S'actualise en fonction du chargement du plan.
+     */
     private int YVille = 0;
     
     /**
-     * Les 2 attributs ci-dessous donnent des informations sur les données dans la vue.
+     * Noeud sélectionné actuellement. Null si aucun ne l'est.
      */
     private VueNoeud vNSelectionne = null;
     
+    /**
+     * Vrai si le fond d'écran est gris
+     */
     private boolean isGray = true;
     
+    /**
+     * Liste des couleurs à attribuer aux plages horaires.
+     */
     private final List<Color> colors  =  new  ArrayList<Color>(){{
         add(Color.CYAN);
         add(Color.YELLOW);
@@ -54,11 +83,15 @@ public class VuePlan extends JPanel{
         add(Color.BLACK);
         add(Color.LIGHT_GRAY);
     }};
+    /**
+     * Permet d'associer les pages avec les couleurs de la liste colors.
+     */
     private final Map<PlageHoraire,Color>  colorsPL = new HashMap<>();
     
-    
+    /**
+     * Vrai si des livraisons sont présentes dans le plan.
+     */
     private boolean livraisonsPresentes ;
-    private final List<Livraison> livraisons  = new ArrayList<>();
     
     public void setTournee(Tournee tournee){
         vueTournee.setTourneeModel(tournee);
@@ -75,31 +108,33 @@ public class VuePlan extends JPanel{
         return vNSelectionne;
     }
     
+    public boolean getLivraisonsPresente() {
+        return livraisonsPresentes;
+    }
+
+    public Map<PlageHoraire, Color> getColorsPL() {
+        return colorsPL;
+    }
     
     
-    
-	@Override
+    @Override
+    /**
+     * Méthode appelée a chaque fois que le dessin doit etre redessine
+     * C'est ici que l'on peint tous les composants
+     */
     public void paintComponent(Graphics g) {
-        /* methode appelee a chaque fois que le dessin doit etre redessine
-         * C'est ici que l'on peint tous les composants
-         */
         super.paintComponent(g);
               
         ZoneGeographique zg = Controleur.getInstance().getZone();
 
-        //On utilise un type différent pour avoir plus de possibilités et l'accès à de nouvelles méthodes
-        //Les méthodes qu'on utilisait avec g continuent à fonctionner.
         Graphics2D g2 = (Graphics2D) g;
         
-        // Dessin des tronçons
         for(VueTroncon vTr : vueTroncons){
-            //Règle de trois pour afficher les points.
             vTr.setOrigViewX(border + this.getX() + zg.getNoeudById(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
             vTr.setOrigViewY(border + this.getY() + zg.getNoeudById(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
             vTr.setDestViewX(border + this.getX() + zg.getNoeudById(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
             vTr.setDestViewY(border + this.getY() + zg.getNoeudById(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
 
-            //g2.setColor(vTr.getCouleur());
             g2.setStroke(new BasicStroke(3));
             g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
         }
@@ -108,13 +143,11 @@ public class VuePlan extends JPanel{
         if (vueTournee != null){
             for (VueTroncon vTr : getVueTournee().vTroncons) {
 
-                //Règle de trois pour afficher les points.
                 vTr.setOrigViewX(border + this.getX() + zg.getNoeudById(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
                 vTr.setOrigViewY(border + this.getY() + zg.getNoeudById(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
                 vTr.setDestViewX(border + this.getX() + zg.getNoeudById(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
                 vTr.setDestViewY(border + this.getY() + zg.getNoeudById(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
 
-                //g2.setColor(vTr.getCouleur());
                 g2.setStroke(new BasicStroke(5));
                 g2.setColor(Color.BLUE);
                 g2.drawLine(vTr.origViewX, vTr.origViewY, vTr.destViewX, vTr.destViewY);
@@ -125,7 +158,6 @@ public class VuePlan extends JPanel{
         }
         
         for(VueNoeud vN : vueNoeuds){
-                //Règle de trois pour afficher les points.
                 vN.setVueX(border + this.getX() + vN.getNoeudModele().getXMetre()*(this.getWidth() - 2*border) / XVille);
                 vN.setVueY(border + this.getY() + vN.getNoeudModele().getYMetre()*(this.getHeight() - 2*border) / YVille);
 
@@ -141,49 +173,33 @@ public class VuePlan extends JPanel{
                     g2.fillOval(vN.getVueX()-VueNoeud.DIAMETRE/2, vN.getVueY()-VueNoeud.DIAMETRE/2, VueNoeud.DIAMETRE, VueNoeud.DIAMETRE);
                 }
         }
-        
-        //Légende
-        
     }
 
     
-    /**
-     * Creates new form VuePlan
-     */
-    public VuePlan() {
+    private VuePlan() {
         setBackground(Color.GRAY);
  	this.paint(getGraphics());
     }
-     /**
-     *
-     * @param noeuds
-     * @param troncons
-     * @param livraisons
-     */
-    public VuePlan (List<Noeud> noeuds, List<Troncon> troncons, List<Livraison> livraisons) {
-    }
         
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
-    
     /**
      * Détermine quel noeud est cliqué et met à jour en conséquence vNSelectionne.
-     * @param locationOnPanel point cliqué sur le panel
+     * @param locationOnPanel point cliqué sur le panel.
      * @return le noeud qui a été cliqué, null si aucun noeud n'est cliqué.
      */
     protected VueNoeud noeudEstClique(Point locationOnPanel) {
-    	VueNoeud vNSelectionne = null;
+    	VueNoeud noeudSelectionne = null;
         Iterator<VueNoeud> itVN = vueNoeuds.iterator();
     	while(itVN.hasNext()){
             VueNoeud vN = itVN.next();
             if(vN.getNoeudClique(locationOnPanel)){
-                vNSelectionne = vN;
+                noeudSelectionne = vN;
                 break;
             }
         }
-        changerSelection(vNSelectionne);
-        return vNSelectionne;
+        changerSelection(noeudSelectionne);
+        return noeudSelectionne;
     }
+    
     /**
      * Change les flags des VueNoeud de la Vue pour que la sélection se mette à jour.
      * Appelée à la fois par le clic sur le plan et la liste de droite.
@@ -204,13 +220,9 @@ public class VuePlan extends JPanel{
         }
     }
 
-//    public VueTournee getVueTournee() {
-//        return vueTournee;
-//    }
-
     /**
      * Redessine tout le plan en fonction du modèle (noeuds+troncons+livraison).
-     * @param zoneGeo 
+     * @param zoneGeo le modèle à afficher.
      */
     protected void actualiserPlan(ZoneGeographique zoneGeo) {
         viderPlan();
@@ -233,7 +245,7 @@ public class VuePlan extends JPanel{
     }
     
     /**
-     * Ajoute les noeuds à dessiner.
+     * Ajoute les noeuds et les livraisons à dessiner.
      * @param entrepot
      * @param listNoeuds 
      */
@@ -268,7 +280,6 @@ public class VuePlan extends JPanel{
                 if(noeud.getYMetre()>YVille){
                     YVille = noeud.getYMetre();
                 }
-                //TODO : redéfinir .equals 
                 if ((entrepot != null) && (noeud.equals(entrepot))){
                     vueNoeuds.add(new VueNoeud(noeud, Color. ORANGE));
                 }
@@ -285,7 +296,10 @@ public class VuePlan extends JPanel{
         }
     }
     
-    
+    /**
+     * Ajoute la tournée à afficher.
+     * @param tournee 
+     */
     private void ajouterTournee(Tournee tournee){
         if(tournee.getCheminsResultats().isEmpty()){
             return;
@@ -294,31 +308,19 @@ public class VuePlan extends JPanel{
         vueTournee = new VueTournee(tournee, Color.GREEN);
     }
     
-    private void ajouterLivraisonAVueNoeuds(VueNoeud vN){
-        for(int i=0,len=vueNoeuds.size() ; i<len ; i++){
-            if(vueNoeuds.get(i).getNoeudModele().getId() == vN.getNoeudModele().getId()){
-                vueNoeuds.set(i, vN);
-                i=len;
-            }
-        }
-    }
-    
+    /**
+     * Remet le plan à zéro.
+     */
     private void viderPlan(){
         colorsPL.clear();
         vueNoeuds.clear();
         vueTroncons.clear();
         vueTournee = null;
     }
-
-    boolean getLivraisonsPresente() {
-        return livraisonsPresentes;
-    }
-
-    public Map<PlageHoraire, Color> getColorsPL() {
-        return colorsPL;
-    }
     
-
+    /**
+     * Change la couleur de fond d'écran.
+     */
     void changeBackGround() {
         if(isGray){
             setBackground(Color.WHITE);

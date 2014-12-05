@@ -1,9 +1,5 @@
 package fr.insaif.jajagaa.control.Commands;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import fr.insaif.jajagaa.control.Controleur;
 import fr.insaif.jajagaa.control.HorsPlageException;

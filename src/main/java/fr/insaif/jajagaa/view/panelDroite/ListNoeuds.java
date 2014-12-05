@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package fr.insaif.jajagaa.view.panelDroite;
 
 import fr.insaif.jajagaa.model.EtatNoeud;
@@ -19,7 +13,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionListener;
 
 /**
- *
+ * Liste des noeuds.
  * @author H4201
  */
 public class ListNoeuds extends JList {
@@ -34,6 +28,7 @@ public class ListNoeuds extends JList {
     }
     
     /**
+     * Sélectionne le noeud dans la liste.
      * <b>Précaution : </b> Désactivation des listeners pour travailler.
      * @param vNASelectionner noeud à sélectionner.
      */
@@ -62,7 +57,7 @@ public class ListNoeuds extends JList {
     }
 
     /**
-     * 
+     * Ajoute les élements en paramètre à la liste.
      * @param vueNoeuds liste des noeuds à ajouter à la liste
      */
     private void addElements(List<VueNoeud> vueNoeuds) {
@@ -72,7 +67,7 @@ public class ListNoeuds extends JList {
     }
     
     /**
-     * Vide la JList
+     * Vide la liste.
      */
     private void removeElements(){
         dlm.removeAllElements();
@@ -105,6 +100,10 @@ public class ListNoeuds extends JList {
     
 }
 
+/**
+ * Définit le rendu de la liste.
+ * @author jeje
+ */
 class ListNoeudsRenderer extends JLabel implements ListCellRenderer{
 
     @Override

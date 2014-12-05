@@ -31,39 +31,63 @@ import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
 /**
  * Classe qui fait l'interface avec le controleur et qui implémente 
  * tous les écouteurs.
+ * Contient un JSplitPane permettant de séparer le plan du conteneur de la liste.
  * @author H4201
  */
 public class Fenetre extends JFrame {
-        private static Fenetre fenetre = null;
-        public static Fenetre getInstance(){
-            if(fenetre==null){
-                fenetre=new Fenetre();
-            }
-            return fenetre;
+    private static Fenetre fenetre = null;
+    /**
+     * Permet de n'avoir qu'une instance de fenêtre (pattern singleton).
+     * @return l'instance de Fenetre.
+     */
+    public static Fenetre getInstance(){
+        if(fenetre==null){
+            fenetre=new Fenetre();
         }
-	
-        private final VuePlan vuePlan;
-	private final ConteneurDroite conteneurDroite;
-	private final JSplitPane split;
-        
-        //Barre de menu
-        private final JMenuBar barreMenu;
-        private final JMenu fichier, apparence, actions;
-        JMenuItem importPlan, importLivr, imprimer, changeBG, annuler, refaire, quit;
-        
-        //On crée un nouveau sélecteur de fichier
-        final JFileChooser fc = new JFileChooser("./src/main/resources");
-        
-        private VueNoeud vNAAjouter;
-        private VueNoeud vNAvant;
+        return fenetre;
+    }
+
+    /**
+     * Conteneur du plan
+     */
+    private final VuePlan vuePlan;
+    /**
+     * Conteneur de la liste et des boutons
+     */
+    private final ConteneurDroite conteneurDroite;
+    /**
+     * Séparateur entre vuePlan et conteneurDroite
+     */
+    private final JSplitPane split;
+
+    /**
+     * Barre de menu
+     */
+    private final JMenuBar barreMenu;
+    private final JMenu fichier, apparence, actions;
+    JMenuItem importPlan, importLivr, imprimer, changeBG, annuler, refaire, quit;
+
+    /**
+     * Sélectionneur de fichier
+     */
+    final JFileChooser fc = new JFileChooser("./src/main/resources");
+
+    /**
+     * Pointeur sur le noeud sélectionné par l'interface pour l'ajouter à une tournée.
+     */
+    private VueNoeud vNAAjouter;
+    /**
+     * Pointeur sur la livraison précédent le noeud à ajouter dans une tournée.
+     */
+    private VueNoeud vNLivraisonAvant;
         
     private Fenetre(){
     	setVisible(true);
         setTitle("OnlyLyon Livreur");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        vuePlan = new VuePlan();
+        vuePlan = VuePlan.getInstance();
     	
-        conteneurDroite = new ConteneurDroite();
+        conteneurDroite = ConteneurDroite.getInstance();
         conteneurDroite.majListe(vuePlan.getVueNoeuds());
     	
     	split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, vuePlan, conteneurDroite);
@@ -129,6 +153,10 @@ public class Fenetre extends JFrame {
         imprimer.setEnabled(false);
     }
     
+    /**
+     * Ajout de tous les listeners de l'interface. La plupart des listeners appelent des fonctions
+     * privées de cette classe et appelent selon les conditions des méthodes du contrôleur.
+     */
     private void addListeners(){
         //Redimensionnement
         addComponentListener(new ComponentListener() {
@@ -136,7 +164,7 @@ public class Fenetre extends JFrame {
                 public void componentShown(ComponentEvent arg0) {}
 
                 public void componentResized(ComponentEvent arg0) {
-                        //Maj de l'endroit de la séparation
+                        //Mise à jour de l'endroit de la séparation.
                     split.setDividerLocation(getWidth()-250);
                 }
 
@@ -371,7 +399,7 @@ public class Fenetre extends JFrame {
     
     
     /**
-     * Appelée par un listener sur bouton
+     * Appelée pour choisir un fichier xml de plan à charger
      */
     private void choisirFichierPlan(){
         int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier du plan");
@@ -386,7 +414,7 @@ public class Fenetre extends JFrame {
     }
     
     /**
-     * Appelée par un listener sur bouton
+     * Appelée pour choisir un fichier xml de livraisons à charger
      */
     private void choisirFichierLivraisons(){
         int returnVal = fc.showDialog(fenetre, "Ouvrir le fichier de la livraison");
@@ -401,39 +429,36 @@ public class Fenetre extends JFrame {
     }
     
     /**
-     * 
-     * @param time 
+     * Appelle le contrôleur afin de calculer la tournée.
      */
     private void calculerTournee(){
-        System.out.println("Controleur.getInstance().getZone().getTournee().getCheminsResultats().size() : " + Controleur.getInstance().getZone().getTournee().getCheminsResultats().size());
         Controleur.getInstance().CalculerTournee();
         conteneurDroite.setEtatBtnAddNoeud(0);
     }
     
     /**
-     * Met à jour le bouton d'ajout de livraison et appelle le calcul de la tournee si on a saisi les deux noeuds.
+     * Met à jour le bouton d'ajout de livraison et ajoute le noeud vNAAjouter dans la tournée en demandant au du contrôleur.
      */
     private void traitementAjoutLivraison(){
         if(vNAAjouter != null){
-            vNAvant = vuePlan.getvNSelectionne();
-            //Doit être une livraison
-            if(vNAvant.getEtatLivraison() == EtatNoeud.LIVRAISON ||
-                   vNAvant.getEtatLivraison() == EtatNoeud.RETARD){
+            vNLivraisonAvant = vuePlan.getvNSelectionne();
+            if(vNLivraisonAvant.getEtatLivraison() == EtatNoeud.LIVRAISON ||
+                   vNLivraisonAvant.getEtatLivraison() == EtatNoeud.RETARD){
                 conteneurDroite.getBtnAddNoeud().setEnabled(false);
                 conteneurDroite.getBtnCalculLivraison().setEnabled(true);
-                //Appel
-                Controleur.getInstance().ajouterPointLivraison(vNAAjouter.getNoeudModele(), vNAvant.getNoeudModele());
+                
+                Controleur.getInstance().ajouterPointLivraison(vNAAjouter.getNoeudModele(), vNLivraisonAvant.getNoeudModele());
+                
                 conteneurDroite.setEtatBtnAddNoeud(0);
                 conteneurDroite.getBtnAddNoeud().setEnabled(true);
                 vNAAjouter = null;
-                vNAvant = null;
+                vNLivraisonAvant = null;
             }else{
-                vNAvant = null;
+                vNLivraisonAvant = null;
             }
         }
         else{
             vNAAjouter = vuePlan.getvNSelectionne();
-            //Ne doit pas être une livraison + au moins un livraison doit être présente.
             if(vNAAjouter.getEtatLivraison() == EtatNoeud.RIEN && vuePlan.getLivraisonsPresente()){
                 conteneurDroite.setEtatBtnAddNoeud(1);
                 conteneurDroite.getBtnCalculLivraison().setEnabled(false);
@@ -443,15 +468,13 @@ public class Fenetre extends JFrame {
         }
     }
     /**
-     * Met à jour le bouton de suppression de livraison et appelle le calcul de la tournée si on valide la suppression. 
+     * Met à jour le bouton de suppression de livraison et supprime la livraison sélectionnée de la tournée en demandant au du contrôleur.
      */
     private void traitementSupprLivraison() {
         VueNoeud vNASupprimer ;
         if((vNASupprimer=vuePlan.getvNSelectionne())!=null){
             Controleur.getInstance().supprimerPointLivraison(vNASupprimer.getNoeudModele());
         }
-            
-        
     }
     
     /**
@@ -470,10 +493,18 @@ public class Fenetre extends JFrame {
         dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
+    /**
+     * Autorise ou pas l'annulation
+     * @param b si vrai, on peut annuler la dernière commande
+     */
     public void setUndoable(boolean b) {
         if(annuler.isEnabled() != b)    annuler.setEnabled(b);
     }
 
+    /**
+     * Autorise ou pas l'action de refaire
+     * @param b si vrai, on peut refaire la commande tout juste annulée
+     */
     public void setRedoable(boolean b) {
         if(refaire.isEnabled() != b)    refaire.setEnabled(b);
     }

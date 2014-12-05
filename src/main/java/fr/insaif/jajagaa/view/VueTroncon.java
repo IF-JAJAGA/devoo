@@ -18,19 +18,19 @@ public class VueTroncon {
      */
     protected Troncon tronconModel;
     /**
-     * Coordonnée X du noeud d'origine du tronçon.
+     * Coordonnée X du noeud d'origine du tronçon dans la vue.
      */
     protected int origViewX;
     /**
-     * Coordonnée Y du noeud d'origine du tronçon.
+     * Coordonnée Y du noeud d'origine du tronçon dans la vue.
      */
     protected int origViewY;
     /**
-     * Coordonnée X du noeud de destination du tronçon.
+     * Coordonnée X du noeud de destination du tronçon dans la vue.
      */
     protected int destViewX;
     /**
-     * Coordonnée Y du noeud de destination du tronçon.
+     * Coordonnée Y du noeud de destination du tronçon dans la vue.
      */
     protected int destViewY;
     /**
@@ -58,11 +58,6 @@ public class VueTroncon {
         vitesse = unTroncon.getVitesse();
     }
     
-    public boolean changementSelection(Point p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
     public Troncon getTronconModel() {
         return tronconModel;
     }

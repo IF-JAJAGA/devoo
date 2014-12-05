@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package fr.insaif.jajagaa.view.panelDroite;
 
 import fr.insaif.jajagaa.model.Livraison;
@@ -30,17 +24,43 @@ import javax.swing.SpringLayout;
 public class ConteneurDroite extends JPanel{
     private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
+    private static ConteneurDroite conteneurDroite =  null;
+    public static ConteneurDroite getInstance(){
+        if(conteneurDroite==null) conteneurDroite = new ConteneurDroite();
+        return conteneurDroite;
+    }
     
     private final String strBtnAddNoeud0 = "Ajouter un noeud livraison";
     private final String strBtnAddNoeud1 = "Choisir la livraison précédente";
     private final String strBtnSupNoeud  = "Supprimer une livraison";
     
+    /**
+     * Titre de la liste.
+     */
     private JLabel titre;
+    /**
+     * Liste des noeuds et livraisons.
+     */
     private ListNoeuds listeNoeuds;
+    /**
+     * Zone des description des livraisons
+     */
     private JTextArea textFiDescriptionLivraison;
+    /**
+     * Zone de description des couleurs utilisées
+     */
     private JTextArea legendeCouleurs;
+    /**
+     * Bouton d'ajout de livraison.
+     */
     private JButton btnAddNoeud;
+    /**
+     * Bouton de suppression des livraisons.
+     */
     private JButton btnSupNoeud;
+    /**
+     * Bouton pour lancer le calcul de la tournée.
+     */
     private JButton btnCalculLivraison;
     
     private SpringLayout layout;
@@ -75,10 +95,10 @@ public class ConteneurDroite extends JPanel{
         }
     }
     
-    public void setEtatBtnSupNoeud(int e){
-        //TODO !!
-    }
-    
+    /**
+     * Met à jour le texte pour décrire la livraison.
+     * @param l livraison sélectionnée à décrire.
+     */
     public void setTextFieldText(Livraison l){
         String s = "";
         s += "Id Commande : ";
@@ -93,11 +113,14 @@ public class ConteneurDroite extends JPanel{
         textFiDescriptionLivraison.setText(s);
     }
     
+    /**
+     * Efface la descrption des livraisons.
+     */
     public void resetTextFieldText(){
         textFiDescriptionLivraison.setText("");
     }
 
-    public ConteneurDroite() {
+    private ConteneurDroite() {
         initComponents();
         placeComponents();
         addListeners();
@@ -174,6 +197,10 @@ public class ConteneurDroite extends JPanel{
     private void addListeners(){
     }
 
+    /**
+     * Met à jour la légende des couleurs.
+     * @param colorsPL données associant les plages présentes aux couleurs.
+     */
     public void majLegendeCouleurs(Map<PlageHoraire, Color> colorsPL) {
         legendeCouleurs.setText("Pas de plages horaires chargées");
         

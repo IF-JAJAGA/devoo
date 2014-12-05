@@ -1,17 +1,15 @@
 package fr.insaif.jajagaa.view;
 
 import fr.insaif.jajagaa.model.Chemin;
-import fr.insaif.jajagaa.model.Noeud;
 import fr.insaif.jajagaa.model.Tournee;
 import fr.insaif.jajagaa.model.Troncon;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
- * Classe qui implémente la vue d'une tournée, elle même constituée de plusieurs cheminsResultats.
+ * Classe qui implémente la vue d'une tournée, elle-même constituée de plusieurs cheminsResultats.
  *
  * @author H4201
  */
@@ -25,21 +23,17 @@ public class VueTournee {
      * Couleur avec laquelle sera colorée la tournée sur la carte.
      */
     protected Color couleur;
-
     /**
      * Liste des tronçons qui composent la tournée
      */
     protected List<VueTroncon> vTroncons = new ArrayList<VueTroncon>();
-
     /**
      * Constructeur de la classe tournée
-     *
-     * @param uneTournee
+     * @param uneTournee la tournée dans le modèle.
      * @param uneCouleur
      */
     public VueTournee(Tournee uneTournee, Color uneCouleur) {
         setTourneeModel(uneTournee);
-        System.out.println("uneTournee.getCheminsResultats() : " + uneTournee.getCheminsResultats().size());
         if(uneTournee.getCheminsResultats() !=null){
             for (Chemin ch : uneTournee.getCheminsResultats()) {
                 for(Troncon tr : ch.getTroncons()) {
@@ -48,11 +42,6 @@ public class VueTournee {
             }
         }
         couleur = uneCouleur;
-    }
-
-    public boolean changementSelection(Point p) {
-        // TODO Auto-generated method stub
-        return false;
     }
 
     @Override
@@ -75,6 +64,4 @@ public class VueTournee {
     public void setTourneeModel(Tournee tourneeModel) {
         this.tourneeModel = tourneeModel;
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
 }
