@@ -14,7 +14,7 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 /**
  * Classe faisant parti du design pattern Command
  * Elle concerne l'ajout manuel d'une livraison directement dans le graphe
- * @author alicia
+ * @author H4201
  */
 public class AjoutLivraisonCommande implements Command {
     /**

@@ -13,7 +13,7 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
  * Classe du design pattern Command permettant de lire le plan
- * @author Jérôme
+ * @author H4201
  */
 public class LirePlanCommand implements Command{
     

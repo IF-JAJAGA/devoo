@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Heure précise à laquelle est annoncée l'arrivée du livreur au client et est prévue la livraison.
  * Est contenue dans une seule plage horaire.
- * @author gustavemonod
+ * @author H4201
  */
 public class PlageHoraire implements Comparable<PlageHoraire> {
     /**

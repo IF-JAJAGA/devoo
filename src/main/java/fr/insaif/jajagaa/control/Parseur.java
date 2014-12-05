@@ -18,7 +18,7 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
  * Classe qui s'occupe de parser les fichiers XML de livraisons et de plan.
- * @author gustavemonod
+ * @author H4201
  */
 public class Parseur{
 	

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Point défini où il est possible de s'arrêter sur la carte d'une zone géographique,
  * il comporte au moins un tronçon (entrant) le desservant et un tronçon (sortant) desservant un autre point.
- * @author gustavemonod
+ * @author H4201
  */
 public class Noeud {
     

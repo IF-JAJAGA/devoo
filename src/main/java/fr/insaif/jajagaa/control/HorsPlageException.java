@@ -5,7 +5,7 @@ import fr.insaif.jajagaa.model.Livraison;
 /**
  * Classe comprenant les exceptions reportées lorsqu'une livraison se trouve en dehors des possibilités 
  * de la plage horaire à laquelle elle est censée appartenir
- * @author alberto
+ * @author H4201
  */
 public class HorsPlageException extends Exception{
     

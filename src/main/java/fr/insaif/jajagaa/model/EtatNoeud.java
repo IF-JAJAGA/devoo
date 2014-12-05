@@ -8,7 +8,7 @@ package fr.insaif.jajagaa.model;
 
 /**
  * Enum contenant les différents états que peuvent avoir un Noeud
- * @author aurelien
+ * @author H4201
  */
 public enum EtatNoeud {
     RIEN, LIVRAISON, RETARD, NON_LIVRE

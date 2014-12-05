@@ -4,7 +4,7 @@ import java.util.*;
 
 /**
  * Classe permettant de trouver le meilleur chemin localement, ou d'appeler Choco pour calculer la tournée
- * @author gustavemonod
+ * @author H4201
  */
 public class Dijkstra {
     /**

@@ -11,7 +11,7 @@ import java.util.Date;
  * Classe Vue qui correspond à un noeud dans le modèle.
  * Cette vue possède plus d'attributs si le noeud est un point de livraison.
  *
- * @author alicia
+ * @author H4201
  */
 public class VueNoeud {
 

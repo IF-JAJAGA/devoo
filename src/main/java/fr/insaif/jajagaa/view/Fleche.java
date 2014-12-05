@@ -13,7 +13,7 @@ import static java.lang.Math.abs;
 
 /**
  *
- * @author jeje
+ * @author H4201
  */
 public class Fleche {
     private VueTroncon vT;

@@ -11,7 +11,7 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
  * Classe qui implémente la vue d'un tronçon.
- * @author alicia
+ * @author H4201
  */
 public class VueTroncon {
 

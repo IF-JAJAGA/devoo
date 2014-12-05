@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Controleur qui permet de faire l'interface avec le modèle
- * @author gustavemonod
+ * @author H4201
  */
 public class Controleur {
     private static Controleur controleur;

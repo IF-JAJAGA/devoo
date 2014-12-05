@@ -15,7 +15,7 @@ import fr.insaif.jajagaa.model.tsp.TSP;
  * Itinéraire d'un livreur dans une seule zone géographique, partant du dépôt et revenant au dépôt,
  * elle est représentée par une liste ordonnée de cheminsResultats
  *
- * @author gustavemonod
+ * @author H4201
  */
 public class Tournee {
     

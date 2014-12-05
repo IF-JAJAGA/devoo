@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Classe qui implémente la vue d'une tournée, elle même constituée de plusieurs cheminsResultats.
  *
- * @author alicia
+ * @author H4201
  */
 public class VueTournee {
 

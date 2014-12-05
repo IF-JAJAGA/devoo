@@ -2,7 +2,7 @@ package fr.insaif.jajagaa.control;
 
 /**
  * Classe désignant les exceptions relevées par le Parseur
- * @author alberto
+ * @author H4201
  */
 public class ParseurException extends Exception{
 	
