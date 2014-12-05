@@ -10,7 +10,6 @@ import java.util.Map;
 import fr.insaif.jajagaa.control.HorsPlageException;
 import fr.insaif.jajagaa.model.tsp.SolutionState;
 import fr.insaif.jajagaa.model.tsp.TSP;
-import java.util.Date;
 
 /**
  * Itinéraire d'un livreur dans une seule zone géographique, partant du dépôt et revenant au dépôt,

@@ -1,9 +1,5 @@
 package fr.insaif.jajagaa.model;
 
-import fr.insaif.jajagaa.model.tsp.Graph;
-import fr.insaif.jajagaa.model.tsp.SolutionState;
-import fr.insaif.jajagaa.model.tsp.TSP;
-
 import java.util.*;
 
 /**
