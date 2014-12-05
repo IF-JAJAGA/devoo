@@ -1,16 +1,17 @@
+package fr.insaif.jajagaa.model;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.insaif.jajagaa.model;
 
 import fr.insaif.jajagaa.model.tsp.Graph;
 
 import java.util.*;
 
 /**
- *
+ *              /////
  * @author aurelien
  */
 public class LivraisonGraph implements Graph {
@@ -30,26 +31,54 @@ public class LivraisonGraph implements Graph {
      */
     protected List<Chemin> chemins;
     
+    /**
+     * Liste de Livraison composant le graphe
+     */
     protected List<LivraisonGraphVertex> noeuds;
     
+    /**
+     * Map servant à récupérer les IDs
+     */
     protected Map<Integer,Integer> idToIndex;
 
+    /**
+     * Constructeur de LivraisonGraph
+     * @param chemins List<Chemin> composant la Tournee
+     */
     public LivraisonGraph(List<Chemin> chemins) {
         this.setChemins(chemins);
     }
 
+    /**
+     * Accesseur des Livraisons composant la Tournée 
+     * @return  
+     */
     protected List<LivraisonGraphVertex> getNoeuds() {
         return this.noeuds;
     }
     
+    /**
+     * Accesseur de l'ID de la Livraison correspondant au ////
+     * @param id
+     * @return 
+     */
     public int getIndexNoeudById(int id) {
         return this.idToIndex.get(id);
     }
     
+    /**
+     * Accesseur du LivraisonGrapheVertex
+     * @param index
+     * @return 
+     */
     public LivraisonGraphVertex getVertex(int index) {
         return this.noeuds.get(index);
     }
 
+    /**
+     * Mutateur de la liste de Chemins du LivraisonGraphe
+     * @param chemins 
+     */
     public void setChemins(List<Chemin> chemins) {
         assert !chemins.isEmpty();
         this.chemins = chemins;
@@ -81,29 +110,37 @@ public class LivraisonGraph implements Graph {
     }
     
     /**
-     * Coût max des arcs
+     * Coût maximum des arcs
      * @return Coût max des arcs
      */
+    @Override
     public int getMaxArcCost() {
         return this.maxArcCost;
     }
 
     /**
-     * Coût min des arcs
+     * Coût minimum des arcs
      * @return Coût min des arcs
      */
+    @Override
     public int getMinArcCost() {
         return this.minArcCost;
     }
 
     /**
-     * Nombre de sommets du graphe
+     * Accesseur du nombre de sommets du graphe
      * @return Nombre de sommets du graphe
      */
+    @Override
     public int getNbVertices() {
         return this.getNoeuds().size();
     }
 
+    /**
+     * Accesseur des coûts de tous les Troncons composants le LivraisonGraphe
+     * @return 
+     */
+    @Override
     public int[][] getCost() {
         final int PAS_DE_TRONCON = this.getMaxArcCost() + 1;
         int size = this.getNbVertices();
@@ -127,6 +164,7 @@ public class LivraisonGraph implements Graph {
      * @return Tableau des ID des noeuds reliés avec un Chemin sortant
      * @throws ArrayIndexOutOfBoundsException
      */
+    @Override
     public int[] getSucc(int i) throws ArrayIndexOutOfBoundsException {
         List<Chemin> sortants = this.getNoeuds().get(i).getSortants();
         int size = sortants.size();
@@ -138,10 +176,22 @@ public class LivraisonGraph implements Graph {
         return succ;
     }
 
+    /**
+     *      ////
+     * @param i
+     * @return
+     * @throws ArrayIndexOutOfBoundsException 
+     */
+    @Override
     public int getNbSucc(int i) throws ArrayIndexOutOfBoundsException {
         return this.noeuds.get(i).getSortants().size();
     }
     
+    /**
+     * Accesseur des coûts des ///
+     * @param i
+     * @return 
+     */
     protected int[] getSuccCost(int i) {
         List<Chemin> sortants = this.getNoeuds().get(i).getSortants();
         int size = sortants.size();
