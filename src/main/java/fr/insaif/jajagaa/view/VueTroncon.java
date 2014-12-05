@@ -3,8 +3,6 @@ package fr.insaif.jajagaa.view;
 import fr.insaif.jajagaa.control.Controleur;
 import java.awt.Point;
 
-import javax.swing.JPanel;
-
 import fr.insaif.jajagaa.model.Troncon;
 import fr.insaif.jajagaa.model.ZoneGeographique;
 
@@ -53,10 +51,10 @@ public class VueTroncon {
         ZoneGeographique zg = Controleur.getInstance().getZone();
         
         tronconModel = unTroncon;
-        origViewX = zg.getNoeudById(unTroncon.getIdOrigine()).getX()*conv;
-        origViewY = zg.getNoeudById(unTroncon.getIdOrigine()).getY()*conv;
-        destViewX = zg.getNoeudById(unTroncon.getIdDestination()).getX()*conv;
-        destViewY = zg.getNoeudById(unTroncon.getIdDestination()).getY()*conv;
+        origViewX = zg.getNoeudById(unTroncon.getIdOrigine()).getXMetre()*conv;
+        origViewY = zg.getNoeudById(unTroncon.getIdOrigine()).getYMetre()*conv;
+        destViewX = zg.getNoeudById(unTroncon.getIdDestination()).getXMetre()*conv;
+        destViewY = zg.getNoeudById(unTroncon.getIdDestination()).getYMetre()*conv;
         vitesse = unTroncon.getVitesse();
     }
     

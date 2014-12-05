@@ -1,7 +1,6 @@
 package fr.insaif.jajagaa.view;
 
 import fr.insaif.jajagaa.model.EtatNoeud;
-import fr.insaif.jajagaa.model.Livraison;
 import fr.insaif.jajagaa.model.Noeud;
 
 import java.awt.*;
@@ -60,8 +59,8 @@ public class VueNoeud {
         this.couleur = couleur;
         noeudModele = unNoeud;
         
-        vueX = unNoeud.getX();
-        vueY = unNoeud.getY();
+        vueX = unNoeud.getXMetre();
+        vueY = unNoeud.getYMetre();
     }
 
 

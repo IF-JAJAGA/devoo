@@ -165,25 +165,6 @@ public class Noeud {
         assert !this.equals(destination);
         this.sortants.add(new Troncon(this.id, destination.getId(), longueurMetre, vitesse,rue));
     }
-
-    /*
-    public int getX() {
-        return xMetre;
-    }
-
-    public void setX(int x) {
-        this.xMetre = x;
-    }
-
-    public int getY() {
-        return yMetre;
-    }
-
-    public void setY(int y) {
-        this.yMetre = y;
-    }
-    
-    */
     
     /**
      * Teste l'égalité entre le Noeud this et celui passé en paramètre

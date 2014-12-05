@@ -112,16 +112,16 @@ class ListNoeudsRenderer extends JLabel implements ListCellRenderer{
         if(e instanceof VueNoeud){
             VueNoeud vN = (VueNoeud)e;
             if(vN.getEtatLivraison() == EtatNoeud.LIVRAISON){
-                setText("Livraison " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
+                setText("Livraison " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getXMetre()+ " ; " + vN.getNoeudModele().getYMetre()+ ")");
             }
             else if(vN.getEtatLivraison() == EtatNoeud.RETARD){
-                setText("Livraison retard" + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
+                setText("Livraison retard" + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getXMetre()+ " ; " + vN.getNoeudModele().getYMetre()+ ")");
             }
             else if(vN.getCouleur() == Color.ORANGE){
-                setText("Entrepôt " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
+                setText("Entrepôt " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getXMetre()+ " ; " + vN.getNoeudModele().getYMetre()+ ")");
             }
             else{
-                setText("Noeud " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getX() + " ; " + vN.getNoeudModele().getY() + ")");
+                setText("Noeud " + vN.getNoeudModele().getId() + " (" + vN.getNoeudModele().getXMetre()+ " ; " + vN.getNoeudModele().getYMetre()+ ")");
             }
             
             if (isSelected) {
