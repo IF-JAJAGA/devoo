@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author aurelien
+ * @author H4201
  */
 public class LivraisonGraphVertex {
     

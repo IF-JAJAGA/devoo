@@ -16,7 +16,7 @@ import static org.junit.Assert.fail;
 
 /**
  * Test de {@link fr.insaif.jajagaa.model.Tournee}
- * @author gustavemonod
+ * @author H4201
  */
 public class TourneeTest {
     protected Tournee tournee, tournee2;

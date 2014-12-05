@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  *
- * @author jeje
+ * @author H4201
  */
 public class VueNoeudTest {
     private VueNoeud vN1;

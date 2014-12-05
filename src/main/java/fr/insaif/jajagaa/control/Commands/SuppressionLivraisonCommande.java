@@ -12,7 +12,7 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
  * Classe du design pattern Command permettant de supprimer une Livraison
- * @author alicia
+ * @author H4201
  */
 public class SuppressionLivraisonCommande implements Command {
     

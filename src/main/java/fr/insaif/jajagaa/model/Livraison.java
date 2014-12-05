@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Acte de livrer un colis à un point de livraison.
  * Une livraison a un intervalle horaire précis, et peut être prévue sans retard, en retard ou faite
- * @author gustavemonod
+ * @author H4201
  */
 public class Livraison extends Noeud {
 /* TODO Définir comment ces attributs doivent être mis en place
@@ -59,6 +59,7 @@ public class Livraison extends Noeud {
         this.plageHoraire = plageHoraire;
         // Date de livraison par défaut: heure de création
         this.heureLivraison = Calendar.getInstance();
+        this.setEtatLivraison(EtatNoeud.LIVRAISON);
     }
     
     /**

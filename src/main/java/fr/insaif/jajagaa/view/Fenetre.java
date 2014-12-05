@@ -31,7 +31,7 @@ import fr.insaif.jajagaa.view.panelDroite.ConteneurDroite;
 /**
  * Classe qui fait l'interface avec le controleur et qui implémente 
  * tous les écouteurs.
- * @author alicia
+ * @author H4201
  */
 public class Fenetre extends JFrame {
         private static Fenetre fenetre = null;

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Zone regroupant un certain nombre de points de livraison, de vueNoeuds et de tronçons reliants ces vueNoeuds.
- * @author gustavemonod
+ * @author H4201
  */
 public class ZoneGeographique {
 

@@ -26,7 +26,7 @@ import javax.swing.JPanel;
 
 /**
  * La classe représente la Vue du plan et est composée de tous les tronçons, les vueNoeuds et les tournées du modèle.
- * @author alicia
+ * @author H4201
  */
 public class VuePlan extends JPanel{
     protected static int border = VueNoeud.DIAMETRE;

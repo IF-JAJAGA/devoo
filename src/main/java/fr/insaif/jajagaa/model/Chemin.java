@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Ensemble ordonné de tronçons joignant deux points de livraison, ou un point de livraison et un entrepôt.
- * @author gustavemonod
+ * @author H4201
  */
 public class Chemin {
     

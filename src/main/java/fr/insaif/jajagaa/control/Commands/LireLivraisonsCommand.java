@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Classe du design pattern Command permettant de lire les Livraisons
- * @author Jérôme
+ * @author H4201
  */
 public class LireLivraisonsCommand implements Command{
     

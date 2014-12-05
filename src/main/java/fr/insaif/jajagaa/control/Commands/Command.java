@@ -7,7 +7,7 @@ package fr.insaif.jajagaa.control.Commands;
 
 /**
  * Interface du design pattern Command
- * @author alicia
+ * @author H4201
  */
 public interface Command {
     

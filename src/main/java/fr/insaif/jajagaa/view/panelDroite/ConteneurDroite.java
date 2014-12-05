@@ -25,7 +25,7 @@ import javax.swing.SpringLayout;
 
 /**
  * Contient les éléments à droite du plan.
- * @author jeje
+ * @author H4201
  */
 public class ConteneurDroite extends JPanel{
     private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");

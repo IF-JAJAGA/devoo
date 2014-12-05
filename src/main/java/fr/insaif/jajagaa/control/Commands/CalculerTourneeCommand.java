@@ -18,7 +18,7 @@ import fr.insaif.jajagaa.model.tsp.SolutionState;
 /**
  * Ce qui change pour un objet tournee :
  * - cheminsResultats
- * @author Jérôme
+ * @author H4201
  */
 public class CalculerTourneeCommand implements Command{
     private final Tournee tournee;

@@ -10,7 +10,7 @@ import fr.insaif.jajagaa.control.Controleur;
 
 /**
  * Point d'entrée de l'application.
- * @author Jérôme
+ * @author H4201
  */
 public class Livreur {
     public static void main(String... args){

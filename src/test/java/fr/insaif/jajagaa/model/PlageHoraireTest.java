@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author aurelien
+ * @author H4201
  */
 public class PlageHoraireTest {
     

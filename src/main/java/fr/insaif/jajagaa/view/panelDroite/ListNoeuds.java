@@ -20,7 +20,7 @@ import javax.swing.event.ListSelectionListener;
 
 /**
  *
- * @author jeje
+ * @author H4201
  */
 public class ListNoeuds extends JList {
     private DefaultListModel dlm = new DefaultListModel<VueNoeud>();
