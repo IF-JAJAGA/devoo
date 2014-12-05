@@ -70,16 +70,6 @@ public class ZoneGeographique {
         }
         return null;
     }
-    
-    /**
-     * Renvoie le nœud d'id donné en paramètre
-     * @param id L'id du nœud à renvoyer
-     * @return Le nœud d'id donné en paramètre
-     */
-    public Noeud getNoeudId(int id) {
-        assert this.noeuds.get(id).getId() == id;
-        return this.noeuds.get(id);
-    }
 
     /**
      * Entrepôt de la zone

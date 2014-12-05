@@ -40,14 +40,14 @@ public class Dijkstra {
                 List<Troncon> troncons = new LinkedList<Troncon>();
                 while (plusProche != departNoeud) {
                     troncons.add(0, cheminMap.get(plusProche));
-                    plusProche = zone.getNoeudId(cheminMap.get(plusProche).getIdOrigine());
+                    plusProche = zone.getNoeudById(cheminMap.get(plusProche).getIdOrigine());
                 }
                 Chemin chemin = new Chemin(troncons, depart, arrivee);
                 depart.getSortants().add(chemin);
                 return chemin;
             }
             for (Troncon t : plusProche.getSortants()) {
-                Noeud voisin = zone.getNoeudId(t.getIdDestination());
+                Noeud voisin = zone.getNoeudById(t.getIdDestination());
                 float cost = distances.get(plusProche) + t.getCost();
                 if (cost < distances.get(voisin)) {
                     distances.put(voisin, cost);

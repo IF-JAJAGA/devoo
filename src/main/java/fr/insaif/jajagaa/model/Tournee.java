@@ -347,7 +347,7 @@ public class Tournee {
         }
 
         this.zone.modifierNoeudEnLivraison(noeudALivrer.getId(), new Livraison(noeudALivrer, ++maxId, idClient, plageInsertion));
-        Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudId(noeudALivrer.getId());
+        Livraison aAjouterLivraison = (Livraison) this.zone.getNoeudById(noeudALivrer.getId());
         plageInsertion.getLivraisons().add(aAjouterLivraison);
 
         

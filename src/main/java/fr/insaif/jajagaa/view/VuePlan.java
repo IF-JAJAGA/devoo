@@ -94,10 +94,10 @@ public class VuePlan extends JPanel{
         // Dessin des tronçons
         for(VueTroncon vTr : vueTroncons){
             //Règle de trois pour afficher les points.
-            vTr.setOrigViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
-            vTr.setOrigViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
-            vTr.setDestViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
-            vTr.setDestViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
+            vTr.setOrigViewX(border + this.getX() + zg.getNoeudById(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+            vTr.setOrigViewY(border + this.getY() + zg.getNoeudById(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
+            vTr.setDestViewX(border + this.getX() + zg.getNoeudById(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+            vTr.setDestViewY(border + this.getY() + zg.getNoeudById(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
 
             //g2.setColor(vTr.getCouleur());
             g2.setStroke(new BasicStroke(3));
@@ -109,10 +109,10 @@ public class VuePlan extends JPanel{
             for (VueTroncon vTr : getVueTournee().vTroncons) {
 
                 //Règle de trois pour afficher les points.
-                vTr.setOrigViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
-                vTr.setOrigViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
-                vTr.setDestViewX(border + this.getX() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
-                vTr.setDestViewY(border + this.getY() + zg.getNoeudId(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
+                vTr.setOrigViewX(border + this.getX() + zg.getNoeudById(vTr.getTronconModel().getIdOrigine()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+                vTr.setOrigViewY(border + this.getY() + zg.getNoeudById(vTr.getTronconModel().getIdOrigine()).getYMetre()*(this.getHeight() -2*border) / YVille);
+                vTr.setDestViewX(border + this.getX() + zg.getNoeudById(vTr.getTronconModel().getIdDestination()).getXMetre()*(this.getWidth() - 2*border) / XVille);
+                vTr.setDestViewY(border + this.getY() + zg.getNoeudById(vTr.getTronconModel().getIdDestination()).getYMetre()*(this.getHeight() -2*border) / YVille);
 
                 //g2.setColor(vTr.getCouleur());
                 g2.setStroke(new BasicStroke(5));

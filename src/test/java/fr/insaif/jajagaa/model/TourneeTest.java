@@ -80,7 +80,7 @@ public class TourneeTest {
 
     @Test
     public void testAjout() {
-        Noeud noeudALivrer = this.zoneGeo.getNoeudId(20); // le noeud 20 n'est pas une livraison
+        Noeud noeudALivrer = this.zoneGeo.getNoeudById(20); // le noeud 20 n'est pas une livraison
         Livraison precedent = this.tournee.getPlagesHoraire().get(1).getLivraisons().get(0);
 
         try {

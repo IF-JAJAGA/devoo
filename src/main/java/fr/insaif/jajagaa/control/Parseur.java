@@ -56,7 +56,7 @@ public class Parseur{
                 	int idLiv = Integer.parseInt(livraison.getAttributeValue("id"));
                 	int idClient = Integer.parseInt(livraison.getAttributeValue("client"));
 
-                	Livraison l = new Livraison(zone.getNoeudId(idNoeud),idLiv, idClient,plageHoraire);
+                	Livraison l = new Livraison(zone.getNoeudById(idNoeud),idLiv, idClient,plageHoraire);
                 	livraisonList.add(l);
                 	zone.modifierNoeudEnLivraison(idNoeud, l);
                 }

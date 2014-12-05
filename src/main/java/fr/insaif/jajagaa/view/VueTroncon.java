@@ -53,10 +53,10 @@ public class VueTroncon {
         ZoneGeographique zg = Controleur.getInstance().getZone();
         
         tronconModel = unTroncon;
-        origViewX = zg.getNoeudId(unTroncon.getIdOrigine()).getX()*conv;
-        origViewY = zg.getNoeudId(unTroncon.getIdOrigine()).getY()*conv;
-        destViewX = zg.getNoeudId(unTroncon.getIdDestination()).getX()*conv;
-        destViewY = zg.getNoeudId(unTroncon.getIdDestination()).getY()*conv;
+        origViewX = zg.getNoeudById(unTroncon.getIdOrigine()).getX()*conv;
+        origViewY = zg.getNoeudById(unTroncon.getIdOrigine()).getY()*conv;
+        destViewX = zg.getNoeudById(unTroncon.getIdDestination()).getX()*conv;
+        destViewY = zg.getNoeudById(unTroncon.getIdDestination()).getY()*conv;
         vitesse = unTroncon.getVitesse();
     }
     
