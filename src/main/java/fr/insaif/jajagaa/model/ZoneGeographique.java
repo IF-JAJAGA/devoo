@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class ZoneGeographique {
 
+    /**
+     * Tournee appartenant à la ZoneGeographique
+     */
     protected Tournee tournee;
    
     /**
@@ -17,13 +20,14 @@ public class ZoneGeographique {
     protected Noeud entrepot;
 
     /**
-     * Liste des noeuds qui composent la zone géographique.
+     * Liste des noeuds qui composent la zone géographique
      */
     protected List<Noeud> noeuds = new ArrayList<>();
 
     /**
-     * Constructeur de la zone géographique à partir de la liste des vueNoeuds (non vide)
-     * @param noeuds La liste des vueNoeuds qui sont dans la zone (contenant l'entrepôt, en première place par défaut)
+     * Constructeur de la zone géographique à partir de la liste des Noeuds.
+     * Cette liste doit être non vide
+     * @param noeuds La liste des Noeuds qui sont dans la zone (contenant l'entrepôt, en première place par défaut)
      */
     public ZoneGeographique(List<Noeud> noeuds) {
         tournee = new Tournee(this);
@@ -31,7 +35,7 @@ public class ZoneGeographique {
     }
 
     /**
-     * Constructeur par copie.
+     * Constructeur par copie
      * @param zone 
      */
     public ZoneGeographique(ZoneGeographique zone) {
@@ -60,7 +64,7 @@ public class ZoneGeographique {
     }
     
     /**
-     * Renvoie le nœud d'id donné en paramètre
+     * Accesseur du Nœud dont l'ID est passé en paramètre
      * @param id L'id du nœud à renvoyer
      * @return Le nœud d'id donné en paramètre
      */
@@ -72,20 +76,24 @@ public class ZoneGeographique {
     }
 
     /**
-     * Entrepôt de la zone
+     * Accesseur du noeud désigné comme Entrepôt
      * @return Entrepôt de la zone
      */
     public Noeud getEntrepot() {
         return this.entrepot;
     }
 
+    /**
+     * Accesseur de la Tournee appartenant à cette ZoneGeographique
+     * @return la Tournee appartenant à la zone
+     */
     public Tournee getTournee() {
         return tournee;
     }
     
 
     /**
-     * Modifie la valeur de l'entrepôt (en choisissant un indice la liste)
+     * Mutateur de l'Entrepôt à partir de son indice
      * @param indice Indice où se trouve l'entrepôt dans la liste
      */
     public void setEntrepot(int indice) {
@@ -93,8 +101,8 @@ public class ZoneGeographique {
     }
 
     /**
-     * Modifie l'entrepôt de la zone
-     * @param entrepot Le nouvel entrepôt de la zone (qui doit déjà être présent dans la liste des vueNoeuds)
+     * Mutateur de l'Entrepôt à partir d'un Noeud
+     * @param entrepot Le nouvel entrepôt de la zone (qui doit déjà être présent dans la liste des Noeuds)
      */
     public void setEntrepot(Noeud entrepot) {
         assert this.getNoeuds().contains(entrepot);
@@ -102,16 +110,16 @@ public class ZoneGeographique {
     }
 
     /**
-     * Liste des vueNoeuds qui forme une zone géographique (carte)
-     * @return Liste des vueNoeuds qui forme une zone géographique (carte)
+     * Accesseur de la liste des Noeuds de la zone
+     * @return Liste des Noeuds composant la ZoneGeographique
      */
     public List<Noeud> getNoeuds() {
         return noeuds;
     }
 
     /**
-     * Modifie la liste des vueNoeuds qui forme une zone géographique (carte)
-     * @param noeuds Liste des vueNoeuds (non vide) qui forme une zone géographique (carte)
+     * Mutateur de la liste des Noeuds de la zone
+     * @param noeuds Liste des Noeuds à muter dans la ZoneGeographique
      */
     public void setNoeuds(List<Noeud> noeuds) {
         assert !noeuds.isEmpty();
@@ -119,10 +127,10 @@ public class ZoneGeographique {
     }
     
     /**
-     * Supprime le Noeud qui possède l'id idNoeud et ajoute la livraison l à la place.
+     * Supprime le Noeud qui possède l'ID idNoeud et ajoute la Livraison l à la place.
      * La livraison à ajouter et le Noeud à supprimer doivent avoir le même id de Noeud.
-     * @param idNoeud
-     * @param l 
+     * @param idNoeud identifiant du Noeud à supprimer
+     * @param l Livraison à ajouter
      */
     public void modifierNoeudEnLivraison(int idNoeud, Livraison l){
         this.noeuds.remove(idNoeud);
@@ -131,16 +139,20 @@ public class ZoneGeographique {
     
     
     /**
-     * Supprime la livraison qui possède l'id idLivraison et ajoute le noeud n à la place.
+     * Supprime la Livraison qui possède l'ID idLivraison et ajoute le noeud n à la place.
      * La livraison à supprimer et le Noeud à ajouter doivent avoir le même id de Noeud.
-     * @param idLivraison
-     * @param n 
+     * @param idLivraison identifiant de la Livraison à supprimer
+     * @param n Noeud à ajouter
      */
     public void modifierLivraisonEnNoeud(int idLivraison, Noeud n){
         this.noeuds.remove(idLivraison);
         this.noeuds.add(n.id,n);
     }
-
+    
+    /**
+     * Mutateur de la Tournee de la zone
+     * @param tournee 
+     */
     public void setTournee(Tournee tournee) {
         this.tournee = tournee;
     }

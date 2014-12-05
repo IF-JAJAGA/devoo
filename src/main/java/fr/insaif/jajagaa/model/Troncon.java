@@ -34,10 +34,11 @@ public class Troncon {
 
     /**
      * Construction d'un Troncon à partir de ces informations de base
-     * @param origine Noeud origine de ce Troncon
-     * @param destination Noeud destination de ce Troncon
+     * @param idOrigine Noeud origine de ce Troncon
+     * @param idDestination Noeud destination de ce Troncon
      * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
      * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
+     * @param rue Nom de la rue associée au Troncon à créer
      * Renvoie des erreurs lorsque des valeurs sont repérées comme aberrantes
      */
     public Troncon(int idOrigine, int idDestination, float longueurMetre, float vitesse, String rue) {
@@ -85,43 +86,40 @@ public class Troncon {
     }
 
     /**
-     * Noeud origine de ce Troncon
-     * @return Noeud origine de ce Troncon
+     * Accesseur de l'ID du Noeud origine de ce Troncon
+     * @return ID du noeud origine de ce Troncon
      */
     public int getIdOrigine() {
         return idOrigine;
     }
 
-
     /**
-     * Modifie le noeud origine de ce Troncon
-     * @param origine Noeud origine de ce Troncon
+     * Mutateur du noeud origine de ce Troncon
+     * @param idOrigine ID du Noeud origine de ce Troncon
      */
     public void setIdOrigine(int idOrigine) {
         this.idOrigine = idOrigine;
     }
 
-
     /**
-     * Noeud destination de ce Troncon
-     * @return Noeud destination de ce Troncon
+     * Accesseur de l'ID du Noeud destination de ce Troncon
+     * @return ID du Noeud destination de ce Troncon
      */
     public int getIdDestination() {
         return idDestination;
     }
 
-
     /**
-     * Modifie le noeud destination de ce Troncon
-     * @param destination Noeud destination de ce Troncon
+     * Mutateurde l'ID du Noeud destination de ce Troncon
+     * @param idDestination ID du Noeud destination de ce Troncon
      */
     public void setIdDestination(int idDestination) {
         this.idDestination = idDestination;
     }
 
-
     /**
-     * Distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     * Accesseur de la distance séparant le noeud origine de celui destination.
+     * Exprimée en mètre
      * @return Distance séparant le noeud origine de celui destination (exprimée en mètre?)
      */
     public float getLongueurMetre() {
@@ -129,7 +127,8 @@ public class Troncon {
     }
 
     /**
-     * Modifie la distance séparant le noeud origine de celui destination (exprimée en mètre?)
+     * Mutateur de la distance séparant le noeud origine de celui destination.
+     * Exprimée en mètre
      * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
      */
     public void setLongueurMetre(float longueurMetre) {
@@ -138,23 +137,25 @@ public class Troncon {
     }
 
     /**
-     * Vitesse de parcours du Troncon (exprimée en ???)
-     * @return Vitesse de parcours du Troncon (exprimée en ???)
+     * Accesseur de la vitesse de parcours du Troncon.
+     * Exprimée en 10km/h
+     * @return Vitesse de parcours du Troncon (exprimée en 10km/h)
      */
     public float getVitesse() {
         return vitesse;
     }
 
     /**
-     * Modifie la vitesse de parcours du Troncon (exprimée en ???)
-     * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
+     * Mutateur de la vitesse de parcours du Troncon.
+     * Exprimée en 10km/h
+     * @param vitesse Vitesse de parcours du Troncon (exprimée en 10km/h)
      */
     public void setVitesse(float vitesse) {
         this.vitesse = vitesse;
     }
     
     /**
-     * Getteur du nom de la rue concernée par le Troncon désigné
+     * Accesseur du nom de la rue concernée par le Troncon désigné
      * @return Nom de la rue sous forme de String
      */
     public String getNomRue() {
@@ -162,8 +163,8 @@ public class Troncon {
     }
     
     /**
-     * Modifie le nom de la rue associée au tronçon
-     * @param nom 
+     * Mutateur du nom de la rue associée au tronçon
+     * @param nom Nom de la rue du Troncon
      */
     public void setNomRue(String nom) {
         this.nomRue = nom;
