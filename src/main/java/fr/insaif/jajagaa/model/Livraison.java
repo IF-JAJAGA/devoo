@@ -91,7 +91,7 @@ public class Livraison extends Noeud {
 
     /**
      * 
-     * Mutateur de l'heure exacte de la livraison à partir d'un String
+     * Mutateur de l'heure exacte de la livraison à partir d'une String
      * @param heureLivraison La nouvelle heure exacte sous forme de chaîne
      * @throws ParseException 
      */

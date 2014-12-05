@@ -12,18 +12,19 @@ import java.util.List;
  * @author gustavemonod
  */
 public class PlageHoraire implements Comparable<PlageHoraire> {
+    
     /**
      * Formatter/parser de dates
      */
     protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:m:s");
 
     /**
-     * Heure de début de la livraison
+     * Heure de début de la plage horaire
      */
     protected Date heureDebut;
 
     /**
-     * Heure de fin de la livraison
+     * Heure de fin de la plage horaire
      */
     protected Date heureFin;
 
@@ -67,6 +68,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     }
 
     /**
+     * Accesseur de l'heure de début de la plage horaire
      * @return Heure de début de la livraison
      */
     public Date getHeureDebut() {
@@ -75,7 +77,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
 
 
     /**
-     * Modifie l'heure de début de la livraison
+     * Mutateur de l'heure de début de la plage horaire à partir d'une Date
      * @param heureDebut La nouvelle heure de début
      */
     public void setHeureDebut(Date heureDebut) {
@@ -83,7 +85,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     }
 
     /**
-     * Modifie l'heure de début de la livraison
+     * Mutateur de l'heure de début de la plage horaire à partir d'une String
      * @param heureDebut La nouvelle heure de début sous forme de chaîne
      */
     @SuppressWarnings("deprecation")
@@ -99,6 +101,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     }
 
     /**
+     * Accesseur de l'heure de fin de la plage horaire
      * @return Heure de fin de la livraison
      */
     public Date getHeureFin() {
@@ -106,7 +109,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     }
 
     /**
-     * Modifie l'heure de fin de la livraison
+     * Mutateur de l'heure de fin de la plage horaire à partir d'une Date
      * @param heureFin La nouvelle heure de fin
      */
     public void setHeureFin(Date heureFin) {
@@ -114,7 +117,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
     }
 
     /**
-     * Modifie l'heure de fin de la livraison
+     * Modifie l'heure de fin de la livraison à partir d'une String 
      * @param heureFin La nouvelle heure de fin sous forme de chaîne
      */
     @SuppressWarnings("deprecation")
@@ -152,6 +155,7 @@ public class PlageHoraire implements Comparable<PlageHoraire> {
      *          1 si l'heure de fin de t est inférieure ou égale à l'heure de début de this
      *          0 sinon.
      */
+    @Override
     public int compareTo(PlageHoraire t) {
         if(this.heureFin.before(t.getHeureDebut()) || this.heureFin.equals(t.getHeureDebut())) {
             return -1;
