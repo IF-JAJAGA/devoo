@@ -460,7 +460,8 @@ public class Fenetre extends JFrame {
     public void actualiserPlan(){
         vuePlan.actualiserPlan(Controleur.getInstance().getZone());
         conteneurDroite.majListe(vuePlan.getVueNoeuds());
-    };
+        conteneurDroite.majLegendeCouleurs(vuePlan.getColorsPL());
+    }
     
     /**
      * Ferme la fenêtre.

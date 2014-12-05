@@ -1,9 +1,10 @@
+package fr.insaif.jajagaa.model;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.insaif.jajagaa.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +15,34 @@ import java.util.List;
  */
 public class LivraisonGraphVertex {
     
+    /**
+     * Booléen indiquant si l'entrepot 
+     */
     protected boolean estEntrepot = false;
     
+    /**
+     * ID de la Livraison
+     */
     protected int idNoeud;
-
+    
+    /**
+     * Liste de Chemins sortants de la Livraison 
+     */
     protected List<Chemin> sortants = new ArrayList<>();
 
+    /**
+     * Constructeur de LivraisonGraphVertex à partir de l'ID
+     * @param idNoeud 
+     */
     public LivraisonGraphVertex(int idNoeud) {
         this.idNoeud = idNoeud;
     }
     
+    /**
+     * Constructeur de LivraisonGraphVertex en précisant si c'est un entrepot
+     * @param idNoeud ID du noeud
+     * @param estEntrepot Booléen indiquant si c'est un entrepot
+     */
     public LivraisonGraphVertex(int idNoeud, boolean estEntrepot) {
         this.idNoeud = idNoeud;
         this.estEntrepot = estEntrepot;
@@ -47,6 +66,11 @@ public class LivraisonGraphVertex {
         }
     }
 
+    /**
+     * Test l'égalité entre deux LivraisonGraphVertex
+     * @param o
+     * @return 
+     */
     @Override
     public boolean equals(Object o) {
         if(o instanceof LivraisonGraphVertex){
@@ -56,16 +80,27 @@ public class LivraisonGraphVertex {
         return super.equals(o); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
-    
+    /**
+     * Accesseur de la Livraison
+     * @return 
+     */
     public int getIdNoeud() {
         return idNoeud;
     }
 
+    /**
+     * Accesseur des Chemins sortants de la Livraison
+     * @return 
+     */
     public List<Chemin> getSortants() {
         return sortants;
     }
     
+    /**
+     * Accesseur du Chemin entre la Livraison this et celui passé en paramètre
+     * @param destination
+     * @return 
+     */
     public Chemin getSortantByDest(LivraisonGraphVertex destination) {
         List<Chemin> chemins = this.getSortants();
         for(Chemin c : chemins) {

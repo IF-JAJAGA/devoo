@@ -36,6 +36,9 @@ public class Controleur {
         return controleur;
     }
     
+    /**
+     * Constructeur de Controleur qui instancie la fenêtre pour la vue.
+     */
     private Controleur() {
         Fenetre.getInstance();
     }
@@ -56,19 +59,24 @@ public class Controleur {
      */
     private ElementListeCourante commandeCourante = new ElementListeCourante();
 
+    /**
+     * Récupérateur de la zoneVierge de l'instance de Controleur
+     * @return 
+     */
     public ZoneGeographique getZoneVierge() {
         return zoneVierge;
     }
 
+    /**
+     * Mutateur de l'attribut ZoneVierge du controleur
+     * @param zoneVierge 
+     */
     public void setZoneVierge(ZoneGeographique zoneVierge) {
         this.zoneVierge = zoneVierge;
     }
-    
-    
-    
 
     /**
-     * Getteur de ZoneGeographique 
+     * Accesseur de ZoneGeographique 
      * @return ZoneGeographique associée au controleur en question
      */
     public ZoneGeographique getZone() {
@@ -87,7 +95,6 @@ public class Controleur {
     /**
      * Méthode permettant de générer la zone géographique correspondant à la liste de noeuds listés dans le fichier xml passé en paramètre
      * @param fichierPlan
-     * @return 
      */
     public void lirePlan(String fichierPlan) {
         creationCommande(new ElementListeCourante(new LirePlanCommand(zone, fichierPlan)));
@@ -99,7 +106,6 @@ public class Controleur {
     /**
      * Méthode permettant de générer la liste des plages horaires contenant les ensembles de livraisons à réaliser
      * @param fichierLivraison
-     * @return 
      */
     public void lireLivraisons(String fichierLivraison) {
         if(zone == null){
@@ -107,13 +113,11 @@ public class Controleur {
             return;
         }
         creationCommande(new ElementListeCourante(new LireLivraisonsCommand(zone, fichierLivraison)));
-        
         execute();
     }
     
     /**
      * Permet de créer la commande pour calculer la tournée.
-     * @param time 
      */
     public void CalculerTournee() {
         creationCommande(new ElementListeCourante(new CalculerTourneeCommand(zone.getTournee(), timeCalculMs)));
@@ -123,17 +127,15 @@ public class Controleur {
     
     /**
      * Méthode qui permet d'ajouter un point dans une tournee, juste après un autre point (spécifié)
-     * @param tourneeModel tournee que l'on veut modifier
      * @param noeudMilieu noeud que l'on veut ajouter à la tournee
      * @param noeudAvant noeud après lequel on veut ajouter noeudMilieu
-     * @return la tournee une fois qu'elle a été modifiée
      */
     public void ajouterPointLivraison (Noeud noeudMilieu, Noeud noeudAvant) {
         System.out.println("ajouterPointLivraison");
         
         int idClient = -1;
         while(idClient <= 0) {
-            String rep = JOptionPane.showInputDialog(null, "Entrez le numéro du client", "Ajout d'une livraison", JOptionPane.QUESTION_MESSAGE);
+            String rep = JOptionPane.showInputDialog(null, "Entrez le numéro du client (entier positif)", "Ajout d'une livraison", JOptionPane.QUESTION_MESSAGE);
             try {
                 idClient = Integer.parseInt(rep);
             }
@@ -146,6 +148,10 @@ public class Controleur {
         execute();
     }
     
+    /**
+     * Méthode prenant une Livraison en paramètre et créant une commande pour la suppression de la livraison.
+     * @param noeudASup 
+     */
     public void supprimerPointLivraison(Noeud noeudASup) {
         System.out.println("Suppression Point Livraison");
         creationCommande(new ElementListeCourante(new SuppressionLivraisonCommande(zone,noeudASup)));
@@ -182,9 +188,6 @@ public class Controleur {
             Fenetre.getInstance().actualiserPlan();
             System.out.println("Fin de calculTournee : " + zone.getTournee().getCheminsResultats());
         }
-        else {
-            //Autres types de commande
-        }
     }
     
     /**
@@ -214,9 +217,6 @@ public class Controleur {
         else if(commande instanceof CalculerTourneeCommand){
             zone.getTournee().setCheminsResultats(((CalculerTourneeCommand)commande).getChemins());
             Fenetre.getInstance().actualiserPlan();
-        }
-        else {
-            //Autres types de commande
         }
         
         commandeCourante = commandeCourante.previous;
@@ -287,6 +287,7 @@ public class Controleur {
     
     /**
      * Classe qui lance l'impresion de la feuille de route pour une tournnée
+     * @return booléen indiquant la réussite ou non de l'impression
      */
     public boolean lancerImpression() {
     	return ImprimerFdr.ecrireFichier(zone);

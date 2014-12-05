@@ -9,19 +9,21 @@ import java.util.List;
  * @author gustavemonod
  */
 public class Noeud {
+    
     /**
-     * Liste des vueTroncons qui ont ce noeud comme origine
+     * Liste des Troncons qui ont ce noeud comme origine
      */
     protected List<Troncon> sortants;
 
     /**
-
-     * Abscisse du noeud (exprimée en mètre)
+     * Abscisse du noeud.
+     * Exprimée en mètre
      */
     protected int xMetre;
 
     /**
-     * Ordonnée du noeud (exprimée en mètre)
+     * Ordonnée du noeud.
+     * Exprimée en mètre
      */
     protected int yMetre;
 
@@ -30,9 +32,14 @@ public class Noeud {
      */
     protected int id;
     
-    //TODO : enum si le noeud est un point de livraison
+    /**
+     * Attribut indiquant l'état du noeud
+     */
     public EtatNoeud etatLivraison = EtatNoeud.RIEN;
     
+    /**
+     * Méthode privée permettant de changer l'état du noeud en Livraison
+     */
     private Noeud() {
         if (this instanceof Livraison) {
             this.setEtatLivraison(EtatNoeud.LIVRAISON);
@@ -53,6 +60,13 @@ public class Noeud {
         this.sortants = new ArrayList<Troncon>();
     }
     
+    /**
+     * Constructeur du noeud prenant en compte les Troncons dont il est à l'origine
+     * @param id Identifiant du noeud
+     * @param xMetre Abscisse du noeud
+     * @param yMetre Ordonnée du noeud
+     * @param sortants Liste des Troncons sortant du noeud  créer
+     */
     public Noeud(int id, int xMetre, int yMetre, List<Troncon> sortants){
         this();
         this.id = id;
@@ -61,6 +75,10 @@ public class Noeud {
         this.sortants = sortants;
     }
     
+    /**
+     * Constructeur par copie de noeud
+     * @param oldNoeud 
+     */
     public Noeud(Noeud oldNoeud){
         this();
         sortants = new ArrayList<>();
@@ -72,16 +90,24 @@ public class Noeud {
         id = oldNoeud.id;
     }
 
+    /**
+     * Accesseur de l'état du Noeud
+     * @return Etat du noeud
+     */
     public EtatNoeud getEtatLivraison() {
         return etatLivraison;
     }
 
+    /**
+     * Mutateur de l'état du noeud
+     * @param etatLivraison 
+     */
     public void setEtatLivraison(EtatNoeud etatLivraison) {
         this.etatLivraison = etatLivraison;
     }
     
     /**
-     * Identifiant du noeud
+     * Accesseur de l'identifiant du noeud
      * @return Identifiant du noeud
      */
     public int getId() {
@@ -89,7 +115,7 @@ public class Noeud {
     }
 
     /**
-     * Liste des vueTroncons qui ont ce noeud comme origine
+     * Accesseur de la liste des Troncons qui ont ce noeud comme origine
      * @return liste des vueTroncons qui ont ce noeud comme origine
      */
     public List<Troncon> getSortants() {
@@ -97,7 +123,7 @@ public class Noeud {
     }
 
     /**
-     * Modifie la liste des vueTroncons qui ont ce noeud comme origine
+     * Mutateur de la liste des Troncons qui ont ce noeud comme origine
      * @param sortants Liste des vueTroncons qui ont ce noeud comme origine
      */
     public void setSortants(List<Troncon> sortants) {
@@ -105,7 +131,8 @@ public class Noeud {
     }
 
     /**
-     * Abscisse du noeud (exprimée en mètre)
+     * Accesseur de l'abscisse du noeud.
+     * Exprimée en mètre
      * @return Abscisse du noeud (exprimée en mètre)
      */
     public int getXMetre() {
@@ -113,7 +140,8 @@ public class Noeud {
     }
 
     /**
-     * Modifie l'abscisse du noeud (exprimée en mètre)
+     * Mutateur de l'abscisse du noeud.
+     * Exprimée en mètre
      * @param xMetre Abscisse du noeud (exprimée en mètre)
      */
     public void setXMetre(int xMetre) {
@@ -121,7 +149,8 @@ public class Noeud {
     }
 
     /**
-     * Ordonnée du noeud (exprimée en mètre)
+     * Getteur de l'ordonnée du noeud.
+     * Exprimée en mètre
      * @return Ordonnée du noeud (exprimée en mètre)
      */
     public int getYMetre() {
@@ -129,7 +158,8 @@ public class Noeud {
     }
 
     /**
-     * Modifie l'ordonnée du noeud (exprimée en mètre)
+     * Mutateur de l'ordonnée du noeud.
+     * Exprimée en mètre
      * @param yMetre Ordonnée du noeud (exprimée en mètre)
      */
     public void setYMetre(int yMetre) {
@@ -141,12 +171,14 @@ public class Noeud {
      * @param destination Noeud destination du Troncon à rajouter
      * @param longueurMetre Distance séparant le noeud origine de celui destination (exprimée en mètre?)
      * @param vitesse Vitesse de parcours du Troncon (exprimée en ???)
+     * @param rue Nom de la Rue du Troncon qu'on ajoute
      */
     public void addSortant(Noeud destination, float longueurMetre, float vitesse, String rue) {
         assert !this.equals(destination);
         this.sortants.add(new Troncon(this.id, destination.getId(), longueurMetre, vitesse,rue));
     }
 
+    /*
     public int getX() {
         return xMetre;
     }
@@ -163,13 +195,20 @@ public class Noeud {
         this.yMetre = y;
     }
     
+    */
+    
+    /**
+     * Teste l'égalité entre le Noeud this et celui passé en paramètre
+     * @param obj
+     * @return 
+     */
     @Override
     public boolean equals(Object obj){
         if (obj instanceof Noeud){
             Noeud noeud = (Noeud) obj;
             return (noeud.id == this.id) && (noeud.xMetre==this.xMetre)  && (noeud.yMetre == this.yMetre);
         }
-        else {
+        else { 
             return false;
         }
     }

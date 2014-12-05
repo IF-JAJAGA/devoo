@@ -19,10 +19,10 @@ import static org.junit.Assert.fail;
  * @author gustavemonod
  */
 public class TourneeTest {
-    protected Tournee tournee;
+    protected Tournee tournee, tournee2;
     protected ZoneGeographique zoneGeo;
 
-    public static final int MAX_TIME_SEC = 10;
+    public static final int MAX_TIME_SEC = 100;
 
     @Before
     public void setUp() throws Exception {
@@ -30,18 +30,18 @@ public class TourneeTest {
         List<PlageHoraire> listPlages = Parseur.lireLivraison("./src/main/resources/livraison10x10-2.xml", this.zoneGeo);
         this.tournee = new Tournee(this.zoneGeo);
         this.tournee.setPlagesHoraire(listPlages);
+
     }
 
     @Test
     public void testSolve() throws ParseurException {
-        System.out.println("Debut calcul");
         SolutionState solutionState = null;
         try{
         	solutionState = tournee.solve(MAX_TIME_SEC * 1000);
         } catch (Exception e) {
-        	System.err.println("blabla");
+        	e.printStackTrace();
+        	fail();
         }
-        System.out.println("Fin calcul");
 
         if (solutionState == SolutionState.OPTIMAL_SOLUTION_FOUND || solutionState == SolutionState.SOLUTION_FOUND) {
             this.verifierHoraires();
@@ -85,9 +85,23 @@ public class TourneeTest {
 
         try {
             this.tournee.ajouterPointDeLivraison(noeudALivrer, 1, precedent);
-            // TODO ajouter ici des tests
         } catch (HorsPlageException ex) {
             Logger.getLogger(TourneeTest.class.getName()).log(Level.SEVERE, null, ex);
         }
      }
+    
+    @Test
+    public void testTropDeLivraisons() {
+    	try {
+          List<PlageHoraire> listPlages2 = Parseur.lireLivraison("./src/main/resources/livraison10x10-5.xml", zoneGeo);
+          this.tournee2 = new Tournee(this.zoneGeo);
+          this.tournee2.setPlagesHoraire(listPlages2);
+    		tournee2.solve(200000);
+    		fail();
+    	} catch (HorsPlageException hpe) {
+    		
+    	} catch (Exception e) {
+    		fail();
+    	}
+    }
 }

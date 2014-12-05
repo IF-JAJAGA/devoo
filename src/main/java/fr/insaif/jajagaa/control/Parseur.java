@@ -18,22 +18,21 @@ import fr.insaif.jajagaa.model.ZoneGeographique;
 
 /**
  * Classe qui s'occupe de parser les fichiers XML de livraisons et de plan.
- * TODO Vérifier où cette classe est censée être
  * @author gustavemonod
  */
 public class Parseur{
 	
-	/** TODO tester (test actuel incomplet/vieux)
+    /**
      * Lit toutes les livraisons contenues dans un fichier de demande de livraisons et en renvoie une liste
-     * @param inputStream Flux à partir duquel lire les données XML
-     * @param zone ZoneGeographique la liste des noeuds dans laquelle les livraisons sont contenues
+     * @param fichierEntree String menant au fichier XML d'entrée pour les livraisons
+     * @param zone ZoneGeographique  dela liste des noeuds dans laquelle les livraisons sont contenues
      * @return Liste des plages horaires contenant chacune leur livraisons à effectuer
-
+     * @throws ParseurException 
      */
     public static List<PlageHoraire> lireLivraison(String fichierEntree, ZoneGeographique zone) throws ParseurException{
         List<PlageHoraire> plageList = new ArrayList<PlageHoraire>();
         SAXBuilder builder = new SAXBuilder();
-        FileInputStream inputStream = null;
+        FileInputStream inputStream;
         try {
             inputStream = new FileInputStream(fichierEntree);            
             Document document = builder.build(inputStream);
@@ -81,25 +80,18 @@ public class Parseur{
         return plageList;
     }
 
-    // TODO tester cette methode dans {@link fr.insaif.jajagaa.control.ParseurTest}
     /**
      * Méthode permettant de déterminer la zone géographique contenant les noeuds et les tronçons associés
-     * @param inputStream Fichier XML contenant les noeuds et les tronçons composants la zone géographique
+     * @param fichierEntree String menant au fichier XML d'entrée du plan
      * @return La zone géographique contenant les noeuds passés en paramètre
+     * @throws ParseurException 
      */
     public static ZoneGeographique lirePlan(String fichierEntree) throws ParseurException{
-        FileInputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(fichierEntree);
-        } catch (FileNotFoundException ex) {
-        	//TODO: À quoi ça sert?
-//            Logger.getLogger(Parseur.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ParseurException("Fichier inexistant");
-        }
-        
+        FileInputStream inputStream;
         List<Noeud> plan = new ArrayList<Noeud>();
         SAXBuilder builder = new SAXBuilder();
         try {
+            inputStream = new FileInputStream(fichierEntree);
             Document document = (Document) builder.build(inputStream);
             Element reseau = document.getRootElement();
 
@@ -108,6 +100,7 @@ public class Parseur{
             if(noeuds.isEmpty()) {
                 throw new ParseurException("Fichier plan non valide : aucun noeud trouvé");
             }
+            
             //Création des vueNoeuds contenus dans le fichier XML
             //Et ajout de ceux-ci dans la liste plan 
             for (Element noeudXml : noeuds) {
@@ -132,7 +125,7 @@ public class Parseur{
                     plan.get(id).addSortant(plan.get(idNoeudDestination), longeur, vitesse, rue);
                 }
             }
-        } catch (FileNotFoundException fnfe) { //TODO: il sert là maintenant? Car il se déclanche haut.
+        } catch (FileNotFoundException fnfe) {
             throw new ParseurException("Fichier inexistant");
         } catch (IOException io) {
             throw new ParseurException("Impossible d'accéder au fichier correctement");

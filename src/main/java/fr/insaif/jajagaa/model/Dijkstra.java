@@ -1,9 +1,5 @@
 package fr.insaif.jajagaa.model;
 
-import fr.insaif.jajagaa.model.tsp.Graph;
-import fr.insaif.jajagaa.model.tsp.SolutionState;
-import fr.insaif.jajagaa.model.tsp.TSP;
-
 import java.util.*;
 
 /**
@@ -12,10 +8,12 @@ import java.util.*;
  */
 public class Dijkstra {
     /**
-     * Nombre maximum de secondes à attendre pour
+     * Méthode permettant de calculer le plus court Chemin entre deux Livraisons.
+     * @param zone ZoneGeographique à laquelle appartiennent les deux Livraisons
+     * @param depart Livraison de départ
+     * @param arrivee Livraison de destination
+     * @return Chemin le plus court entre les deux Livraisons
      */
-    public static int MAX_SEC = 200;
-
     public static Chemin plusCourtChemin(ZoneGeographique zone, LivraisonGraphVertex depart, LivraisonGraphVertex arrivee) {
         final Map<Noeud, Float> distances = new HashMap<Noeud, Float>();
         float maxArcCost = getMaxArcCost(zone);
@@ -62,20 +60,12 @@ public class Dijkstra {
         return null;
     }
 
-    public static void cheminComplet(Graph g) {
-        final int SEC_TO_MILLIS = 1000;
-        int nbVertices = g.getNbVertices();
-        int maxCost = g.getMaxArcCost();
-
-        TSP tsp = new TSP(g);
-        tsp.solve(MAX_SEC * SEC_TO_MILLIS, nbVertices * maxCost + 1);
-        if (tsp.getSolutionState() == SolutionState.SOLUTION_FOUND
-                || tsp.getSolutionState() == SolutionState.OPTIMAL_SOLUTION_FOUND) {
-            int[] next = tsp.getNext();
-            System.out.println(Arrays.toString(next));
-        }
-    }
-
+    /**
+     * Recherche le coût maximal possible des Troncons composants la ZoneGeographique
+     * zone passée en paramètre
+     * @param zone
+     * @return le coût maximal
+     */
     private static float getMaxArcCost(ZoneGeographique zone) {
         float maxArcCost = 0;
         for (Noeud noeud : zone.getNoeuds()) {

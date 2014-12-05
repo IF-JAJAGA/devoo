@@ -47,6 +47,10 @@ public class Livraison extends Noeud {
 
     /**
      * Constructeur d'une livraison à partir du noeud qui la concerne
+     * @param n Noeud concernant la Livraison
+     * @param idLiv ID de la Livraison en question
+     * @param idClientLiv ID du client concerné par la Livraison
+     * @param plageHoraire PlageHoraire dans laquelle se trouve la Livraison
      */
     public Livraison(Noeud n, int idLiv, int idClientLiv, PlageHoraire plageHoraire) {
         super(n.id, n.xMetre, n.yMetre, n.sortants);
@@ -70,6 +74,7 @@ public class Livraison extends Noeud {
     }
 
     /**
+     * Accesseur de l'heure prévue de la Livraison
      * @return Heure exacte de la livraison
      */
     public Date getHeureLivraison() {
@@ -77,7 +82,7 @@ public class Livraison extends Noeud {
     }
 
     /**
-     * Modifie l'heure exacte de la livraison
+     * Mutateur de l'heure exacte de la livraison à partir d'une Date
      * @param heureLivraison La nouvelle heure de fin
      */
     public void setHeureLivraison(Date heureLivraison) {
@@ -85,8 +90,10 @@ public class Livraison extends Noeud {
     }
 
     /**
-     * Modifie l'heure exacte de la livraison
+     * 
+     * Mutateur de l'heure exacte de la livraison à partir d'un String
      * @param heureLivraison La nouvelle heure exacte sous forme de chaîne
+     * @throws ParseException 
      */
     public void setHeureLivraison(String heureLivraison) throws ParseException {
         try {
@@ -98,6 +105,7 @@ public class Livraison extends Noeud {
     }
     
     /**
+     * Accesseur de l'ID du client de la Livraison
      * @return Id du client à livrer
      */
     public int getIdClient() {
@@ -105,15 +113,16 @@ public class Livraison extends Noeud {
     }
 
     /**
-     * Modifie l'Id du client à livrer
-     * @param Id du client à livrer
+     * Mutateur de l'ID du client à livrer
+     * @param idClient du client à livrer
      */
     public void setIdClient(int idClient) {
         this.idClient = idClient;
     }
     
     /**
-     * Décale la livraison d'un cran dans le planning (avance l'heure de livraison de TPS_LIVRAISON_MIN minutes)
+     * Décale la livraison d'un cran dans le planning.
+     * Avance l'heure de livraison de TPS_LIVRAISON_MIN minutes
      */
     public void decalerHeureLivraison() {
         this.heureLivraison.add(Calendar.MINUTE, TPS_LIVRAISON_MIN);
@@ -121,6 +130,7 @@ public class Livraison extends Noeud {
     
     /**
      * Calcule l'heure de départ pour la livraison.
+     * @return Date correspondant à l'heure de fin de la Livraison
      */
     public Date getHeureFin(){
         Calendar heureFin = ((Calendar) this.heureLivraison.clone());
@@ -129,6 +139,7 @@ public class Livraison extends Noeud {
     }
     
     /**
+     * Accesseur de la PlageHoraire à laquelle appartient la Livraison
      * @return la Plage dans laquelle se déroule la livraison
      */
     public PlageHoraire getPlage() {
@@ -136,7 +147,8 @@ public class Livraison extends Noeud {
     }
     
     /**
-     * @param la nouvelle plage dans laquelle se déroule la livraison
+     * Mutateur de la PlageHoraire dans laquelle se trouve la Livraison
+     * @param plageHoraire nouvelle plage dans laquelle se déroule la livraison
      */
     public void setPlage(PlageHoraire plageHoraire) {
     	this.plageHoraire = plageHoraire;
