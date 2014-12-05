@@ -83,22 +83,6 @@ public class Tournee {
     }
     
     /**
-     * Cherche une plage horaire selon les heures de début et de fin.
-     * @param heureDebut
-     * @param heureFin
-     * @return 
-     */
-    public PlageHoraire getPlageByHours(Date heureDebut, Date heureFin){
-        for(PlageHoraire pl : plagesHoraire){
-            if(pl.getHeureDebut().equals(heureDebut) &&
-                    pl.getHeureFin().equals(heureFin)){
-                return pl;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Modifie la liste des plages horaires au cours de laquelle se déroule la tournée. (Peut au maximum contenir 24h)
      * @param plagesHoraire Liste des plages horaires au cours de laquelle se déroule la tournée. (Peut au maximum contenir 24h)
      */

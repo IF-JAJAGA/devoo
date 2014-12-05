@@ -11,12 +11,6 @@ import java.util.*;
  * @author gustavemonod
  */
 public class Dijkstra {
-    
-    /**
-     * Nombre maximum de secondes à attendre pour calculer le meilleur Chemin.
-     */
-    public static int MAX_SEC = 200;
-
     /**
      * Méthode permettant de calculer le plus court Chemin entre deux Livraisons.
      * @param zone ZoneGeographique à laquelle appartiennent les deux Livraisons
@@ -68,23 +62,6 @@ public class Dijkstra {
         }
 
         return null;
-    }
-
-    /**
-     * 
-     * @param g 
-     */
-    public static void cheminComplet(Graph g) {
-        final int SEC_TO_MILLIS = 1000;
-        int nbVertices = g.getNbVertices();
-        int maxCost = g.getMaxArcCost();
-
-        TSP tsp = new TSP(g);
-        tsp.solve(MAX_SEC * SEC_TO_MILLIS, nbVertices * maxCost + 1);
-        if (tsp.getSolutionState() == SolutionState.SOLUTION_FOUND
-                || tsp.getSolutionState() == SolutionState.OPTIMAL_SOLUTION_FOUND) {
-            int[] next = tsp.getNext();
-        }
     }
 
     /**
