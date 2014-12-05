@@ -38,22 +38,12 @@ public class Noeud {
     public EtatNoeud etatLivraison = EtatNoeud.RIEN;
     
     /**
-     * Méthode privée permettant de changer l'état du noeud en Livraison
-     */
-    private Noeud() {
-        if (this instanceof Livraison) {
-            this.setEtatLivraison(EtatNoeud.LIVRAISON);
-        }
-    }
-
-    /**
      * Constructeur du noeud à partir de l'adresse
      * @param id Identifiant du noeud
      * @param xMetre Abscisse du noeud (exprimée en mètre)
      * @param yMetre Ordonnée du noeud (exprimée en mètre)
      */
     public Noeud(int id, int xMetre, int yMetre) {
-        this();
         this.id = id;
         this.setXMetre(xMetre);
         this.setYMetre(yMetre);
@@ -68,7 +58,6 @@ public class Noeud {
      * @param sortants Liste des Troncons sortant du noeud  créer
      */
     public Noeud(int id, int xMetre, int yMetre, List<Troncon> sortants){
-        this();
         this.id = id;
         this.xMetre = xMetre;
         this.yMetre = yMetre;
@@ -80,7 +69,6 @@ public class Noeud {
      * @param oldNoeud 
      */
     public Noeud(Noeud oldNoeud){
-        this();
         sortants = new ArrayList<>();
         for(Troncon tr : oldNoeud.sortants){
             sortants.add(new Troncon(tr));

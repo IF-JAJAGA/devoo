@@ -59,6 +59,7 @@ public class Livraison extends Noeud {
         this.plageHoraire = plageHoraire;
         // Date de livraison par défaut: heure de création
         this.heureLivraison = Calendar.getInstance();
+        this.setEtatLivraison(EtatNoeud.LIVRAISON);
     }
     
     /**
