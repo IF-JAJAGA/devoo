@@ -14,7 +14,6 @@ import fr.insaif.jajagaa.model.tsp.TSP;
 /**
  * Itinéraire d'un livreur dans une seule zone géographique, partant du dépôt et revenant au dépôt,
  * elle est représentée par une liste ordonnée de cheminsResultats
- *
  * @author gustavemonod
  */
 public class Tournee {
@@ -48,7 +47,8 @@ public class Tournee {
     protected LivraisonGraph graph;
 
     /**
-     * Création d'une tournée à partir d'une zone et d'une demande de livraisons (List<PlageHoraire>).
+     * Création d'une tournée à partir d'une ZoneGeographique
+     * @param zone ZoneGeographique utilisée pour créer la Tournee
      */
     public Tournee(ZoneGeographique zone) {
         this.zone = zone;
@@ -82,7 +82,8 @@ public class Tournee {
     }
     
     /**
-     * Modifie la liste des plages horaires au cours de laquelle se déroule la tournée. (Peut au maximum contenir 24h)
+     * Mutateur de la liste des plages horaires au cours de laquelle se déroule la tournée. 
+     * Peut au maximum contenir 24h
      * @param plagesHoraire Liste des plages horaires au cours de laquelle se déroule la tournée. (Peut au maximum contenir 24h)
      */
     public void setPlagesHoraire(List<PlageHoraire> plagesHoraire) {
@@ -92,7 +93,7 @@ public class Tournee {
     }
 
     /**
-     * Liste ordonnée des cheminsResultats à parcourir au cours de la tournée.
+     * Accesseur de la liste ordonnée des cheminsResultats à parcourir au cours de la tournée.
      * Le premier chemin doit partir de l'entrepôt de la zone géographique.
      * Le dernier chemin doit arriver à l'entrepôt.
      * La fin d'un chemin doit être le début du chemin de l'autre.
@@ -292,7 +293,7 @@ public class Tournee {
     }
 
     /**
-     * L'état de résolution du problème actuel (après le dernier appel à solve)
+     * Accesseur de l'état de résolution du problème actuel (après le dernier appel à solve)
      * @return L'état de résolution du problème actuel (après le dernier appel à solve)
      */
     public SolutionState getSolutionState() {
@@ -300,7 +301,7 @@ public class Tournee {
     }
 
     /**
-     * Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
+     * Accesseur de la liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      * @return Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      */
     public List<Chemin> getCheminsResultats() {
@@ -316,7 +317,7 @@ public class Tournee {
     }
 
     /**
-     * Modifie la liste ordonnée des cheminsResultats parcourus au cours de la tournée.
+     * Mutateur de la liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      * @param cheminsResultats Liste ordonnée des cheminsResultats parcourus au cours de la tournée.
      */
     public void setCheminsResultats(List<Chemin> cheminsResultats) {
@@ -326,8 +327,10 @@ public class Tournee {
     /**
      * Ajoute un point de livraison dans la tournée, en recalculant localement le meilleur chemin et les horaires
      * @param noeudALivrer noeud à ajouter à la tournée
+     * @param idClient identifiant du client
      * @param livraisonAvant livraison après laquelle on doit ajouter noeudALivrer
      * @return la tournée une fois qu'elle a été modifiée.
+     * @throws HorsPlageException 
      */
     public boolean ajouterPointDeLivraison(Noeud noeudALivrer, int idClient, Livraison livraisonAvant) throws HorsPlageException {
         // Recherche de la plage horaire de precedent
